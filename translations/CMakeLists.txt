@@ -9,13 +9,15 @@
 #
 file(GLOB TRANSLATIONS_FILES qucs_*.ts)
 
+find_package(Qt5 COMPONENTS LinguistTools REQUIRED)
+
 # WARNING: make clean might delete the source .ts files! Danger!
 option(UPDATE_TRANSLATIONS "Update source translation translations/*.ts" "OFF")
 
 if(UPDATE_TRANSLATIONS)
-  qt4_create_translation(QM_FILES ${FILES_TO_TRANSLATE} ${TRANSLATIONS_FILES})
+  qt5_create_translation(QM_FILES ${FILES_TO_TRANSLATE} ${TRANSLATIONS_FILES})
 else(UPDATE_TRANSLATIONS)
-  qt4_add_translation(QM_FILES ${TRANSLATIONS_FILES})
+  qt5_add_translation(QM_FILES ${TRANSLATIONS_FILES})
 endif(UPDATE_TRANSLATIONS)
 
 add_custom_target(translations ALL DEPENDS ${QM_FILES})

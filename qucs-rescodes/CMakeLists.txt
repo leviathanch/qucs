@@ -1,6 +1,5 @@
 project(qucsrescodes CXX C)
-cmake_minimum_required(VERSION 2.6)
-cmake_policy(VERSION 2.6)
+cmake_minimum_required(VERSION 3.1.0)
 
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
@@ -31,10 +30,7 @@ if(NOT WIN32)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
 endif()
 
-find_package(Qt4 REQUIRED)
-set(QT_USE_QTGUI TRUE)
-
-include(${QT_USE_FILE})
+find_package(Qt5 COMPONENTS Gui REQUIRED)
 
 add_definitions(${QT_DEFINITIONS})
 
@@ -50,10 +46,10 @@ set(QUCS-RESCODES_SRCS
 set(QUCS-RESCODES_MOC_HDRS helpdialog.h mycolorbox.h myresistancebox.h
                            mywidget.h qresistor.h)
 
-qt4_wrap_cpp(QUCS-RESCODES_MOC_SRCS ${QUCS-RESCODES_MOC_HDRS})
+qt5_wrap_cpp(QUCS-RESCODES_MOC_SRCS ${QUCS-RESCODES_MOC_HDRS})
 
 set(RESOURCES qucsrescodes.qrc)
-qt4_add_resources(RESOURCES_SRCS ${RESOURCES})
+qt5_add_resources(RESOURCES_SRCS ${RESOURCES})
 
 if(APPLE)
   # set information on Info.plist file

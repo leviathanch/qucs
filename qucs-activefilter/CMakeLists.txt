@@ -1,6 +1,5 @@
 project(qucsactivefilter CXX C)
-cmake_minimum_required(VERSION 2.6)
-cmake_policy(VERSION 2.6)
+cmake_minimum_required(VERSION 3.1.0)
 
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
@@ -31,11 +30,7 @@ configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
 
 include_directories("${PROJECT_BINARY_DIR}")
 
-find_package(Qt4 REQUIRED)
-set(QT_USE_QTGUI TRUE)
-set(QT_USE_QTSVG TRUE)
-
-include(${QT_USE_FILE})
+find_package(Qt5 COMPONENTS Gui Svg REQUIRED)
 
 add_definitions(${QT_DEFINITIONS})
 
@@ -53,10 +48,10 @@ set(QUCS-ACTIVE-FILTER_SRCS
 set(QUCS-ACTIVE-FILTER_MOC_HDRS transferfuncdialog.h qucsactivefilter.h
                                 helpdialog.h)
 
-qt4_wrap_cpp(QUCS-ACTIVE-FILTER_MOC_SRCS ${QUCS-ACTIVE-FILTER_MOC_HDRS})
+qt5_wrap_cpp(QUCS-ACTIVE-FILTER_MOC_SRCS ${QUCS-ACTIVE-FILTER_MOC_HDRS})
 
 set(RESOURCES qucsactivefilter_.qrc)
-qt4_add_resources(RESOURCES_SRCS ${RESOURCES})
+qt5_add_resources(RESOURCES_SRCS ${RESOURCES})
 
 if(APPLE)
   # set information on Info.plist file

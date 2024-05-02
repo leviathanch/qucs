@@ -1,6 +1,5 @@
 project(qucsattenuator CXX C)
-cmake_minimum_required(VERSION 2.6)
-cmake_policy(VERSION 2.6)
+cmake_minimum_required(VERSION 3.1.0)
 
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
@@ -31,10 +30,7 @@ if(NOT WIN32)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
 endif()
 
-find_package(Qt4 REQUIRED)
-set(QT_USE_QTGUI TRUE)
-
-include(${QT_USE_FILE})
+find_package(Qt5 COMPONENTS Gui REQUIRED)
 
 add_definitions(${QT_DEFINITIONS})
 
@@ -44,11 +40,11 @@ set(attenuator_sources attenuatorfunc.cpp main.cpp qucsattenuator.cpp)
 
 set(attenuator_moc_headers qucsattenuator.h)
 
-qt4_wrap_cpp(attenuator_moc_sources ${attenuator_moc_headers})
+qt5_wrap_cpp(attenuator_moc_sources ${attenuator_moc_headers})
 
 set(RESOURCES qucsattenuator_.qrc)
 
-qt4_add_resources(RESOURCES_SRCS ${RESOURCES})
+qt5_add_resources(RESOURCES_SRCS ${RESOURCES})
 
 if(APPLE)
   # set information on Info.plist file

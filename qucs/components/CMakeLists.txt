@@ -352,7 +352,7 @@ set(COMPONENTS_HDRS
 set(COMPONENTS_MOC_HDRS componentdialog.h spicedialog.h optimizedialog.h
                         spicefile.h)
 
-qt4_wrap_cpp(COMPONENTS_MOC_SRCS ${COMPONENTS_MOC_HDRS})
+qt5_wrap_cpp(COMPONENTS_MOC_SRCS ${COMPONENTS_MOC_HDRS})
 
 add_library(components OBJECT ${COMPONENTS_HDRS} ${COMPONENTS_SRCS}
                               ${COMPONENTS_MOC_SRCS})

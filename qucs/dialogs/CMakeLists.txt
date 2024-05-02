@@ -68,9 +68,9 @@ set(DIALOGS_MOC_HDRS
 
 set(DIALOGS_UIC_HDRS searchdialog.ui)
 
-qt4_wrap_cpp(DIALOGS_MOC_SRCS ${DIALOGS_MOC_HDRS})
+qt5_wrap_cpp(DIALOGS_MOC_SRCS ${DIALOGS_MOC_HDRS})
 
-qt4_wrap_ui(DIALOGS_UIC_SRCS ${DIALOGS_UIC_HDRS})
+qt5_wrap_ui(DIALOGS_UIC_SRCS ${DIALOGS_UIC_HDRS})
 
 add_library(dialogs OBJECT ${DIALOGS_HDRS} ${DIALOGS_SRCS} ${DIALOGS_MOC_SRCS}
                            ${DIALOGS_UIC_SRCS})

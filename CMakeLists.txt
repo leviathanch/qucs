@@ -23,18 +23,7 @@ endif()
 message(STATUS "${PROJECT_NAME} ${CMAKE_INSTALL_PREFIX}
     ${qucs-suite_BINARY_DIR}")
 
-find_package(Qt4 REQUIRED)
-
-set(QT_USE_QT TRUE)
-# SET( QT_USE_QTXML TRUE ) SET( QT_USE_QTSVG TRUE )
-set(QT_USE_QTCORE TRUE)
-set(QT_USE_QTGUI TRUE)
-
-set(QT_USE_QTSCRIPT TRUE)
-
-set(QT_DEBUG TRUE)
-
-include(${QT_USE_FILE})
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 add_definitions(${QT_DEFINITIONS} -DQT_DEPRECATED_WARNINGS)
 

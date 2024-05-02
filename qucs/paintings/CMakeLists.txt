@@ -38,7 +38,7 @@ set(PAINTINGS_SRCS
 set(PAINTINGS_MOC_HDRS arrowdialog.h filldialog.h graphictextdialog.h
                        id_dialog.h)
 
-qt4_wrap_cpp(PAINTINGS_MOC_SRCS ${PAINTINGS_MOC_HDRS})
+qt5_wrap_cpp(PAINTINGS_MOC_SRCS ${PAINTINGS_MOC_HDRS})
 
 add_library(paintings OBJECT ${PAINTINGS_HDRS} ${PAINTINGS_SRCS}
                              ${PAINTINGS_MOC_SRCS})

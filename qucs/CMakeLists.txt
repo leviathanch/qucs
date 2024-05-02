@@ -11,8 +11,7 @@
 # env CTEST_OUTPUT_ON_FAILURE=1 make test    # for verbose output
 
 project(qucs CXX)
-cmake_minimum_required(VERSION 2.6)
-cmake_policy(VERSION 2.6)
+cmake_minimum_required(VERSION 3.1.0)
 
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
@@ -56,17 +55,10 @@ endif()
 add_definitions(-DHAVE_CONFIG_H)
 
 find_package(
-  Qt4
-  4.6.3
+  Qt5
+  COMPONENTS Widgets Core Gui Svg Xml Script Test
   REQUIRED
-  QtCore
-  QtGui
-  Qt3Support
-  QtSvg
-  QtXml
-  QtScript
-  QtTest)
-include(${QT_USE_FILE})
+)
 
 # MESSAGE("QT_INCLUDES=[${QT_INCLUDES}]")
 # MESSAGE("QT_LIBRARIES=[${QT_LIBRARIES}]")
@@ -103,6 +95,7 @@ endif()
 if(WIN32)
   link_directories("${QT_BINARY_DIR}")
 
+  # TODO: update for Qt5
   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(QT_LIBRARIES QtCored4 QtGuid4 Qt3Supportd4 QtSvgd4 QtXmld4 QtScriptd4)
   else()
@@ -194,13 +187,13 @@ set(QUCS_MOC_HDRS octave_window.h qucs.h schematic.h textdoc.h messagedock.h
 #
 # headers that need to be moc'ed
 #
-qt4_wrap_cpp(QUCS_MOC_SRCS ${QUCS_MOC_HDRS})
+qt5_wrap_cpp(QUCS_MOC_SRCS ${QUCS_MOC_HDRS})
 
 #
 # generate rules for building source files from bitmap resources
 #
 set(RESOURCES qucs_.qrc)
-qt4_add_resources(RESOURCES_SRCS ${RESOURCES})
+qt5_add_resources(RESOURCES_SRCS ${RESOURCES})
 
 if(UNIX AND NOT APPLE)
 
