@@ -76,14 +76,15 @@ ImageWriter::noGuiPrint(QWidget *doc, QString printFile, QString color)
     delete svg1;
 
     if (!printFile.endsWith(".svg")) {
-        QString cmd = "inkscape -z --file=";
-        cmd += tempfile + " ";
-
+        QString cmd = "inkscape";
+        QStringList args;
+        args.append("-z");
+        args.append("--file=" + tempfile);
         if (printFile.endsWith(".eps")) {
-          cmd += "--export-eps=" + printFile;
+          args.append("--export-eps=" + printFile);
         }
 
-        int result = QProcess::execute(cmd);
+        int result = QProcess::execute(cmd, args);
 
         if (result!=0) {
             QMessageBox* msg =  new QMessageBox(QMessageBox::Critical,"Export to image", "Inkscape start error!", QMessageBox::Ok);
@@ -240,24 +241,27 @@ int ImageWriter::print(QWidget *doc)
         delete svgwriter;
 
         if (dlg->needsInkscape()) {
-            QString cmd = "inkscape -z --file=";
-            cmd += filename+".tmp.svg ";
+            QString cmd = "inkscape";
+            QStringList args;
+            args.append("-z");
+            args.append("--file=" + filename + ".tmp.svg ");
 
             if (dlg->isPdf_Tex()) {
                 QString tmp = filename;
                 tmp.chop(4);
-                cmd = cmd + "--export-pdf="+ tmp + " --export-latex";
+                args.append("--export-pdf=" + tmp);
+                args.append("--export-latex");
             }
 
             if (dlg->isPdf()) {
-                cmd = cmd + "--export-pdf=" + filename;
+                args.append("--export-pdf=" + filename);
             }
 
             if (dlg->isEps()) {
-                cmd = cmd + "--export-eps=" + filename;
+                args.append("--export-eps=" + filename);
             }
 
-            int result = QProcess::execute(cmd);
+            int result = QProcess::execute(cmd, args);
 
             if (result!=0) {
                 QMessageBox::critical(0, QObject::tr("Export to image"), 
@@ -311,7 +315,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
         xmax= INT_MIN,
         ymax= INT_MIN;
 
-     for(Component *pc = sch->Components->first(); pc != 0; pc = sch->Components->next()) {
+     for (auto pc = sch->Components->begin(); pc != sch->Components->end(); ++pc) {
          if (pc->isSelected) {
            int x1,y1,x2,y2;
            pc->entireBounds(x1,y1,x2,y2,sch->textCorr());
@@ -319,7 +323,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
          }
     }
 
-    for(Wire *pw = sch->Wires->first(); pw != 0; pw = sch->Wires->next()) {
+    for (auto pw = sch->Wires->begin(); pw != sch->Wires->end(); ++pw) {
 
         if (pw->isSelected) {
             if(pw->x1 < xmin) xmin = pw->x1;
@@ -329,7 +333,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
             qDebug() << pw->x1 << pw->x2 << pw->y1 << pw->y2;
         }
         if (pw->Label) {
-          WireLabel *pl = pw->Label;
+          auto pl = std::dynamic_pointer_cast<WireLabel>(pw->Label);
           if (pl->isSelected) {
             int x1,y1,x2,y2;
             pl->getLabelBounding(x1,y1,x2,y2);
@@ -339,8 +343,8 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
         }
     }
 
-    for(Node *pn = sch->Nodes->first(); pn != 0; pn = sch->Nodes->next()) {
-        WireLabel *pl = pn->Label;
+    for(auto pn = sch->Nodes->begin(); pn != sch->Nodes->end(); ++pn) {
+        auto pl = std::dynamic_pointer_cast<WireLabel>(pn->Label);
         if(pl) {     // check position of node label
             if (pl->isSelected) {
                 int x1,x2,y1,y2;
@@ -353,17 +357,14 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
         }
     }
 
-    for(Diagram *pd = sch->Diagrams->first(); pd != 0; pd =sch-> Diagrams->next()) {
-
-
-
+    for(auto pd = sch->Diagrams->begin(); pd != sch->Diagrams->end(); ++pd) {
         if (pd->isSelected) {
             int x1,y1,x2,y2;
             pd->Bounding(x1,y1,x2,y2);
             updateMinMax(xmin,xmax,ymin,ymax,x1,x2,y1,y2);
 
-            foreach (Graph *pg, pd->Graphs) {
-                foreach (Marker *pm, pg->Markers) {
+            for (auto pg = pd->Graphs.begin(); pg != pd->Graphs.end(); ++pg) {
+                for (auto pm = pg->Markers.begin(); pm != pg->Markers.end(); ++pm) {
                     if (pm->isSelected) {
                         int x1,y1,x2,y2;
                         pm->Bounding(x1,y1,x2,y2);
@@ -374,8 +375,7 @@ void ImageWriter::getSelAreaWidthAndHeight(Schematic *sch, int &wsel, int &hsel,
         }
     }
 
-    for(Painting *pp = sch->Paintings->first(); pp != 0; pp = sch->Paintings->next()) {
-
+    for(auto pp = sch->Paintings->begin(); pp != sch->Paintings->end(); ++pp) {
        if (pp->isSelected) {
            int x1,y1,x2,y2;
            pp->Bounding(x1,y1,x2,y2);

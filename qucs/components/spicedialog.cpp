@@ -37,7 +37,7 @@
 #include <QDebug>
 
 
-SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
+SpiceDialog::SpiceDialog(QucsApp* App_, const std::shared_ptr<SpiceFile> &c, Schematic *d)
     : QDialog(d)
 {
   App = App_; // pointer to main application
@@ -156,13 +156,13 @@ SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
   changed = false;
 
   // insert all properties into the ListBox
-  Property *pp = Comp->Props.first();
-  FileEdit->setText(pp->Value);
-  FileCheck->setChecked(pp->display);
-  SimCheck->setChecked(Comp->Props.at(2)->Value == "yes");
+  Property &pp = Comp->prop(0);
+  FileEdit->setText(pp.Value);
+  FileCheck->setChecked(pp.display);
+  SimCheck->setChecked(Comp->prop(2).Value == "yes");
   for(int i=0; i<PrepCombo->count(); i++)
   {
-    if(PrepCombo->itemText(i) == Comp->Props.at(3)->Value)
+    if(PrepCombo->itemText(i) == Comp->prop(3).Value)
     {
       PrepCombo->setCurrentIndex(i);
       currentPrep = i;
@@ -170,7 +170,7 @@ SpiceDialog::SpiceDialog(QucsApp* App_, SpiceFile *c, Schematic *d)
     }
   }
 
-  loadSpiceNetList(pp->Value);  // load netlist nodes
+  loadSpiceNetList(pp.Value);  // load netlist nodes
 }
 
 SpiceDialog::~SpiceDialog()
@@ -207,15 +207,15 @@ void SpiceDialog::reject()
 // Is called, if the "Apply"-button is pressed.
 void SpiceDialog::slotButtApply()
 {
-  Component *pc;
   if(CompNameEdit->text().isEmpty())  CompNameEdit->setText(Comp->name());
   else if(CompNameEdit->text() != Comp->name())
   {
-    for(pc = Doc->Components->first(); pc!=0; pc = Doc->Components->next())
+    auto pc = Doc->Components->begin();
+    for( ; pc != Doc->Components->end(); ++pc)
       if(pc->name() == CompNameEdit->text()) {
         break;  // found component with the same name ?
       }
-    if (pc) {
+    if (pc != Doc->Components->end()) {
       CompNameEdit->setText(Comp->name());
     }
     else {
@@ -225,15 +225,14 @@ void SpiceDialog::slotButtApply()
   }
 
   // apply all the new property values
-  Property *pp = Comp->Props.first();
-  if(pp->Value != FileEdit->text())
+  if(Comp->prop(0).Value != FileEdit->text())
   {
-    pp->Value = FileEdit->text();
+    Comp->prop(0).Value = FileEdit->text();
     changed = true;
   }
-  if(pp->display != FileCheck->isChecked())
+  if(Comp->prop(0).display != FileCheck->isChecked())
   {
-    pp->display = FileCheck->isChecked();
+    Comp->prop(0).display = FileCheck->isChecked();
     changed = true;
   }
 
@@ -245,26 +244,25 @@ void SpiceDialog::slotButtApply()
     }
     tmp += "_net" + PortsList->item(i)->text();   // chosen ports
   }
-  pp = Comp->Props.next();
-  if(pp->Value != tmp)
+
+  if(Comp->prop(1).Value != tmp)
   {
-    pp->Value = tmp;
+    Comp->prop(1).Value = tmp;
     changed = true;
   }
-  pp = Comp->Props.next();
-  if((pp->Value=="yes") != SimCheck->isChecked())
+
+  if((Comp->prop(2).Value=="yes") != SimCheck->isChecked())
   {
-    pp->Value = ((SimCheck->isChecked())? "yes" : "no");
+    Comp->prop(2).Value = ((SimCheck->isChecked())? "yes" : "no");
     changed = true;
   }
-  if(pp->Value != "yes") {
+  if(Comp->prop(2).Value != "yes") {
     Comp->withSim = false;
   }
 
-  pp = Comp->Props.next();
-  if(pp->Value != PrepCombo->currentText())
+  if(Comp->prop(3).Value != PrepCombo->currentText())
   {
-    pp->Value = PrepCombo->currentText();
+    Comp->prop(3).Value = PrepCombo->currentText();
     changed = true;
   }
 
@@ -298,7 +296,7 @@ void SpiceDialog::slotButtBrowse()
   }
   FileEdit->setText(s);
 
-  Comp->Props.at(1)->Value = "";
+  Comp->prop(1).Value.clear();
   loadSpiceNetList(s);
 }
 
@@ -350,11 +348,10 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
       piping = false;
     }
     script = QucsSettings.BinDir + script;
-    QString spiceCommand;
+    QStringList args;
     SpicePrep = new QProcess(this);
-    spiceCommand+=interpreter + " ";
-    spiceCommand+=script + " ";
-    spiceCommand+=FileInfo.filePath() + " ";
+    args.append(script);
+    args.append(FileInfo.filePath());
 
     QFile PrepFile;
     QFileInfo PrepInfo(QucsSettings.QucsWorkDir, s + ".pre");
@@ -362,7 +359,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
 
     if (!piping)
     {
-      spiceCommand += PrepName + " ";
+      args.append(PrepName);
       connect(SpicePrep, SIGNAL(readyReadStandardOutput()), SLOT(slotSkipOut()));
       connect(SpicePrep, SIGNAL(readyReadStandardError()), SLOT(slotGetPrepErr()));
     }
@@ -393,7 +390,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
       }
       prestream = new QTextStream(&PrepFile);
     }
-    SpicePrep->start(spiceCommand);
+    SpicePrep->start(interpreter, args);
     if ((SpicePrep->state() != QProcess::Starting) &&
         (SpicePrep->state() != QProcess::Running))
     {
@@ -463,11 +460,11 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
       QMessageBox::critical(this, tr("QucsConv Error"), Error);
   }
 
-  Property *pp = Comp->Props.at(1);
-  if(!pp->Value.isEmpty())
+  Property &pp = Comp->prop(1);
+  if(!pp.Value.isEmpty())
   {
     PortsList->clear();
-    QStringList ports = pp->Value.split(',');
+    QStringList ports = pp.Value.split(',');
     foreach(QString port, ports) {
       PortsList->addItem(port);
     }

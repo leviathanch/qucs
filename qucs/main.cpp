@@ -255,20 +255,20 @@ void createIcons() {
 
         Component *c = (Component* ) e;
 
-        QList<Line *> Lines      = c->Lines;
-        QList<struct Arc *> Arcs = c-> Arcs;
-        QList<Area *> Rects      = c-> Rects;
-        QList<Area *> Ellips     = c-> Ellips;
-        QList<Port *> Ports      = c->Ports;
-        QList<Text*> Texts       = c->Texts;
+        std::list<Line> Lines      = c->Lines;
+        std::list<Arc> Arcs        = c-> Arcs;
+        std::list<Area> Rects      = c-> Rects;
+        std::list<Area> Ellips     = c-> Ellips;
+        std::list<Port> Ports      = c->Ports;
+        std::list<Text> Texts      = c->Texts;
 
         QGraphicsScene *scene = new QGraphicsScene();
 
-        foreach (Line *l, Lines) {
+        for (auto l = Lines.begin(); l != Lines.end(); ++l) {
           scene->addLine(l->x1, l->y1, l->x2, l->y2, l->style);
         }
 
-        foreach(struct Arc *a, Arcs) {
+        for (auto a = Arcs.begin(); a != Arcs.end(); ++a) {
           // we need an open item here; QGraphisEllipseItem draws a filled ellipse and doesn't do the job here...
           QPainterPath *path = new QPainterPath();
           // the components do not contain the angles in degrees but in 1/16th degrees -> conversion needed
@@ -277,19 +277,19 @@ void createIcons() {
           scene->addPath(*path);
         }
 
-        foreach(Area *a, Rects) {
+        for (auto a = Rects.begin(); a != Rects.end(); ++a) {
           scene->addRect(a->x, a->y, a->w, a->h, a->Pen, a->Brush);
         }
 
-        foreach(Area *a, Ellips) {
+        for (auto a = Ellips.begin(); a != Ellips.end(); ++a) {
           scene->addEllipse(a->x, a->y, a->w, a->h, a->Pen, a->Brush);
         }
 
-        foreach(Port *p, Ports) {
+        for (auto p = Ports.begin(); p != Ports.end(); ++p) {
           scene->addEllipse(p->x-4, p->y-4, 8, 8, QPen(Qt::red));
         }
 
-        foreach(Text *t, Texts) {
+        for (auto t = Texts.begin(); t != Texts.end(); ++t) {
           QFont myFont;
           myFont.setPointSize(10);
           QGraphicsTextItem* item  = new QGraphicsTextItem(t->s);
@@ -317,7 +317,7 @@ void createIcons() {
         image.fill(Qt::transparent);
 
         QPainter painter(&image);
-        QPainter::RenderHints hints = 0;
+        QPainter::RenderHints hints;
         // Ask to antialias drawings if requested
         if (QucsSettings.GraphAntiAliasing) hints |= QPainter::Antialiasing;
         // Ask to antialias text if requested
@@ -409,7 +409,7 @@ void createDocData() {
         compData << "Default name; ``"    + c->name()  + "``";
         compData << "Type; "              + typeMap.value(c->Type);
         compData << "Bitmap file; "       + QString(File);
-        compData << "Properties; "        + QString::number(c->Props.count());
+        compData << "Properties; "        + QString::number(c->Props.size());
         compData << "Category; "          + category;
 
         // 001_data.csv - CSV file with component data
@@ -427,7 +427,7 @@ void createDocData() {
         QStringList compProps;
         compProps << "# Note: auto-generated file (changes will be lost on update)";
         compProps << QString("# %1; %2; %3; %4").arg(  "Name", "Value", "Display", "Description");
-        foreach(Property *prop, c->Props) {
+        for (auto prop = c->Props.begin(); prop != c->Props.end(); ++prop) {
           compProps << QString("%1; \"%2\"; %3; \"%4\"").arg(
                          prop->Name,
                          prop->Value,
@@ -486,8 +486,10 @@ void createListComponentEntry(){
 
       // add dummy ports/wires, avoid segfault
       int port = 0;
-      foreach (Port *p, c->Ports) {
-        Node *n = new Node(0,0);
+      for (auto p = c->Ports.begin(); p != c->Ports.end(); ++p) {
+        static std::list<std::shared_ptr<Node> > heap;  //  FIXME: lost
+        std::shared_ptr<Node> n(new Node(0,0));
+        heap.push_back(n);
         n->Name="_net"+QString::number(port);
         p->Connection = n;
         port +=1;

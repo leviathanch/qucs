@@ -39,7 +39,7 @@ Node::~Node()
 // -------------------------------------------------------------
 void Node::paint(ViewPainter *p)
 {
-  switch(Connections.count()) {
+  switch(Connections.size()) {
     case 1:  if(Label)
                p->fillRect(cx-2, cy-2, 4, 4, Qt::darkBlue); // open but labeled
              else {
@@ -47,8 +47,8 @@ void Node::paint(ViewPainter *p)
                p->drawEllipse(cx-4, cy-4, 8, 8);
              }
              return;
-    case 2:  if(Connections.getFirst()->Type == isWire)
-               if(Connections.getLast()->Type == isWire) return;
+    case 2:  if(Connections.front().lock()->Type == isWire)
+               if(Connections.back().lock()->Type == isWire) return;
              p->fillRect(cx-2, cy-2, 4, 4, Qt::darkBlue);
              break;
     default: p->Painter->setBrush(Qt::darkBlue);  // more than 2 connections
@@ -72,13 +72,30 @@ bool Node::getSelected(int x_, int y_)
 void Node::setName(const QString& Name_, const QString& Value_, int x_, int y_)
 {
   if(Name_.isEmpty() && Value_.isEmpty()) {
-    if(Label) delete Label;
     Label = 0;
     return;
   }
 
-  if(!Label) Label = new WireLabel(Name_, cx, cy, x_, y_, isNodeLabel);
+  if(!Label) Label.reset(new WireLabel(Name_, cx, cy, x_, y_, isNodeLabel));
   else Label->setName(Name_);
   Label->pOwner = this;
   Label->initValue = Value_;
+}
+
+// ----------------------------------------------------------------
+void Node::removeConnection(const std::shared_ptr<Element> &e)
+{
+  for (auto i = Connections.begin(); i != Connections.end(); ++i) {
+    if (i->lock() == e) {
+      Connections.erase (i);
+      break;
+    }
+  }
+}
+
+// ----------------------------------------------------------------
+void
+Node::appendConnection(const std::shared_ptr<Element> &e)
+{
+  Connections.push_back(e);
 }

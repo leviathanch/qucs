@@ -20,8 +20,6 @@
 
 #include "element.h"
 
-#include <Q3PtrList>
-
 class ViewPainter;
 
 
@@ -33,8 +31,10 @@ public:
   void  paint(ViewPainter*);
   bool  getSelected(int, int);
   void  setName(const QString&, const QString&, int x_=0, int y_=0);
+  void  removeConnection(const std::shared_ptr<Element> &);
+  void  appendConnection(const std::shared_ptr<Element> &);
 
-  Q3PtrList<Element> Connections;
+  std::list<std::weak_ptr<Element> > Connections;
   QString Name;  // node name used by creation of netlist
   QString DType; // type of node (used by digital files)
   int State;	 // remember some things during some operations

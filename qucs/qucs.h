@@ -247,7 +247,7 @@ private slots:
   void slotButtonProjNew();
   void slotButtonProjOpen();
   void slotButtonProjDel();
-  void slotChangeView(QWidget*);
+  void slotChangeView(int index);
   void slotSimulate();
   void slotAfterSimulation(int, SimMessage*);
   void slotDCbias();
@@ -472,7 +472,7 @@ private slots:
 private:
   void showHTML(const QString&);
   bool performToggleAction(bool, QAction*, pToggleFunc, pMouseFunc, pMouseFunc2);
-  void launchTool(const QString&, const QString&, const QString& = ""); // tool, description and args
+  void launchTool(const QString&, const QString&, const QStringList& = QStringList()); // tool, description and args
   friend class SaveDialog;
   QString lastExportFilename;
 };

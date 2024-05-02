@@ -30,20 +30,20 @@ RFedd2P::RFedd2P()
   Name  = "RF";
 
   // first properties !!!
-  Props.append(new Property("Type", "Y", false,
+  Props.push_back(Property("Type", "Y", false,
 		QObject::tr("type of parameters")+" [Y, Z, S, H, G, A, T]"));
-  Props.append(new Property("duringDC", "open", false,
+  Props.push_back(Property("duringDC", "open", false,
 		QObject::tr("representation during DC analysis")+
 			    " [open, short, unspecified, zerofrequency]"));
 
   // last properties
-  Props.append(new Property("P11", "0", false,
+  Props.push_back(Property("P11", "0", false,
 		QObject::tr("parameter equation") + " 11"));
-  Props.append(new Property("P12", "0", false,
+  Props.push_back(Property("P12", "0", false,
 		QObject::tr("parameter equation") + " 12"));
-  Props.append(new Property("P21", "0", false,
+  Props.push_back(Property("P21", "0", false,
 		QObject::tr("parameter equation") + " 21"));
-  Props.append(new Property("P22", "0", false,
+  Props.push_back(Property("P22", "0", false,
 		QObject::tr("parameter equation") + " 22"));
 
   createSymbol();
@@ -53,7 +53,7 @@ RFedd2P::RFedd2P()
 Component* RFedd2P::newOne()
 {
   RFedd2P* p = new RFedd2P();
-  p->Props.at(0)->Value = Props.at(0)->Value;
+  p->prop(0).Value = prop(0).Value;
   p->recreate(0);
   return p;
 }
@@ -66,7 +66,7 @@ Element* RFedd2P::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
   if(getNewOne) {
     RFedd2P* p = new RFedd2P();
-    p->Props.at(0)->Value = "Y";
+    p->prop(0).Value = "Y";
     p->recreate(0);
     return p;
   }
@@ -81,23 +81,18 @@ QString RFedd2P::netlist()
   QString n, p;
 
   // output all node names
-  foreach(Port *p1, Ports)
-    s += " "+p1->Connection->Name;   // node names
+  for(auto p1 = Ports.begin(); p1 != Ports.end(); ++p1)
+    s += " "+p1->getConnection()->Name;   // node names
 
   // output all properties
-  Property *p2;
-  p2 = Props.at(0);
-  s += " "+p2->Name+"=\""+p2->Value+"\"";
-  p = p2->Value;
-  p2 = Props.at(1);
-  s += " "+p2->Name+"=\""+p2->Value+"\"";
-  p2 = Props.at(2);
-  while(p2) {
-    n = p2->Name.mid(1);
-    s += " "+p2->Name+"=\""+Name+"."+p+n+"\"";
-    e += "  Eqn:Eqn"+Name+p2->Name+" "+
-      Name+"."+p+n+"=\""+p2->Value+"\" Export=\"no\"\n";
-    p2 = Props.next();
+  s += " "+prop(0).Name+"=\""+prop(0).Value+"\"";
+  p = prop(0).Value;
+  s += " "+prop(1).Name+"=\""+prop(1).Value+"\"";
+  for (int i = 2; i < int(Props.size()); ++i) {
+    n = prop(i).Name.mid(1);
+    s += " "+prop(i).Name+"=\""+Name+"."+p+n+"\"";
+    e += "  Eqn:Eqn"+Name+prop(i).Name+" "+
+      Name+"."+p+n+"=\""+prop(i).Value+"\" Export=\"no\"\n";
   }
 
   return s+e;
@@ -118,30 +113,30 @@ void RFedd2P::createSymbol()
   // draw symbol
   #define HALFWIDTH  17
   int h = 15;
-  Lines.append(new Line(-HALFWIDTH, -h, HALFWIDTH, -h,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line( HALFWIDTH, -h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line(-HALFWIDTH,  h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line(-HALFWIDTH, -h,-HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line(-HALFWIDTH, -h, HALFWIDTH, -h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line( HALFWIDTH, -h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line(-HALFWIDTH,  h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line(-HALFWIDTH, -h,-HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
 
   // component text name
-  tmp = Props.at(0)->Value;
-  w = smallmetrics.width(tmp);
-  Texts.append(new Text(-w/2, -fHeight/2, tmp)); // text centered in the box
+  tmp = prop(0).Value;
+  w = smallmetrics.horizontalAdvance(tmp);
+  Texts.push_back(Text(-w/2, -fHeight/2, tmp)); // text centered in the box
 
   // add port numbers text
   i = 0;
   int y = 15-h;
-  Lines.append(new Line(-30,  y,-HALFWIDTH,  y,QPen(Qt::darkBlue,2)));
-  Ports.append(new Port(-30,  y));
+  Lines.push_back(Line(-30,  y,-HALFWIDTH,  y,QPen(Qt::darkBlue,2)));
+  Ports.push_back(Port(-30,  y));
   tmp = QString::number(i+1);
-  w = smallmetrics.width(tmp);
-  Texts.append(new Text(-25-w, y-fHeight-2, tmp)); // text right-aligned
+  w = smallmetrics.horizontalAdvance(tmp);
+  Texts.push_back(Text(-25-w, y-fHeight-2, tmp)); // text right-aligned
   i++;
 
-  Lines.append(new Line(HALFWIDTH,  y, 30,  y,QPen(Qt::darkBlue,2)));
-  Ports.append(new Port( 30,  y));
+  Lines.push_back(Line(HALFWIDTH,  y, 30,  y,QPen(Qt::darkBlue,2)));
+  Ports.push_back(Port( 30,  y));
   tmp = QString::number(i+1);
-  Texts.append(new Text(25, y-fHeight-2, tmp)); // text left-aligned
+  Texts.push_back(Text(25, y-fHeight-2, tmp)); // text left-aligned
   y += 60;
   i++;
 

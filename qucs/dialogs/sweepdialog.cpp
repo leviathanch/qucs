@@ -48,7 +48,7 @@ QString mySpinBox::textFromValue(int Val) const
 {
   if (Values == NULL) return "";
 
-  qDebug() << "Values + Val" << *(Values+Val) << endl;
+  qDebug() << "Values + Val" << *(Values+Val) << Qt::endl;
   return QString::number(*(Values+Val));
 }
 
@@ -142,9 +142,8 @@ void SweepDialog::slotNewValue(int)
   }
   Index *= 2;  // because of complex values
 
-  QList<Node *>::iterator node_it;
   QList<double *>::const_iterator value_it = ValueList.begin();
-  for(node_it = NodeList.begin(); node_it != NodeList.end(); node_it++) {
+  for(auto node_it = NodeList.begin(); node_it != NodeList.end(); node_it++) {
     qDebug() << "SweepDialog::slotNewValue:(*node_it)->Name:" << (*node_it)->Name;
     (*node_it)->Name = misc::num2str(*((*value_it)+Index));
     (*node_it)->Name += ((*node_it)->x1 & 0x10)? "A" : "V";
@@ -167,9 +166,6 @@ Graph* SweepDialog::setBiasPoints()
   QFileInfo Info(Doc->DocName);
   QString DataSet = Info.path() + QDir::separator() + Doc->DataSet;
 
-  Node *pn;
-  Element *pe;
-
   // Note 1:
   // Invalidate it so that "Graph::loadDatFile()" does not check for the previously loaded time.
   // This is a current hack as "Graph::loadDatFile()" does not support multi-node data loading
@@ -179,22 +175,23 @@ Graph* SweepDialog::setBiasPoints()
   ValueList.clear();
 
   // create DC voltage for all nodes
-  for(pn = Doc->Nodes->first(); pn != 0; pn = Doc->Nodes->next()) {
+  for(auto pn = Doc->Nodes->begin(); pn != Doc->Nodes->end(); ++pn) {
     if(pn->Name.isEmpty()) continue;
 
     pn->x1 = 0;
-    if(pn->Connections.count() < 2) {
+    if(pn->Connections.size() < 2) {
       pn->Name = "";  // no text at open nodes
       continue;
     }
     else {
       hasNoComp = true;
-      for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
+      for(auto i = pn->Connections.begin(); i != pn->Connections.end(); ++i) {
+        std::shared_ptr<Element> pe(*i);
         if(pe->Type == isWire) {
-          if( ((Wire*)pe)->isHorizontal() )  pn->x1 |= 2;
+          if( std::dynamic_pointer_cast<Wire>(pe)->isHorizontal() )  pn->x1 |= 2;
         }
         else {
-          if( ((Component*)pe)->obsolete_model_hack() == "GND" ) { // BUG
+          if( std::dynamic_pointer_cast<Component>(pe)->obsolete_model_hack() == "GND" ) { // BUG
             hasNoComp = true;   // no text at ground symbol
             break;
           }
@@ -202,6 +199,7 @@ Graph* SweepDialog::setBiasPoints()
           if(pn->cx < pe->cx)  pn->x1 |= 1;  // to the right is no room
           hasNoComp = false;
         }
+      }
       if(hasNoComp) {  // text only were a component is connected
         pn->Name = "";
         continue;
@@ -212,7 +210,7 @@ Graph* SweepDialog::setBiasPoints()
     pg->lastLoaded = QDateTime(); // Note 1 at the start of this function
     if(pg->loadDatFile(DataSet) == 2) {
       pn->Name = misc::num2str(*(pg->cPointsY)) + "V";
-      NodeList.append(pn);             // remember node ...
+      NodeList.push_back(pn.ref());             // remember node ...
       ValueList.append(pg->cPointsY);  // ... and all of its values
       pg->cPointsY = 0;   // do not delete it next time !
     }
@@ -220,42 +218,47 @@ Graph* SweepDialog::setBiasPoints()
       pn->Name = "0V";
 
 
-    for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
+    for(auto i = pn->Connections.begin(); i != pn->Connections.end(); ++i) {
+      std::shared_ptr<Element> pe(*i);
       if(pe->Type == isWire) {
-        if( ((Wire*)pe)->Port1 != pn )  // no text at next node
-          ((Wire*)pe)->Port1->Name = "";
-        else  ((Wire*)pe)->Port2->Name = "";
+        auto pw = std::dynamic_pointer_cast<Wire>(pe);
+        if (pw->Port1 != pn.operator->())  // no text at next node
+          pw->Port1->Name = "";
+        else
+          pw->Port2->Name = "";
       }
+    }
   }
 
 
   // create DC current through each probe
-  Component *pc;
-  for(pc = Doc->Components->first(); pc != 0; pc = Doc->Components->next())
+  for(auto pc = Doc->Components->begin(); pc != Doc->Components->end(); ++pc)
     if(pc->obsolete_model_hack() == "IProbe") { // BUG.
-      pn = pc->Ports.first()->Connection;
+      auto pn = pc->Ports.front().getConnection();
       if(!pn->Name.isEmpty())   // preserve node voltage ?
-        pn = pc->Ports.at(1)->Connection;
+        pn = pc->port(1).getConnection();
 
       pn->x1 = 0x10;   // mark current
       pg->Var = pc->name() + ".I";
       pg->lastLoaded = QDateTime(); // Note 1 at the start of this function
       if(pg->loadDatFile(DataSet) == 2) {
         pn->Name = misc::num2str(*(pg->cPointsY)) + "A";
-        NodeList.append(pn);             // remember node ...
+        NodeList.push_back(pn);             // remember node ...
         ValueList.append(pg->cPointsY);  // ... and all of its values
         pg->cPointsY = 0;   // do not delete it next time !
       }
       else
         pn->Name = "0A";
 
-      for(pe = pn->Connections.first(); pe!=0; pe = pn->Connections.next())
+      for(auto i = pn->Connections.begin(); i != pn->Connections.end(); ++i) {
+        std::shared_ptr<Element> pe(*i);
         if(pe->Type == isWire) {
-          if( ((Wire*)pe)->isHorizontal() )  pn->x1 |= 2;
+          if( std::dynamic_pointer_cast<Wire>(pe)->isHorizontal() )  pn->x1 |= 2;
         }
         else {
           if(pn->cx < pe->cx)  pn->x1 |= 1;  // to the right is no room
         }
+      }
     }
 
 

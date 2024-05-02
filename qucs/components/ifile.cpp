@@ -23,23 +23,23 @@ iFile::iFile()
 {
   Description = QObject::tr("file based current source");
 
-  Arcs.append(new Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line( 30,  0, 12,  0,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line( -7,  0,  7,  0,QPen(Qt::darkBlue,3)));
-  Lines.append(new Line(  6,  0,  0, -4,QPen(Qt::darkBlue,3)));
-  Lines.append(new Line(  6,  0,  0,  4,QPen(Qt::darkBlue,3)));
+  Arcs.push_back(Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line( 30,  0, 12,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line( -7,  0,  7,  0,QPen(Qt::darkBlue,3)));
+  Lines.push_back(Line(  6,  0,  0, -4,QPen(Qt::darkBlue,3)));
+  Lines.push_back(Line(  6,  0,  0,  4,QPen(Qt::darkBlue,3)));
 
-  Lines.append(new Line( -6,-17, -6,-21,QPen(Qt::darkBlue,1)));
-  Lines.append(new Line( -8,-17, -8,-21,QPen(Qt::darkBlue,1)));
-  Lines.append(new Line(-10,-17,-10,-21,QPen(Qt::darkBlue,1)));
-  Lines.append(new Line( -3,-15, -3,-23,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line(-13,-15,-13,-23,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line( -3,-23,-13,-23,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line( -3,-15,-13,-15,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line( -6,-17, -6,-21,QPen(Qt::darkBlue,1)));
+  Lines.push_back(Line( -8,-17, -8,-21,QPen(Qt::darkBlue,1)));
+  Lines.push_back(Line(-10,-17,-10,-21,QPen(Qt::darkBlue,1)));
+  Lines.push_back(Line( -3,-15, -3,-23,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line(-13,-15,-13,-23,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line( -3,-23,-13,-23,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line( -3,-15,-13,-15,QPen(Qt::darkBlue,2)));
 
-  Ports.append(new Port( 30,  0));
-  Ports.append(new Port(-30,  0));
+  Ports.push_back(Port( 30,  0));
+  Ports.push_back(Port(-30,  0));
 
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  14;
@@ -49,14 +49,14 @@ iFile::iFile()
   Model = "Ifile";
   Name  = "I";
 
-  Props.append(new Property("File", "ifile.dat", true,
+  Props.push_back(Property("File", "ifile.dat", true,
 		QObject::tr("name of the sample file")));
-  Props.append(new Property("Interpolator", "linear", false,
+  Props.push_back(Property("Interpolator", "linear", false,
 		QObject::tr("interpolation type")+" [hold, linear, cubic]"));
-  Props.append(new Property("Repeat", "no", false,
+  Props.push_back(Property("Repeat", "no", false,
 		QObject::tr("repeat waveform")+" [no, yes]"));
-  Props.append(new Property("G", "1", false, QObject::tr("current gain")));
-  Props.append(new Property("T", "0", false, QObject::tr("delay time")));
+  Props.push_back(Property("G", "1", false, QObject::tr("current gain")));
+  Props.push_back(Property("T", "0", false, QObject::tr("delay time")));
 
   rotate();  // fix historical flaw
 }
@@ -83,7 +83,7 @@ Element* iFile::info(QString& Name, char* &BitmapFile, bool getNewOne)
 QString iFile::getSubcircuitFile()
 {
   // construct full filename
-  QString FileName = Props.getFirst()->Value;
+  QString FileName = Props.front().Value;
   return misc::properAbsFileName(FileName);
 }
 
@@ -93,15 +93,15 @@ QString iFile::netlist()
   QString s = Model+":"+Name;
 
   // output all node names
-  foreach(Port *p1, Ports)
-    s += " "+p1->Connection->Name;   // node names
+  for(auto p1 = Ports.begin(); p1 != Ports.end(); ++p1)
+    s += " "+p1->getConnection()->Name;   // node names
 
   // output file properties
-  Property *p2 = Props.first();
+  auto p2 = Props.begin();
   s += " "+p2->Name+"=\"{"+getSubcircuitFile()+"}\"";
 
   // output all remaining properties
-  for(p2 = Props.next(); p2 != 0; p2 = Props.next())
+  for(++p2; p2 != Props.end(); ++p2)
     s += " "+p2->Name+"=\""+p2->Value+"\"";
 
   return s + "\n";

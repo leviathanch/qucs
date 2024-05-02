@@ -184,7 +184,7 @@ void QucsApp::initView()
   setCentralWidget(DocumentTab);
 
   connect(DocumentTab,
-          SIGNAL(currentChanged(QWidget*)), SLOT(slotChangeView(QWidget*)));
+          SIGNAL(currentChanged(int)), SLOT(slotChangeView(int)));
 
   // Give every tab a close button, and connect the button's signal to
   // slotFileClose
@@ -213,7 +213,7 @@ void QucsApp::initView()
   connect(editText, SIGNAL(returnPressed()), SLOT(slotApplyCompText()));
   connect(editText, SIGNAL(textChanged(const QString&)),
           SLOT(slotResizePropEdit(const QString&)));
-  connect(editText, SIGNAL(lostFocus()), SLOT(slotHideEdit()));
+  connect(editText, SIGNAL(editingFinished()), SLOT(slotHideEdit()));
 
   // ----------------------------------------------------------
   // "Project Tab" of the left QTabWidget
@@ -358,7 +358,7 @@ void QucsApp::initView()
   QString path = QucsSettings.QucsHomeDir.absolutePath();
   QDir ProjDir(path);
   // initial projects directory is the Qucs home directory
-  QucsSettings.projsDir = path;
+  QucsSettings.projsDir.setPath(path);
 
   // create home dir if not exist
   if(!ProjDir.exists()) {
@@ -637,9 +637,7 @@ void QucsApp::slotSetCompView (int index)
 
       // Just need path to bitmap, do not create an object
       QString Name, vaBitmap;
-      Component * c = (Component *)
-              vacomponent::info (Name, vaBitmap, false, i.value());
-      if (c) delete c;
+      vacomponent::info (Name, vaBitmap, false, i.value());
 
       // check if icon exists, fall back to default
       QString iconPath = QucsSettings.QucsWorkDir.filePath(vaBitmap+".png");
@@ -810,7 +808,6 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   slotHideEdit(); // disable text edit of component property
 
   // delete previously selected elements
-  if(view->selElem != 0)  delete view->selElem;
   view->selElem  = 0;   // no component/diagram/painting selected
 
   if(item == 0) {   // mouse button pressed not over an item ?
@@ -819,7 +816,7 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   }
 
   if(view->drawn)
-    ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
+    dynamic_cast<QAbstractScrollArea *>(DocumentTab->currentWidget())->viewport()->update();
   view->drawn = false;
 
   // toggle last toolbar button off
@@ -861,14 +858,14 @@ void QucsApp::slotSelectComponent(QListWidgetItem *item)
   Infos = mod->info;
   if (Infos) {
     // static component
-    view->selElem = (*mod->info) (CompName, CompFile_cptr, true);
+    view->selElem = std::shared_ptr<Element>((*mod->info) (CompName, CompFile_cptr, true));
   } else {
     // Verilog-A component
     InfosVA = mod->infoVA;
     // get JSON file out of item name on widgetitem
     QString filename = Module::vaComponents[name];
     if (InfosVA) {
-      view->selElem = (*InfosVA) (CompName, CompFile_qstr, true, filename);
+      view->selElem = std::shared_ptr<Element>((*InfosVA) (CompName, CompFile_qstr, true, filename));
     }
   }
 
@@ -1224,7 +1221,7 @@ void QucsApp::slotListProjOpen(const QModelIndex &idx)
     openProject(QucsSettings.projsDir.filePath(dName));
   } else { // it's a normal directory
     // change projects directory to the selected one
-    QucsSettings.projsDir = QucsSettings.projsDir.filePath(dName);
+    QucsSettings.projsDir.setPath(QucsSettings.projsDir.filePath(dName));
     readProjects();
     //repaint();
   }
@@ -1410,7 +1407,7 @@ bool QucsApp::gotoPage(const QString& Name)
     view->drawn = false;
     return false;
   }
-  slotChangeView(DocumentTab->currentWidget());
+  slotChangeView(DocumentTab->currentIndex());
 
   // if only an untitled document was open -> close it
   if(getDoc(0)->DocName.isEmpty())
@@ -1608,7 +1605,7 @@ void QucsApp::slotFileSaveAll()
   QString tabType = DocumentTab->currentWidget()->metaObject()->className();
 
   if (tabType == "Schematic") {
-    ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
+    dynamic_cast<QAbstractScrollArea *>(DocumentTab->currentWidget())->viewport()->update();
   }
   view->drawn = false;
   statusBar()->showMessage(tr("Ready."));
@@ -1810,8 +1807,9 @@ void QucsApp::slotHelpReport()
 
 // --------------------------------------------------------------
 // Is called when another document is selected via the TabBar.
-void QucsApp::slotChangeView(QWidget *w)
+void QucsApp::slotChangeView(int index)
 {
+  QWidget *w = DocumentTab->widget(index);
 
   editText->setHidden (true); // disable text edit of component property
   QucsDoc * Doc;
@@ -1922,26 +1920,22 @@ void QucsApp::updatePortNumber(QucsDoc *currDoc, int No)
   // update all occurencies of subcircuit in all open documents
   No = 0;
   QWidget *w;
-  Component *pc_tmp;
   while((w=DocumentTab->widget(No++)) != 0) {
     if(isTextDocument (w))  continue;
 
     // start from the last to omit re-appended components
     Schematic *Doc = (Schematic*)w;
-    for(Component *pc=Doc->Components->last(); pc!=0; ) {
+    std::list<std::shared_ptr<Component> > toRecreate;
+    for(auto pc = Doc->Components->end(); pc != Doc->Components->begin(); ) {
+      --pc;
       if(pc->obsolete_model_hack() == Model) { // BUG
-        File = pc->Props.getFirst()->Value;
-        if((File == pathName) || (File == Name)) {
-          pc_tmp = Doc->Components->prev();
-          Doc->recreateComponent(pc);  // delete and re-append component
-          if(!pc_tmp)  break;
-          Doc->Components->findRef(pc_tmp);
-          pc = Doc->Components->current();
-          continue;
-        }
+        File = pc->Props.front().Value;
+        if((File == pathName) || (File == Name))
+          toRecreate.push_back(pc.ref());
       }
-      pc = Doc->Components->prev();
     }
+    for (auto i = toRecreate.begin(); i != toRecreate.end(); ++i)
+      Doc->recreateComponent(*i);
   }
 }
 
@@ -2336,7 +2330,9 @@ void QucsApp::slotOpenContent(const QModelIndex &idx)
       //Program->setCommunication(0);
       QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
       Program->setProcessEnvironment(env);
-      Program->start(com.join(" "));
+      QString cmd = com.first();
+      com.erase(com.begin());
+      Program->start(cmd, com);
       if(Program->state()!=QProcess::Running&&
               Program->state()!=QProcess::Starting) {
         QMessageBox::critical(this, tr("Error"),
@@ -2389,7 +2385,6 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   if (filename == tab_titl ) return; // Forbid to paste subcircuit into itself.
 
   // delete previously selected elements
-  if(view->selElem != 0)  delete view->selElem;
   view->selElem = 0;
 
   // toggle last toolbar button off
@@ -2400,19 +2395,19 @@ void QucsApp::slotSelectSubcircuit(const QModelIndex &idx)
   }
   activeAction = 0;
 
-  Component *Comp;
+  std::shared_ptr<Component> Comp;
   if(isVHDL)
-    Comp = new VHDL_File();
+    Comp.reset(new VHDL_File());
   else if(isVerilog)
-    Comp = new Verilog_File();
+    Comp.reset(new Verilog_File());
   else
-    Comp = new Subcircuit();
-  Comp->Props.first()->Value = idx.sibling(idx.row(), 0).data().toString();
+    Comp.reset(new Subcircuit());
+  Comp->Props.front().Value = idx.sibling(idx.row(), 0).data().toString();
   Comp->recreate(0);
   view->selElem = Comp;
 
   if(view->drawn)
-    ((Q3ScrollView*)DocumentTab->currentWidget())->viewport()->update();
+    dynamic_cast<QAbstractScrollArea *>(DocumentTab->currentWidget())->viewport()->update();
   view->drawn = false;
   MouseMoveAction = &MouseActions::MMoveElement;
   MousePressAction = &MouseActions::MPressElement;
@@ -2612,7 +2607,7 @@ void QucsApp::slotPowerMatching()
 {
   if(!view->focusElement) return;
   if(view->focusElement->Type != isMarker) return;
-  Marker *pm = (Marker*)view->focusElement;
+  auto pm = std::dynamic_pointer_cast<Marker>(view->focusElement);
 
 //  double Z0 = 50.0;
   QString Var = pm->pGraph->Var;
@@ -2636,7 +2631,7 @@ void QucsApp::slot2PortMatching()
 {
   if(!view->focusElement) return;
   if(view->focusElement->Type != isMarker) return;
-  Marker *pm = (Marker*)view->focusElement;
+  auto pm = std::dynamic_pointer_cast<Marker>(view->focusElement);
 
   QString DataSet;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
@@ -2679,7 +2674,7 @@ void QucsApp::slot2PortMatching()
     return;
   }
 
-  DataX const *Data = Diag->Graphs.first()->axis(0);
+  DataX const *Data = Diag->Graphs.begin()->axis(0);
   if(Data->Var != "frequency") {
     QMessageBox::critical(0, tr("Error"), tr("Wrong dependency!"));
     return;
@@ -2691,14 +2686,18 @@ void QucsApp::slot2PortMatching()
     if(*(Value++) == Freq) break;
 
   // get S-parameters
-  double S11real = *(Diag->Graphs.at(0)->cPointsY + 2*z);
-  double S11imag = *(Diag->Graphs.at(0)->cPointsY + 2*z + 1);
-  double S12real = *(Diag->Graphs.at(1)->cPointsY + 2*z);
-  double S12imag = *(Diag->Graphs.at(1)->cPointsY + 2*z + 1);
-  double S21real = *(Diag->Graphs.at(2)->cPointsY + 2*z);
-  double S21imag = *(Diag->Graphs.at(2)->cPointsY + 2*z + 1);
-  double S22real = *(Diag->Graphs.at(3)->cPointsY + 2*z);
-  double S22imag = *(Diag->Graphs.at(3)->cPointsY + 2*z + 1);
+  auto ig = Diag->Graphs.begin();
+  double S11real = *(ig->cPointsY + 2*z);
+  double S11imag = *(ig->cPointsY + 2*z + 1);
+  ++ig;
+  double S12real = *(ig->cPointsY + 2*z);
+  double S12imag = *(ig->cPointsY + 2*z + 1);
+  ++ig;
+  double S21real = *(ig->cPointsY + 2*z);
+  double S21imag = *(ig->cPointsY + 2*z + 1);
+  ++ig;
+  double S22real = *(ig->cPointsY + 2*z);
+  double S22imag = *(ig->cPointsY + 2*z + 1);
   delete Diag;
 
   MatchDialog *Dia = new MatchDialog(this);
@@ -2727,7 +2726,7 @@ void QucsApp::slotEditElement()
 // looses the focus.
 void QucsApp::slotHideEdit()
 {
-  editText->setParent(this, 0);
+  editText->setParent(this, Qt::WindowFlags());
   editText->setHidden(true);
 }
 
@@ -2917,8 +2916,8 @@ bool loadSettings()
     //if(settings.contains("BinDir"))QucsSettings.BinDir = settings.value("BinDir").toString();
     //if(settings.contains("LangDir"))QucsSettings.LangDir = settings.value("LangDir").toString();
     //if(settings.contains("LibDir"))QucsSettings.LibDir = settings.value("LibDir").toString();
-    if(settings.contains("AdmsXmlBinDir"))QucsSettings.AdmsXmlBinDir = settings.value("AdmsXmlBinDir").toString();
-    if(settings.contains("AscoBinDir"))QucsSettings.AscoBinDir = settings.value("AscoBinDir").toString();
+    if(settings.contains("AdmsXmlBinDir"))QucsSettings.AdmsXmlBinDir.setPath(settings.value("AdmsXmlBinDir").toString());
+    if(settings.contains("AscoBinDir"))QucsSettings.AscoBinDir.setPath(settings.value("AscoBinDir").toString());
     //if(settings.contains("OctaveDir"))QucsSettings.OctaveDir = settings.value("OctaveDir").toString();
     //if(settings.contains("ExamplesDir"))QucsSettings.ExamplesDir = settings.value("ExamplesDir").toString();
     //if(settings.contains("DocDir"))QucsSettings.DocDir = settings.value("DocDir").toString();
@@ -2951,7 +2950,7 @@ bool loadSettings()
 
     if(settings.contains("ShowDescription")) QucsSettings.ShowDescriptionProjectTree = settings.value("ShowDescription").toBool();
 
-    QucsSettings.RecentDocs = settings.value("RecentDocs").toString().split("*",QString::SkipEmptyParts);
+    QucsSettings.RecentDocs = settings.value("RecentDocs").toString().split("*",Qt::SkipEmptyParts);
     QucsSettings.numRecentDocs = QucsSettings.RecentDocs.count();
 
 

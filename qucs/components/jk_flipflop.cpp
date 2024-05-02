@@ -25,38 +25,38 @@ JK_FlipFlop::JK_FlipFlop()
   Type = isDigitalComponent;
   Description = QObject::tr("JK flip flop with asynchron set and reset");
 
-  Props.append(new Property("t", "0", false, QObject::tr("delay time")));
+  Props.push_back(Property("t", "0", false, QObject::tr("delay time")));
 
-  Lines.append(new Line(-20,-30, 20,-30,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line(-20, 30, 20, 30,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line(-20,-30,-20, 30,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line( 20,-30, 20, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line(-20,-30, 20,-30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line(-20, 30, 20, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line(-20,-30,-20, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line( 20,-30, 20, 30,QPen(Qt::darkBlue,2)));
 
-  Lines.append(new Line(-30,-20,-20,-20,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line(-30, 20,-20, 20,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line( 30,-20, 20,-20,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line( 30, 20, 20, 20,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line(-30,  0,-20,  0,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line(  0,-30,  0,-40,QPen(Qt::darkBlue,2)));
-  Lines.append(new Line(  0, 30,  0, 40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line(-30,-20,-20,-20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line(-30, 20,-20, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line( 30,-20, 20,-20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line( 30, 20, 20, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line(-30,  0,-20,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line(  0,-30,  0,-40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(Line(  0, 30,  0, 40,QPen(Qt::darkBlue,2)));
 
-  Texts.append(new Text( -4,-29, "S", Qt::darkBlue,  9.0));
-  Texts.append(new Text( -4, 14, "R", Qt::darkBlue,  9.0));
-  Texts.append(new Text(-18,-31, "J", Qt::darkBlue, 12.0));
-  Texts.append(new Text(-18,  8, "K", Qt::darkBlue, 12.0));
-  Texts.append(new Text(  6,-31, "Q", Qt::darkBlue, 12.0));
-  Texts.append(new Text(  6,  8, "Q", Qt::darkBlue, 12.0));
-  Texts.last()->over=true;
-  Lines.append(new Line(-20, -4,-12,  0,QPen(Qt::darkBlue,0)));
-  Lines.append(new Line(-20,  4,-12,  0,QPen(Qt::darkBlue,0)));
+  Texts.push_back(Text( -4,-29, "S", Qt::darkBlue,  9.0));
+  Texts.push_back(Text( -4, 14, "R", Qt::darkBlue,  9.0));
+  Texts.push_back(Text(-18,-31, "J", Qt::darkBlue, 12.0));
+  Texts.push_back(Text(-18,  8, "K", Qt::darkBlue, 12.0));
+  Texts.push_back(Text(  6,-31, "Q", Qt::darkBlue, 12.0));
+  Texts.push_back(Text(  6,  8, "Q", Qt::darkBlue, 12.0));
+  Texts.back().over=true;
+  Lines.push_back(Line(-20, -4,-12,  0,QPen(Qt::darkBlue,0)));
+  Lines.push_back(Line(-20,  4,-12,  0,QPen(Qt::darkBlue,0)));
 
-  Ports.append(new Port(-30,-20));  // J
-  Ports.append(new Port(-30, 20));  // K
-  Ports.append(new Port( 30,-20));  // Q
-  Ports.append(new Port( 30, 20));  // nQ
-  Ports.append(new Port(-30,  0));  // Clock
-  Ports.append(new Port(  0,-40));  // set
-  Ports.append(new Port(  0, 40));  // reset
+  Ports.push_back(Port(-30,-20));  // J
+  Ports.push_back(Port(-30, 20));  // K
+  Ports.push_back(Port( 30,-20));  // Q
+  Ports.push_back(Port( 30, 20));  // nQ
+  Ports.push_back(Port(-30,  0));  // Clock
+  Ports.push_back(Port(  0,-40));  // set
+  Ports.push_back(Port(  0, 40));  // reset
 
   x1 = -30; y1 = -40;
   x2 =  30; y2 =  40;
@@ -71,30 +71,30 @@ QString JK_FlipFlop::vhdlCode(int NumPorts)
 {
   QString s = "";
   if(NumPorts <= 0) { // no truth table simulation ?
-    QString td = Props.at(0)->Value;     // delay time
+    QString td = prop(0).Value;     // delay time
     if(!misc::VHDL_Delay(td, Name)) return td; // time has not VHDL format
     s += td;
   }
   s += ";\n";
 
   s = "  " + Name + " : process (" +
-      Ports.at(5)->Connection->Name + ", " +
-      Ports.at(6)->Connection->Name + ", " +
-      Ports.at(4)->Connection->Name + ")\n  begin\n    if (" +
-      Ports.at(6)->Connection->Name + "='1') then  " +
-      Ports.at(2)->Connection->Name + " <= '0'" + s +"    elsif (" +
-      Ports.at(5)->Connection->Name + "='1') then  " +
-      Ports.at(2)->Connection->Name + " <= '1'" + s +"    elsif (" +
-      Ports.at(4)->Connection->Name + "='1' and " +
-      Ports.at(4)->Connection->Name + "'event) then\n      " +
-      Ports.at(2)->Connection->Name + " <= (" +
-      Ports.at(0)->Connection->Name + " and not " +
-      Ports.at(2)->Connection->Name + ") or (not " +
-      Ports.at(1)->Connection->Name + " and " +
-      Ports.at(2)->Connection->Name + ")" + s +
+      port(5).getConnection()->Name + ", " +
+      port(6).getConnection()->Name + ", " +
+      port(4).getConnection()->Name + ")\n  begin\n    if (" +
+      port(6).getConnection()->Name + "='1') then  " +
+      port(2).getConnection()->Name + " <= '0'" + s +"    elsif (" +
+      port(5).getConnection()->Name + "='1') then  " +
+      port(2).getConnection()->Name + " <= '1'" + s +"    elsif (" +
+      port(4).getConnection()->Name + "='1' and " +
+      port(4).getConnection()->Name + "'event) then\n      " +
+      port(2).getConnection()->Name + " <= (" +
+      port(0).getConnection()->Name + " and not " +
+      port(2).getConnection()->Name + ") or (not " +
+      port(1).getConnection()->Name + " and " +
+      port(2).getConnection()->Name + ")" + s +
       "    end if;\n  end process;\n  " +
-      Ports.at(3)->Connection->Name + " <= not " +
-      Ports.at(2)->Connection->Name + ";\n\n";
+      port(3).getConnection()->Name + " <= not " +
+      port(2).getConnection()->Name + ";\n\n";
   return s;
 }
 
@@ -103,20 +103,20 @@ QString JK_FlipFlop::verilogCode(int NumPorts)
 {
   QString t = "";
   if(NumPorts <= 0) { // no truth table simulation ?
-    QString td = Props.at(0)->Value;        // delay time
+    QString td = prop(0).Value;        // delay time
     if(!misc::Verilog_Delay(td, Name)) return td; // time has not VHDL format
     if(!td.isEmpty()) t = "   " + td + ";\n";
   }
 
   QString l = "";
 
-  QString s = Ports.at(5)->Connection->Name;
-  QString r = Ports.at(6)->Connection->Name;
-  QString j = Ports.at(0)->Connection->Name;
-  QString k = Ports.at(1)->Connection->Name;
-  QString q = Ports.at(2)->Connection->Name;
-  QString b = Ports.at(3)->Connection->Name;
-  QString c = Ports.at(4)->Connection->Name;
+  QString s = port(5).getConnection()->Name;
+  QString r = port(6).getConnection()->Name;
+  QString j = port(0).getConnection()->Name;
+  QString k = port(1).getConnection()->Name;
+  QString q = port(2).getConnection()->Name;
+  QString b = port(3).getConnection()->Name;
+  QString c = port(4).getConnection()->Name;
   QString v = "net_reg" + Name + q;
   
   l = "\n  // " + Name + " JK-flipflop\n" +

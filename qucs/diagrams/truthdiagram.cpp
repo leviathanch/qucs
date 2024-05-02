@@ -68,27 +68,23 @@ int TruthDiagram::calcDiagram()
   y = y2 - tHeight - 6;
 
   // outer frame
-  Lines.append(new Line(0, y2, x2, y2, QPen(Qt::black,0)));
-  Lines.append(new Line(0, y2, 0, 0, QPen(Qt::black,0)));
-  Lines.append(new Line(x2, y2, x2, 0, QPen(Qt::black,0)));
-  Lines.append(new Line(0, 0, x2, 0, QPen(Qt::black,0)));
-  Lines.append(new Line(0, y+2, x2, y+2, QPen(Qt::black,2)));
+  Lines.push_back(Line(0, y2, x2, y2, QPen(Qt::black,0)));
+  Lines.push_back(Line(0, y2, 0, 0, QPen(Qt::black,0)));
+  Lines.push_back(Line(x2, y2, x2, 0, QPen(Qt::black,0)));
+  Lines.push_back(Line(0, 0, x2, 0, QPen(Qt::black,0)));
+  Lines.push_back(Line(0, y+2, x2, y+2, QPen(Qt::black,2)));
 
   if(xAxis.limit_min < 0.0)
     xAxis.limit_min = 0.0;
 
   Graph *firstGraph;
 
-  QListIterator<Graph *> ig(Graphs);
-  Graph *g = 0;
-  if (ig.hasNext())
-     g= ig.next();
-
-  if(g == 0) {  // no variables specified in diagram ?
+  auto ig = Graphs.begin();
+  if (ig == Graphs.end()) {  // no variables specified in diagram ?
     Str = QObject::tr("no variables");
     colWidth = checkColumnWidth(Str, metrics, colWidth, x, y2);
     if(colWidth >= 0)
-      Texts.append(new Text(x-4, y2-2, Str)); // independent variable
+      Texts.push_back(Text(x-4, y2-2, Str)); // independent variable
     return 0;
   }
 
@@ -100,14 +96,12 @@ int TruthDiagram::calcDiagram()
   int startWriting, z;
 
   // any graph with data ?
-  while(g->isEmpty()) {
-    if (!ig.hasNext()) break; // no more graphs, exit loop
-    g = ig.next(); // point to next graph
-  }
+  for (; ig != Graphs.end() && ig->isEmpty(); ++ig)
+    ;
 
-  if(!g->isEmpty()) { // did we find a graph with data ?
+  if(ig != Graphs.end()) { // did we find a graph with data ?
     // ................................................
-    NumAll = g->axis(0)->count * g->countY;  // number of values
+    NumAll = ig->axis(0)->count * ig->countY;  // number of values
     
     invisibleCount = NumAll - y/tHeight;
     if(invisibleCount <= 0)  xAxis.limit_min = 0.0;// height bigger than needed
@@ -118,10 +112,10 @@ int TruthDiagram::calcDiagram()
     }
 
     colWidth = 0;
-    Texts.append(new Text(x-4, y2-2, Str)); // independent variable
+    Texts.push_back(Text(x-4, y2-2, Str)); // independent variable
     if(NumAll != 0) {
-      z = metrics.width("1");
-      colWidth = metrics.width("0");
+      z = metrics.horizontalAdvance("1");
+      colWidth = metrics.horizontalAdvance("0");
       if(z > colWidth)  colWidth = z;
       colWidth += 2;
       counting = int(log(double(NumAll)) / log(2.0) + 0.9999); // number of bits
@@ -139,34 +133,34 @@ int TruthDiagram::calcDiagram()
 	for(int zi=counting-1; zi>=0; zi--) {
 	  if(z & (1 << zi))  Str = "1";
 	  else  Str = "0";
-	  Texts.append(new Text( startWriting, y, Str));
+          Texts.push_back(Text( startWriting, y, Str));
 	  startWriting += colWidth;
 	}
 	y -= tHeight;
       }
       x = startWriting + 15;
     }
-    Lines.append(new Line(x-8, y2, x-8, 0, QPen(Qt::black,2)));  
+    Lines.push_back(Line(x-8, y2, x-8, 0, QPen(Qt::black,2)));
   }  // of "if no data in graphs"
   
 
   int zi, digitWidth;
-  firstGraph = g;
+  firstGraph = ig.operator->();
   // ................................................
   // all dependent variables
-  foreach(Graph *g ,Graphs) {
+  for (auto g = Graphs.begin(); g != Graphs.end(); ++g) {
     y = y2-tHeight-5;
 
     Str = g->Var;
     colWidth = checkColumnWidth(Str, metrics, 0, x, y2);
     if(colWidth < 0)  goto funcEnd;
-    Texts.append(new Text(x, y2-2, Str));  // dependent variable
+    Texts.push_back(Text(x, y2-2, Str));  // dependent variable
 
 
     startWriting = int(xAxis.limit_min + 0.5);  // when to reach visible area
     if(g->axis(0)) {
 
-      if(sameDependencies(g, firstGraph)) {
+      if(sameDependencies(g.operator->(), firstGraph)) {
 
         if(g->Var.right(2) != ".X") {  // not a digital variable ?
           double *pdy = g->cPointsY - 2;
@@ -179,7 +173,7 @@ int TruthDiagram::calcDiagram()
             colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
             if(colWidth < 0)  goto funcEnd;
 
-            Texts.append(new Text(x, y, Str));
+            Texts.push_back(Text(x, y, Str));
             y -= tHeight;
           }
         }
@@ -188,7 +182,7 @@ int TruthDiagram::calcDiagram()
           py = (char*)g->cPointsY;
           counting = strlen((char*)py);    // count number of "bits"
 
-          digitWidth = metrics.width("X") + 2;
+          digitWidth = metrics.horizontalAdvance("X") + 2;
           if((x+digitWidth*counting) >= x2) {    // enough space for "bit vector" ?
             checkColumnWidth("0", metrics, 0, x2, y);
             goto funcEnd;
@@ -204,7 +198,7 @@ int TruthDiagram::calcDiagram()
             zi = 0;
             while(*py) {
               Str = *(py++);
-              Texts.append(new Text(x + zi, y, Str));
+              Texts.push_back(Text(x + zi, y, Str));
               zi += digitWidth;
             }
             py++;
@@ -221,18 +215,19 @@ int TruthDiagram::calcDiagram()
         Str = QObject::tr("wrong dependency");
         colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
         if(colWidth < 0)  goto funcEnd;
-        Texts.append(new Text(x, y, Str));
+        Texts.push_back(Text(x, y, Str));
       }
     }
     else {   // no data in graph
       Str = QObject::tr("no data");
       colWidth = checkColumnWidth(Str, metrics, colWidth, x, y);
       if(colWidth < 0)  goto funcEnd;
-      Texts.append(new Text(x, y, Str));
+      Texts.push_back(Text(x, y, Str));
     }
     x += colWidth+15;
-    if(g != Graphs.last())   // do not paint last line
-      Lines.append(new Line(x-8, y2, x-8, 0, QPen(Qt::black,0)));
+    auto gn = g;
+    if(++gn != Graphs.end())   // do not paint last line
+      Lines.push_back(Line(x-8, y2, x-8, 0, QPen(Qt::black,0)));
   }
 
 funcEnd:

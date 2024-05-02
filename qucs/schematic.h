@@ -31,15 +31,15 @@
 #include "node.h"
 #include "qucsdoc.h"
 #include "viewpainter.h"
+#include "sharedObjectList.h"
 #include "diagrams/diagram.h"
 #include "paintings/painting.h"
 #include "components/component.h"
 
-#include <Q3ScrollView>
-#include <Q3PtrList>
 #include <QVector>
 #include <QStringList>
 #include <QFileInfo>
+#include <QAbstractScrollArea>
 
 class QTextStream;
 class QTextEdit;
@@ -61,7 +61,7 @@ struct DigSignal {
   QString Type; // type of signal
 };
 typedef QMap<QString, DigSignal> DigMap;
-typedef enum {_NotRop, _Rect, _Line, _Ellipse, _Arc, _DotLine, _Translate, _Scale}PE;
+typedef enum {_NotRop, _Rect, _Line, _Ellipse, _Arc, _DotLine, _Translate, _Scale} PE;
 typedef struct {PE pe; int x1; int y1;int x2;int y2;int a; int b; bool PaintOnViewport;}PostedPaintEvent;
 
 // subcircuit, vhdl, etc. file structure
@@ -75,24 +75,13 @@ struct SubFile {
 };
 typedef QMap<QString, SubFile> SubMap;
 
-// TODO: refactor here
-class WireList : public Q3PtrList<Wire> {
-};
-// TODO: refactor here
-class NodeList : public Q3PtrList<Node> {
-};
-// TODO: refactor here
-class DiagramList : public Q3PtrList<Diagram> {
-};
-// TODO: refactor here
-class ComponentList : public Q3PtrList<Component> {
-	// void first(){} // GOAL: hide, still compile.
-};
-// TODO: refactor here
-class PaintingList : public Q3PtrList<Painting> {
-};
+typedef SharedObjectList<Wire> WireList;
+typedef SharedObjectList<Node> NodeList;
+typedef SharedObjectList<Diagram> DiagramList;
+typedef SharedObjectList<Component> ComponentList;
+typedef SharedObjectList<Painting> PaintingList;
 
-class Schematic : public Q3ScrollView, public QucsDoc {
+class Schematic : public QAbstractScrollArea, public QucsDoc {
   Q_OBJECT
 public:
   Schematic(QucsApp*, const QString&);
@@ -116,7 +105,8 @@ public:
   void  setOnGrid(int&, int&);
   bool  elementsOnGrid();
 
-  float zoom(float);
+  //  NOTE: "around" is given in window coordinates - (0, 0) is upper left corner of viewport
+  float zoom(float, QPoint around);
   float zoomBy(float);
   void  showAll();
   void  showNoZoom();
@@ -128,7 +118,7 @@ public:
 
   void    cut();
   void    copy();
-  bool    paste(QTextStream*, Q3PtrList<Element>*);
+  bool    paste(QTextStream*, SharedObjectList<Element> &);
   bool    load();
   int     save();
   int     saveSymbolCpp (void);
@@ -137,10 +127,21 @@ public:
   bool    undo();
   bool    redo();
 
-  bool scrollUp(int);
-  bool scrollDown(int);
-  bool scrollLeft(int);
-  bool scrollRight(int);
+  void scrollUp(int);
+  void scrollDown(int);
+  void scrollLeft(int);
+  void scrollRight(int);
+
+  void resizeContents(int w, int h);
+  void scrollBy(int dx, int dy);
+  void setContentsPos(int x, int y);
+  int visibleWidth();
+  int visibleHeight();
+  int contentsWidth();
+  int contentsHeight();
+  int contentsX();
+  int contentsY();
+  void contentsToViewport(int x, int y, int &vx, int &vy);
 
   // The pointers points to the current lists, either to the schematic
   // elements "Doc..." or to the symbol elements "SymbolPaints".
@@ -177,9 +178,9 @@ public:
   int tmpUsedX1, tmpUsedY1, tmpUsedX2, tmpUsedY2;
 
   int undoActionIdx;
-  QVector<QString *> undoAction;
+  QVector<QString> undoAction;
   int undoSymbolIdx;
-  QVector<QString *> undoSymbol;    // undo stack for circuit symbol
+  QVector<QString> undoSymbol;    // undo stack for circuit symbol
 
   /*! \brief Get (schematic) file reference */
   QFileInfo getFileInfo (void) { return FileInfo; }
@@ -196,22 +197,23 @@ protected:
   void paintFrame(ViewPainter*);
 
   // overloaded function to get actions of user
-  void drawContents(QPainter*, int, int, int, int);
-  void contentsMouseMoveEvent(QMouseEvent*);
-  void contentsMousePressEvent(QMouseEvent*);
-  void contentsMouseDoubleClickEvent(QMouseEvent*);
-  void contentsMouseReleaseEvent(QMouseEvent*);
-  void contentsWheelEvent(QWheelEvent*);
-  void contentsDropEvent(QDropEvent*);
-  void contentsDragEnterEvent(QDragEnterEvent*);
-  void contentsDragLeaveEvent(QDragLeaveEvent*);
-  void contentsDragMoveEvent(QDragMoveEvent*);
+  void paintEvent(QPaintEvent * /*event*/);
 
-protected slots:
-  void slotScrollUp();
-  void slotScrollDown();
-  void slotScrollLeft();
-  void slotScrollRight();
+  void mouseMoveEvent(QMouseEvent*);
+  void mousePressEvent(QMouseEvent*);
+  void mouseDoubleClickEvent(QMouseEvent*);
+  void mouseReleaseEvent(QMouseEvent*);
+  void wheelEvent(QWheelEvent*);
+  void dropEvent(QDropEvent*);
+  void dragEnterEvent(QDragEnterEvent*);
+  void dragLeaveEvent(QDragLeaveEvent*);
+  void dragMoveEvent(QDragMoveEvent*);
+  void resizeEvent(QResizeEvent*);
+
+  void contentMouseMoveEvent(QMouseEvent*);
+  void contentMousePressEvent(QMouseEvent*);
+  void contentMouseDoubleClickEvent(QMouseEvent*);
+  void contentMouseReleaseEvent(QMouseEvent*);
 
 private:
   bool dragIsOkay;
@@ -226,67 +228,67 @@ private:
    ******************************************************************** */
 
 public:
-  Node* insertNode(int, int, Element*);
+  std::shared_ptr<Node> insertNode(int, int, const std::shared_ptr<Element> &);
   Node* selectedNode(int, int);
 
-  int   insertWireNode1(Wire*);
-  bool  connectHWires1(Wire*);
-  bool  connectVWires1(Wire*);
-  int   insertWireNode2(Wire*);
-  bool  connectHWires2(Wire*);
-  bool  connectVWires2(Wire*);
-  int   insertWire(Wire*);
-  void  selectWireLine(Element*, Node*, bool);
-  Wire* selectedWire(int, int);
-  Wire* splitWire(Wire*, Node*);
-  bool  oneTwoWires(Node*);
-  void  deleteWire(Wire*);
+  int   insertWireNode1(const std::shared_ptr<Wire> &);
+  bool  connectHWires1(const std::shared_ptr<Wire> &);
+  bool  connectVWires1(const std::shared_ptr<Wire> &);
+  int   insertWireNode2(const std::shared_ptr<Wire> &);
+  bool  connectHWires2(const std::shared_ptr<Wire> &);
+  bool  connectVWires2(const std::shared_ptr<Wire> &);
+  int   insertWire(const std::shared_ptr<Wire> &);
+  void  selectWireLine(const std::shared_ptr<Element> &, Node *, bool);
+  std::shared_ptr<Wire> selectedWire(int, int);
+  std::shared_ptr<Wire> splitWire(const std::shared_ptr<Wire> &, const std::shared_ptr<Node> &);
+  bool  oneTwoWires(const std::shared_ptr<Node> &);
+  void  deleteWire(const WireList::iterator &);
 
   Marker* setMarker(int, int);
-  void    markerLeftRight(bool, Q3PtrList<Element>*);
-  void    markerUpDown(bool, Q3PtrList<Element>*);
+  void    markerLeftRight(bool, SharedObjectList<Element> &);
+  void    markerUpDown(bool, SharedObjectList<Element> &);
 
-  Element* selectElement(float, float, bool, int *index=0);
-  void     deselectElements(Element*);
+  std::shared_ptr<Element> selectElement(float, float, bool, int *index=0);
+  void     deselectElements(const std::shared_ptr<Element> &);
   int      selectElements(int, int, int, int, bool);
   void     selectMarkers();
-  void     newMovingWires(Q3PtrList<Element>*, Node*, int);
-  int      copySelectedElements(Q3PtrList<Element>*);
+  void     newMovingWires(SharedObjectList<Element> &, Node*, int);
+  int      copySelectedElements(SharedObjectList<Element> &);
   bool     deleteElements();
   bool     aligning(int);
   bool     distributeHorizontal();
   bool     distributeVertical();
 
-  void       setComponentNumber(Component*);
-  void       insertRawComponent(Component*, bool noOptimize=true);
-  void       recreateComponent(Component*);
-  void       insertComponent(Component*);
+  void       setComponentNumber(const std::shared_ptr<Component> &);
+  void       insertRawComponent(const ComponentList::holder &, bool noOptimize=true);
+  void       recreateComponent(const std::shared_ptr<Component> &);
+  void       insertComponent(const std::shared_ptr<Component> &);
   void       activateCompsWithinRect(int, int, int, int);
   bool       activateSpecifiedComponent(int, int);
   bool       activateSelectedComponents();
-  void       setCompPorts(Component*);
-  Component* selectCompText(int, int, int&, int&);
+  void       setCompPorts(std::shared_ptr<Component> &);
+  std::shared_ptr<Component> selectCompText(int, int, int&, int&);
   Component* searchSelSubcircuit();
-  Component* selectedComponent(int, int);
-  void       deleteComp(Component*);
+  std::shared_ptr<Component> selectedComponent(int, int);
+  void       deleteComp(const ComponentList::iterator &);
 
   void     oneLabel(Node*);
-  int      placeNodeLabel(WireLabel*);
-  Element* getWireLabel(Node*);
-  void     insertNodeLabel(WireLabel*);
-  void     copyLabels(int&, int&, int&, int&, QList<Element *> *);
+  int      placeNodeLabel(const std::shared_ptr<WireLabel> &);
+  std::shared_ptr<Element> getWireLabel(Node*);
+  void     insertNodeLabel(const std::shared_ptr<WireLabel> &);
+  void     copyLabels(int&, int&, int&, int&, SharedObjectList<Element> &);
 
   Painting* selectedPainting(float, float);
-  void      copyPaintings(int&, int&, int&, int&, QList<Element *> *);
+  void      copyPaintings(int&, int&, int&, int&, SharedObjectList<Element> &);
 
 
 private:
-  void insertComponentNodes(Component*, bool);
-  int  copyWires(int&, int&, int&, int&, QList<Element *> *);
-  int  copyComponents(int&, int&, int&, int&, QList<Element *> *);
-  void copyComponents2(int&, int&, int&, int&, QList<Element *> *);
-  bool copyComps2WiresPaints(int&, int&, int&, int&, QList<Element *> *);
-  int  copyElements(int&, int&, int&, int&, QList<Element *> *);
+  void insertComponentNodes(const std::shared_ptr<Component> &, bool);
+  int  copyWires(int&, int&, int&, int&, SharedObjectList<Element> &);
+  int  copyComponents(int&, int&, int&, int&, SharedObjectList<Element> &);
+  void copyComponents2(int&, int&, int&, int&, SharedObjectList<Element> &);
+  bool copyComps2WiresPaints(int&, int&, int&, int&, SharedObjectList<Element> &);
+  int  copyElements(int&, int&, int&, int&, SharedObjectList<Element> &);
 
 
 /* ********************************************************************
@@ -309,25 +311,27 @@ private:
   int  saveDocument();
 
   bool loadProperties(QTextStream*);
-  void simpleInsertComponent(Component*);
-  bool loadComponents(QTextStream*, Q3PtrList<Component> *List=0);
-  void simpleInsertWire(Wire*);
-  bool loadWires(QTextStream*, Q3PtrList<Element> *List=0);
-  bool loadDiagrams(QTextStream*, Q3PtrList<Diagram>*);
-  bool loadPaintings(QTextStream*, Q3PtrList<Painting>*);
+  void simpleInsertComponent(const std::shared_ptr<Component> &);
+  bool loadComponents(QTextStream*, SharedObjectList<Element> *List=0);
+  void simpleInsertWire(const std::shared_ptr<Wire> &);
+  bool loadWires(QTextStream*, SharedObjectList<Element> *List=0);
+  bool loadDiagrams(QTextStream*, SharedObjectList<Element> &);
+  bool loadDiagrams(QTextStream*, DiagramList &);
+  bool loadPaintings(QTextStream*, SharedObjectList<Element> &);
+  bool loadPaintings(QTextStream*, PaintingList &);
   bool loadIntoNothing(QTextStream*);
 
   QString createClipboardFile();
-  bool    pasteFromClipboard(QTextStream *, Q3PtrList<Element>*);
+  bool    pasteFromClipboard(QTextStream *, SharedObjectList<Element> &);
 
   QString createUndoString(char);
-  bool    rebuild(QString *);
+  bool    rebuild(const QString &);
   QString createSymbolUndoString(char);
-  bool    rebuildSymbol(QString *);
+  bool    rebuildSymbol(const QString &);
 
-  static void createNodeSet(QStringList&, int&, Conductor*, Node*);
+  static void createNodeSet(QStringList&, int&, const std::shared_ptr<Conductor> &, const std::shared_ptr<Node> &pn);
   void throughAllNodes(bool, QStringList&, int&);
-  void propagateNode(QStringList&, int&, Node*);
+  void propagateNode(QStringList&, int&, const std::shared_ptr<Node> &);
   void collectDigitalSignals(void);
   bool giveNodeNames(QTextStream *, int&, QStringList&, QPlainTextEdit*, int);
   void beginNetlistDigital(QTextStream &);
@@ -338,7 +342,7 @@ private:
   QStringList PortTypes;
 
 public: // for now. move to parser asap
-	Component* loadComponent(const QString& _s, Component* c) const;
+        bool loadComponent(const QString& _s, const std::shared_ptr<Component> &c) const;
 
 public:
   bool isAnalog;

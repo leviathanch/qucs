@@ -22,10 +22,12 @@
 #include "marker.h"
 #include "element.h"
 #include "viewpainter.h"
+#include "sharedObjectList.h"
 
 #include <QFile>
 #include <QTextStream>
-#include <QList>
+
+#include <list>
 
 #define MIN_SCROLLBAR_SIZE 8
 
@@ -107,10 +109,10 @@ public:
   QString Name; // identity of diagram type (e.g. Polar), used for saving etc.
   QPen    GridPen;
 
-  QList<Graph *>  Graphs;
-  QList<Arc *>    Arcs;
-  QList<Line *>   Lines;
-  QList<Text *>   Texts;
+  SharedObjectList<Graph>  Graphs;
+  std::list<Arc>    Arcs;
+  std::list<Line>   Lines;
+  std::list<Text>   Texts;
 
   QString sfreq;
   double *freq=nullptr;

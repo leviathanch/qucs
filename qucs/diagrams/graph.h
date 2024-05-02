@@ -21,10 +21,10 @@
 
 #include "marker.h"
 #include "element.h"
+#include "sharedObjectList.h"
 
 #include <cmath>
 #include <QColor>
-#include <Q3PtrList>
 #include <QDateTime>
 
 #include <assert.h>
@@ -159,7 +159,7 @@ public:
   QColor  Color;
   int     Thick;
   graphstyle_t Style;
-  QList<Marker *> Markers;
+  SharedObjectList<Marker> Markers;
   double *gy;
 
   // for tabular diagram
@@ -173,7 +173,7 @@ private: // painting
   void drawArrowSymbols(int, int, ViewPainter*) const;
   void drawvect(int, int, ViewPainter*) const;
 public: // marker related
-  void createMarkerText() const;
+  void createMarkerText();
   std::pair<double,double> findSample(std::vector<double>&) const;
   Diagram const* parentDiagram() const{return diagram;}
 private:

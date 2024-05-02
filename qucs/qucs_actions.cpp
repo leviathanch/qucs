@@ -21,12 +21,10 @@
  *  \brief Actions implementation for the GUI menu items
  */
 
-#include <QtCore>
 #include <stdlib.h>
 #include <limits.h>
 
 #include <QProcess>
-#include <Q3PtrList>
 #include <QRegExpValidator>
 #include <QLineEdit>
 #include <QAction>
@@ -41,6 +39,7 @@
 #include <QListWidget>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QScrollBar>
 
 #include "projectView.h"
 #include "qucs.h"
@@ -396,10 +395,7 @@ void QucsApp::slotInsertEquation(bool on)
   }
   activeAction = insEquation;
 
-  if(view->selElem)
-    delete view->selElem;  // delete previously selected component
-
-  view->selElem = new Equation();
+  view->selElem.reset(new Equation());
 
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(view->drawn) Doc->viewport()->update();
@@ -429,10 +425,7 @@ void QucsApp::slotInsertGround(bool on)
   }
   activeAction = insGround;
 
-  if(view->selElem)
-    delete view->selElem;  // delete previously selected component
-
-  view->selElem = new Ground();
+  view->selElem.reset(new Ground());
 
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(view->drawn) Doc->viewport()->update();
@@ -462,10 +455,7 @@ void QucsApp::slotInsertPort(bool on)
   }
   activeAction = insPort;
 
-  if(view->selElem)
-    delete view->selElem;  // delete previously selected component
-
-  view->selElem = new SubCirPort();
+  view->selElem.reset(new SubCirPort());
 
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
   if(view->drawn) Doc->viewport()->update();
@@ -804,7 +794,7 @@ void QucsApp::slotCallPowerComb()
  * \param progDesc  program description string (used for error messages)
  * \param args  arguments to pass to the executable
  */
-void QucsApp::launchTool(const QString& prog, const QString& progDesc, const QString& args) {
+void QucsApp::launchTool(const QString& prog, const QString& progDesc, const QStringList &args) {
   QProcess *tool = new QProcess();
 
 #ifdef __MINGW32__
@@ -827,15 +817,14 @@ void QucsApp::launchTool(const QString& prog, const QString& progDesc, const QSt
     tool->setWorkingDirectory(QucsSettings.BinDir);
   }
 
-  qDebug() << "Command :" << cmd + " " + args;
+  qDebug() << "Command :" << cmd + " " + args.join(" ");
 
-  // FIXME: use start(const QString& program, const QStringList& arguments);
-  tool->start(cmd + " " + args);
+  tool->start(cmd, args);
   
   // BUG: use signals. see QUCSATOR invocation
   if(!tool->waitForStarted(1000) ) {
     QMessageBox::critical(this, tr("Error"),
-	tr("Cannot start %1 program! \n\n(%2)").arg(progDesc, cmd + " " + args));
+        tr("Cannot start %1 program! \n\n(%2)").arg(progDesc, cmd + " " + args.join(" ")));
     delete tool;
     return;
   }
@@ -857,7 +846,9 @@ void QucsApp::slotHelpOnline()
 // --------------------------------------------------------------
 void QucsApp::showHTML(const QString& Page)
 {
-  launchTool("qucshelp", "help", Page);
+  QStringList args;
+  args.push_back(Page);
+  launchTool("qucshelp", "help", args);
 }
 
 
@@ -981,28 +972,26 @@ void QucsApp::slotCursorLeft(bool left)
   }
   if(!editText->isHidden()) return;  // for edit of component property ?
 
-  Q3PtrList<Element> movingElements;
+  SharedObjectList<Element> movingElements;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  int markerCount = Doc->copySelectedElements(&movingElements);
+  int markerCount = Doc->copySelectedElements(movingElements);
 
   if((movingElements.count() - markerCount) < 1) {
     if(markerCount > 0) {  // only move marker if nothing else selected
-      Doc->markerLeftRight(left, &movingElements);
+      Doc->markerLeftRight(left, movingElements);
     } else if(left) {
-      if(Doc->scrollLeft(Doc->horizontalScrollBar()->singleStep()))
-        Doc->scrollBy(-Doc->horizontalScrollBar()->singleStep(), 0);
+      Doc->scrollLeft(Doc->horizontalScrollBar()->singleStep());
     }else{ // right
-      if(Doc->scrollRight(-Doc->horizontalScrollBar()->singleStep()))
-        Doc->scrollBy(Doc->horizontalScrollBar()->singleStep(), 0);
+      Doc->scrollRight(-Doc->horizontalScrollBar()->singleStep());
     }
 
     Doc->viewport()->update();
     view->drawn = false;
     return;
   } else { // random selection. move all of them
-    view->moveElements(&movingElements, sign*Doc->GridX, 0);
+    view->moveElements(movingElements, sign*Doc->GridX, 0);
     view->MAx3 = 1;  // sign for moved elements
-    view->endElementMoving(Doc, &movingElements);
+    view->endElementMoving(Doc, movingElements);
   }
 }
 
@@ -1012,66 +1001,64 @@ void QucsApp::slotCursorUp(bool up)
   if(editText->isHidden()) {  // for edit of component property ?
   }else if(up){
     if(view->MAx3 == 0) return;  // edit component namen ?
-    Component *pc = (Component*)view->focusElement;
-    Property *pp = pc->Props.at(view->MAx3-1);  // current property
-    int Begin = pp->Description.indexOf('[');
+    auto pc = std::dynamic_pointer_cast<Component>(view->focusElement);
+    const Property &pp = pc->prop(view->MAx3-1);  // current property
+    int Begin = pp.Description.indexOf('[');
     if(Begin < 0) return;  // no selection list ?
-    int End = pp->Description.indexOf(editText->text(), Begin); // current
+    int End = pp.Description.indexOf(editText->text(), Begin); // current
     if(End < 0) return;  // should never happen
-    End = pp->Description.lastIndexOf(',', End);
+    End = pp.Description.lastIndexOf(',', End);
     if(End < Begin) return;  // was first item ?
     End--;
-    int Pos = pp->Description.lastIndexOf(',', End);
+    int Pos = pp.Description.lastIndexOf(',', End);
     if(Pos < Begin) Pos = Begin;   // is first item ?
     Pos++;
-    if(pp->Description.at(Pos) == ' ') Pos++; // remove leading space
-    editText->setText(pp->Description.mid(Pos, End-Pos+1));
+    if(pp.Description.at(Pos) == ' ') Pos++; // remove leading space
+    editText->setText(pp.Description.mid(Pos, End-Pos+1));
     editText->selectAll();
     return;
   }else{ // down
     if(view->MAx3 == 0) return;  // edit component namen ?
-    Component *pc = (Component*)view->focusElement;
-    Property *pp = pc->Props.at(view->MAx3-1);  // current property
-    int Pos = pp->Description.indexOf('[');
+    auto pc = std::dynamic_pointer_cast<Component>(view->focusElement);
+    const Property &pp = pc->prop(view->MAx3-1);  // current property
+    int Pos = pp.Description.indexOf('[');
     if(Pos < 0) return;  // no selection list ?
-    Pos = pp->Description.indexOf(editText->text(), Pos); // current list item
+    Pos = pp.Description.indexOf(editText->text(), Pos); // current list item
     if(Pos < 0) return;  // should never happen
-    Pos = pp->Description.indexOf(',', Pos);
+    Pos = pp.Description.indexOf(',', Pos);
     if(Pos < 0) return;  // was last item ?
     Pos++;
-    if(pp->Description.at(Pos) == ' ') Pos++; // remove leading space
-    int End = pp->Description.indexOf(',', Pos);
+    if(pp.Description.at(Pos) == ' ') Pos++; // remove leading space
+    int End = pp.Description.indexOf(',', Pos);
     if(End < 0) {  // is last item ?
-      End = pp->Description.indexOf(']', Pos);
+      End = pp.Description.indexOf(']', Pos);
       if(End < 0) return;  // should never happen
     }
-    editText->setText(pp->Description.mid(Pos, End-Pos));
+    editText->setText(pp.Description.mid(Pos, End-Pos));
     editText->selectAll();
     return;
   }
 
-  Q3PtrList<Element> movingElements;
+  SharedObjectList<Element> movingElements;
   Schematic *Doc = (Schematic*)DocumentTab->currentWidget();
-  int markerCount = Doc->copySelectedElements(&movingElements);
+  int markerCount = Doc->copySelectedElements(movingElements);
 
   if((movingElements.count() - markerCount) < 1) { // all selections are markers
     if(markerCount > 0) {  // only move marker if nothing else selected
-      Doc->markerUpDown(up, &movingElements);
+      Doc->markerUpDown(up, movingElements);
     } else if(up) { // nothing selected at all
-      if(Doc->scrollUp(Doc->verticalScrollBar()->singleStep()))
-        Doc->scrollBy(0, -Doc->verticalScrollBar()->singleStep());
+      Doc->scrollUp(Doc->verticalScrollBar()->singleStep());
     } else { // down
-      if(Doc->scrollDown(-Doc->verticalScrollBar()->singleStep()))
-        Doc->scrollBy(0, Doc->verticalScrollBar()->singleStep());
+      Doc->scrollDown(-Doc->verticalScrollBar()->singleStep());
     }
 
     Doc->viewport()->update();
     view->drawn = false;
     return;
   }else{ // some random selection, put it back
-    view->moveElements(&movingElements, 0, ((up)?-1:1) * Doc->GridY);
+    view->moveElements(movingElements, 0, ((up)?-1:1) * Doc->GridY);
     view->MAx3 = 1;  // sign for moved elements
-    view->endElementMoving(Doc, &movingElements);
+    view->endElementMoving(Doc, movingElements);
   }
 }
 
@@ -1087,37 +1074,38 @@ void QucsApp::slotApplyCompText()
   f.setPointSizeF(Doc->Scale * float(f.pointSize()) );
   editText->setFont(f);
 
-  Property  *pp = 0;
-  Component *pc = (Component*)view->focusElement;
+  auto pc = std::dynamic_pointer_cast<Component>(view->focusElement);
   if(!pc) return;  // should never happen
   view->MAx1 = pc->cx + pc->tx;
   view->MAy1 = pc->cy + pc->ty;
 
   int z, n=0;  // "n" is number of property on screen
-  pp = pc->Props.first();
-  for(z=view->MAx3; z>0; z--) {  // calculate "n"
-    if(!pp) {  // should never happen
-      slotHideEdit();
-      return;
+  {
+    auto pp = pc->Props.begin();
+    for(z=view->MAx3; z>0; z--) {  // calculate "n"
+      if(pp == pc->Props.end()) {  // should never happen
+        slotHideEdit();
+        return;
+      }
+      if(pp->display) n++;   // is visible ?
+      ++pp;
     }
-    if(pp->display) n++;   // is visible ?
-    pp = pc->Props.next();
   }
 
-  pp = 0;
-  if(view->MAx3 > 0)  pp = pc->Props.at(view->MAx3-1); // current property
+  Property *pp = 0;
+  if(view->MAx3 > 0)  pp = &pc->prop(view->MAx3-1); // current property
   else s = pc->name();
 
   if(!editText->isHidden()) {   // is called the first time ?
     // no -> apply value to current property
     if(view->MAx3 == 0) {   // component name ?
-      Component *pc2;
       if(!editText->text().isEmpty())
         if(pc->name() != editText->text()) {
-          for(pc2 = Doc->Components->first(); pc2!=0; pc2 = Doc->Components->next())
+          auto pc2 = Doc->Components->begin();
+          for( ; pc2 != Doc->Components->end(); ++pc2)
             if(pc2->name() == editText->text())
               break;  // found component with the same name ?
-          if(!pc2) {
+          if(pc2 == Doc->Components->end()) {
             pc->obsolete_name_override_hack( editText->text() );
             Doc->setChanged(true, true);  // only one undo state
           }
@@ -1133,7 +1121,7 @@ void QucsApp::slotApplyCompText()
 
     n++;     // next row on screen
     (view->MAx3)++;  // next property
-    pp = pc->Props.at(view->MAx3-1);  // search for next property
+    pp = view->MAx3 > int(pc->Props.size()) ? 0 : &pc->prop(view->MAx3-1);
 
     Doc->viewport()->update();
     view->drawn = false;
@@ -1146,7 +1134,7 @@ void QucsApp::slotApplyCompText()
 
     while(!pp->display) {  // search for next visible property
       (view->MAx3)++;  // next property
-      pp = pc->Props.next();
+      pp = view->MAx3 > int(pc->Props.size()) ? 0 : &pc->prop(view->MAx3-1);
       if(!pp) {     // was already last property ?
         slotHideEdit();
         return;
@@ -1157,7 +1145,7 @@ void QucsApp::slotApplyCompText()
   // avoid seeing the property text behind the line edit
   if(pp)  // Is it first property or component name ?
     s = pp->Value;
-  editText->setMinimumWidth(editText->fontMetrics().width(s)+4);
+  editText->setMinimumWidth(editText->fontMetrics().horizontalAdvance(s)+4);
 
 
   Doc->contentsToViewport(int(Doc->Scale * float(view->MAx1 - Doc->ViewX1)),
@@ -1166,7 +1154,7 @@ void QucsApp::slotApplyCompText()
   editText->setReadOnly(false);
   if(pp) {  // is it a property ?
     s = pp->Value;
-    view->MAx2 += editText->fontMetrics().width(pp->Name+"=");
+    view->MAx2 += editText->fontMetrics().horizontalAdvance(pp->Name+"=");
     if(pp->Description.indexOf('[') >= 0)  // is selection list ?
       editText->setReadOnly(true);
     Expr_CompProp.setPattern("[^\"]*");
@@ -1195,7 +1183,7 @@ void QucsApp::slotApplyCompText()
 // the width of the edit field.
 void QucsApp::slotResizePropEdit(const QString& t)
 {
-  editText->resize(editText->fontMetrics().width(t)+4,
+  editText->resize(editText->fontMetrics().horizontalAdvance(t)+4,
                    editText->fontMetrics().lineSpacing());
 }
 
@@ -1275,7 +1263,7 @@ void QucsApp::slotExportGraphAsCsv()
 
 
   DataX const *pD;
-  Graph *g = (Graph*)view->focusElement;
+  auto g = std::dynamic_pointer_cast<Graph>(view->focusElement);
   // First output the names of independent and dependent variables.
   for(unsigned ii=0; (pD=g->axis(ii)); ++ii)
     Stream << '\"' << pD->Var << "\";";
