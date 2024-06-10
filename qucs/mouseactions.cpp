@@ -21,7 +21,7 @@
 #include "schematic.h"
 #include "mouseactions.h"
 #include "module.h"
-#include "opt_sim.h"
+#include "components/opt_sim.h"
 #include "components/component.h"
 #include "components/spicedialog.h"
 #include "components/spicefile.h"

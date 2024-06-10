@@ -25,7 +25,6 @@ ACLOCAL_AMFLAGS=-Im4
 
 SUBDIRS = \
 	man \
-	qt3_compat \
 	qucs \
 	qucs-activefilter \
 	qucs-attenuator \
