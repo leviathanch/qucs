@@ -34,10 +34,17 @@ http://qucs.sourceforge.net
 Requirements
 ============
 
-Qucs needs Qt version 4.6 or later. For simplicity, the Qt configuration is
+Qucs needs Qt version 5 or later. For simplicity, the Qt configuration is
 currently obtained through pkg-config, which you need to install in addition
 to Qt.
 
+Development
+===========
+
+Qucs source code is stored in a git repo. Two build systems are included.
+The traditional autotools build system needs to be created by developpers,
+when not using a tarball. Run ./bootstrap after cloning. The CMake build
+system does not require this step. Choose your pick.
 
 Installation
 ============
@@ -75,6 +82,8 @@ to compile and install the package.
 
 Getting the latest Git snapshot
 ===============================
+
+TODO: repo on sf is oudated.
 
 You can always get the latest Qucs version from our Git repository.
 Please use an official release if you want to work with Qucs.  The Git
