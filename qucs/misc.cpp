@@ -440,8 +440,9 @@ bool misc::checkVersion(QString& Line)
 
 // a small class to handle the application version string
 //   loosely modeled after the standard Semantic Versioning...
-VersionTriplet::VersionTriplet(const QString& version) {
+VersionTriplet::VersionTriplet(const QString& raw_version) {
   // TODO should be likely made more robust...
+  QString version = raw_version.mid(0, raw_version.indexOf("-"));
   if (version.isEmpty()) {
     major = minor = patch = 0;
   } else {

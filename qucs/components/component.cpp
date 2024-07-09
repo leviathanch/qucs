@@ -1083,7 +1083,7 @@ int Component::analyseLine(const QString& Row, int numProps)
 
     i1 = 1;
     auto pp = Props.begin();
-    for(int i = 0; i < (numProps-1) && pp != Props.end(); ++i)
+    for(int i = 0; i < (numProps) && pp != Props.end(); ++i)
       ++pp;
     for(;;) {
       s = Row.section('"', i1,i1);
