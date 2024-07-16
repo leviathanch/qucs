@@ -1,0 +1,24 @@
+ROADMAP for Qucs, after 0.0.20
+
+We need to support a file format that allows data exchange to and from other
+tools.
+
+Traditionally, Qucs defines a schematic format and a flat netlist format. Both
+are tied to a fixed component library, and don't work very well without it.
+
+A new data format will replace the Qucs schematic format. It will be based on
+the structural subset of Verilog, an established IEEE standard, after adding a
+few conventions [1]. A lossless roundtrip from Qucs schematic to the new format
+and back is envisaged and feasible. Among other things it will add
+
+- explicit connectivity,
+- port and parameter names,
+- self-containedness,
+- support for user defined models.
+
+The Qucs flat netlist format only serves the purpose of simulating with
+Qucsator, and could be generated from schematics by a stand-alone program.
+Generally, other tools should aim to process data from new schematic files
+directly, following the the standard interpretation.
+
+[1] http://gnucap.org/dokuwiki/doku.php/gnucap:user:netlist_import_and_export
