@@ -2528,7 +2528,10 @@ void Schematic::insertRawComponent(const ComponentList::holder &c, bool noOptimi
 {
     // connect every node of component to corresponding schematic node
     insertComponentNodes(c, noOptimize);
-    Components->append(c);
+    // Check if this component already exists in the list. If it does, then
+    // we shouldn't add it.
+    if(Components->find(c) == Components->end())
+        Components->append(c);
 
     // a ground symbol erases an existing label on the wire line
     if(c->obsolete_model_hack() == "GND") { // BUG.
