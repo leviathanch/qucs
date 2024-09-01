@@ -1367,6 +1367,44 @@ void MultiViewComponent::recreate(Schematic *Doc)
     holder = i.ref();
   }
 
+  // The problem is that Schematic::insertComponentNodes, which is called by Doc->insertRawComponent,
+  // adds new nodes all the time, but the old nodes are not removed when the port is deleted.
+  // A second problem is that the component is added to the ElementList, even if it exists already.
+  // This causes weird behavior on move, as the component is selected twice, it will also move
+  // at double speed.
+  
+  //Removes all connections to this component's ports, and deletes dangling nodes.
+  //Code is very similar to Schematic::setCompPorts
+  if(holder)
+  {
+    std::list<std::shared_ptr<WireLabel> > LabelCache;
+
+    for (auto pp = holder->Ports.begin(); pp != holder->Ports.end(); ++pp)
+    {
+      auto pcc = pp->getConnection();
+      pcc->removeConnection(holder);  // delete connections
+      switch(pcc->Connections.size())
+      {
+      case 0:
+          {
+            auto pl = pcc->Label;
+            if(pl)
+            {
+              LabelCache.push_back(pl);
+              pl->cx = pp->x + holder->cx;
+              pl->cy = pp->y + holder->cy;
+            }
+            Doc->Nodes->erase(pcc);
+          }
+          break;
+      case 2:
+          Doc->oneTwoWires(pcc); // try to connect two wires to one
+      default:
+          ;
+      }
+    }
+  }
+
   Ellips.clear();
   Texts.clear();
   Ports.clear();
