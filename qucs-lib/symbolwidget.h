@@ -30,6 +30,7 @@
 #include <QMessageBox>
 
 #include "element.h"
+using namespace qucs;
 
 /*!
  * \file symbolwidget.h

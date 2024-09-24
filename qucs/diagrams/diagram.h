@@ -21,6 +21,7 @@
 #include "graph.h"
 #include "marker.h"
 #include "element.h"
+using namespace qucs;
 #include "viewpainter.h"
 #include "sharedObjectList.h"
 
@@ -110,9 +111,9 @@ public:
   QPen    GridPen;
 
   SharedObjectList<Graph>  Graphs;
-  std::list<Arc>    Arcs;
-  std::list<Line>   Lines;
-  std::list<Text>   Texts;
+  std::list<qucs::Arc>    Arcs;
+  std::list<qucs::Line>   Lines;
+  std::list<qucs::Text>   Texts;
 
   QString sfreq;
   double *freq=nullptr;

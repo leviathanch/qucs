@@ -254,12 +254,12 @@ void createIcons() {
 
         Component *c = (Component* ) e;
 
-        std::list<Line> Lines      = c->Lines;
-        std::list<Arc> Arcs        = c-> Arcs;
-        std::list<Area> Rects      = c-> Rects;
-        std::list<Area> Ellips     = c-> Ellips;
-        std::list<Port> Ports      = c->Ports;
-        std::list<Text> Texts      = c->Texts;
+        std::list<qucs::Line> Lines      = c->Lines;
+        std::list<qucs::Arc> Arcs        = c-> Arcs;
+        std::list<qucs::Area> Rects      = c-> Rects;
+        std::list<qucs::Area> Ellips     = c-> Ellips;
+        std::list<qucs::Port> Ports      = c->Ports;
+        std::list<qucs::Text> Texts      = c->Texts;
 
         QGraphicsScene *scene = new QGraphicsScene();
 

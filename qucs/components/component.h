@@ -19,7 +19,7 @@
 #define COMPONENT_H
 
 #include "element.h"
-
+using namespace qucs;
 #include <list>
 
 class Schematic;
@@ -72,13 +72,13 @@ public:
   Port &port(int n);
   const Port &port(int n) const;
 
-  std::list<Line>   Lines;
-  std::list<Arc>    Arcs;
-  std::list<Area>   Rects;
-  std::list<Area>   Ellips;
-  std::list<Port>   Ports;
-  std::list<Text>   Texts;
-  std::list<Property>   Props;
+  std::list<qucs::Line>   Lines;
+  std::list<qucs::Arc>    Arcs;
+  std::list<qucs::Area>   Rects;
+  std::list<qucs::Area>   Ellips;
+  std::list<qucs::Port>   Ports;
+  std::list<qucs::Text>   Texts;
+  std::list<qucs::Property>   Props;
 
   #define COMP_IS_OPEN    0
   #define COMP_IS_ACTIVE  1
