@@ -55,7 +55,6 @@
 #include <Windows.h>  //for OutputDebugString
 #endif
 
-#define toAscii toLatin1
 
 // void attach(const char*); not yet.
 
@@ -444,7 +443,7 @@ void createDocData() {
         outProps << compProps.join("\n");
         compProps.clear();
         file.close();
-        fprintf(stdout, "[%s] %s %s \n", category.toAscii().data(), c->obsolete_model_hack().toAscii().data(), fileProps.fileName().toAscii().data());
+        fprintf(stdout, "[%s] %s %s \n", category.toLatin1().data(), c->obsolete_model_hack().toLatin1().data(), fileProps.fileName().toLatin1().data());
     } // module
   } // category
   fprintf(stdout, "Created data for %i components from %i categories\n", nComps, nCats);
@@ -482,7 +481,7 @@ void createListComponentEntry(){
 		QTextStream s;
 		c->getSchematic()->saveComponent(s, c);
       QString qucsEntry = *(s.string());
-      fprintf(stdout, "%s; qucs    ; %s\n", c->obsolete_model_hack().toAscii().data(), qucsEntry.toAscii().data());
+      fprintf(stdout, "%s; qucs    ; %s\n", c->obsolete_model_hack().toLatin1().data(), qucsEntry.toLatin1().data());
 
       // add dummy ports/wires, avoid segfault
       int port = 0;
@@ -497,12 +496,12 @@ void createListComponentEntry(){
 
       // skip Subcircuit, segfault, there is nothing to netlist
       if (c->obsolete_model_hack() == "Sub" or c->obsolete_model_hack() == ".Opt") {
-        fprintf(stdout, "WARNING, qucsator netlist not generated for %s\n\n", c->obsolete_model_hack().toAscii().data());
+        fprintf(stdout, "WARNING, qucsator netlist not generated for %s\n\n", c->obsolete_model_hack().toLatin1().data());
         continue;
       }
 
       QString qucsatorEntry = c->getNetlist();
-      fprintf(stdout, "%s; qucsator; %s\n", c->obsolete_model_hack().toAscii().data(), qucsatorEntry.toAscii().data());
+      fprintf(stdout, "%s; qucsator; %s\n", c->obsolete_model_hack().toLatin1().data(), qucsatorEntry.toLatin1().data());
       } // module
     } // category
 }
