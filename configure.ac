@@ -837,7 +837,7 @@ dnl Check for Git short SHA to tag version
 dnl The release package should also keep it on the config.h
 GIT="unknown"
 if test -d "../.git"; then
-  m4_define([GIT_REVISION], m4_esyscmd([git log --pretty=format:'%h' -n 1u]))
+  m4_define([GIT_REVISION], m4_esyscmd([git log --pretty=format:'%h' -n 1]))
   AC_DEFINE([GIT], ["GIT_REVISION"], [Git short revision hash.])
   GIT=GIT_REVISION
   echo "\nFound Git clone... $GIT"
