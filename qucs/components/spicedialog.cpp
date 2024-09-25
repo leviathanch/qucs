@@ -156,7 +156,7 @@ SpiceDialog::SpiceDialog(QucsApp* App_, const std::shared_ptr<SpiceFile> &c, Sch
   changed = false;
 
   // insert all properties into the ListBox
-  Property &pp = Comp->prop(0);
+  qucs::Property &pp = Comp->prop(0);
   FileEdit->setText(pp.Value);
   FileCheck->setChecked(pp.display);
   SimCheck->setChecked(Comp->prop(2).Value == "yes");
@@ -460,7 +460,7 @@ bool SpiceDialog::loadSpiceNetList(const QString& s)
       QMessageBox::critical(this, tr("QucsConv Error"), Error);
   }
 
-  Property &pp = Comp->prop(1);
+  qucs::Property &pp = Comp->prop(1);
   if(!pp.Value.isEmpty())
   {
     PortsList->clear();

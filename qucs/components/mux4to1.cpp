@@ -24,9 +24,9 @@ mux4to1::mux4to1()
   Type = isComponent; // Analogue and digital component.
   Description = QObject::tr ("4to1 multiplexer verilog device");
 
-  Props.push_back (Property ("TR", "6", false,
+  Props.push_back(qucs::Property("TR", "6", false,
     QObject::tr ("transfer function high scaling factor")));
-  Props.push_back (Property ("Delay", "1 ns", false,
+  Props.push_back(qucs::Property("Delay", "1 ns", false,
     QObject::tr ("output delay")
     +" ("+QObject::tr ("s")+")"));
  
@@ -56,49 +56,49 @@ Element * mux4to1::info(QString& Name, char * &BitmapFile, bool getNewOne)
 
 void mux4to1::createSymbol()
 {
-  Lines.push_back(Line(-30, -80, 30,-80,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30, -80, 30, 100,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30,  100,-30, 100,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30, 100,-30, -80,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, -80, 30,-80,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30, -80, 30, 100,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30,  100,-30, 100,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, 100,-30, -80,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-50,-40,-40,-40,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-50,-20,-30, -20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-50, 0, -30, 0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-50, 30, -30, 30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-50, 50,-30, 50,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-50, 70, -30, 70,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-50, 90, -30, 90,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-50,-40,-40,-40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-50,-20,-30, -20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-50, 0, -30, 0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-50, 30, -30, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-50, 50,-30, 50,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-50, 70, -30, 70,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-50, 90, -30, 90,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line( 30, 10, 50, 10,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30, 10, 50, 10,QPen(Qt::darkBlue,2)));
 
-  Arcs.push_back(Arc( -40, -45, 10, 10, 0, 16*360, QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc( -40, -45, 10, 10, 0, 16*360, QPen(Qt::darkBlue,2)));
  
-  Texts.push_back(Text(-17,-75, "MUX", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-17,-75, "MUX", Qt::darkBlue, 12.0));
 
-  Texts.push_back(Text(-25,-53, "En", Qt::darkBlue, 12.0));
-  Texts.push_back(Text(-14,-23, "G", Qt::darkBlue, 12.0));
-  Texts.push_back(Text(-1, -28, "}", Qt::darkBlue, 16.0));
-  Texts.push_back(Text( 12,-30, "0", Qt::darkBlue, 12.0));
-  Texts.push_back(Text( 12,-10, "3", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-25,-53, "En", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-14,-23, "G", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-1, -28, "}", Qt::darkBlue, 16.0));
+  Texts.push_back(qucs::Text( 12,-30, "0", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text( 12,-10, "3", Qt::darkBlue, 12.0));
 
-  Texts.push_back(Text(-25,-31, "0", Qt::darkBlue, 12.0));
-  Texts.push_back(Text(-25,-11, "1", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-25,-31, "0", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-25,-11, "1", Qt::darkBlue, 12.0));
 
-  Texts.push_back(Text(-25, 17, "0", Qt::darkBlue, 12.0));
-  Texts.push_back(Text(-25, 37, "1", Qt::darkBlue, 12.0));
-  Texts.push_back(Text(-25, 57, "2", Qt::darkBlue, 12.0));
-  Texts.push_back(Text(-25, 77, "3", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-25, 17, "0", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-25, 37, "1", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-25, 57, "2", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-25, 77, "3", Qt::darkBlue, 12.0));
 
-  Lines.push_back(Line(11, -8, 23, -8, QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(11, -8, 23, -8, QPen(Qt::darkBlue,2)));
 
-  Ports.push_back(Port(-50,-40));  // En
-  Ports.push_back(Port(-50,-20));  // A
-  Ports.push_back(Port(-50,  0));  // B
-  Ports.push_back(Port(-50, 30));  // D0
-  Ports.push_back(Port(-50, 50));  // D1
-  Ports.push_back(Port(-50, 70));  // D2
-  Ports.push_back(Port(-50, 90));  // D3
-  Ports.push_back(Port( 50, 10));  // Y
+  Ports.push_back(qucs::Port(-50,-40));  // En
+  Ports.push_back(qucs::Port(-50,-20));  // A
+  Ports.push_back(qucs::Port(-50,  0));  // B
+  Ports.push_back(qucs::Port(-50, 30));  // D0
+  Ports.push_back(qucs::Port(-50, 50));  // D1
+  Ports.push_back(qucs::Port(-50, 70));  // D2
+  Ports.push_back(qucs::Port(-50, 90));  // D3
+  Ports.push_back(qucs::Port( 50, 10));  // Y
 
   x1 = -50; y1 = -84;
   x2 =  50; y2 =  104;

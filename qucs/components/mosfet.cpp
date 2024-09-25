@@ -83,36 +83,36 @@ Element* MOSFET::info_depl(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 void MOSFET::createSymbol()
 {
-  Lines.push_back(Line(-14,-13,-14, 13,QPen(Qt::darkBlue,3)));
-  Lines.push_back(Line(-30,  0,-14,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-14,-13,-14, 13,QPen(Qt::darkBlue,3)));
+  Lines.push_back(qucs::Line(-30,  0,-14,  0,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-10,-11,  0,-11,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  0,-11,  0,-30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-10, 11,  0, 11,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  0,  0,  0, 30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-10,  0,  0,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-10,-11,  0,-11,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  0,-11,  0,-30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-10, 11,  0, 11,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  0,  0,  0, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-10,  0,  0,  0,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-10,-16,-10, -7,QPen(Qt::darkBlue,3)));
-  Lines.push_back(Line(-10,  7,-10, 16,QPen(Qt::darkBlue,3)));
+  Lines.push_back(qucs::Line(-10,-16,-10, -7,QPen(Qt::darkBlue,3)));
+  Lines.push_back(qucs::Line(-10,  7,-10, 16,QPen(Qt::darkBlue,3)));
 
   if(prop(0).Value == "nfet") {
-    Lines.push_back(Line( -9,  0, -4, -5,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line( -9,  0, -4,  5,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line( -9,  0, -4, -5,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line( -9,  0, -4,  5,QPen(Qt::darkBlue,2)));
   }
   else {
-    Lines.push_back(Line( -1,  0, -6, -5,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line( -1,  0, -6,  5,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line( -1,  0, -6, -5,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line( -1,  0, -6,  5,QPen(Qt::darkBlue,2)));
   }
 
   if((prop(1).Value.trimmed().at(0) == '-') ==
      (prop(0).Value == "nfet"))
-    Lines.push_back(Line(-10, -8,-10,  8,QPen(Qt::darkBlue,3)));
+    Lines.push_back(qucs::Line(-10, -8,-10,  8,QPen(Qt::darkBlue,3)));
   else
-    Lines.push_back(Line(-10, -4,-10,  4,QPen(Qt::darkBlue,3)));
+    Lines.push_back(qucs::Line(-10, -4,-10,  4,QPen(Qt::darkBlue,3)));
   
-  Ports.push_back(Port(-30,  0));
-  Ports.push_back(Port(  0,-30));
-  Ports.push_back(Port(  0, 30));
+  Ports.push_back(qucs::Port(-30,  0));
+  Ports.push_back(qucs::Port(  0,-30));
+  Ports.push_back(qucs::Port(  0, 30));
 
   x1 = -30; y1 = -30;
   x2 =   4; y2 =  30;

@@ -28,15 +28,15 @@ EqnDefined::EqnDefined()
   Name  = "D";
 
   // first properties !!!
-  Props.push_back(Property("Type", "explicit", false,
+  Props.push_back(qucs::Property("Type", "explicit", false,
 		QObject::tr("type of equations")+" [explicit, implicit]"));
-  Props.push_back(Property("Branches", "1", false,
+  Props.push_back(qucs::Property("Branches", "1", false,
 		QObject::tr("number of branches")));
 
   // last properties
-  Props.push_back(Property("I1", "0", true,
+  Props.push_back(qucs::Property("I1", "0", true,
 		QObject::tr("current equation") + " 1"));
-  Props.push_back(Property("Q1", "0", false,
+  Props.push_back(qucs::Property("Q1", "0", false,
 		QObject::tr("charge equation") + " 1"));
 
   createSymbol();
@@ -116,9 +116,9 @@ void EqnDefined::createSymbol()
   int NumProps = (Props.size() - 2) / 2; // current number of properties
   if (NumProps < Num) {
     for(i = NumProps; i < Num; i++) {
-      Props.push_back(Property("I"+QString::number(i+1), "0", false,
+      Props.push_back(qucs::Property("I"+QString::number(i+1), "0", false,
 		QObject::tr("current equation") + " " +QString::number(i+1)));
-      Props.push_back(Property("Q"+QString::number(i+1), "0", false,
+      Props.push_back(qucs::Property("Q"+QString::number(i+1), "0", false,
 		QObject::tr("charge equation") + " " +QString::number(i+1)));
     }
   } else {
@@ -137,33 +137,33 @@ void EqnDefined::createSymbol()
 
   // draw symbol
   int h = (PortDistance/2)*((Num-1)) + PortDistance/2; // total component half-height
-  Lines.push_back(Line(-15, -h, 15, -h,QPen(Qt::darkBlue,2))); // top side
-  Lines.push_back(Line( 15, -h, 15,  h,QPen(Qt::darkBlue,2))); // right side
-  Lines.push_back(Line(-15,  h, 15,  h,QPen(Qt::darkBlue,2))); // bottom side
-  Lines.push_back(Line(-15, -h,-15,  h,QPen(Qt::darkBlue,2))); // left side
+  Lines.push_back(qucs::Line(-15, -h, 15, -h,QPen(Qt::darkBlue,2))); // top side
+  Lines.push_back(qucs::Line( 15, -h, 15,  h,QPen(Qt::darkBlue,2))); // right side
+  Lines.push_back(qucs::Line(-15,  h, 15,  h,QPen(Qt::darkBlue,2))); // bottom side
+  Lines.push_back(qucs::Line(-15, -h,-15,  h,QPen(Qt::darkBlue,2))); // left side
 
   i=0;
   int y = PortDistance/2-h, yh; // y is the actual vertical center
   while(i<Num) { // for every branch
     i++;
     // left connection with port
-    Lines.push_back(Line(-30, y,-15, y,QPen(Qt::darkBlue,2)));
-    Ports.push_back(Port(-30, y));
+    Lines.push_back(qucs::Line(-30, y,-15, y,QPen(Qt::darkBlue,2)));
+    Ports.push_back(qucs::Port(-30, y));
     // small black arrow inside the box
-    Lines.push_back(Line( 7,y-3, 10, y,QPen(Qt::black,1)));
-    Lines.push_back(Line( 7,y+3, 10, y,QPen(Qt::black,1)));
-    Lines.push_back(Line(-10, y, 10, y,QPen(Qt::black,1)));
+    Lines.push_back(qucs::Line( 7,y-3, 10, y,QPen(Qt::black,1)));
+    Lines.push_back(qucs::Line( 7,y+3, 10, y,QPen(Qt::black,1)));
+    Lines.push_back(qucs::Line(-10, y, 10, y,QPen(Qt::black,1)));
 
     if (i > 1) {
       yh = y-PortDistance/2; // bottom of the branch box
       // draw horizontal separation between boxes
-      Lines.push_back(Line(-15, yh, 15, yh, QPen(Qt::darkBlue,2)));
+      Lines.push_back(qucs::Line(-15, yh, 15, yh, QPen(Qt::darkBlue,2)));
     }
     // right connection with port
-    Lines.push_back(Line( 15, y, 30, y,QPen(Qt::darkBlue,2)));
-    Ports.push_back(Port( 30, y));
+    Lines.push_back(qucs::Line( 15, y, 30, y,QPen(Qt::darkBlue,2)));
+    Ports.push_back(qucs::Port( 30, y));
     // add branch number near the right connection port
-    Texts.push_back(Text(25,y-fHeight-2,QString::number(i))); // left-aligned
+    Texts.push_back(qucs::Text(25,y-fHeight-2,QString::number(i))); // left-aligned
     // move the vertical center down for the next branch
     y += PortDistance;
   }

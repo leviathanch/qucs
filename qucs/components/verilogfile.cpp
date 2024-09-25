@@ -30,14 +30,14 @@ Verilog_File::Verilog_File()
   Type = isDigitalComponent;
   Description = QObject::tr("Verilog file");
 
-  Props.push_back(Property("File", "sub.v", false,
+  Props.push_back(qucs::Property("File", "sub.v", false,
 		QObject::tr("Name of Verilog file")));
 
   Model = "Verilog";
   Name  = "X";
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
-  Ports.push_back(Port(0, 0));
+  Ports.push_back(qucs::Port(0, 0));
 }
 
 // -------------------------------------------------------
@@ -125,30 +125,30 @@ void Verilog_File::createSymbol()
 
   #define HALFWIDTH  24
   int h = 30*((No-1)/2) + 15;
-  Lines.push_back(Line(-HALFWIDTH, -h, HALFWIDTH, -h,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( HALFWIDTH, -h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-HALFWIDTH,  h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-HALFWIDTH, -h,-HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-HALFWIDTH, -h, HALFWIDTH, -h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( HALFWIDTH, -h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-HALFWIDTH,  h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-HALFWIDTH, -h,-HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
 
   tmp = QObject::tr("verilog");
   int w = metrics.horizontalAdvance(tmp);
-  Texts.push_back(Text(w/-2, fHeight/-2, tmp));
+  Texts.push_back(qucs::Text(w/-2, fHeight/-2, tmp));
 
 
   int y = 15-h, i = 0;
   while(i<No) {
-    Lines.push_back(Line(-30,  y,-HALFWIDTH,  y,QPen(Qt::darkBlue,2)));
-    Ports.push_back(Port(-30,  y));
+    Lines.push_back(qucs::Line(-30,  y,-HALFWIDTH,  y,QPen(Qt::darkBlue,2)));
+    Ports.push_back(qucs::Port(-30,  y));
     tmp = PortNames.section(',', i, i);
     w = metrics.horizontalAdvance(tmp);
-    Texts.push_back(Text(-26-w, y-fHeight-2, tmp));
+    Texts.push_back(qucs::Text(-26-w, y-fHeight-2, tmp));
     i++;
 
     if(i == No) break;
-    Lines.push_back(Line(HALFWIDTH,  y, 30,  y,QPen(Qt::darkBlue,2)));
-    Ports.push_back(Port( 30,  y));
+    Lines.push_back(qucs::Line(HALFWIDTH,  y, 30,  y,QPen(Qt::darkBlue,2)));
+    Ports.push_back(qucs::Port( 30,  y));
     tmp = PortNames.section(',', i, i);
-    Texts.push_back(Text( 27, y-fHeight-2, tmp));
+    Texts.push_back(qucs::Text( 27, y-fHeight-2, tmp));
     y += 60;
     i++;
   }

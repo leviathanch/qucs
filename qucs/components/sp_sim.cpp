@@ -30,9 +30,9 @@ SP_Sim::SP_Sim()
   }
   if (b != -1) s[b] = '\n';
 
-  Texts.push_back(Text(0, 0, s.left(b), Qt::darkBlue, QucsSettings.largeFontSize));
+  Texts.push_back(qucs::Text(0, 0, s.left(b), Qt::darkBlue, QucsSettings.largeFontSize));
   if (b != -1)
-    Texts.push_back(Text(0, 0, s.mid(b+1), Qt::darkBlue, QucsSettings.largeFontSize));
+    Texts.push_back(qucs::Text(0, 0, s.mid(b+1), Qt::darkBlue, QucsSettings.largeFontSize));
 
   x1 = -10; y1 = -9;
   x2 = x1+121; y2 = y1+59;
@@ -43,25 +43,25 @@ SP_Sim::SP_Sim()
   Name  = "SP";
 
   // The index of the first 4 properties must not changed. Used in recreate().
-  Props.push_back(Property("Type", "lin", true,
+  Props.push_back(qucs::Property("Type", "lin", true,
 	QObject::tr("sweep type")+" [lin, log, list, const]"));
-  Props.push_back(Property("Start", "1 GHz", true,
+  Props.push_back(qucs::Property("Start", "1 GHz", true,
 	QObject::tr("start frequency in Hertz")));
-  Props.push_back(Property("Stop", "10 GHz", true,
+  Props.push_back(qucs::Property("Stop", "10 GHz", true,
 	QObject::tr("stop frequency in Hertz")));
-  Props.push_back(Property("Points", "19", true,
+  Props.push_back(qucs::Property("Points", "19", true,
 	QObject::tr("number of simulation steps")));
-  Props.push_back(Property("Noise", "no", false,
+  Props.push_back(qucs::Property("Noise", "no", false,
 	QObject::tr("calculate noise parameters")+
 	" [yes, no]"));
-  Props.push_back(Property("NoiseIP", "1", false,
+  Props.push_back(qucs::Property("NoiseIP", "1", false,
 	QObject::tr("input port for noise figure")));
-  Props.push_back(Property("NoiseOP", "2", false,
+  Props.push_back(qucs::Property("NoiseOP", "2", false,
 	QObject::tr("output port for noise figure")));
-  Props.push_back(Property("saveCVs", "no", false,
+  Props.push_back(qucs::Property("saveCVs", "no", false,
 	QObject::tr("put characteristic values into dataset")+
 	" [yes, no]"));
-  Props.push_back(Property("saveAll", "no", false,
+  Props.push_back(qucs::Property("saveAll", "no", false,
 	QObject::tr("save subcircuit characteristic values into dataset")+
 	" [yes, no]"));
 }
@@ -86,7 +86,7 @@ Element* SP_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
 void SP_Sim::recreate(Schematic*)
 {
-  Property &pp = Props.front();
+  qucs::Property &pp = Props.front();
   if((pp.Value == "list") || (pp.Value == "const")) {
     // Call them "Symbol" to omit them in the netlist.
     prop(1).Name = "Symbol";

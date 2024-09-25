@@ -2449,7 +2449,7 @@ void Schematic::setComponentNumber(const std::shared_ptr<Component> &c)
       return;
     }
 
-    Property &pp = c->Props.front();
+    qucs::Property &pp = c->Props.front();
     if(pp.Name != "Num") return;
 
     int n=1;

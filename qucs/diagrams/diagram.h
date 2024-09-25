@@ -21,7 +21,6 @@
 #include "graph.h"
 #include "marker.h"
 #include "element.h"
-using namespace qucs;
 #include "viewpainter.h"
 #include "sharedObjectList.h"
 

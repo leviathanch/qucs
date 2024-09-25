@@ -23,15 +23,15 @@ MSvia::MSvia()
 {
   Description = QObject::tr("microstrip via");
 
-  Arcs.push_back(Arc(-5,-4, 10,  7,  0, 16*360,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-20,  0, -5,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( -5,  0, -5, 14,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  5,  0,  5, 14,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-11, 14, 11, 14,QPen(Qt::darkBlue,3)));
-  Lines.push_back(Line( -7, 20,  7, 20,QPen(Qt::darkBlue,3)));
-  Lines.push_back(Line( -3, 26,  3, 26,QPen(Qt::darkBlue,3)));
+  Arcs.push_back(qucs::Arc(-5,-4, 10,  7,  0, 16*360,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-20,  0, -5,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -5,  0, -5, 14,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  5,  0,  5, 14,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-11, 14, 11, 14,QPen(Qt::darkBlue,3)));
+  Lines.push_back(qucs::Line( -7, 20,  7, 20,QPen(Qt::darkBlue,3)));
+  Lines.push_back(qucs::Line( -3, 26,  3, 26,QPen(Qt::darkBlue,3)));
 
-  Ports.push_back(Port(-20,  0));
+  Ports.push_back(qucs::Port(-20,  0));
 
   x1 = -20; y1 = -7;
   x2 =  14; y2 = 30;
@@ -41,11 +41,11 @@ MSvia::MSvia()
   Model = "MVIA";
   Name  = "MS";
 
-  Props.push_back(Property("Subst", "Subst1", true,
+  Props.push_back(qucs::Property("Subst", "Subst1", true,
 		QObject::tr("substrate")));
-  Props.push_back(Property("D", "1 mm", true,
+  Props.push_back(qucs::Property("D", "1 mm", true,
 		QObject::tr("diameter of round via conductor")));
-  Props.push_back(Property("Temp", "26.85", false,
+  Props.push_back(qucs::Property("Temp", "26.85", false,
 	QObject::tr("simulation temperature in degree Celsius")));
 }
 

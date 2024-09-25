@@ -30,20 +30,20 @@ RFedd2P::RFedd2P()
   Name  = "RF";
 
   // first properties !!!
-  Props.push_back(Property("Type", "Y", false,
+  Props.push_back(qucs::Property("Type", "Y", false,
 		QObject::tr("type of parameters")+" [Y, Z, S, H, G, A, T]"));
-  Props.push_back(Property("duringDC", "open", false,
+  Props.push_back(qucs::Property("duringDC", "open", false,
 		QObject::tr("representation during DC analysis")+
 			    " [open, short, unspecified, zerofrequency]"));
 
   // last properties
-  Props.push_back(Property("P11", "0", false,
+  Props.push_back(qucs::Property("P11", "0", false,
 		QObject::tr("parameter equation") + " 11"));
-  Props.push_back(Property("P12", "0", false,
+  Props.push_back(qucs::Property("P12", "0", false,
 		QObject::tr("parameter equation") + " 12"));
-  Props.push_back(Property("P21", "0", false,
+  Props.push_back(qucs::Property("P21", "0", false,
 		QObject::tr("parameter equation") + " 21"));
-  Props.push_back(Property("P22", "0", false,
+  Props.push_back(qucs::Property("P22", "0", false,
 		QObject::tr("parameter equation") + " 22"));
 
   createSymbol();
@@ -113,30 +113,30 @@ void RFedd2P::createSymbol()
   // draw symbol
   #define HALFWIDTH  17
   int h = 15;
-  Lines.push_back(Line(-HALFWIDTH, -h, HALFWIDTH, -h,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( HALFWIDTH, -h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-HALFWIDTH,  h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-HALFWIDTH, -h,-HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-HALFWIDTH, -h, HALFWIDTH, -h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( HALFWIDTH, -h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-HALFWIDTH,  h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-HALFWIDTH, -h,-HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
 
   // component text name
   tmp = prop(0).Value;
   w = smallmetrics.horizontalAdvance(tmp);
-  Texts.push_back(Text(-w/2, -fHeight/2, tmp)); // text centered in the box
+  Texts.push_back(qucs::Text(-w/2, -fHeight/2, tmp)); // text centered in the box
 
   // add port numbers text
   i = 0;
   int y = 15-h;
-  Lines.push_back(Line(-30,  y,-HALFWIDTH,  y,QPen(Qt::darkBlue,2)));
-  Ports.push_back(Port(-30,  y));
+  Lines.push_back(qucs::Line(-30,  y,-HALFWIDTH,  y,QPen(Qt::darkBlue,2)));
+  Ports.push_back(qucs::Port(-30,  y));
   tmp = QString::number(i+1);
   w = smallmetrics.horizontalAdvance(tmp);
-  Texts.push_back(Text(-25-w, y-fHeight-2, tmp)); // text right-aligned
+  Texts.push_back(qucs::Text(-25-w, y-fHeight-2, tmp)); // text right-aligned
   i++;
 
-  Lines.push_back(Line(HALFWIDTH,  y, 30,  y,QPen(Qt::darkBlue,2)));
-  Ports.push_back(Port( 30,  y));
+  Lines.push_back(qucs::Line(HALFWIDTH,  y, 30,  y,QPen(Qt::darkBlue,2)));
+  Ports.push_back(qucs::Port( 30,  y));
   tmp = QString::number(i+1);
-  Texts.push_back(Text(25, y-fHeight-2, tmp)); // text left-aligned
+  Texts.push_back(qucs::Text(25, y-fHeight-2, tmp)); // text left-aligned
   y += 60;
   i++;
 

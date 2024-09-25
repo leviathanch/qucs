@@ -24,11 +24,11 @@ gatedDlatch::gatedDlatch()
   Type = isComponent; // Analogue and digital component.
   Description = QObject::tr ("gated D latch verilog device");
 
-  Props.push_back (Property ("TR_H", "6", false,
+  Props.push_back(qucs::Property("TR_H", "6", false,
     QObject::tr ("cross coupled gate transfer function high scaling factor")));
-  Props.push_back (Property ("TR_L", "5", false,
+  Props.push_back(qucs::Property("TR_L", "5", false,
     QObject::tr ("cross coupled gate transfer function low scaling factor")));
-  Props.push_back (Property ("Delay", "1 ns", false,
+  Props.push_back(qucs::Property("Delay", "1 ns", false,
     QObject::tr ("cross coupled gate delay")
     +" ("+QObject::tr ("s")+")"));
 
@@ -58,28 +58,28 @@ Element * gatedDlatch::info(QString& Name, char * &BitmapFile, bool getNewOne)
 
 void gatedDlatch::createSymbol()
 {
-  Lines.push_back(Line(-30, -40, 30,-40,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30, -40, 30, 40,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30,  40,-30, 40,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30, 40,-30, -40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, -40, 30,-40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30, -40, 30, 40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30,  40,-30, 40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, 40,-30, -40,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-50,-20,-30,-20,QPen(Qt::darkBlue,2))); // D
-  Lines.push_back(Line(-50, 20,-30, 20,QPen(Qt::darkBlue,2))); // C
-  Lines.push_back(Line( 40, 20, 50, 20,QPen(Qt::darkBlue,2))); // QB
-  Lines.push_back(Line( 30,-20, 50,-20,QPen(Qt::darkBlue,2))); // Q
+  Lines.push_back(qucs::Line(-50,-20,-30,-20,QPen(Qt::darkBlue,2))); // D
+  Lines.push_back(qucs::Line(-50, 20,-30, 20,QPen(Qt::darkBlue,2))); // C
+  Lines.push_back(qucs::Line( 40, 20, 50, 20,QPen(Qt::darkBlue,2))); // QB
+  Lines.push_back(qucs::Line( 30,-20, 50,-20,QPen(Qt::darkBlue,2))); // Q
 
-  Arcs.push_back(Arc( 30, 15, 10, 10, 0, 16*360, QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc( 30, 15, 10, 10, 0, 16*360, QPen(Qt::darkBlue,2)));
 
-  Texts.push_back(Text(-25,-32, "D", Qt::darkBlue, 12.0));
-  Texts.push_back(Text(-25,  7, "C", Qt::darkBlue, 12.0));
-  Texts.push_back(Text( 11,-32, "Q", Qt::darkBlue, 12.0));
-  Texts.push_back(Text( 11,  7, "Q", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-25,-32, "D", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-25,  7, "C", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text( 11,-32, "Q", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text( 11,  7, "Q", Qt::darkBlue, 12.0));
   Texts.back().over=true;
 
-  Ports.push_back(Port(-50,-20));  // D
-  Ports.push_back(Port(-50, 20));  // C
-  Ports.push_back(Port( 50, 20));  // QB
-  Ports.push_back(Port( 50,-20));  // Q
+  Ports.push_back(qucs::Port(-50,-20));  // D
+  Ports.push_back(qucs::Port(-50, 20));  // C
+  Ports.push_back(qucs::Port( 50, 20));  // QB
+  Ports.push_back(qucs::Port( 50,-20));  // Q
 
   x1 = -50; y1 = -44;
   x2 =  50; y2 =  44;

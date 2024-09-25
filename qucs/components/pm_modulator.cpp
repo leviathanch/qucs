@@ -22,23 +22,23 @@ PM_Modulator::PM_Modulator()
 {
   Description = QObject::tr("ac voltage source with phase modulator");
 
-  Arcs.push_back(Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
-  Arcs.push_back(Arc( -7, -4,  7,  7,     0, 16*180,QPen(Qt::darkBlue,2)));
-  Arcs.push_back(Arc(  0, -4,  7,  7,16*180, 16*180,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  0, 30,  0, 12,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  0,-30,  0,-12,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  5,-18, 11,-18,QPen(Qt::red,1)));
-  Lines.push_back(Line(  8,-21,  8,-15,QPen(Qt::red,1)));
-  Lines.push_back(Line(  5, 18, 11, 18,QPen(Qt::black,1)));
+  Arcs.push_back(qucs::Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc( -7, -4,  7,  7,     0, 16*180,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc(  0, -4,  7,  7,16*180, 16*180,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  0, 30,  0, 12,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  0,-30,  0,-12,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  5,-18, 11,-18,QPen(Qt::red,1)));
+  Lines.push_back(qucs::Line(  8,-21,  8,-15,QPen(Qt::red,1)));
+  Lines.push_back(qucs::Line(  5, 18, 11, 18,QPen(Qt::black,1)));
 
-  Lines.push_back(Line(-12,  0,-30,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-12,  0,-17,  5,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-12,  0,-17, -5,QPen(Qt::darkBlue,2)));
-  Texts.push_back(Text(-30,-22, QObject::tr("PM"), Qt::black, 10.0,1.0,0.0));
+  Lines.push_back(qucs::Line(-12,  0,-30,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-12,  0,-17,  5,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-12,  0,-17, -5,QPen(Qt::darkBlue,2)));
+  Texts.push_back(qucs::Text(-30,-22, QObject::tr("PM"), Qt::black, 10.0,1.0,0.0));
 
-  Ports.push_back(Port(  0,-30));
-  Ports.push_back(Port(  0, 30));
-  Ports.push_back(Port(-30,  0));
+  Ports.push_back(qucs::Port(  0,-30));
+  Ports.push_back(qucs::Port(  0, 30));
+  Ports.push_back(qucs::Port(-30,  0));
 
   x1 = -30; y1 = -30;
   x2 =  14; y2 =  30;
@@ -48,13 +48,13 @@ PM_Modulator::PM_Modulator()
   Model = "PM_Mod";
   Name  = "V";
 
-  Props.push_back(Property("U", "1 V", true,
+  Props.push_back(qucs::Property("U", "1 V", true,
 		QObject::tr("peak voltage in Volts")));
-  Props.push_back(Property("f", "1 GHz", false,
+  Props.push_back(qucs::Property("f", "1 GHz", false,
 		QObject::tr("frequency in Hertz")));
-  Props.push_back(Property("Phase", "0", false,
+  Props.push_back(qucs::Property("Phase", "0", false,
 		QObject::tr("initial phase in degrees")));
-  Props.push_back(Property("M", "1.0", false,
+  Props.push_back(qucs::Property("M", "1.0", false,
 		QObject::tr("modulation index")));
 }
 

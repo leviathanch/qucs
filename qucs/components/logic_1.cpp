@@ -23,7 +23,7 @@ logic_1::logic_1()
   Type = isComponent; // Analogue and digital component.
   Description = QObject::tr ("logic 1 verilog device");
 
- Props.push_back (Property ("LEVEL", "1", false,
+ Props.push_back(qucs::Property("LEVEL", "1", false,
     QObject::tr ("logic 1 voltage level")
     +" ("+QObject::tr ("V")+")"));
   createSymbol ();
@@ -54,16 +54,16 @@ Element * logic_1::info(QString& Name, char * &BitmapFile, bool getNewOne)
 void logic_1::createSymbol()
 {
 
-  Lines.push_back(Line(-10,  0,  0,  0,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-20,-10,-10,  0,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-20, 10,-10,  0,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-35,-10,-20,-10,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-35, 10,-20, 10,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-35,-10,-35, 10,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-10,  0,  0,  0,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-20,-10,-10,  0,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-20, 10,-10,  0,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-35,-10,-20,-10,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-35, 10,-20, 10,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-35,-10,-35, 10,QPen(Qt::darkGreen,2)));
 
-  Texts.push_back(Text(-30,-12, "1", Qt::darkGreen, 12.0));
+  Texts.push_back(qucs::Text(-30,-12, "1", Qt::darkGreen, 12.0));
 
-  Ports.push_back(Port(  0,  0)); // L1
+  Ports.push_back(qucs::Port(  0,  0)); // L1
 
   x1 = -39; y1 = -14;
   x2 = 0;   y2 =  14;

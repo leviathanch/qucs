@@ -24,9 +24,9 @@ comp_1bit::comp_1bit()
   Type = isComponent; // Analogue and digital component.
   Description = QObject::tr ("1bit comparator verilog device");
 
-  Props.push_back (Property ("TR", "6", false,
+  Props.push_back(qucs::Property("TR", "6", false,
     QObject::tr ("transfer function high scaling factor")));
-  Props.push_back (Property ("Delay", "1 ns", false,
+  Props.push_back(qucs::Property("Delay", "1 ns", false,
     QObject::tr ("output delay")
     +" ("+QObject::tr ("s")+")"));
  
@@ -56,30 +56,30 @@ Element * comp_1bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
 
 void comp_1bit::createSymbol()
 {
-  Lines.push_back(Line(-30, -60, 30,-60,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30, -60, 30, 30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30,  30,-30, 30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30,  30,-30, -60,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, -60, 30,-60,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30, -60, 30, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30,  30,-30, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  30,-30, -60,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-50,-10,-30,-10,QPen(Qt::darkBlue,2)));  // X
-  Lines.push_back(Line(-50, 10,-30, 10,QPen(Qt::darkBlue,2)));  // Y
-  Lines.push_back(Line( 30, 20, 50, 20,QPen(Qt::darkBlue,2)));  // L
-  Lines.push_back(Line( 30,  0, 50,  0,QPen(Qt::darkBlue,2)));  // G
-  Lines.push_back(Line( 30,-20, 50,-20,QPen(Qt::darkBlue,2)));  // E
+  Lines.push_back(qucs::Line(-50,-10,-30,-10,QPen(Qt::darkBlue,2)));  // X
+  Lines.push_back(qucs::Line(-50, 10,-30, 10,QPen(Qt::darkBlue,2)));  // Y
+  Lines.push_back(qucs::Line( 30, 20, 50, 20,QPen(Qt::darkBlue,2)));  // L
+  Lines.push_back(qucs::Line( 30,  0, 50,  0,QPen(Qt::darkBlue,2)));  // G
+  Lines.push_back(qucs::Line( 30,-20, 50,-20,QPen(Qt::darkBlue,2)));  // E
 
-  Texts.push_back(Text(-25,-55, "COMP", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-25,-55, "COMP", Qt::darkBlue, 12.0));
 
-  Texts.push_back(Text(-25,-23,   "X",  Qt::darkBlue, 12.0));
-  Texts.push_back(Text(-25, -3,   "Y",  Qt::darkBlue, 12.0));
-  Texts.push_back(Text( -5,  7, "X<Y",  Qt::darkBlue, 12.0));
-  Texts.push_back(Text( -5,-13, "X>Y", Qt::darkBlue, 12.0));
-  Texts.push_back(Text( -5,-33, "X=Y", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-25,-23,   "X",  Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-25, -3,   "Y",  Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text( -5,  7, "X<Y",  Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text( -5,-13, "X>Y", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text( -5,-33, "X=Y", Qt::darkBlue, 12.0));
 
-  Ports.push_back(Port(-50,-10));  // X
-  Ports.push_back(Port(-50, 10));  // Y
-  Ports.push_back(Port( 50, 20));  // L
-  Ports.push_back(Port( 50,  0));  // G
-  Ports.push_back(Port( 50,-20));  // E
+  Ports.push_back(qucs::Port(-50,-10));  // X
+  Ports.push_back(qucs::Port(-50, 10));  // Y
+  Ports.push_back(qucs::Port( 50, 20));  // L
+  Ports.push_back(qucs::Port( 50,  0));  // G
+  Ports.push_back(qucs::Port( 50,-20));  // E
 
   x1 = -50; y1 = -64;
   x2 =  50; y2 =  34;

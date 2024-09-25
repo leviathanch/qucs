@@ -22,29 +22,29 @@ Source_ac::Source_ac()
 {
   Description = QObject::tr("ac power source");
 
-  Lines.push_back(Line(-22,-11, 22,-11,QPen(Qt::darkGray,0)));
-  Lines.push_back(Line(-22, 11, 22, 11,QPen(Qt::darkGray,0)));
-  Lines.push_back(Line(-22,-11,-22, 11,QPen(Qt::darkGray,0)));
-  Lines.push_back(Line( 22,-11, 22, 11,QPen(Qt::darkGray,0)));
+  Lines.push_back(qucs::Line(-22,-11, 22,-11,QPen(Qt::darkGray,0)));
+  Lines.push_back(qucs::Line(-22, 11, 22, 11,QPen(Qt::darkGray,0)));
+  Lines.push_back(qucs::Line(-22,-11,-22, 11,QPen(Qt::darkGray,0)));
+  Lines.push_back(qucs::Line( 22,-11, 22, 11,QPen(Qt::darkGray,0)));
 
-  Arcs.push_back(Arc(-19, -9, 18, 18,     0, 16*360,QPen(Qt::darkBlue,2)));
-  Arcs.push_back(Arc(-13, -6,  6,  6,16*270, 16*180,QPen(Qt::darkBlue,2)));
-  Arcs.push_back(Arc(-13,  0,  6,  6, 16*90, 16*180,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30,  0,-19,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30,  0, 19,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( -1,  0,  3,  0,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc(-19, -9, 18, 18,     0, 16*360,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc(-13, -6,  6,  6,16*270, 16*180,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc(-13,  0,  6,  6, 16*90, 16*180,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  0,-19,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30,  0, 19,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -1,  0,  3,  0,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(  3, -5, 19, -5,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  3,  5, 19,  5,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  3, -5,  3,  5,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 19, -5, 19,  5,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  3, -5, 19, -5,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  3,  5, 19,  5,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  3, -5,  3,  5,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 19, -5, 19,  5,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line( 25,  5, 25, 11,QPen(Qt::red,1)));
-  Lines.push_back(Line( 28,  8, 22,  8,QPen(Qt::red,1)));
-  Lines.push_back(Line(-25,  5,-25, 11,QPen(Qt::black,1)));
+  Lines.push_back(qucs::Line( 25,  5, 25, 11,QPen(Qt::red,1)));
+  Lines.push_back(qucs::Line( 28,  8, 22,  8,QPen(Qt::red,1)));
+  Lines.push_back(qucs::Line(-25,  5,-25, 11,QPen(Qt::black,1)));
 
-  Ports.push_back(Port( 30,  0));
-  Ports.push_back(Port(-30,  0));
+  Ports.push_back(qucs::Port( 30,  0));
+  Ports.push_back(qucs::Port(-30,  0));
 
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  14;
@@ -55,15 +55,15 @@ Source_ac::Source_ac()
   Name  = "P";
 
   // This property must be the first one !
-  Props.push_back(Property("Num", "1", true,
+  Props.push_back(qucs::Property("Num", "1", true,
 		QObject::tr("number of the port")));
-  Props.push_back(Property("Z", "50 Ohm", true,
+  Props.push_back(qucs::Property("Z", "50 Ohm", true,
 		QObject::tr("port impedance")));
-  Props.push_back(Property("P", "0 dBm", false,
+  Props.push_back(qucs::Property("P", "0 dBm", false,
 		QObject::tr("(available) ac power in Watts")));
-  Props.push_back(Property("f", "1 GHz", false,
+  Props.push_back(qucs::Property("f", "1 GHz", false,
 		QObject::tr("frequency in Hertz")));
-  Props.push_back(Property("Temp", "26.85", false,
+  Props.push_back(qucs::Property("Temp", "26.85", false,
 	QObject::tr("simulation temperature in degree Celsius")));
 
   rotate();  // fix historical flaw

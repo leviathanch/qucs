@@ -24,11 +24,11 @@ dff_SR::dff_SR()
   Type = isComponent; // Analogue and digital component.
   Description = QObject::tr ("D flip flop with set and reset verilog device");
 
-  Props.push_back (Property ("TR_H", "6", false,
+  Props.push_back(qucs::Property("TR_H", "6", false,
     QObject::tr ("cross coupled gate transfer function high scaling factor")));
-  Props.push_back (Property ("TR_L", "5", false,
+  Props.push_back(qucs::Property("TR_L", "5", false,
     QObject::tr ("cross coupled gate transfer function low scaling factor")));
-  Props.push_back (Property ("Delay", "1 ns", false,
+  Props.push_back(qucs::Property("Delay", "1 ns", false,
     QObject::tr ("cross coupled gate delay")
     +" ("+QObject::tr ("s")+")"));
 
@@ -59,38 +59,38 @@ Element * dff_SR::info(QString& Name, char * &BitmapFile, bool getNewOne)
 void dff_SR::createSymbol()
 {
   // put in here symbol drawing code and terminal definitions
-  Lines.push_back(Line(-30,-40, 30,-40,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30,-40, 30, 40,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30, 40,-30, 40,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30, 40,-30,-40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,-40, 30,-40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30,-40, 30, 40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30, 40,-30, 40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, 40,-30,-40,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-50,-20,-30,-20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-50, 20,-30, 20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30, 20, 50, 20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30,-20, 50,-20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-50,-20,-30,-20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-50, 20,-30, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30, 20, 50, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30,-20, 50,-20,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line( -30, 10,-20, 20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( -30, 30,-20, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -30, 10,-20, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -30, 30,-20, 20,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(  0, -50,  0, -60,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  0,  50,  0,  60,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  0, -50,  0, -60,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  0,  50,  0,  60,QPen(Qt::darkBlue,2)));
 
-  Arcs.push_back(Arc( -5,-50, 10, 10, 0, 16*360, QPen(Qt::darkBlue,2)));
-  Arcs.push_back(Arc( -5, 40, 10, 10, 0, 16*360, QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc( -5,-50, 10, 10, 0, 16*360, QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc( -5, 40, 10, 10, 0, 16*360, QPen(Qt::darkBlue,2)));
 
-  Texts.push_back(Text(-25,-32,  "D", Qt::darkBlue, 12.0));
-  Texts.push_back(Text( 11,-32,  "Q", Qt::darkBlue, 12.0));
-  Texts.push_back(Text( -5,-39,  "S", Qt::darkBlue, 12.0));
-  Texts.push_back(Text( 11,  7,  "Q", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-25,-32,  "D", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text( 11,-32,  "Q", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text( -5,-39,  "S", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text( 11,  7,  "Q", Qt::darkBlue, 12.0));
   Texts.back().over=true;
-  Texts.push_back(Text( -5, 17,  "R", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text( -5, 17,  "R", Qt::darkBlue, 12.0));
  
-  Ports.push_back(Port(0,  -60));  // S
-  Ports.push_back(Port(-50,-20));  // D
-  Ports.push_back(Port(-50, 20));  // CLK
-  Ports.push_back(Port(  0, 60));  // R
-  Ports.push_back(Port( 50, 20));  // QB
-  Ports.push_back(Port( 50,-20));  // Q
+  Ports.push_back(qucs::Port(0,  -60));  // S
+  Ports.push_back(qucs::Port(-50,-20));  // D
+  Ports.push_back(qucs::Port(-50, 20));  // CLK
+  Ports.push_back(qucs::Port(  0, 60));  // R
+  Ports.push_back(qucs::Port( 50, 20));  // QB
+  Ports.push_back(qucs::Port( 50,-20));  // Q
 
   x1 = -50; y1 = -60;
   x2 =  50; y2 =  60;

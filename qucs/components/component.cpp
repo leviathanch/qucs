@@ -77,7 +77,7 @@ void Component::Bounding(int& _x1, int& _y1, int& _x2, int& _y2)
 
 // -------------------------------------------------------
 
-Property &Component::prop(int n)
+qucs::Property &Component::prop(int n)
 {
   auto p = Props.begin();
   while (n-- > 0 && p != Props.end())
@@ -86,7 +86,7 @@ Property &Component::prop(int n)
   return *p;
 }
 
-const Property &Component::prop(int n) const
+const qucs::Property &Component::prop(int n) const
 {
   auto p = Props.begin();
   while (n-- > 0 && p != Props.end())
@@ -95,7 +95,7 @@ const Property &Component::prop(int n) const
   return *p;
 }
 
-Port &Component::port(int n)
+qucs::Port &Component::port(int n)
 {
   auto p = Ports.begin();
   while (n-- > 0 && p != Ports.end())
@@ -104,7 +104,7 @@ Port &Component::port(int n)
   return *p;
 }
 
-const Port &Component::port(int n) const
+const qucs::Port &Component::port(int n) const
 {
   auto p = Ports.begin();
   while (n-- > 0 && p != Ports.end())
@@ -769,7 +769,7 @@ void Schematic::saveComponent(QTextStream& s, Component /*const*/ * c) const
   el.setAttribute ("mirror", mirroredX);
   el.setAttribute ("rotate", rotated);
 
-  for (Property *pr = Props.front(); pr != 0; pr = Props.next()) {
+  for (qucs::Property *pr = Props.front(); pr != 0; pr = Props.next()) {
     el.setAttribute (pr->Name, (pr->display ? "1@" : "0@") + pr.Value);
   }
   qDebug (doc.toString());
@@ -908,7 +908,7 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
 
   /// BUG FIXME. dont use Component parameter dictionary.
   for(; tmp<=(int)counts/2; tmp++)
-    c->Props.push_back(Property("p", "", true, " "));
+    c->Props.push_back(qucs::Property("p", "", true, " "));
 
   // BUG this is weird ...
 
@@ -995,7 +995,7 @@ bool Schematic::loadComponent(const QString& _s, const std::shared_ptr<Component
         if((unsigned int)c->Props.size() < (counts>>1)) {
           auto p1next = p1;
           ++p1next;
-          c->Props.insert(p1next, Property("y", "1", true));
+          c->Props.insert(p1next, qucs::Property("y", "1", true));
         }
       }
     if(Model == "R" && z == 6 && counts == 6) {    // backward compatible
@@ -1030,7 +1030,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(!getIntegers(Row, &i1, &i2, &i3))
       return -1;
     for(i6 = Ports.size(); i6<i3; i6++)  // if ports not in numerical order
-      Ports.push_back(Port(0, 0, false));
+      Ports.push_back(qucs::Port(0, 0, false));
 
     auto po = Ports.begin();
     for(int i = 0; i < (i3-1) && po != Ports.end(); ++i)
@@ -1050,7 +1050,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(!getPen(Row, Pen, 5))  return -1;
     i3 += i1;
     i4 += i2;
-    Lines.push_back(Line(i1, i2, i3, i4, Pen));
+    Lines.push_back(qucs::Line(i1, i2, i3, i4, Pen));
 
     if(i1 < x1)  x1 = i1;  // keep track of component boundings
     if(i1 > x2)  x2 = i1;
@@ -1066,7 +1066,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(!getIntegers(Row, &i1, &i2, &i3, &i4, &i5, &i6))
       return -1;
     if(!getPen(Row, Pen, 7))  return -1;
-    Arcs.push_back(Arc(i1, i2, i3, i4, i5, i6, Pen));
+    Arcs.push_back(qucs::Arc(i1, i2, i3, i4, i5, i6, Pen));
 
     if(i1 < x1)  x1 = i1;  // keep track of component boundings
     if(i1+i3 > x2)  x2 = i1+i3;
@@ -1091,7 +1091,7 @@ int Component::analyseLine(const QString& Row, int numProps)
 
       ++pp;
       if(pp == Props.end()) {
-        Props.push_back(Property());
+        Props.push_back(qucs::Property());
         pp = --Props.end();
         pp->display = (s.at(0) == '1');
         pp->Value = s.section('=', 2,2);
@@ -1127,12 +1127,12 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(i4 < y1)  y1 = i4;
     if(i4 > y2)  y2 = i4;
 
-    Lines.push_back(Line(i1, i2, i3, i4, Pen));   // base line
+    Lines.push_back(qucs::Line(i1, i2, i3, i4, Pen));   // base line
 
     double w = beta+phi;
     i5 = i3-int(Length*cos(w));
     i6 = i4-int(Length*sin(w));
-    Lines.push_back(Line(i3, i4, i5, i6, Pen)); // arrow head
+    Lines.push_back(qucs::Line(i3, i4, i5, i6, Pen)); // arrow head
     if(i5 < x1)  x1 = i5;  // keep track of component boundings
     if(i5 > x2)  x2 = i5;
     if(i6 < y1)  y1 = i6;
@@ -1141,7 +1141,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     w = phi-beta;
     i5 = i3-int(Length*cos(w));
     i6 = i4-int(Length*sin(w));
-    Lines.push_back(Line(i3, i4, i5, i6, Pen));
+    Lines.push_back(qucs::Line(i3, i4, i5, i6, Pen));
     if(i5 < x1)  x1 = i5;  // keep track of component boundings
     if(i5 > x2)  x2 = i5;
     if(i6 < y1)  y1 = i6;
@@ -1153,7 +1153,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(!getIntegers(Row, &i1, &i2, &i3, &i4))  return -1;
     if(!getPen(Row, Pen, 5))  return -1;
     if(!getBrush(Row, Brush, 8))  return -1;
-    Ellips.push_back(Area(i1, i2, i3, i4, Pen, Brush));
+    Ellips.push_back(qucs::Area(i1, i2, i3, i4, Pen, Brush));
 
     if(i1 < x1)  x1 = i1;  // keep track of component boundings
     if(i1 > x2)  x2 = i1;
@@ -1169,7 +1169,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(!getIntegers(Row, &i1, &i2, &i3, &i4))  return -1;
     if(!getPen(Row, Pen, 5))  return -1;
     if(!getBrush(Row, Brush, 8))  return -1;
-    Rects.push_back(Area(i1, i2, i3, i4, Pen, Brush));
+    Rects.push_back(qucs::Area(i1, i2, i3, i4, Pen, Brush));
 
     if(i1 < x1)  x1 = i1;  // keep track of component boundings
     if(i1 > x2)  x2 = i1;
@@ -1191,7 +1191,7 @@ int Component::analyseLine(const QString& Row, int numProps)
     if(s.isEmpty()) return -1;
     misc::convert2Unicode(s);
 
-    Texts.push_back(Text(i1, i2, s, Color, float(i3),
+    Texts.push_back(qucs::Text(i1, i2, s, Color, float(i3),
                           float(cos(float(i4)*pi/180.0)),
                           float(sin(float(i4)*pi/180.0))));
 
@@ -1311,14 +1311,14 @@ bool Component::getBrush(const QString& s, QBrush& Brush, int i)
 }
 
 // ---------------------------------------------------------------------
-Property &Component::getProperty(const QString& name)
+qucs::Property &Component::getProperty(const QString& name)
 {
   for(auto pp = Props.begin(); pp != Props.end(); ++pp) {
     if(pp->Name == name) {
       return *pp;
     }
   }
-  Props.push_back(Property());
+  Props.push_back(qucs::Property());
   Props.back().Name = name;
   return Props.back();
 }
@@ -1444,17 +1444,17 @@ GateComponent::GateComponent()
   Name  = "Y";
 
   // the list order must be preserved !!!
-  Props.push_back(Property("in", "2", false,
+  Props.push_back(qucs::Property("in", "2", false,
 		QObject::tr("number of input ports")));
-  Props.push_back(Property("V", "1 V", false,
+  Props.push_back(qucs::Property("V", "1 V", false,
 		QObject::tr("voltage of high level")));
-  Props.push_back(Property("t", "0", false,
+  Props.push_back(qucs::Property("t", "0", false,
 		QObject::tr("delay time")));
-  Props.push_back(Property("TR", "10", false,
+  Props.push_back(qucs::Property("TR", "10", false,
 		QObject::tr("transfer function scaling factor")));
 
   // this must be the last property in the list !!!
-  Props.push_back(Property("Symbol", "old", false,
+  Props.push_back(qucs::Property("Symbol", "old", false,
 		QObject::tr("schematic symbol")+" [old, DIN40900]"));
 }
 
@@ -1607,29 +1607,29 @@ void GateComponent::createSymbol()
   if(Props.back().Value.at(0) == 'D') {  // DIN symbol
     xl = -15;
     xr =  15;
-    Lines.push_back(Line( 15,-y, 15, y,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line(-15,-y, 15,-y,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line(-15, y, 15, y,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line(-15,-y,-15, y,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line( 15, 0, 30, 0,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line( 15,-y, 15, y,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(-15,-y, 15,-y,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(-15, y, 15, y,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(-15,-y,-15, y,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line( 15, 0, 30, 0,QPen(Qt::darkBlue,2)));
 
     if(Model.at(z) == 'O') {
-      Lines.push_back(Line(-11, 6-y,-6, 9-y,QPen(Qt::darkBlue,0)));
-      Lines.push_back(Line(-11,12-y,-6, 9-y,QPen(Qt::darkBlue,0)));
-      Lines.push_back(Line(-11,14-y,-6,14-y,QPen(Qt::darkBlue,0)));
-      Lines.push_back(Line(-11,16-y,-6,16-y,QPen(Qt::darkBlue,0)));
-      Texts.push_back(Text( -4, 3-y, "1", Qt::darkBlue, 15.0));
+      Lines.push_back(qucs::Line(-11, 6-y,-6, 9-y,QPen(Qt::darkBlue,0)));
+      Lines.push_back(qucs::Line(-11,12-y,-6, 9-y,QPen(Qt::darkBlue,0)));
+      Lines.push_back(qucs::Line(-11,14-y,-6,14-y,QPen(Qt::darkBlue,0)));
+      Lines.push_back(qucs::Line(-11,16-y,-6,16-y,QPen(Qt::darkBlue,0)));
+      Texts.push_back(qucs::Text( -4, 3-y, "1", Qt::darkBlue, 15.0));
     }
     else if(Model.at(z) == 'A')
-      Texts.push_back(Text( -10, 3-y, "&", Qt::darkBlue, 15.0));
+      Texts.push_back(qucs::Text( -10, 3-y, "&", Qt::darkBlue, 15.0));
     else if(Model.at(0) == 'X') {
       if(Model.at(1) == 'N') {
-	Ellips.push_back(Area(xr,-4, 8, 8,
+	Ellips.push_back(qucs::Area(xr,-4, 8, 8,
                   QPen(Qt::darkBlue,0), QBrush(Qt::darkBlue)));
-        Texts.push_back(Text( -11, 3-y, "=1", Qt::darkBlue, 15.0));
+        Texts.push_back(qucs::Text( -11, 3-y, "=1", Qt::darkBlue, 15.0));
       }
       else
-        Texts.push_back(Text( -11, 3-y, "=1", Qt::darkBlue, 15.0));
+        Texts.push_back(qucs::Text( -11, 3-y, "=1", Qt::darkBlue, 15.0));
     }
   }
   else {   // old symbol
@@ -1637,39 +1637,39 @@ void GateComponent::createSymbol()
     if(Model.at(z) == 'O')  xl = 10;
     else  xl = -10;
     xr = 10;
-    Lines.push_back(Line(-10,-y,-10, y,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line( 10, 0, 30, 0,QPen(Qt::darkBlue,2)));
-    Arcs.push_back(Arc(-30,-y, 40, 30, 0, 16*90,QPen(Qt::darkBlue,2)));
-    Arcs.push_back(Arc(-30,y-30, 40, 30, 0,-16*90,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line( 10,15-y, 10, y-15,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(-10,-y,-10, y,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line( 10, 0, 30, 0,QPen(Qt::darkBlue,2)));
+    Arcs.push_back(qucs::Arc(-30,-y, 40, 30, 0, 16*90,QPen(Qt::darkBlue,2)));
+    Arcs.push_back(qucs::Arc(-30,y-30, 40, 30, 0,-16*90,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line( 10,15-y, 10, y-15,QPen(Qt::darkBlue,2)));
 
     if(Model.at(0) == 'X') {
-      Lines.push_back(Line(-5, 0, 5, 0,QPen(Qt::darkBlue,1)));
+      Lines.push_back(qucs::Line(-5, 0, 5, 0,QPen(Qt::darkBlue,1)));
       if(Model.at(1) == 'N') {
-        Lines.push_back(Line(-5,-3, 5,-3,QPen(Qt::darkBlue,1)));
-        Lines.push_back(Line(-5, 3, 5, 3,QPen(Qt::darkBlue,1)));
+        Lines.push_back(qucs::Line(-5,-3, 5,-3,QPen(Qt::darkBlue,1)));
+        Lines.push_back(qucs::Line(-5, 3, 5, 3,QPen(Qt::darkBlue,1)));
       }
       else {
-        Arcs.push_back(Arc(-5,-5, 10, 10, 0, 16*360,QPen(Qt::darkBlue,1)));
-        Lines.push_back(Line( 0,-5, 0, 5,QPen(Qt::darkBlue,1)));
+        Arcs.push_back(qucs::Arc(-5,-5, 10, 10, 0, 16*360,QPen(Qt::darkBlue,1)));
+        Lines.push_back(qucs::Line( 0,-5, 0, 5,QPen(Qt::darkBlue,1)));
       }
     }
   }
 
   if(Model.at(0) == 'N')
-    Ellips.push_back(Area(xr,-4, 8, 8,
+    Ellips.push_back(qucs::Area(xr,-4, 8, 8,
                   QPen(Qt::darkBlue,0), QBrush(Qt::darkBlue)));
 
-  Ports.push_back(Port( 30,  0));
+  Ports.push_back(qucs::Port( 30,  0));
   y += 10;
   for(z=0; z<Num; z++) {
     y -= 20;
-    Ports.push_back(Port(-30, y));
+    Ports.push_back(qucs::Port(-30, y));
     if(xl == 10) if((z == 0) || (z == Num-1)) {
-      Lines.push_back(Line(-30, y, 9, y,QPen(Qt::darkBlue,2)));
+      Lines.push_back(qucs::Line(-30, y, 9, y,QPen(Qt::darkBlue,2)));
       continue;
     }
-    Lines.push_back(Line(-30, y, xl, y,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(-30, y, xl, y,QPen(Qt::darkBlue,2)));
   }
 }
 

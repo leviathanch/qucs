@@ -36,18 +36,18 @@ SPDeEmbed::SPDeEmbed()
   Name  = "XD";
 
   // must be the first property !!!
-  Props.push_back(Property("File", "test.s2p", true,
+  Props.push_back(qucs::Property("File", "test.s2p", true,
 		QObject::tr("name of the s parameter file")));
-  Props.push_back(Property("Data", "rectangular", false,
+  Props.push_back(qucs::Property("Data", "rectangular", false,
 		QObject::tr("data type")+" [rectangular, polar]"));
-  Props.push_back(Property("Interpolator", "linear", false,
+  Props.push_back(qucs::Property("Interpolator", "linear", false,
 		QObject::tr("interpolation type")+" [linear, cubic]"));
-  Props.push_back(Property("duringDC", "open", false,
+  Props.push_back(qucs::Property("duringDC", "open", false,
 		QObject::tr("representation during DC analysis")+
 			    " [open, short, shortall, unspecified]"));
 
   // must be the last property !!!
-  Props.push_back(Property("Ports", "2", false,
+  Props.push_back(qucs::Property("Ports", "2", false,
 		QObject::tr("number of ports")));
 
   createSymbol();
@@ -168,35 +168,35 @@ void SPDeEmbed::createSymbol()
   // draw symbol outline
   int h = (PortDistance/2)*((Num-1)/2) + 15;
   QPen pen(Qt::darkBlue, 2, Qt::DashLine);
-  Lines.push_back(Line(-15, -h, 15, -h, pen));
-  Lines.push_back(Line( 15, -h, 15,  h, pen));
-  Lines.push_back(Line(-15,  h, 15,  h, pen));
-  Lines.push_back(Line(-15, -h,-15,  h, pen));
+  Lines.push_back(qucs::Line(-15, -h, 15, -h, pen));
+  Lines.push_back(qucs::Line( 15, -h, 15,  h, pen));
+  Lines.push_back(qucs::Line(-15,  h, 15,  h, pen));
+  Lines.push_back(qucs::Line(-15, -h,-15,  h, pen));
   stmp = QObject::tr("file");
   w = smallmetrics.horizontalAdvance(stmp); // compute text size to center it
-  Texts.push_back(Text(-w/2, -fHeight/2, stmp));
+  Texts.push_back(qucs::Text(-w/2, -fHeight/2, stmp));
 
   int i=0, y = 15-h;
   while(i<Num) { // add ports lines and numbers
     i++;
-    Lines.push_back(Line(-30, y,-15, y,QPen(Qt::darkBlue,2)));
-    Ports.push_back(Port(-30, y));
+    Lines.push_back(qucs::Line(-30, y,-15, y,QPen(Qt::darkBlue,2)));
+    Ports.push_back(qucs::Port(-30, y));
     stmp = QString::number(i);
     w = smallmetrics.horizontalAdvance(stmp);
-    Texts.push_back(Text(-25-w, y-fHeight-2, stmp)); // text right-aligned
+    Texts.push_back(qucs::Text(-25-w, y-fHeight-2, stmp)); // text right-aligned
 
     if(i == Num) break; // if odd number of ports there will be one port less on the right side
     i++;
-    Lines.push_back(Line( 15, y, 30, y,QPen(Qt::darkBlue,2)));
-    Ports.push_back(Port( 30, y));
+    Lines.push_back(qucs::Line( 15, y, 30, y,QPen(Qt::darkBlue,2)));
+    Ports.push_back(qucs::Port( 30, y));
     stmp = QString::number(i);
-    Texts.push_back(Text(25, y-fHeight-2, stmp)); // text left-aligned
+    Texts.push_back(qucs::Text(25, y-fHeight-2, stmp)); // text left-aligned
     y += PortDistance;
   }
 
-  Lines.push_back(Line( 0, h, 0,h+15,QPen(Qt::darkBlue,2)));
-  Texts.push_back(Text( 4, h,"Ref"));
-  Ports.push_back(Port( 0,h+15));    // 'Ref' port
+  Lines.push_back(qucs::Line( 0, h, 0,h+15,QPen(Qt::darkBlue,2)));
+  Texts.push_back(qucs::Text( 4, h,"Ref"));
+  Ports.push_back(qucs::Port( 0,h+15));    // 'Ref' port
 
   x1 = -30; y1 = -h-2;
   x2 =  30; y2 =  h+15;

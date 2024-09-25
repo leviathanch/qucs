@@ -22,16 +22,16 @@ CoaxialLine::CoaxialLine()
 {
   Description = QObject::tr("coaxial transmission line");
 
-  Arcs.push_back(Arc(-20, -9, 8, 18,     0, 16*360,QPen(Qt::darkBlue,2)));
-  Arcs.push_back(Arc( 11, -9, 8, 18,16*270, 16*180,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc(-20, -9, 8, 18,     0, 16*360,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc( 11, -9, 8, 18,16*270, 16*180,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-30,  0,-16,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 19,  0, 30,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-16, -9, 16, -9,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-16,  9, 16,  9,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  0,-16,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 19,  0, 30,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-16, -9, 16, -9,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-16,  9, 16,  9,QPen(Qt::darkBlue,2)));
 
-  Ports.push_back(Port(-30, 0));
-  Ports.push_back(Port( 30, 0));
+  Ports.push_back(qucs::Port(-30, 0));
+  Ports.push_back(qucs::Port( 30, 0));
 
   x1 = -30; y1 =-12;
   x2 =  30; y2 = 12;
@@ -41,21 +41,21 @@ CoaxialLine::CoaxialLine()
   Model = "COAX";
   Name  = "Line";
 
-  Props.push_back(Property("er", "2.29", true,
+  Props.push_back(qucs::Property("er", "2.29", true,
 		QObject::tr("relative permittivity of dielectric")));
-  Props.push_back(Property("rho", "0.022e-6", false,
+  Props.push_back(qucs::Property("rho", "0.022e-6", false,
 		QObject::tr("specific resistance of conductor")));
-  Props.push_back(Property("mur", "1", false,
+  Props.push_back(qucs::Property("mur", "1", false,
 		QObject::tr("relative permeability of conductor")));
-  Props.push_back(Property("D", "2.95 mm", false,
+  Props.push_back(qucs::Property("D", "2.95 mm", false,
 		QObject::tr("inner diameter of shield")));
-  Props.push_back(Property("d", "0.9 mm", false,
+  Props.push_back(qucs::Property("d", "0.9 mm", false,
 		QObject::tr("diameter of inner conductor")));
-  Props.push_back(Property("L", "1500 mm", true,
+  Props.push_back(qucs::Property("L", "1500 mm", true,
 		QObject::tr("mechanical length of the line")));
-  Props.push_back(Property("tand", "4e-4", false,
+  Props.push_back(qucs::Property("tand", "4e-4", false,
 		QObject::tr("loss tangent")));
-  Props.push_back(Property("Temp", "26.85", false,
+  Props.push_back(qucs::Property("Temp", "26.85", false,
 		QObject::tr("simulation temperature in degree Celsius")));
 }
 

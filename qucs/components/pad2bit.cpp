@@ -16,7 +16,7 @@ pad2bit::pad2bit()
   Type = isComponent; // Analogue and digital component.
   Description = QObject::tr ("2bit pattern generator verilog device");
 
-  Props.push_back (Property ("Number", "0", false,
+  Props.push_back(qucs::Property("Number", "0", false,
     QObject::tr ("pad output value")));
 
   createSymbol ();
@@ -45,18 +45,18 @@ Element * pad2bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
 
 void pad2bit::createSymbol()
 {
-  Lines.push_back(Line(-60, -50, 30,-50,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line( 30, -50, 30, 10,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line( 30,  10,-60, 10,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-60,  10,-60,-50,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-60, -50, 30,-50,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line( 30, -50, 30, 10,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line( 30,  10,-60, 10,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-60,  10,-60,-50,QPen(Qt::darkGreen,2)));
 
-  Lines.push_back(Line( 40,-30, 30,-30,QPen(Qt::darkGreen,2)));  // A
-  Lines.push_back(Line( 40,-10, 30,-10,QPen(Qt::darkGreen,2)));  // B
+  Lines.push_back(qucs::Line( 40,-30, 30,-30,QPen(Qt::darkGreen,2)));  // A
+  Lines.push_back(qucs::Line( 40,-10, 30,-10,QPen(Qt::darkGreen,2)));  // B
  
-  Texts.push_back(Text(-58,-33, " 0   1   2    3", Qt::darkGreen, 12.0));
+  Texts.push_back(qucs::Text(-58,-33, " 0   1   2    3", Qt::darkGreen, 12.0));
 
-  Ports.push_back(Port(40,-10));  // B
-  Ports.push_back(Port(40,-30));  // A
+  Ports.push_back(qucs::Port(40,-10));  // B
+  Ports.push_back(qucs::Port(40,-30));  // A
 
   x1 = -64; y1 = -54;
   x2 =  40; y2 =  14;

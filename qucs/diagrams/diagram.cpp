@@ -195,12 +195,12 @@ void Diagram::createAxisLabels()
           if(Name[0] != 'C') {   // locus curve ?
             w = metrics.horizontalAdvance(pD->Var) >> 1;
 	    if(w > wmax)  wmax = w;
-            Texts.push_back(Text(x-w, y, pD->Var, pg->Color, 12.0));
+            Texts.push_back(qucs::Text(x-w, y, pD->Var, pg->Color, 12.0));
 	  }
 	  if(Name[0] == 'C') {
             w = metrics.horizontalAdvance("real("+pg->Var+")") >> 1;
 	    if(w > wmax)  wmax = w;
-            Texts.push_back(Text(x-w, y, "real("+pg->Var+")",
+            Texts.push_back(qucs::Text(x-w, y, "real("+pg->Var+")",
                                 pg->Color, 12.0));
 	  }
     }
@@ -210,7 +210,7 @@ void Diagram::createAxisLabels()
     encode_String(xAxis.Label, Str);
     w = metrics.horizontalAdvance(Str) >> 1;
     if(w > wmax)  wmax = w;
-    Texts.push_back(Text(x-w, y, Str, Qt::black, 12.0));
+    Texts.push_back(qucs::Text(x-w, y, Str, Qt::black, 12.0));
   }
   Bounding_y2 = 0;
   Bounding_y1 = y - LineSpacing;
@@ -230,19 +230,19 @@ void Diagram::createAxisLabels()
 	if(Name[0] != 'C') {   // location curve ?
           w = metrics.horizontalAdvance(pg->Var) >> 1;
           if(w > wmax)  wmax = w;
-          Texts.push_back(Text(x, y-w, pg->Var, pg->Color, 12.0, 0.0, 1.0));
+          Texts.push_back(qucs::Text(x, y-w, pg->Var, pg->Color, 12.0, 0.0, 1.0));
 	}
 	else {
           w = metrics.horizontalAdvance("imag("+pg->Var+")") >> 1;
           if(w > wmax)  wmax = w;
-          Texts.push_back(Text(x, y-w, "imag("+pg->Var+")",
+          Texts.push_back(qucs::Text(x, y-w, "imag("+pg->Var+")",
                                 pg->Color, 12.0, 0.0, 1.0));
 	}
       }
       else {     // if no data => <invalid>
         w = metrics.horizontalAdvance(pg->Var+INVALID_STR) >> 1;
         if(w > wmax)  wmax = w;
-        Texts.push_back(Text(x, y-w, pg->Var+INVALID_STR,
+        Texts.push_back(qucs::Text(x, y-w, pg->Var+INVALID_STR,
                               pg->Color, 12.0, 0.0, 1.0));
       }
       x -= LineSpacing;
@@ -252,7 +252,7 @@ void Diagram::createAxisLabels()
     encode_String(yAxis.Label, Str);
     w = metrics.horizontalAdvance(Str) >> 1;
     if(w > wmax)  wmax = w;
-    Texts.push_back(Text(x, y-w, Str, Qt::black, 12.0, 0.0, 1.0));
+    Texts.push_back(qucs::Text(x, y-w, Str, Qt::black, 12.0, 0.0, 1.0));
     x -= LineSpacing;
   }
   if(Bounding_x1 < -x) Bounding_x1 = -x;
@@ -268,20 +268,20 @@ void Diagram::createAxisLabels()
 	if(Name[0] != 'C') {   // location curve ?
           w = metrics.horizontalAdvance(pg->Var) >> 1;
           if(w > wmax)  wmax = w;
-          Texts.push_back(Text(x, y+w, pg->Var,
+          Texts.push_back(qucs::Text(x, y+w, pg->Var,
                                 pg->Color, 12.0, 0.0, -1.0));
 	}
 	else {
           w = metrics.horizontalAdvance("imag("+pg->Var+")") >> 1;
           if(w > wmax)  wmax = w;
-          Texts.push_back(Text(x, y+w, "imag("+pg->Var+")",
+          Texts.push_back(qucs::Text(x, y+w, "imag("+pg->Var+")",
                                 pg->Color, 12.0, 0.0, -1.0));
 	}
       }
       else {     // if no data => <invalid>
         w = metrics.horizontalAdvance(pg->Var+INVALID_STR) >> 1;
         if(w > wmax)  wmax = w;
-        Texts.push_back(Text(x, y+w, pg->Var+INVALID_STR,
+        Texts.push_back(qucs::Text(x, y+w, pg->Var+INVALID_STR,
                               pg->Color, 12.0, 0.0, -1.0));
       }
       x += LineSpacing;
@@ -291,7 +291,7 @@ void Diagram::createAxisLabels()
     encode_String(zAxis.Label, Str);
     w = metrics.horizontalAdvance(Str) >> 1;
     if(w > wmax)  wmax = w;
-    Texts.push_back(Text(x, y+w, Str, Qt::black, 12.0, 0.0, -1.0));
+    Texts.push_back(qucs::Text(x, y+w, Str, Qt::black, 12.0, 0.0, -1.0));
   }
   x -= x2;
   if(Bounding_x2 < x) Bounding_x2 = x;
@@ -1154,9 +1154,9 @@ int Diagram::checkColumnWidth(const QString& Str,
     colWidth = w;
     if((x+colWidth) >= x2) {    // enough space for text ?
       // mark lack of space with a small arrow
-      Lines.push_back(Line(x2-6, y-4, x2+7, y-4, QPen(Qt::red,2)));
-      Lines.push_back(Line(x2,   y-7, x2+6, y-4, QPen(Qt::red,2)));
-      Lines.push_back(Line(x2,   y-1, x2+6, y-4, QPen(Qt::red,2)));
+      Lines.push_back(qucs::Line(x2-6, y-4, x2+7, y-4, QPen(Qt::red,2)));
+      Lines.push_back(qucs::Line(x2,   y-7, x2+6, y-4, QPen(Qt::red,2)));
+      Lines.push_back(qucs::Line(x2,   y-1, x2+6, y-4, QPen(Qt::red,2)));
       return -1;
     }
   }
@@ -1485,9 +1485,9 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
     }
 
     if(Above)
-      Arcs.push_back(Arc(x, dx2+y, y, y, beta, theta, GridPen));
+      Arcs.push_back(qucs::Arc(x, dx2+y, y, y, beta, theta, GridPen));
     if(Below)
-      Arcs.push_back(Arc(x, dx2, y, y, 16*360-beta-theta, theta, GridPen));
+      Arcs.push_back(qucs::Arc(x, dx2, y, y, 16*360-beta-theta, theta, GridPen));
   }
 
   // ....................................................
@@ -1506,7 +1506,7 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
     else
       x = (x2-R1)>>1;
     if(fabs(fabs(im)-1.0) > 0.2)   // if too near to |r|=1, it looks ugly
-      Arcs.push_back(Arc(x, (x2+y)>>1, y, y, beta, theta, GridPen));
+      Arcs.push_back(qucs::Arc(x, (x2+y)>>1, y, y, beta, theta, GridPen));
 
     if(Axis->up > 1.0) {  // draw arcs on the rigth-handed side ?
       im = 1.0-im;
@@ -1514,14 +1514,14 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
       if(Zplane)  x += y;
       else  x -= y;
       if(im >= 1.0)
-        Arcs.push_back(Arc(x, (x2+y)>>1, y, y, beta, theta, GridPen));
+        Arcs.push_back(qucs::Arc(x, (x2+y)>>1, y, y, beta, theta, GridPen));
       else {
         phi = int(16.0*180.0/pi*acos(im));
         len = 16*180-phi;
         if(Above && Below)  len += len;
         else if(Below)  phi = 16*180;
         if(!Zplane)  phi += 16*180;
-        Arcs.push_back(Arc(x, (x2+y)>>1, y, y, phi, len, GridPen));
+        Arcs.push_back(qucs::Arc(x, (x2+y)>>1, y, y, phi, len, GridPen));
       }
     }
   }
@@ -1531,7 +1531,7 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
   if(Axis->up > 1.0) {  // draw circle with |r|=1 ?
     x = (x2-R1) >> 1;
     y = (x2+R1) >> 1;
-    Arcs.push_back(Arc(x, y, R1, R1, beta, theta, QPen(Qt::black,0)));
+    Arcs.push_back(qucs::Arc(x, y, R1, R1, beta, theta, QPen(Qt::black,0)));
 
     // vertical line Re(r)=1 (visible only if |r|>1)
     if(Zplane)  x = y;
@@ -1539,11 +1539,11 @@ void Diagram::createSmithChart(Axis *Axis, int Mode)
     if(Above)  m = y;
     else  m = 0;
     if(!Below)  y = 0;
-    Lines.push_back(Line(x, dx2+m, x, dx2-y, GridPen));
+    Lines.push_back(qucs::Line(x, dx2+m, x, dx2-y, GridPen));
 
     if(Below)  y = 4;
     else  y = y2-4-QucsSettings.font.pointSize();
-    Texts.push_back(Text(0, y, misc::StringNum(Axis->up)));
+    Texts.push_back(qucs::Text(0, y, misc::StringNum(Axis->up)));
   }
 
 }
@@ -1603,7 +1603,7 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
   if(Above)  i = y2;  else  i = y2>>1;
   if(Below)  z = 0;   else  z = y2>>1;
   // y line
-  Lines.push_back(Line(x2>>1, i, x2>>1, z, GridPen));
+  Lines.push_back(qucs::Line(x2>>1, i, x2>>1, z, GridPen));
 
   int len  = 0;       // arc length
   int beta = 16*180;  // start angle
@@ -1624,12 +1624,12 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
     for(i=int(numGrids); i>1; i--) {    // create all grid circles
       z = int(zD);
       GridNum += GridStep;
-      Texts.push_back(Text(((x2+z)>>1)-10, tPos, misc::StringNiceNum(GridNum)));
+      Texts.push_back(qucs::Text(((x2+z)>>1)-10, tPos, misc::StringNiceNum(GridNum)));
 
       phi = int(16.0*180.0/pi*atan(double(2*tHeight)/zD));
       if(!Below)  tmp = beta + phi;
       else  tmp = beta;
-      Arcs.push_back(Arc((x2-z)>>1, (y2+z)>>1, z, z, tmp, len-phi,
+      Arcs.push_back(qucs::Arc((x2-z)>>1, (y2+z)>>1, z, z, tmp, len-phi,
 			  GridPen));
       zD += zDstep;
     }
@@ -1641,11 +1641,11 @@ void Diagram::createPolarDiagram(Axis *Axis, int Mode)
   }
 
   // create outer circle
-  Texts.push_back(Text(x2-8, tPos, misc::StringNiceNum(Axis->up)));
+  Texts.push_back(qucs::Text(x2-8, tPos, misc::StringNiceNum(Axis->up)));
   phi = int(16.0*180.0/pi*atan(double(2*tHeight)/double(x2)));
   if(!Below)  tmp = phi;
   else  tmp = 0;
-  Arcs.push_back(Arc(0, y2, x2, y2, tmp, 16*360-phi, QPen(Qt::black,0)));
+  Arcs.push_back(qucs::Arc(0, y2, x2, y2, tmp, 16*360-phi, QPen(Qt::black,0)));
 
   // get size of text using the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);
@@ -1900,7 +1900,7 @@ if(Axis->log) {
   if(back) z = y2;
   while((z <= y2) && (z >= 0)) {    // create all grid lines
     if(Axis->GridOn)  if(z < y2)  if(z > 0)
-      Lines.push_front(Line(0, z, x2, z, GridPen));  // y grid
+      Lines.push_front(qucs::Line(0, z, x2, z, GridPen));  // y grid
 
     if((zD < 1.5*zDstep) || (z == 0)) {
       tmp = misc::StringNiceNum(zD);
@@ -1909,12 +1909,12 @@ if(Axis->log) {
       w = metrics.horizontalAdvance(tmp);  // width of text
       if(maxWidth < w) maxWidth = w;
       if(x0 > 0)
-        Texts.push_back(Text(x0+7, z-6, tmp)); // text aligned left
+        Texts.push_back(qucs::Text(x0+7, z-6, tmp)); // text aligned left
       else
-        Texts.push_back(Text(-w-7, z-6, tmp)); // text aligned right
+        Texts.push_back(qucs::Text(-w-7, z-6, tmp)); // text aligned right
 
       // y marks
-      Lines.push_back(Line(x0-5, z, x0+5, z, QPen(Qt::black,0)));
+      Lines.push_back(qucs::Line(x0-5, z, x0+5, z, QPen(Qt::black,0)));
     }
 
     zD += zDstep;
@@ -1943,15 +1943,15 @@ else {  // not logarithmical
      w = metrics.horizontalAdvance(tmp);  // width of text
       if(maxWidth < w) maxWidth = w;
       if(x0 > 0)
-        Texts.push_back(Text(x0+8, z-6, tmp));  // text aligned left
+        Texts.push_back(qucs::Text(x0+8, z-6, tmp));  // text aligned left
       else
-        Texts.push_back(Text(-w-7, z-6, tmp));  // text aligned right
+        Texts.push_back(qucs::Text(-w-7, z-6, tmp));  // text aligned right
       GridNum += GridStep;
 
 
     if(Axis->GridOn)  if(z < y2)  if(z > 0)
-      Lines.push_front(Line(0, z, x2, z, GridPen));  // y grid
-    Lines.push_back(Line(x0-5, z, x0+5, z, QPen(Qt::black,0))); // y marks
+      Lines.push_front(qucs::Line(0, z, x2, z, GridPen));  // y grid
+    Lines.push_back(qucs::Line(x0-5, z, x0+5, z, QPen(Qt::black,0))); // y marks
     zD += zDstep;
     z = int(zD);
   }

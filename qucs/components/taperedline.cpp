@@ -28,18 +28,18 @@ taperedline::taperedline()
   Description = QObject::tr("Exponential Tapered line");
 
   //Lines connection device and ports
-  Lines.push_back(Line(-30,  0,-17,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  0,-17,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-17,  -6,-17, 6,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(18,  -12,18, 12,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-17,  -6,-17, 6,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(18,  -12,18, 12,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-17,  6, 18, 12,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-17,  -6,18, -12,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-17,  6, 18, 12,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-17,  -6,18, -12,QPen(Qt::darkBlue,2)));
 
 
-  Ports.push_back(Port(-30, 0));
-  Ports.push_back(Port( 30, 0));
+  Ports.push_back(qucs::Port(-30, 0));
+  Ports.push_back(qucs::Port( 30, 0));
 
   x1 = -30; y1 =-16;
   x2 =  30; y2 = 14;
@@ -49,20 +49,20 @@ taperedline::taperedline()
   Model = "TAPEREDLINE";
   Name  = "Line";
 
-  Props.push_back(Property("Z1", "50 Ohm", true,
+  Props.push_back(qucs::Property("Z1", "50 Ohm", true,
 		QObject::tr("Characteristic impedance at port 1")));
-  Props.push_back(Property("Z2", "100 Ohm", true,
+  Props.push_back(qucs::Property("Z2", "100 Ohm", true,
 		QObject::tr("Characteristic impedance at port 2")));
-  Props.push_back(Property("L", "75 mm", true,
+  Props.push_back(qucs::Property("L", "75 mm", true,
 		QObject::tr("Line length")));
-  Props.push_back(Property("Weighting", "Exponential", true,
+  Props.push_back(qucs::Property("Weighting", "Exponential", true,
 		QObject::tr("Taper weighting")+
 		" [Exponential, Linear, Triangular, Klopfenstein]"));
-  Props.push_back(Property("Gamma_max", "0.1", false,
+  Props.push_back(qucs::Property("Gamma_max", "0.1", false,
 		QObject::tr("Maximum ripple (Klopfenstein taper only) ")));
-  Props.push_back(Property("Alpha", "0 dB", false,
+  Props.push_back(qucs::Property("Alpha", "0 dB", false,
 		QObject::tr("attenuation factor per length in 1/m")));
-  Props.push_back(Property("Temp", "26.85", false,
+  Props.push_back(qucs::Property("Temp", "26.85", false,
 		QObject::tr("simulation temperature in degree Celsius")));
 }
 taperedline::~taperedline()

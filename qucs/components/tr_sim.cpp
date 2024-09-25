@@ -26,9 +26,9 @@ TR_Sim::TR_Sim()
   int a = s.indexOf(" ");
   if (a != -1) s[a] = '\n';
 
-  Texts.push_back(Text(0, 0, s.left(a), Qt::darkBlue, QucsSettings.largeFontSize));
+  Texts.push_back(qucs::Text(0, 0, s.left(a), Qt::darkBlue, QucsSettings.largeFontSize));
   if (a != -1)
-    Texts.push_back(Text(0, 0, s.mid(a+1), Qt::darkBlue, QucsSettings.largeFontSize));
+    Texts.push_back(qucs::Text(0, 0, s.mid(a+1), Qt::darkBlue, QucsSettings.largeFontSize));
 
   x1 = -10; y1 = -9;
   x2 = x1+104; y2 = y1+59;
@@ -39,47 +39,47 @@ TR_Sim::TR_Sim()
   Name  = "TR";
 
   // The index of the first 4 properties must not changed. Used in recreate().
-  Props.push_back(Property("Type", "lin", true,
+  Props.push_back(qucs::Property("Type", "lin", true,
 	QObject::tr("sweep type")+" [lin, log, list, const]"));
-  Props.push_back(Property("Start", "0", true,
+  Props.push_back(qucs::Property("Start", "0", true,
 	QObject::tr("start time in seconds")));
-  Props.push_back(Property("Stop", "1 ms", true,
+  Props.push_back(qucs::Property("Stop", "1 ms", true,
 	QObject::tr("stop time in seconds")));
-  Props.push_back(Property("Points", "11", false,
+  Props.push_back(qucs::Property("Points", "11", false,
 	QObject::tr("number of simulation time steps")));
-  Props.push_back(Property("IntegrationMethod", "Trapezoidal", false,
+  Props.push_back(qucs::Property("IntegrationMethod", "Trapezoidal", false,
 	QObject::tr("integration method")+
 	" [Euler, Trapezoidal, Gear, AdamsMoulton]"));
-  Props.push_back(Property("Order", "2", false,
+  Props.push_back(qucs::Property("Order", "2", false,
 	QObject::tr("order of integration method")+" (1-6)"));
-  Props.push_back(Property("InitialStep", "1 ns", false,
+  Props.push_back(qucs::Property("InitialStep", "1 ns", false,
 	QObject::tr("initial step size in seconds")));
-  Props.push_back(Property("MinStep", "1e-16", false,
+  Props.push_back(qucs::Property("MinStep", "1e-16", false,
 	QObject::tr("minimum step size in seconds")));
-  Props.push_back(Property("MaxIter", "150", false,
+  Props.push_back(qucs::Property("MaxIter", "150", false,
 	QObject::tr("maximum number of iterations until error")));
-  Props.push_back(Property("reltol", "0.001", false,
+  Props.push_back(qucs::Property("reltol", "0.001", false,
 	QObject::tr("relative tolerance for convergence")));
-  Props.push_back(Property("abstol", "1 pA", false,
+  Props.push_back(qucs::Property("abstol", "1 pA", false,
 	QObject::tr("absolute tolerance for currents")));
-  Props.push_back(Property("vntol", "1 uV", false,
+  Props.push_back(qucs::Property("vntol", "1 uV", false,
 	QObject::tr("absolute tolerance for voltages")));
-  Props.push_back(Property("Temp", "26.85", false,
+  Props.push_back(qucs::Property("Temp", "26.85", false,
 	QObject::tr("simulation temperature in degree Celsius")));
-  Props.push_back(Property("LTEreltol", "1e-3", false,
+  Props.push_back(qucs::Property("LTEreltol", "1e-3", false,
 	QObject::tr("relative tolerance of local truncation error")));
-  Props.push_back(Property("LTEabstol", "1e-6", false,
+  Props.push_back(qucs::Property("LTEabstol", "1e-6", false,
 	QObject::tr("absolute tolerance of local truncation error")));
-  Props.push_back(Property("LTEfactor", "1", false,
+  Props.push_back(qucs::Property("LTEfactor", "1", false,
 	QObject::tr("overestimation of local truncation error")));
-  Props.push_back(Property("Solver", "CroutLU", false,
+  Props.push_back(qucs::Property("Solver", "CroutLU", false,
 	QObject::tr("method for solving the circuit matrix")+
 	" [CroutLU, DoolittleLU, HouseholderQR, HouseholderLQ, GolubSVD]"));
-  Props.push_back(Property("relaxTSR", "no", false,
+  Props.push_back(qucs::Property("relaxTSR", "no", false,
 	QObject::tr("relax time step raster")+" [no, yes]"));
-  Props.push_back(Property("initialDC", "yes", false,
+  Props.push_back(qucs::Property("initialDC", "yes", false,
 	QObject::tr("perform an initial DC analysis")+" [yes, no]"));
-  Props.push_back(Property("MaxStep", "0", false,
+  Props.push_back(qucs::Property("MaxStep", "0", false,
 	QObject::tr("maximum step size in seconds")));
 }
 
@@ -103,7 +103,7 @@ Element* TR_Sim::info(QString& Name, char* &BitmapFile, bool getNewOne)
 
 void TR_Sim::recreate(Schematic*)
 {
-  Property &pp = prop(0);
+  qucs::Property &pp = prop(0);
   if((pp.Value == "list") || (pp.Value == "const")) {
     // Call them "Symbol" to omit them in the netlist.
     prop(1).Name = "Symbol";

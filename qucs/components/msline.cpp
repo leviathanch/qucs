@@ -22,15 +22,15 @@ MSline::MSline()
 {
   Description = QObject::tr("microstrip line");
 
-  Lines.push_back(Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-13, -8, 23, -8,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-23,  8, 13,  8,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-13, -8,-23,  8,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 23, -8, 13,  8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-13, -8, 23, -8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-23,  8, 13,  8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-13, -8,-23,  8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 23, -8, 13,  8,QPen(Qt::darkBlue,2)));
 
-  Ports.push_back(Port(-30, 0));
-  Ports.push_back(Port( 30, 0));
+  Ports.push_back(qucs::Port(-30, 0));
+  Ports.push_back(qucs::Port( 30, 0));
 
   x1 = -30; y1 =-11;
   x2 =  30; y2 = 11;
@@ -40,19 +40,19 @@ MSline::MSline()
   Model = "MLIN";
   Name  = "MS";
 
-  Props.push_back(Property("Subst", "Subst1", true,
+  Props.push_back(qucs::Property("Subst", "Subst1", true,
 	QObject::tr("name of substrate definition")));
-  Props.push_back(Property("W", "1 mm", true,
+  Props.push_back(qucs::Property("W", "1 mm", true,
 	QObject::tr("width of the line")));
-  Props.push_back(Property("L", "10 mm", true,
+  Props.push_back(qucs::Property("L", "10 mm", true,
 	QObject::tr("length of the line")));
-  Props.push_back(Property("Model", "Hammerstad", false,
+  Props.push_back(qucs::Property("Model", "Hammerstad", false,
 	QObject::tr("quasi-static microstrip model")+
 		    " [Hammerstad, Wheeler, Schneider]"));
-  Props.push_back(Property("DispModel", "Kirschning", false,
+  Props.push_back(qucs::Property("DispModel", "Kirschning", false,
 	QObject::tr("microstrip dispersion model")+" [Kirschning, Kobayashi, "
 	"Yamashita, Hammerstad, Getsinger, Schneider, Pramanick]"));
-  Props.push_back(Property("Temp", "26.85", false,
+  Props.push_back(qucs::Property("Temp", "26.85", false,
 	QObject::tr("simulation temperature in degree Celsius")));
 }
 

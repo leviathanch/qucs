@@ -22,20 +22,20 @@ MSlange::MSlange()
 {
   Description = QObject::tr("microstrip lange coupler");
 
-  Lines.push_back(Line(-30,-30,-30, 10,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30, 30,-30, 20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30, 20,  0, 20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30, 10, 30, 10,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-25,  0, 25,  0,QPen(Qt::darkBlue,2)));      
-  Lines.push_back(Line(-30,-10, 30,-10,QPen(Qt::darkBlue,2)));    
-  Lines.push_back(Line(  0,-20, 30,-20,QPen(Qt::darkBlue,2)));    
-  Lines.push_back(Line( 30,-30, 30,-20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30,-10, 30, 30,QPen(Qt::darkBlue,2)));          
+  Lines.push_back(qucs::Line(-30,-30,-30, 10,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, 30,-30, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, 20,  0, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, 10, 30, 10,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-25,  0, 25,  0,QPen(Qt::darkBlue,2)));      
+  Lines.push_back(qucs::Line(-30,-10, 30,-10,QPen(Qt::darkBlue,2)));    
+  Lines.push_back(qucs::Line(  0,-20, 30,-20,QPen(Qt::darkBlue,2)));    
+  Lines.push_back(qucs::Line( 30,-30, 30,-20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30,-10, 30, 30,QPen(Qt::darkBlue,2)));          
 
-  Ports.push_back(Port(-30,-30));
-  Ports.push_back(Port( 30, 30));
-  Ports.push_back(Port( 30,-30));
-  Ports.push_back(Port(-30, 30));
+  Ports.push_back(qucs::Port(-30,-30));
+  Ports.push_back(qucs::Port( 30, 30));
+  Ports.push_back(qucs::Port( 30,-30));
+  Ports.push_back(qucs::Port(-30, 30));
 
   x1 = -30; y1 =-33;
   x2 =  30; y2 = 33;
@@ -45,20 +45,20 @@ MSlange::MSlange()
   Model = "MLANGE";
   Name  = "MS";
 
-  Props.push_back(Property("Subst", "Subst1", true,
+  Props.push_back(qucs::Property("Subst", "Subst1", true,
 	QObject::tr("name of substrate definition")));
-  Props.push_back(Property("W", "1 mm", true,
+  Props.push_back(qucs::Property("W", "1 mm", true,
 	QObject::tr("width of the line")));
-  Props.push_back(Property("L", "10 mm", true,
+  Props.push_back(qucs::Property("L", "10 mm", true,
 	QObject::tr("length of the line")));
-  Props.push_back(Property("S", "1 mm", true,
+  Props.push_back(qucs::Property("S", "1 mm", true,
 	QObject::tr("spacing between the lines")));
-  Props.push_back(Property("Model", "Kirschning", false,
+  Props.push_back(qucs::Property("Model", "Kirschning", false,
 	QObject::tr("microstrip model")+" [Kirschning, Hammerstad]"));
-  Props.push_back(Property("DispModel", "Kirschning", false,
+  Props.push_back(qucs::Property("DispModel", "Kirschning", false,
 	QObject::tr("microstrip dispersion model")+
 	" [Kirschning, Getsinger]"));
-  Props.push_back(Property("Temp", "26.85", false,
+  Props.push_back(qucs::Property("Temp", "26.85", false,
 	QObject::tr("simulation temperature in degree Celsius")));
 }
 

@@ -24,9 +24,9 @@ ha1b::ha1b()
   Type = isComponent; // Analogue and digital component.
   Description = QObject::tr ("1bit half adder verilog device");
 
-  Props.push_back (Property ("TR", "6", false,
+  Props.push_back(qucs::Property("TR", "6", false,
     QObject::tr ("transfer function high scaling factor")));
-  Props.push_back (Property ("Delay", "1 ns", false,
+  Props.push_back(qucs::Property("Delay", "1 ns", false,
     QObject::tr ("output delay")
     +" ("+QObject::tr ("s")+")"));
 
@@ -56,27 +56,27 @@ Element * ha1b::info(QString& Name, char * &BitmapFile, bool getNewOne)
 
 void ha1b::createSymbol()
 {
-  Lines.push_back(Line(-30, -40, 30,-40,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30, -40, 30, 30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30,  30,-30, 30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30,  30,-30,-40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, -40, 30,-40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30, -40, 30, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30,  30,-30, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  30,-30,-40,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-50,-10,-30,-10,QPen(Qt::darkBlue,2)));  // A
-  Lines.push_back(Line(-50, 10,-30, 10,QPen(Qt::darkBlue,2)));  // B
-  Lines.push_back(Line( 30, 10, 50, 10,QPen(Qt::darkBlue,2)));  // CO
-  Lines.push_back(Line( 30,-10, 50,-10,QPen(Qt::darkBlue,2)));  // S
+  Lines.push_back(qucs::Line(-50,-10,-30,-10,QPen(Qt::darkBlue,2)));  // A
+  Lines.push_back(qucs::Line(-50, 10,-30, 10,QPen(Qt::darkBlue,2)));  // B
+  Lines.push_back(qucs::Line( 30, 10, 50, 10,QPen(Qt::darkBlue,2)));  // CO
+  Lines.push_back(qucs::Line( 30,-10, 50,-10,QPen(Qt::darkBlue,2)));  // S
 
-  Texts.push_back(Text(0, -3, "CO", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(0, -3, "CO", Qt::darkBlue, 12.0));
 
-  Lines.push_back(Line(-10,-35, 10, -35, QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-10,-35,  5, -25, QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  5,-25,-10, -15, QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-10,-15, 10, -15, QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-10,-35, 10, -35, QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-10,-35,  5, -25, QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  5,-25,-10, -15, QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-10,-15, 10, -15, QPen(Qt::darkBlue,2)));
  
-  Ports.push_back(Port(-50,-10));  // A
-  Ports.push_back(Port(-50, 10));  // B
-  Ports.push_back(Port( 50, 10));  // CO
-  Ports.push_back(Port( 50,-10));  // S
+  Ports.push_back(qucs::Port(-50,-10));  // A
+  Ports.push_back(qucs::Port(-50, 10));  // B
+  Ports.push_back(qucs::Port( 50, 10));  // CO
+  Ports.push_back(qucs::Port( 50,-10));  // S
 
   x1 = -50; y1 = -44;
   x2 =  50; y2 =  34;

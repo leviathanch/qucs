@@ -22,21 +22,21 @@ vPulse::vPulse()
 {
   Description = QObject::tr("ideal voltage pulse source");
 
-  Arcs.push_back(Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30,  0, 12,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 18,  5, 18, 11,QPen(Qt::red,1)));
-  Lines.push_back(Line( 21,  8, 15,  8,QPen(Qt::red,1)));
-  Lines.push_back(Line(-18,  5,-18, 11,QPen(Qt::black,1)));
+  Arcs.push_back(qucs::Arc(-12,-12, 24, 24,     0, 16*360,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30,  0, 12,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 18,  5, 18, 11,QPen(Qt::red,1)));
+  Lines.push_back(qucs::Line( 21,  8, 15,  8,QPen(Qt::red,1)));
+  Lines.push_back(qucs::Line(-18,  5,-18, 11,QPen(Qt::black,1)));
 
-  Lines.push_back(Line(  6, -3,  6,  3,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( -6, -7, -6, -3,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( -6,  3, -6,  7,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( -6, -3,  6, -3,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( -6,  3,  6,  3,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  6, -3,  6,  3,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -6, -7, -6, -3,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -6,  3, -6,  7,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -6, -3,  6, -3,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -6,  3,  6,  3,QPen(Qt::darkBlue,2)));
 
-  Ports.push_back(Port( 30,  0));
-  Ports.push_back(Port(-30,  0));
+  Ports.push_back(qucs::Port( 30,  0));
+  Ports.push_back(qucs::Port(-30,  0));
 
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  14;
@@ -46,17 +46,17 @@ vPulse::vPulse()
   Model = "Vpulse";
   Name  = "V";
 
-  Props.push_back(Property("U1", "0 V", true,
+  Props.push_back(qucs::Property("U1", "0 V", true,
 		QObject::tr("voltage before and after the pulse")));
-  Props.push_back(Property("U2", "1 V", true,
+  Props.push_back(qucs::Property("U2", "1 V", true,
 		QObject::tr("voltage of the pulse")));
-  Props.push_back(Property("T1", "0", true,
+  Props.push_back(qucs::Property("T1", "0", true,
 		QObject::tr("start time of the pulse")));
-  Props.push_back(Property("T2", "1 ms", true,
+  Props.push_back(qucs::Property("T2", "1 ms", true,
 		QObject::tr("ending time of the pulse")));
-  Props.push_back(Property("Tr", "1 ns", false,
+  Props.push_back(qucs::Property("Tr", "1 ns", false,
 		QObject::tr("rise time of the leading edge")));
-  Props.push_back(Property("Tf", "1 ns", false,
+  Props.push_back(qucs::Property("Tf", "1 ns", false,
 		QObject::tr("fall time of the trailing edge")));
 
   rotate();  // fix historical flaw

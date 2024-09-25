@@ -66,25 +66,25 @@ Element* BJT::info_pnp(QString& Name, char* &BitmapFile, bool getNewOne)
 // -------------------------------------------------------
 void BJT::createSymbol()
 {
-  Lines.push_back(Line(-10,-15,-10, 15,QPen(Qt::darkBlue,3)));
-  Lines.push_back(Line(-30,  0,-10,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-10, -5,  0,-15,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  0,-15,  0,-30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-10,  5,  0, 15,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  0, 15,  0, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-10,-15,-10, 15,QPen(Qt::darkBlue,3)));
+  Lines.push_back(qucs::Line(-30,  0,-10,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-10, -5,  0,-15,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  0,-15,  0,-30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-10,  5,  0, 15,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  0, 15,  0, 30,QPen(Qt::darkBlue,2)));
 
   if(Props.front().Value == "npn") {
-    Lines.push_back(Line( -6, 15,  0, 15,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line(  0,  9,  0, 15,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line( -6, 15,  0, 15,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(  0,  9,  0, 15,QPen(Qt::darkBlue,2)));
   }
   else {
-    Lines.push_back(Line( -5, 10, -5, 16,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line( -5, 10,  1, 10,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line( -5, 10, -5, 16,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line( -5, 10,  1, 10,QPen(Qt::darkBlue,2)));
   }
 
-  Ports.push_back(Port(-30,  0));
-  Ports.push_back(Port(  0,-30));
-  Ports.push_back(Port(  0, 30));
+  Ports.push_back(qucs::Port(-30,  0));
+  Ports.push_back(qucs::Port(  0,-30));
+  Ports.push_back(qucs::Port(  0, 30));
 
   x1 = -30; y1 = -30;
   x2 =   4; y2 =  30;
