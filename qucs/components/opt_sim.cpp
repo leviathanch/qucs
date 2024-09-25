@@ -29,7 +29,7 @@ Optimize_Sim::Optimize_Sim()
 {
   Description = QObject::tr("Optimization");
 
-  Texts.push_back(Text(0, 0, Description, Qt::darkBlue, QucsSettings.largeFontSize));
+  Texts.push_back(qucs::Text(0, 0, Description, Qt::darkBlue, QucsSettings.largeFontSize));
 
   x1 = -10; y1 = -9;
   x2 = x1+128; y2 = y1+41;
@@ -39,8 +39,8 @@ Optimize_Sim::Optimize_Sim()
   Model = ".Opt";
   Name  = "Opt";
 
-  Props.push_back(Property("Sim", "", false, ""));
-  Props.push_back(Property("DE", "3|50|2|20|0.85|1|3|1e-6|10|100", false, ""));
+  Props.push_back(qucs::Property("Sim", "", false, ""));
+  Props.push_back(qucs::Property("DE", "3|50|2|20|0.85|1|3|1e-6|10|100", false, ""));
 }
 
 Optimize_Sim::~Optimize_Sim()

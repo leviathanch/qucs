@@ -23,28 +23,28 @@ D_FlipFlop::D_FlipFlop()
   Type = isDigitalComponent;
   Description = QObject::tr("D flip flop with asynchron reset");
 
-  Props.push_back(Property("t", "0", false, QObject::tr("delay time")));
+  Props.push_back(qucs::Property("t", "0", false, QObject::tr("delay time")));
 
-  Lines.push_back(Line(-20,-20, 20,-20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-20, 20, 20, 20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-20,-20,-20, 20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 20,-20, 20, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-20,-20, 20,-20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-20, 20, 20, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-20,-20,-20, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 20,-20, 20, 20,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-30,-10,-20,-10,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30, 10,-20, 10,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30,-10, 20,-10,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  0, 20,  0, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,-10,-20,-10,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, 10,-20, 10,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30,-10, 20,-10,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  0, 20,  0, 30,QPen(Qt::darkBlue,2)));
 
-  Texts.push_back(Text(-18,-21, "D", Qt::darkBlue, 12.0));
-  Texts.push_back(Text(  6,-21, "Q", Qt::darkBlue, 12.0));
-  Texts.push_back(Text( -4,  4, "R", Qt::darkBlue, 9.0));
-  Lines.push_back(Line(-20,  6,-12, 10,QPen(Qt::darkBlue,0)));
-  Lines.push_back(Line(-20, 14,-12, 10,QPen(Qt::darkBlue,0)));
+  Texts.push_back(qucs::Text(-18,-21, "D", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(  6,-21, "Q", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text( -4,  4, "R", Qt::darkBlue, 9.0));
+  Lines.push_back(qucs::Line(-20,  6,-12, 10,QPen(Qt::darkBlue,0)));
+  Lines.push_back(qucs::Line(-20, 14,-12, 10,QPen(Qt::darkBlue,0)));
 
-  Ports.push_back(Port(-30,-10));  // D
-  Ports.push_back(Port(-30, 10));  // Clock
-  Ports.push_back(Port( 30,-10));  // Q
-  Ports.push_back(Port(  0, 30));  // Reset
+  Ports.push_back(qucs::Port(-30,-10));  // D
+  Ports.push_back(qucs::Port(-30, 10));  // Clock
+  Ports.push_back(qucs::Port( 30,-10));  // Q
+  Ports.push_back(qucs::Port(  0, 30));  // Reset
 
   x1 = -30; y1 = -24;
   x2 =  30; y2 =  30;

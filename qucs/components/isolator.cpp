@@ -22,20 +22,20 @@ Isolator::Isolator()
 {
   Description = QObject::tr("isolator");
 
-  Lines.push_back(Line( -8,  0,  8,  0,QPen(Qt::darkBlue,3)));
-  Lines.push_back(Line(  8,  0,  0, -5,QPen(Qt::darkBlue,3)));
-  Lines.push_back(Line(  8,  0,  0,  5,QPen(Qt::darkBlue,3)));
+  Lines.push_back(qucs::Line( -8,  0,  8,  0,QPen(Qt::darkBlue,3)));
+  Lines.push_back(qucs::Line(  8,  0,  0, -5,QPen(Qt::darkBlue,3)));
+  Lines.push_back(qucs::Line(  8,  0,  0,  5,QPen(Qt::darkBlue,3)));
 
-  Lines.push_back(Line(-14,-14, 14,-14,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-14, 14, 14, 14,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-14,-14,-14, 14,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 14,-14, 14, 14,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-14,-14, 14,-14,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-14, 14, 14, 14,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-14,-14,-14, 14,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 14,-14, 14, 14,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-30,  0,-14,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 14,  0, 30,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  0,-14,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 14,  0, 30,  0,QPen(Qt::darkBlue,2)));
 
-  Ports.push_back(Port(-30,  0));
-  Ports.push_back(Port( 30,  0));
+  Ports.push_back(qucs::Port(-30,  0));
+  Ports.push_back(qucs::Port( 30,  0));
 
   x1 = -30; y1 = -17;
   x2 =  30; y2 =  17;
@@ -45,11 +45,11 @@ Isolator::Isolator()
   Model = "Isolator";
   Name  = "X";
 
-  Props.push_back(Property("Z1", "50 Ohm", false,
+  Props.push_back(qucs::Property("Z1", "50 Ohm", false,
 		QObject::tr("reference impedance of input port")));
-  Props.push_back(Property("Z2", "50 Ohm", false,
+  Props.push_back(qucs::Property("Z2", "50 Ohm", false,
 		QObject::tr("reference impedance of output port")));
-  Props.push_back(Property("Temp", "26.85", false,
+  Props.push_back(qucs::Property("Temp", "26.85", false,
 		QObject::tr("simulation temperature in degree Celsius")));
 }
 

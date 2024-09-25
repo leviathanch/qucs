@@ -803,7 +803,7 @@ void OptimizeDialog::slotApply()
       }
       ++pp;
     } else {
-      Comp->Props.push_back(Property("Var", Prop, false, ""));
+      Comp->Props.push_back(qucs::Property("Var", Prop, false, ""));
       changed = true;
     }
   }
@@ -839,7 +839,7 @@ void OptimizeDialog::slotApply()
       }
       ++pp;
     } else {
-      Comp->Props.push_back(Property("Goal", Prop, false, ""));
+      Comp->Props.push_back(qucs::Property("Goal", Prop, false, ""));
       changed = true;
     }
   }

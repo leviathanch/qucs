@@ -22,26 +22,26 @@ Gyrator::Gyrator()
 {
   Description = QObject::tr("gyrator (impedance inverter)");
 
-  Arcs.push_back(Arc(  3, -9, 18, 18, 16*90, 16*180,QPen(Qt::darkBlue,2)));
-  Arcs.push_back(Arc(-21, -9, 18, 18,16*270, 16*180,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc(  3, -9, 18, 18, 16*90, 16*180,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc(-21, -9, 18, 18,16*270, 16*180,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-30,-30,-12,-30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30, 30,-12, 30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 12,-30, 30,-30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 12, 30, 30, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,-30,-12,-30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, 30,-12, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 12,-30, 30,-30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 12, 30, 30, 30,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line( 12,-30, 12, 30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-12,-30,-12, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 12,-30, 12, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-12,-30,-12, 30,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-22,-22, 22,-22,QPen(Qt::darkGray,1)));
-  Lines.push_back(Line( 22,-22, 22, 22,QPen(Qt::darkGray,1)));
-  Lines.push_back(Line( 22, 22,-22, 22,QPen(Qt::darkGray,1)));
-  Lines.push_back(Line(-22, 22,-22,-22,QPen(Qt::darkGray,1)));
+  Lines.push_back(qucs::Line(-22,-22, 22,-22,QPen(Qt::darkGray,1)));
+  Lines.push_back(qucs::Line( 22,-22, 22, 22,QPen(Qt::darkGray,1)));
+  Lines.push_back(qucs::Line( 22, 22,-22, 22,QPen(Qt::darkGray,1)));
+  Lines.push_back(qucs::Line(-22, 22,-22,-22,QPen(Qt::darkGray,1)));
 
-  Ports.push_back(Port(-30,-30));
-  Ports.push_back(Port( 30,-30));
-  Ports.push_back(Port( 30, 30));
-  Ports.push_back(Port(-30, 30));
+  Ports.push_back(qucs::Port(-30,-30));
+  Ports.push_back(qucs::Port( 30,-30));
+  Ports.push_back(qucs::Port( 30, 30));
+  Ports.push_back(qucs::Port(-30, 30));
 
   x1 = -30; y1 = -30;
   x2 =  30; y2 =  30;
@@ -51,9 +51,9 @@ Gyrator::Gyrator()
   Model = "Gyrator";
   Name  = "X";
 
-  Props.push_back(Property("R", "50 Ohm", true,
+  Props.push_back(qucs::Property("R", "50 Ohm", true,
 		QObject::tr("gyrator ratio")));
-  Props.push_back(Property("Zref", "50 Ohm", false,
+  Props.push_back(qucs::Property("Zref", "50 Ohm", false,
 		QObject::tr("reference impedance")));
 }
 

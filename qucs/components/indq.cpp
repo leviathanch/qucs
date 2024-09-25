@@ -28,28 +28,28 @@ indq::indq()
   Description = QObject::tr("Lossy inductor");
 
   //Spiral
-  Arcs.push_back(Arc(-18, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
-  Arcs.push_back(Arc( -6, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
-  Arcs.push_back(Arc(  6, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc(-18, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc( -6, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc(  6, -6, 12, 12,  0, 16*180,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
 
 
 
   //Draw Q character
   //Horizontal lines
-  Lines.push_back(Line( 10,  -10, 17,  -10,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 10,  -17, 17,  -17,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 10,  -10, 17,  -10,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 10,  -17, 17,  -17,QPen(Qt::darkBlue,2)));
   //Vertical lines
-  Lines.push_back(Line( 17,  -10, 17,  -17,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 10,  -10, 10,  -17,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 17,  -10, 17,  -17,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 10,  -10, 10,  -17,QPen(Qt::darkBlue,2)));
   //Middle line
-  Lines.push_back(Line( 18,  -9, 14,  -13,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 18,  -9, 14,  -13,QPen(Qt::darkBlue,2)));
 
 
 
-  Ports.push_back(Port(-30,  0));
-  Ports.push_back(Port( 30,  0));
+  Ports.push_back(qucs::Port(-30,  0));
+  Ports.push_back(qucs::Port( 30,  0));
 
   x1 = -30; y1 = -13;
   x2 =  30; y2 =  13;
@@ -59,16 +59,16 @@ indq::indq()
   Model = "INDQ";
   Name  = "INDQ";
 
-  Props.push_back(Property("L", "1 nH", true,
+  Props.push_back(qucs::Property("L", "1 nH", true,
 		QObject::tr("Inductance")));
-  Props.push_back(Property("Q", "100", true,
+  Props.push_back(qucs::Property("Q", "100", true,
 		QObject::tr("Quality factor")));
-  Props.push_back(Property("f", "100 MHz", false,
+  Props.push_back(qucs::Property("f", "100 MHz", false,
 		QObject::tr("Frequency at which Q is measured")));
-  Props.push_back(Property("Mode", "Linear", false,
+  Props.push_back(qucs::Property("Mode", "Linear", false,
 		QObject::tr("Q frequency profile")+
 		" [Linear, SquareRoot, Constant]"));
-   Props.push_back(Property("Temp", "26.85", false,
+   Props.push_back(qucs::Property("Temp", "26.85", false,
 		QObject::tr("simulation temperature in degree Celsius")));
 }
 indq::~indq()

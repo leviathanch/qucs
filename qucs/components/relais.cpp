@@ -22,31 +22,31 @@ Relais::Relais()
 {
   Description = QObject::tr("relay");
 
-  Lines.push_back(Line(-30,-30,-30, -8,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30,  8,-30, 30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-45, -8,-15, -8,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-45,  8,-15,  8,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-45, -8,-45,  8,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-15, -8,-15,  8,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-45,  8,-15, -8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,-30,-30, -8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  8,-30, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-45, -8,-15, -8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-45,  8,-15,  8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-45, -8,-45,  8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-15, -8,-15,  8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-45,  8,-15, -8,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-43, -3,-37, -3,QPen(Qt::red,1)));
-  Lines.push_back(Line(-40, -6,-40,  0,QPen(Qt::red,1)));
-  Lines.push_back(Line(-23,  3,-17,  3,QPen(Qt::black,1)));  
+  Lines.push_back(qucs::Line(-43, -3,-37, -3,QPen(Qt::red,1)));
+  Lines.push_back(qucs::Line(-40, -6,-40,  0,QPen(Qt::red,1)));
+  Lines.push_back(qucs::Line(-23,  3,-17,  3,QPen(Qt::black,1)));  
 
-  Lines.push_back(Line(-15,  0, 35,  0,QPen(Qt::darkBlue,1,Qt::DotLine)));
+  Lines.push_back(qucs::Line(-15,  0, 35,  0,QPen(Qt::darkBlue,1,Qt::DotLine)));
 
-  Lines.push_back(Line( 30,-30, 30,-18,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30, 15, 30, 30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30, 15, 45,-15,QPen(Qt::darkBlue,2)));
-  Arcs.push_back(Arc( 27,-18, 5, 5, 0, 16*360,QPen(Qt::darkBlue,2)));
-  Ellips.push_back(Area( 27, 12, 6, 6, QPen(Qt::darkBlue,2),
+  Lines.push_back(qucs::Line( 30,-30, 30,-18,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30, 15, 30, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30, 15, 45,-15,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc( 27,-18, 5, 5, 0, 16*360,QPen(Qt::darkBlue,2)));
+  Ellips.push_back(qucs::Area( 27, 12, 6, 6, QPen(Qt::darkBlue,2),
                          QBrush(Qt::darkBlue, Qt::SolidPattern)));
 
-  Ports.push_back(Port(-30,-30));
-  Ports.push_back(Port( 30,-30));
-  Ports.push_back(Port( 30, 30));
-  Ports.push_back(Port(-30, 30));
+  Ports.push_back(qucs::Port(-30,-30));
+  Ports.push_back(qucs::Port( 30,-30));
+  Ports.push_back(qucs::Port( 30, 30));
+  Ports.push_back(qucs::Port(-30, 30));
 
   x1 = -48; y1 = -30;
   x2 =  45; y2 =  30;
@@ -56,15 +56,15 @@ Relais::Relais()
   Model = "Relais";
   Name  = "S";
 
-  Props.push_back(Property("Vt", "0.5 V", false,
+  Props.push_back(qucs::Property("Vt", "0.5 V", false,
 		QObject::tr("threshold voltage in Volts")));
-  Props.push_back(Property("Vh", "0.1 V", false,
+  Props.push_back(qucs::Property("Vh", "0.1 V", false,
 		QObject::tr("hysteresis voltage in Volts")));
-  Props.push_back(Property("Ron", "0", false,
+  Props.push_back(qucs::Property("Ron", "0", false,
 		QObject::tr("resistance of \"on\" state in Ohms")));
-  Props.push_back(Property("Roff", "1e12", false,
+  Props.push_back(qucs::Property("Roff", "1e12", false,
 		QObject::tr("resistance of \"off\" state in Ohms")));
-  Props.push_back(Property("Temp", "26.85", false,
+  Props.push_back(qucs::Property("Temp", "26.85", false,
 		QObject::tr("simulation temperature in degree Celsius")));
 }
 

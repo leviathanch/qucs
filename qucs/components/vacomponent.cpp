@@ -75,7 +75,7 @@ vacomponent::vacomponent(QString filename)
 
       /// \todo what if there are no properties?
 
-      Props.push_back (Property (name, value, show, desc));
+      Props.push_back(qucs::Property(name, value, show, desc));
     }
   }
 
@@ -200,7 +200,7 @@ void vacomponent::createSymbol(QString filename)
       thick = getDouble(entry, "thick");
       style = getString(entry, "style");
 
-      Lines.push_back (Line (x1, y1, x2, y2,
+      Lines.push_back(qucs::Line (x1, y1, x2, y2,
                         QPen (QColor (color), thick, penMap.value(style))));
     }
 
@@ -215,7 +215,7 @@ void vacomponent::createSymbol(QString filename)
       colorfill = getString(entry, "colorfill");
       stylefill = getString(entry, "stylefill");
 
-      Rects.push_back (Area (x, y, w, h,
+      Rects.push_back(qucs::Area (x, y, w, h,
                         QPen (QColor (color), thick, penMap.value(style)),
                         QBrush(QColor (colorfill), brushMap.value(stylefill))
                         ));
@@ -232,7 +232,7 @@ void vacomponent::createSymbol(QString filename)
       colorfill = getString(entry, "colorfill");
       stylefill = getString(entry, "stylefill");
 
-      Ellips.push_back (Area (x, y, w, h,
+      Ellips.push_back(qucs::Area (x, y, w, h,
                          QPen (QColor (color), thick, penMap.value(style)),
                          QBrush(QColor (colorfill), brushMap.value(stylefill))
                          ));
@@ -249,14 +249,14 @@ void vacomponent::createSymbol(QString filename)
       thick = getDouble(entry, "thick");
       style = getString(entry, "style");
 
-      Arcs.push_back (Arc (x, y, w, h, angle, arclen,
+      Arcs.push_back(qucs::Arc(x, y, w, h, angle, arclen,
                        QPen (QColor (color), thick, penMap.value(style))));
     }
 
     if (!type.compare("portsymbol")) {
       x = getDouble(entry, "x");
       y = getDouble(entry, "y");
-      Ports.push_back (Port (x, y));
+      Ports.push_back(qucs::Port(x, y));
     }
 
     if (!type.compare("graphictext")) {
@@ -267,7 +267,7 @@ void vacomponent::createSymbol(QString filename)
       size = getDouble(entry, "size");
       cos = getDouble(entry, "cos");
       sin = getDouble(entry, "sin");
-      Texts.push_back (Text (x, y, s,
+      Texts.push_back(qucs::Text (x, y, s,
                               QColor (color), size, cos, sin));
     }
 
@@ -279,7 +279,7 @@ void vacomponent::createSymbol(QString filename)
       color = getString(entry, "color");
       thick = getDouble(entry, "thick");
       style = getString(entry, "style");
-      Lines.push_back (Line (x1, y1, x2, y2,
+      Lines.push_back(qucs::Line (x1, y1, x2, y2,
                         QPen (QColor (color), thick, penMap.value(style))));
      }
   }

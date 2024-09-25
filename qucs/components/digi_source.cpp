@@ -24,20 +24,20 @@ Digi_Source::Digi_Source()
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("digital source");
 
-  Lines.push_back(Line(-10,  0,  0,  0,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-20,-10,-10,  0,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-20, 10,-10,  0,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-35,-10,-20,-10,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-35, 10,-20, 10,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-35,-10,-35, 10,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-10,  0,  0,  0,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-20,-10,-10,  0,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-20, 10,-10,  0,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-35,-10,-20,-10,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-35, 10,-20, 10,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-35,-10,-35, 10,QPen(Qt::darkGreen,2)));
 
-  Lines.push_back(Line(-32, 5,-28, 5,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-28,-5,-24,-5,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-24, 5,-20, 5,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-28,-5,-28, 5,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-24,-5,-24, 5,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-32, 5,-28, 5,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-28,-5,-24,-5,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-24, 5,-20, 5,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-28,-5,-28, 5,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-24,-5,-24, 5,QPen(Qt::darkGreen,2)));
 
-  Ports.push_back(Port(  0,  0));
+  Ports.push_back(qucs::Port(  0,  0));
 
   x1 = -39; y1 = -14;
   x2 =   0; y2 =  14;
@@ -48,13 +48,13 @@ Digi_Source::Digi_Source()
   Name  = "S";
 
   // This property must stay in this order !
-  Props.push_back(Property("Num", "1", true,
+  Props.push_back(qucs::Property("Num", "1", true,
 		QObject::tr("number of the port")));
-  Props.push_back(Property("init", "low", false,
+  Props.push_back(qucs::Property("init", "low", false,
 		QObject::tr("initial output value")+" [low, high]"));
-  Props.push_back(Property("times", "1ns; 1ns", false,
+  Props.push_back(qucs::Property("times", "1ns; 1ns", false,
 		QObject::tr("list of times for changing output value")));
-  Props.push_back(Property("V", "1 V", false,
+  Props.push_back(qucs::Property("V", "1 V", false,
 		QObject::tr("voltage of high level")));
 }
 

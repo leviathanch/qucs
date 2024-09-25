@@ -22,24 +22,24 @@ iRect::iRect()
 {
   Description = QObject::tr("ideal rectangle current source");
 
-  Arcs.push_back(Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30,  0, 12,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( -7,  0,  7,  0,QPen(Qt::darkBlue,3)));
-  Lines.push_back(Line(  6,  0,  0, -4,QPen(Qt::darkBlue,3)));
-  Lines.push_back(Line(  6,  0,  0,  4,QPen(Qt::darkBlue,3)));
+  Arcs.push_back(qucs::Arc(-12,-12, 24, 24,  0, 16*360,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30,  0, 12,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -7,  0,  7,  0,QPen(Qt::darkBlue,3)));
+  Lines.push_back(qucs::Line(  6,  0,  0, -4,QPen(Qt::darkBlue,3)));
+  Lines.push_back(qucs::Line(  6,  0,  0,  4,QPen(Qt::darkBlue,3)));
 
   // little rectangle symbol
-  Lines.push_back(Line( 19,  5, 19,  7,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 13,  7, 19,  7,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 13,  7, 13, 11,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 13, 11, 19, 11,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 19, 11, 19, 15,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 13, 15, 19, 15,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 13, 15, 13, 17,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 19,  5, 19,  7,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 13,  7, 19,  7,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 13,  7, 13, 11,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 13, 11, 19, 11,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 19, 11, 19, 15,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 13, 15, 19, 15,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 13, 15, 13, 17,QPen(Qt::darkBlue,2)));
 
-  Ports.push_back(Port( 30,  0));
-  Ports.push_back(Port(-30,  0));
+  Ports.push_back(qucs::Port( 30,  0));
+  Ports.push_back(qucs::Port(-30,  0));
 
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  20;
@@ -49,17 +49,17 @@ iRect::iRect()
   Model = "Irect";
   Name  = "I";
 
-  Props.push_back(Property("I", "1 mA", true,
+  Props.push_back(qucs::Property("I", "1 mA", true,
 		QObject::tr("current at high pulse")));
-  Props.push_back(Property("TH", "1 ms", true,
+  Props.push_back(qucs::Property("TH", "1 ms", true,
 		QObject::tr("duration of high pulses")));
-  Props.push_back(Property("TL", "1 ms", true,
+  Props.push_back(qucs::Property("TL", "1 ms", true,
 		QObject::tr("duration of low pulses")));
-  Props.push_back(Property("Tr", "1 ns", false,
+  Props.push_back(qucs::Property("Tr", "1 ns", false,
 		QObject::tr("rise time of the leading edge")));
-  Props.push_back(Property("Tf", "1 ns", false,
+  Props.push_back(qucs::Property("Tf", "1 ns", false,
 		QObject::tr("fall time of the trailing edge")));
-  Props.push_back(Property("Td", "0 ns", false,
+  Props.push_back(qucs::Property("Td", "0 ns", false,
 		QObject::tr("initial delay time")));
 
   rotate();  // fix historical flaw

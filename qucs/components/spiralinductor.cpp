@@ -29,17 +29,17 @@ spiralinductor::spiralinductor()
   Description = QObject::tr("Planar spiral inductor");
 
   //Spiral
-  Arcs.push_back(Arc(-5, 0, 10, 10, -16*90, 16*180,QPen(Qt::darkBlue,3)));
-  Arcs.push_back(Arc(-10, -10, 20, 20, 16*90, 16*180,QPen(Qt::darkBlue,3)));
-  Arcs.push_back(Arc(-15, -10, 30, 30, -16*90, 16*180,QPen(Qt::darkBlue,3)));
-  Arcs.push_back(Arc(-20, -20, 40, 40, 16*90, 16*180,QPen(Qt::darkBlue,3)));
-  Arcs.push_back(Arc(-20, -20, 40, 40, 0, 16*90,QPen(Qt::darkBlue,3)));
+  Arcs.push_back(qucs::Arc(-5, 0, 10, 10, -16*90, 16*180,QPen(Qt::darkBlue,3)));
+  Arcs.push_back(qucs::Arc(-10, -10, 20, 20, 16*90, 16*180,QPen(Qt::darkBlue,3)));
+  Arcs.push_back(qucs::Arc(-15, -10, 30, 30, -16*90, 16*180,QPen(Qt::darkBlue,3)));
+  Arcs.push_back(qucs::Arc(-20, -20, 40, 40, 16*90, 16*180,QPen(Qt::darkBlue,3)));
+  Arcs.push_back(qucs::Arc(-20, -20, 40, 40, 0, 16*90,QPen(Qt::darkBlue,3)));
 
-  Lines.push_back(Line(-30,  0, 0,  0,QPen(Qt::black,4)));
-  Lines.push_back(Line( 20,  0, 30,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  0, 0,  0,QPen(Qt::black,4)));
+  Lines.push_back(qucs::Line( 20,  0, 30,  0,QPen(Qt::darkBlue,2)));
 
-  Ports.push_back(Port(-30, 0));
-  Ports.push_back(Port( 30, 0));
+  Ports.push_back(qucs::Port(-30, 0));
+  Ports.push_back(qucs::Port( 30, 0));
 
   x1 = -30; y1 =-25;
   x2 =  30; y2 = 25;
@@ -49,20 +49,20 @@ spiralinductor::spiralinductor()
   Model = "SPIRALIND";
   Name  = "SPIRALIND";
 
-  Props.push_back(Property("Subst", "Subst1", true,
+  Props.push_back(qucs::Property("Subst", "Subst1", true,
 		QObject::tr("Substrate")));
-  Props.push_back(Property("Geometry", "Circular", true,
+  Props.push_back(qucs::Property("Geometry", "Circular", true,
 		QObject::tr("Spiral type")+
 +		"[Circular, Square, Hexagonal, Octogonal]"));
-  Props.push_back(Property("W", "25 um", false,
+  Props.push_back(qucs::Property("W", "25 um", false,
 		QObject::tr("Width of line")));
-  Props.push_back(Property("Di", "200 um", false,
+  Props.push_back(qucs::Property("Di", "200 um", false,
 		QObject::tr("Inner diameter")));
-  Props.push_back(Property("S", "25 um", false,
+  Props.push_back(qucs::Property("S", "25 um", false,
 		QObject::tr("Spacing between turns")));
-  Props.push_back(Property("N", "3", false,
+  Props.push_back(qucs::Property("N", "3", false,
 		QObject::tr("Number of turns")));
-  Props.push_back(Property("Temp", "26.85", false,
+  Props.push_back(qucs::Property("Temp", "26.85", false,
 		QObject::tr("simulation temperature in degree Celsius")));
 
 }

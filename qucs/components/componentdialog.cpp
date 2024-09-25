@@ -1026,7 +1026,7 @@ void ComponentDialog::slotApplyInput()
         Q_ASSERT(prop->rowCount() >= 0);
         if ( (int) Comp->Props.size() < prop->rowCount() +1) {
             qDebug() << "adding to Comp ";
-            Comp->Props.push_back(Property(name, value, display, desc));
+            Comp->Props.push_back(qucs::Property(name, value, display, desc));
             changed = true;
         }
       }

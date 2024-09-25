@@ -34,23 +34,23 @@ MStee::MStee()
   Model = "MTEE";
   Name  = "MS";
 
-  Props.push_back(Property("Subst", "Subst1", true,
+  Props.push_back(qucs::Property("Subst", "Subst1", true,
 		QObject::tr("substrate")));
-  Props.push_back(Property("W1", "1 mm", true,
+  Props.push_back(qucs::Property("W1", "1 mm", true,
 		QObject::tr("width of line 1")));
-  Props.push_back(Property("W2", "1 mm", true,
+  Props.push_back(qucs::Property("W2", "1 mm", true,
 		QObject::tr("width of line 2")));
-  Props.push_back(Property("W3", "2 mm", true,
+  Props.push_back(qucs::Property("W3", "2 mm", true,
 		QObject::tr("width of line 3")));
-  Props.push_back(Property("MSModel", "Hammerstad", false,
+  Props.push_back(qucs::Property("MSModel", "Hammerstad", false,
 	QObject::tr("quasi-static microstrip model")+
 	" [Hammerstad, Wheeler, Schneider]"));
-  Props.push_back(Property("MSDispModel", "Kirschning", false,
+  Props.push_back(qucs::Property("MSDispModel", "Kirschning", false,
 	QObject::tr("microstrip dispersion model")+" [Kirschning, Kobayashi, "
 	"Yamashita, Hammerstad, Getsinger, Schneider, Pramanick]"));
-  Props.push_back(Property("Temp", "26.85", false,
+  Props.push_back(qucs::Property("Temp", "26.85", false,
 		QObject::tr("temperature in degree Celsius")));
-  Props.push_back(Property("Symbol", "showNumbers", false,
+  Props.push_back(qucs::Property("Symbol", "showNumbers", false,
 	QObject::tr("show port numbers in symbol or not")+
 	" [showNumbers, noNumbers]"));
 
@@ -83,17 +83,17 @@ void MStee::createSymbol()
   // get the small font size; use the screen-compatible metric
   QFontMetrics smallmetrics(Font, 0); 
   
-  Lines.push_back(Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  0, 18,  0, 30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-18, -8, 18, -8,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-18,  8, -8,  8,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  8,  8, 18,  8,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-18, -8,-18,  8,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 18, -8, 18,  8,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( -8,  8, -8, 18,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  8,  8,  8, 18,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( -8, 18,  8, 18,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  0,-18,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 18,  0, 30,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  0, 18,  0, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-18, -8, 18, -8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-18,  8, -8,  8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  8,  8, 18,  8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-18, -8,-18,  8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 18, -8, 18,  8,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -8,  8, -8, 18,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  8,  8,  8, 18,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -8, 18,  8, 18,QPen(Qt::darkBlue,2)));
 
   if(Props.back().Value.at(0) != 'n') {
     QString stmp = "1";
@@ -101,12 +101,12 @@ void MStee::createSymbol()
     int d = smallmetrics.descent();
     int a = smallmetrics.ascent();
     
-    Texts.push_back(Text(-25-w, -d+6, stmp)); // right-aligned, top-aligned
-    Texts.push_back(Text( 25, -d+6, "2")); // left-aligned, top-aligned
-    Texts.push_back(Text(  5, 30-a-1, "3")); // bottom-aligned
+    Texts.push_back(qucs::Text(-25-w, -d+6, stmp)); // right-aligned, top-aligned
+    Texts.push_back(qucs::Text( 25, -d+6, "2")); // left-aligned, top-aligned
+    Texts.push_back(qucs::Text(  5, 30-a-1, "3")); // bottom-aligned
   }
 
-  Ports.push_back(Port(-30, 0));
-  Ports.push_back(Port( 30, 0));
-  Ports.push_back(Port(  0,30));
+  Ports.push_back(qucs::Port(-30, 0));
+  Ports.push_back(qucs::Port( 30, 0));
+  Ports.push_back(qucs::Port(  0,30));
 }

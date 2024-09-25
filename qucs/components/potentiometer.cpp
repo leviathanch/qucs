@@ -14,35 +14,35 @@ potentiometer::potentiometer()
 {
   Description = QObject::tr ("Potentiometer verilog device");
 
-  Props.push_back (Property ("R_pot", "1e4", false,
-    QObject::tr ("nominal device resistance")
+  Props.push_back(qucs::Property ("R_pot", "1e4", false,
+    QObject::tr("nominal device resistance")
     +" ("+QObject::tr ("Ohm")+")"));
-  Props.push_back (Property ("Rotation", "120", false,
-    QObject::tr ("shaft/wiper arm rotation")
+  Props.push_back(qucs::Property ("Rotation", "120", false,
+    QObject::tr("shaft/wiper arm rotation")
     +" ("+QObject::tr ("degrees")+")"));
-  Props.push_back (Property ("Taper_Coeff", "0", false,
-    QObject::tr ("resistive law taper coefficient")));
-  Props.push_back (Property ("LEVEL", "1", false,
-    QObject::tr ("device type selector")+" [1, 2, 3]"));
-  Props.push_back (Property ("Max_Rotation", "240.0", false,
-    QObject::tr ("maximum shaft/wiper rotation")
+  Props.push_back(qucs::Property ("Taper_Coeff", "0", false,
+    QObject::tr("resistive law taper coefficient")));
+  Props.push_back(qucs::Property ("LEVEL", "1", false,
+    QObject::tr("device type selector")+" [1, 2, 3]"));
+  Props.push_back(qucs::Property ("Max_Rotation", "240.0", false,
+    QObject::tr("maximum shaft/wiper rotation")
     +" ("+QObject::tr ("degrees")+")"));
-  Props.push_back (Property ("Conformity", "0.2", false,
-    QObject::tr ("conformity error")
+  Props.push_back(qucs::Property ("Conformity", "0.2", false,
+    QObject::tr("conformity error")
     +" ("+QObject::tr ("%")+")"));
-  Props.push_back (Property ("Linearity", "0.2", false,
-    QObject::tr ("linearity error")
+  Props.push_back(qucs::Property ("Linearity", "0.2", false,
+    QObject::tr("linearity error")
     +" ("+QObject::tr ("%")+")"));
-  Props.push_back (Property ("Contact_Res", "1", false,
-    QObject::tr ("wiper arm contact resistance")
+  Props.push_back(qucs::Property ("Contact_Res", "1", false,
+    QObject::tr("wiper arm contact resistance")
     +" ("+QObject::tr ("Ohm")+")"));
-  Props.push_back (Property ("Temp_Coeff", "100", false,
-    QObject::tr ("resistance temperature coefficient")
+  Props.push_back(qucs::Property ("Temp_Coeff", "100", false,
+    QObject::tr("resistance temperature coefficient")
     +" ("+QObject::tr ("PPM/Celsius")+")"));
-  Props.push_back (Property ("Tnom", "26.85", false,
-    QObject::tr ("parameter measurement temperature")
+  Props.push_back(qucs::Property ("Tnom", "26.85", false,
+    QObject::tr("parameter measurement temperature")
     +" ("+QObject::tr ("Celsius")+")"));
-  Props.push_back (Property ("Temp", "26.85", false,
+  Props.push_back(qucs::Property ("Temp", "26.85", false,
     QObject::tr ("simulation temperature")));
 
   createSymbol ();
@@ -72,36 +72,36 @@ Element * potentiometer::info(QString& Name, char * &BitmapFile, bool getNewOne)
 void potentiometer::createSymbol()
 {
   // frame
-  Lines.push_back(Line(-30,-13,-30, 10,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30, 10, 30, 10,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30, 10, 30,-13,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30,-13,-30,-13,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,-13,-30, 10,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, 10, 30, 10,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30, 10, 30,-13,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30,-13,-30,-13,QPen(Qt::darkBlue,2)));
 
   // resistor
-  Lines.push_back(Line(-40,  0, -25, 0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-25,  0, -20,-5,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-20, -5, -15, 0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-15,  0, -10,-5,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-10, -5, -5,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( -5,  0,  0, -5,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  0, -5,  5,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  5,  0, 10, -5,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 10, -5, 15,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 15,  0, 20, -5,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 20, -5, 25,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 25,  0, 40,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-40,  0, -25, 0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-25,  0, -20,-5,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-20, -5, -15, 0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-15,  0, -10,-5,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-10, -5, -5,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -5,  0,  0, -5,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  0, -5,  5,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  5,  0, 10, -5,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 10, -5, 15,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 15,  0, 20, -5,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 20, -5, 25,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 25,  0, 40,  0,QPen(Qt::darkBlue,2)));
 
   // arrow
-  Lines.push_back(Line( -4, -9,  0, -5,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  4, -9,  0, -5,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  0, -5,  0,-20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -4, -9,  0, -5,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  4, -9,  0, -5,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  0, -5,  0,-20,QPen(Qt::darkBlue,2)));
 
-  Texts.push_back(Text(-23,   0, QObject::tr("B"), Qt::black, 6.0, 1.0, 0.0));
-  Texts.push_back(Text( 18,   0, QObject::tr("T"), Qt::black, 6.0, 1.0, 0.0));
+  Texts.push_back(qucs::Text(-23,   0, QObject::tr("B"), Qt::black, 6.0, 1.0, 0.0));
+  Texts.push_back(qucs::Text( 18,   0, QObject::tr("T"), Qt::black, 6.0, 1.0, 0.0));
 
-  Ports.push_back(Port(-40,   0)); // B
-  Ports.push_back(Port(  0, -20)); // M
-  Ports.push_back(Port( 40,   0)); // T
+  Ports.push_back(qucs::Port(-40,   0)); // B
+  Ports.push_back(qucs::Port(  0, -20)); // M
+  Ports.push_back(qucs::Port( 40,   0)); // T
 
   x1 = -40; y1 = -20;
   x2 =  40; y2 =  15;

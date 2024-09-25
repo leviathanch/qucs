@@ -23,28 +23,28 @@ RS_FlipFlop::RS_FlipFlop()
   Type = isDigitalComponent;
   Description = QObject::tr("RS flip flop");
 
-  Props.push_back(Property("t", "0", false, QObject::tr("delay time")));
+  Props.push_back(qucs::Property("t", "0", false, QObject::tr("delay time")));
 
-  Lines.push_back(Line(-20,-20, 20,-20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-20, 20, 20, 20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-20,-20,-20, 20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 20,-20, 20, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-20,-20, 20,-20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-20, 20, 20, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-20,-20,-20, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 20,-20, 20, 20,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-30,-10,-20,-10,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30, 10,-20, 10,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30,-10, 20,-10,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30, 10, 20, 10,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,-10,-20,-10,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, 10,-20, 10,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30,-10, 20,-10,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30, 10, 20, 10,QPen(Qt::darkBlue,2)));
 
-  Texts.push_back(Text(-18,-21, "R", Qt::darkBlue, 12.0));
-  Texts.push_back(Text(-18, -1, "S", Qt::darkBlue, 12.0));
-  Texts.push_back(Text(  6,-21, "Q", Qt::darkBlue, 12.0));
-  Texts.push_back(Text(  6, -1, "Q", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-18,-21, "R", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-18, -1, "S", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(  6,-21, "Q", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(  6, -1, "Q", Qt::darkBlue, 12.0));
   Texts.back().over=true;
 
-  Ports.push_back(Port(-30,-10));  // R
-  Ports.push_back(Port(-30, 10));  // S
-  Ports.push_back(Port( 30,-10));  // Q
-  Ports.push_back(Port( 30, 10));  // nQ
+  Ports.push_back(qucs::Port(-30,-10));  // R
+  Ports.push_back(qucs::Port(-30, 10));  // S
+  Ports.push_back(qucs::Port( 30,-10));  // Q
+  Ports.push_back(qucs::Port( 30, 10));  // nQ
 
   x1 = -30; y1 = -24;
   x2 =  30; y2 =  24;

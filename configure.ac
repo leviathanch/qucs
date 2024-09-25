@@ -250,7 +250,7 @@ if test "x$PKG_CONFIG" != "x"; then
 
       PKG_CHECK_MODULES([QTest], [${qt_name}Test])
 
-      PKG_CHECK_MODULES([QT], [${qt_name}Core ${qt_name}Gui ${qt_name}Svg ${qt_name}Xml], [
+      PKG_CHECK_MODULES([QT], [${qt_name}Core ${qt_name}Gui ${qt_name}Script  ${qt_name}Svg ${qt_name}Xml], [
         QT_CFLAGS="$QT_CFLAGS $QT_DEF -DQT_DEPRECATED_WARNINGS -D_REENTRANT"
         case $host_os in
           *freebsd*) QT_LIBS="$QT_LIBS -pthread" ;;
@@ -358,6 +358,7 @@ fi # end of Qt4 logic when pkg-config is not found
 AS_IF([test $QT_MAJOR_VERSION -ge 5],
           [ QT_CFLAGS="$QT_CFLAGS -fPIC"
       PKG_CHECK_MODULES([QtPrintSupport], [${qt_name}PrintSupport])
+      PKG_CHECK_MODULES([QtScript], [${qt_name}Script])
 	   ])
 
     QT_CFLAGS="$QT_CFLAGS $QtPrintSupport_CFLAGS $QtScript_CFLAGS"
@@ -837,7 +838,7 @@ dnl Check for Git short SHA to tag version
 dnl The release package should also keep it on the config.h
 GIT="unknown"
 if test -d "../.git"; then
-  m4_define([GIT_REVISION], m4_esyscmd([git log --pretty=format:'%h' -n 1u]))
+  m4_define([GIT_REVISION], m4_esyscmd([git log --pretty=format:'%h' -n 1]))
   AC_DEFINE([GIT], ["GIT_REVISION"], [Git short revision hash.])
   GIT=GIT_REVISION
   echo "\nFound Git clone... $GIT"

@@ -22,16 +22,16 @@ Volt_dc::Volt_dc()
 {
   Description = QObject::tr("ideal dc voltage source");
 
-  Lines.push_back(Line(  4,-13,  4, 13,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( -4, -6, -4,  6,QPen(Qt::darkBlue,4)));
-  Lines.push_back(Line( 30,  0,  4,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( -4,  0,-30,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 11,  5, 11, 11,QPen(Qt::red,1)));
-  Lines.push_back(Line( 14,  8,  8,  8,QPen(Qt::red,1)));
-  Lines.push_back(Line(-11,  5,-11, 11,QPen(Qt::black,1)));
+  Lines.push_back(qucs::Line(  4,-13,  4, 13,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -4, -6, -4,  6,QPen(Qt::darkBlue,4)));
+  Lines.push_back(qucs::Line( 30,  0,  4,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( -4,  0,-30,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 11,  5, 11, 11,QPen(Qt::red,1)));
+  Lines.push_back(qucs::Line( 14,  8,  8,  8,QPen(Qt::red,1)));
+  Lines.push_back(qucs::Line(-11,  5,-11, 11,QPen(Qt::black,1)));
 
-  Ports.push_back(Port( 30,  0));
-  Ports.push_back(Port(-30,  0));
+  Ports.push_back(qucs::Port( 30,  0));
+  Ports.push_back(qucs::Port(-30,  0));
 
   x1 = -30; y1 = -14;
   x2 =  30; y2 =  14;
@@ -41,7 +41,7 @@ Volt_dc::Volt_dc()
   Model = "Vdc";
   Name  = "V";
 
-  Props.push_back(Property("U", "1 V", true,
+  Props.push_back(qucs::Property("U", "1 V", true,
 		QObject::tr("voltage in Volts")));
 
   rotate();  // fix historical flaw

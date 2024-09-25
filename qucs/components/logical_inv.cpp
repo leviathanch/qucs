@@ -26,15 +26,15 @@ Logical_Inv::Logical_Inv()
   Description = QObject::tr("logical inverter");
 
   // the list order must be preserved !!!
-  Props.push_back(Property("V", "1 V", false,
+  Props.push_back(qucs::Property("V", "1 V", false,
 		QObject::tr("voltage of high level")));
-  Props.push_back(Property("t", "0", false,
+  Props.push_back(qucs::Property("t", "0", false,
 		QObject::tr("delay time")));
-  Props.push_back(Property("TR", "10", false,
+  Props.push_back(qucs::Property("TR", "10", false,
 		QObject::tr("transfer function scaling factor")));
 
   // this must be the last property in the list !!!
-  Props.push_back(Property("Symbol", "old", false,
+  Props.push_back(qucs::Property("Symbol", "old", false,
 		QObject::tr("schematic symbol")+" [old, DIN40900]"));
 
   createSymbol();
@@ -64,7 +64,7 @@ QString Logical_Inv::vhdlCode(int NumPorts)
 QString Logical_Inv::verilogCode(int NumPorts)
 {
   bool synthesize = true;
-  Port &pp = port(0);
+  qucs::Port &pp = port(0);
   QString s ("");
 
   if (synthesize) {
@@ -104,29 +104,29 @@ void Logical_Inv::createSymbol()
   int xr;
 
   if(Props.back().Value.at(0) == 'D') {  // DIN symbol
-    Lines.push_back(Line( 15,-20, 15, 20,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line(-15,-20, 15,-20,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line(-15, 20, 15, 20,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line(-15,-20,-15, 20,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line( 15,-20, 15, 20,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(-15,-20, 15,-20,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(-15, 20, 15, 20,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(-15,-20,-15, 20,QPen(Qt::darkBlue,2)));
 
-    Texts.push_back(Text(-11,-17, "1", Qt::darkBlue, 15.0));
+    Texts.push_back(qucs::Text(-11,-17, "1", Qt::darkBlue, 15.0));
     xr =  15;
   }
   else {   // old symbol
-    Lines.push_back(Line(-10,-20,-10,20, QPen(Qt::darkBlue,2)));
-    Arcs.push_back(Arc(-30,-20, 40, 30,  0, 16*90,QPen(Qt::darkBlue,2)));
-    Arcs.push_back(Arc(-30,-10, 40, 30,  0,-16*90,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line( 10,-5, 10, 5,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(-10,-20,-10,20, QPen(Qt::darkBlue,2)));
+    Arcs.push_back(qucs::Arc(-30,-20, 40, 30,  0, 16*90,QPen(Qt::darkBlue,2)));
+    Arcs.push_back(qucs::Arc(-30,-10, 40, 30,  0,-16*90,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line( 10,-5, 10, 5,QPen(Qt::darkBlue,2)));
     xr =  10;
   }
 
-  Ellips.push_back(Area(xr,-4, 8, 8,
+  Ellips.push_back(qucs::Area(xr,-4, 8, 8,
                 QPen(Qt::darkBlue,0), QBrush(Qt::darkBlue)));
 
-  Lines.push_back(Line( xr, 0, 30, 0, QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30, 0,-xr, 0, QPen(Qt::darkBlue,2)));
-  Ports.push_back(Port( 30, 0));
-  Ports.push_back(Port(-30, 0));
+  Lines.push_back(qucs::Line( xr, 0, 30, 0, QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, 0,-xr, 0, QPen(Qt::darkBlue,2)));
+  Ports.push_back(qucs::Port( 30, 0));
+  Ports.push_back(qucs::Port(-30, 0));
 
   x1 = -30; y1 = -23;
   x2 =  30; y2 =  23;

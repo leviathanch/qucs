@@ -22,24 +22,24 @@ TLine_4Port::TLine_4Port()
 {
   Description = QObject::tr("ideal 4-terminal transmission line");
 
-  Arcs.push_back(Arc(-28,-40, 18, 38,16*232, 16*33,QPen(Qt::darkBlue,1)));
-  Arcs.push_back(Arc(-28,  2, 18, 38, 16*95, 16*33,QPen(Qt::darkBlue,1)));
+  Arcs.push_back(qucs::Arc(-28,-40, 18, 38,16*232, 16*33,QPen(Qt::darkBlue,1)));
+  Arcs.push_back(qucs::Arc(-28,  2, 18, 38, 16*95, 16*33,QPen(Qt::darkBlue,1)));
 
-  Lines.push_back(Line(-20,-2, 20,-2,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-20, 2, 20, 2,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-20,-2, 20,-2,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-20, 2, 20, 2,QPen(Qt::darkBlue,2)));
 
-  Arcs.push_back(Arc( 10,-40, 18, 38,16*270, 16*40,QPen(Qt::darkBlue,1)));
-  Arcs.push_back(Arc( 10,  2, 18, 38, 16*50, 16*40,QPen(Qt::darkBlue,1)));
+  Arcs.push_back(qucs::Arc( 10,-40, 18, 38,16*270, 16*40,QPen(Qt::darkBlue,1)));
+  Arcs.push_back(qucs::Arc( 10,  2, 18, 38, 16*50, 16*40,QPen(Qt::darkBlue,1)));
 
-  Arcs.push_back(Arc(-38,-10, 16, 28, 16*45, 16*45,QPen(Qt::darkBlue,1)));
-  Arcs.push_back(Arc(-38,-18, 16, 28,16*270, 16*45,QPen(Qt::darkBlue,1)));
-  Arcs.push_back(Arc( 22,-10, 16, 28, 16*90, 16*45,QPen(Qt::darkBlue,1)));
-  Arcs.push_back(Arc( 22,-18, 16, 28,16*225, 16*45,QPen(Qt::darkBlue,1)));
+  Arcs.push_back(qucs::Arc(-38,-10, 16, 28, 16*45, 16*45,QPen(Qt::darkBlue,1)));
+  Arcs.push_back(qucs::Arc(-38,-18, 16, 28,16*270, 16*45,QPen(Qt::darkBlue,1)));
+  Arcs.push_back(qucs::Arc( 22,-10, 16, 28, 16*90, 16*45,QPen(Qt::darkBlue,1)));
+  Arcs.push_back(qucs::Arc( 22,-18, 16, 28,16*225, 16*45,QPen(Qt::darkBlue,1)));
 
-  Ports.push_back(Port(-30,-10));
-  Ports.push_back(Port( 30,-10));
-  Ports.push_back(Port( 30, 10));
-  Ports.push_back(Port(-30, 10));
+  Ports.push_back(qucs::Port(-30,-10));
+  Ports.push_back(qucs::Port( 30,-10));
+  Ports.push_back(qucs::Port( 30, 10));
+  Ports.push_back(qucs::Port(-30, 10));
 
   x1 = -30; y1 =-12;
   x2 =  30; y2 = 12;
@@ -49,13 +49,13 @@ TLine_4Port::TLine_4Port()
   Model = "TLIN4P";
   Name  = "Line";
 
-  Props.push_back(Property("Z", "50 Ohm", true,
+  Props.push_back(qucs::Property("Z", "50 Ohm", true,
 		QObject::tr("characteristic impedance")));
-  Props.push_back(Property("L", "1 mm", true,
+  Props.push_back(qucs::Property("L", "1 mm", true,
 		QObject::tr("electrical length of the line")));
-  Props.push_back(Property("Alpha", "0 dB", false,
+  Props.push_back(qucs::Property("Alpha", "0 dB", false,
 		QObject::tr("attenuation factor per length in 1/m")));
-  Props.push_back(Property("Temp", "26.85", false,
+  Props.push_back(qucs::Property("Temp", "26.85", false,
 		QObject::tr("simulation temperature in degree Celsius")));
 }
 

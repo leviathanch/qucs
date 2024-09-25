@@ -25,38 +25,38 @@ JK_FlipFlop::JK_FlipFlop()
   Type = isDigitalComponent;
   Description = QObject::tr("JK flip flop with asynchron set and reset");
 
-  Props.push_back(Property("t", "0", false, QObject::tr("delay time")));
+  Props.push_back(qucs::Property("t", "0", false, QObject::tr("delay time")));
 
-  Lines.push_back(Line(-20,-30, 20,-30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-20, 30, 20, 30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-20,-30,-20, 30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 20,-30, 20, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-20,-30, 20,-30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-20, 30, 20, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-20,-30,-20, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 20,-30, 20, 30,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-30,-20,-20,-20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30, 20,-20, 20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30,-20, 20,-20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 30, 20, 20, 20,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30,  0,-20,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  0,-30,  0,-40,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(  0, 30,  0, 40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,-20,-20,-20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, 20,-20, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30,-20, 20,-20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 30, 20, 20, 20,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  0,-20,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  0,-30,  0,-40,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(  0, 30,  0, 40,QPen(Qt::darkBlue,2)));
 
-  Texts.push_back(Text( -4,-29, "S", Qt::darkBlue,  9.0));
-  Texts.push_back(Text( -4, 14, "R", Qt::darkBlue,  9.0));
-  Texts.push_back(Text(-18,-31, "J", Qt::darkBlue, 12.0));
-  Texts.push_back(Text(-18,  8, "K", Qt::darkBlue, 12.0));
-  Texts.push_back(Text(  6,-31, "Q", Qt::darkBlue, 12.0));
-  Texts.push_back(Text(  6,  8, "Q", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text( -4,-29, "S", Qt::darkBlue,  9.0));
+  Texts.push_back(qucs::Text( -4, 14, "R", Qt::darkBlue,  9.0));
+  Texts.push_back(qucs::Text(-18,-31, "J", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(-18,  8, "K", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(  6,-31, "Q", Qt::darkBlue, 12.0));
+  Texts.push_back(qucs::Text(  6,  8, "Q", Qt::darkBlue, 12.0));
   Texts.back().over=true;
-  Lines.push_back(Line(-20, -4,-12,  0,QPen(Qt::darkBlue,0)));
-  Lines.push_back(Line(-20,  4,-12,  0,QPen(Qt::darkBlue,0)));
+  Lines.push_back(qucs::Line(-20, -4,-12,  0,QPen(Qt::darkBlue,0)));
+  Lines.push_back(qucs::Line(-20,  4,-12,  0,QPen(Qt::darkBlue,0)));
 
-  Ports.push_back(Port(-30,-20));  // J
-  Ports.push_back(Port(-30, 20));  // K
-  Ports.push_back(Port( 30,-20));  // Q
-  Ports.push_back(Port( 30, 20));  // nQ
-  Ports.push_back(Port(-30,  0));  // Clock
-  Ports.push_back(Port(  0,-40));  // set
-  Ports.push_back(Port(  0, 40));  // reset
+  Ports.push_back(qucs::Port(-30,-20));  // J
+  Ports.push_back(qucs::Port(-30, 20));  // K
+  Ports.push_back(qucs::Port( 30,-20));  // Q
+  Ports.push_back(qucs::Port( 30, 20));  // nQ
+  Ports.push_back(qucs::Port(-30,  0));  // Clock
+  Ports.push_back(qucs::Port(  0,-40));  // set
+  Ports.push_back(qucs::Port(  0, 40));  // reset
 
   x1 = -30; y1 = -40;
   x2 =  30; y2 =  40;

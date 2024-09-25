@@ -28,17 +28,17 @@ CircLine::CircLine()
 {
   Description = QObject::tr("Circular Waveguide");
 
-  Arcs.push_back(Arc(-20, -9, 18, 18,     0, 16*360,QPen(Qt::darkBlue,2)));
-  Arcs.push_back(Arc(-18, -7, 14, 14,     0, 16*360,QPen(Qt::darkBlue,2)));
-  Arcs.push_back(Arc( 4, -9, 18, 18,16*270, 16*180,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc(-20, -9, 18, 18,     0, 16*360,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc(-18, -7, 14, 14,     0, 16*360,QPen(Qt::darkBlue,2)));
+  Arcs.push_back(qucs::Arc( 4, -9, 18, 18,16*270, 16*180,QPen(Qt::darkBlue,2)));
 
-  Lines.push_back(Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 19,  0, 30,  0,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-12, -9, 12, -9,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-12,  9, 12,  9,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,  0,-12,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 19,  0, 30,  0,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-12, -9, 12, -9,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-12,  9, 12,  9,QPen(Qt::darkBlue,2)));
 
-  Ports.push_back(Port(-30, 0));
-  Ports.push_back(Port( 30, 0));
+  Ports.push_back(qucs::Port(-30, 0));
+  Ports.push_back(qucs::Port( 30, 0));
 
   x1 = -30; y1 =-16;
   x2 =  30; y2 = 14;
@@ -48,21 +48,21 @@ CircLine::CircLine()
   Model = "CIRCLINE";
   Name  = "Line";
 
-  Props.push_back(Property("a", "2.95 mm", true,
+  Props.push_back(qucs::Property("a", "2.95 mm", true,
 		QObject::tr("Radius")));
-  Props.push_back(Property("L", "1500 mm", true,
+  Props.push_back(qucs::Property("L", "1500 mm", true,
 		QObject::tr("Mechanical length of the line")));
-  Props.push_back(Property("er", "1", false,
+  Props.push_back(qucs::Property("er", "1", false,
 		QObject::tr("Relative permittivity of dielectric")));
-  Props.push_back(Property("mur", "1", false,
+  Props.push_back(qucs::Property("mur", "1", false,
 		QObject::tr("Relative permeability of conductor")));
-  Props.push_back(Property("tand", "0", false,
+  Props.push_back(qucs::Property("tand", "0", false,
 		QObject::tr("Loss tangent")));
-  Props.push_back(Property("rho", "0.022e-6", false,
+  Props.push_back(qucs::Property("rho", "0.022e-6", false,
 		QObject::tr("Specific resistance of conductor")));
-  Props.push_back(Property("Temp", "26.85", false,
+  Props.push_back(qucs::Property("Temp", "26.85", false,
 		QObject::tr("Simulation temperature in degree Celsius")));
-  Props.push_back(Property("Material", "unspecified", false,
+  Props.push_back(qucs::Property("Material", "unspecified", false,
 		QObject::tr("Material parameter for temperature model")+
 			    " [unspecified, Copper, StainlessSteel, Gold]"));
 }

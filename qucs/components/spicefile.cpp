@@ -41,10 +41,10 @@ SpiceFile::SpiceFile()
 {
   Description = QObject::tr("SPICE netlist file");
   // Property descriptions not needed, but must not be empty !
-  Props.push_back(Property("File", "", true, QString("x")));
-  Props.push_back(Property("Ports", "", false, QString("x")));
-  Props.push_back(Property("Sim", "yes", false, QString("x")));
-  Props.push_back(Property("Preprocessor", "none", false, QString("x")));
+  Props.push_back(qucs::Property("File", "", true, QString("x")));
+  Props.push_back(qucs::Property("Ports", "", false, QString("x")));
+  Props.push_back(qucs::Property("Sim", "yes", false, QString("x")));
+  Props.push_back(qucs::Property("Preprocessor", "none", false, QString("x")));
   withSim = false;
 
   Model = "SPICE";
@@ -52,7 +52,7 @@ SpiceFile::SpiceFile()
   changed = false;
 
   // Do NOT call createSymbol() here. But create port to let it rotate.
-  Ports.push_back(Port(0, 0));
+  Ports.push_back(qucs::Port(0, 0));
 }
 
 // -------------------------------------------------------
@@ -94,45 +94,45 @@ void SpiceFile::createSymbol()
   // draw symbol outline
   #define HALFWIDTH  17
   int h = 30*((No-1)/2) + 15;
-  Lines.push_back(Line(-HALFWIDTH, -h, HALFWIDTH, -h,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( HALFWIDTH, -h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-HALFWIDTH,  h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-HALFWIDTH, -h,-HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-HALFWIDTH, -h, HALFWIDTH, -h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( HALFWIDTH, -h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-HALFWIDTH,  h, HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-HALFWIDTH, -h,-HALFWIDTH,  h,QPen(Qt::darkBlue,2)));
 
   int w, i = fHeight/2;
   if(withSim) {
     i = fHeight - 2;
     tmp = QObject::tr("sim");
     w = smallmetrics.horizontalAdvance(tmp);
-    Texts.push_back(Text(w/-2, 0, tmp, Qt::red));
+    Texts.push_back(qucs::Text(w/-2, 0, tmp, Qt::red));
   }
   tmp = QObject::tr("spice");
   w = smallmetrics.boundingRect(tmp).width();
-  Texts.push_back(Text(w/-2, -i, tmp));
+  Texts.push_back(qucs::Text(w/-2, -i, tmp));
 
   i = 0;
   int y = 15-h;
   while(i<No) { // add ports lines and numbers
-    Lines.push_back(Line(-30,  y,-HALFWIDTH,  y,QPen(Qt::darkBlue,2)));
-    Ports.push_back(Port(-30,  y));
+    Lines.push_back(qucs::Line(-30,  y,-HALFWIDTH,  y,QPen(Qt::darkBlue,2)));
+    Ports.push_back(qucs::Port(-30,  y));
     tmp = PortNames.section(',', i, i).mid(4);
     w = smallmetrics.horizontalAdvance(tmp);
-    Texts.push_back(Text(-20-w, y-fHeight-2, tmp)); // text right-aligned
+    Texts.push_back(qucs::Text(-20-w, y-fHeight-2, tmp)); // text right-aligned
     i++;
 
     if(i == No) break; // if odd number of ports there will be one port less on the right side
-    Lines.push_back(Line(HALFWIDTH,  y, 30,  y,QPen(Qt::darkBlue,2)));
-    Ports.push_back(Port( 30,  y));
+    Lines.push_back(qucs::Line(HALFWIDTH,  y, 30,  y,QPen(Qt::darkBlue,2)));
+    Ports.push_back(qucs::Port( 30,  y));
     tmp = PortNames.section(',', i, i).mid(4);
-    Texts.push_back(Text( 20, y-fHeight-2, tmp)); // text left-aligned
+    Texts.push_back(qucs::Text( 20, y-fHeight-2, tmp)); // text left-aligned
     y += 60;
     i++;
   }
 
   if(No > 0) {
-    Lines.push_back(Line( 0, h, 0,h+15,QPen(Qt::darkBlue,2)));
-    Texts.push_back(Text( 4, h,"Ref"));
-    Ports.push_back(Port( 0, h+15));    // 'Ref' port
+    Lines.push_back(qucs::Line( 0, h, 0,h+15,QPen(Qt::darkBlue,2)));
+    Texts.push_back(qucs::Text( 4, h,"Ref"));
+    Ports.push_back(qucs::Port( 0, h+15));    // 'Ref' port
   }
 
   x1 = -30; y1 = -h-2;

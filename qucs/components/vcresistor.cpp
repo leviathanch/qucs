@@ -23,39 +23,39 @@ vcresistor::vcresistor()
   Description = QObject::tr("voltage controlled resistor");
 
   // The resistor shape
-  Lines.push_back(Line(5, 18, 5, -18, QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(17, 18, 17, -18, QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(5, 18, 17, 18, QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(5, -18, 17, -18, QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(5, 18, 5, -18, QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(17, 18, 17, -18, QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(5, 18, 17, 18, QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(5, -18, 17, -18, QPen(Qt::darkBlue,2)));
 
   // horizontal lines on top and bottom of left hand side
-  Lines.push_back(Line(-30,-30,-12,-30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-30, 30,-12, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30,-30,-12,-30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-30, 30,-12, 30,QPen(Qt::darkBlue,2)));
   // horizontal lines on top and bottom of right hand side
-  Lines.push_back(Line( 11,-30, 30,-30,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 11, 30, 30, 30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 11,-30, 30,-30,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 11, 30, 30, 30,QPen(Qt::darkBlue,2)));
   // vertical lines on top and bottom of left hand side
-  Lines.push_back(Line(-12,-30,-12,-23,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line(-12, 30,-12, 23,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-12,-30,-12,-23,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line(-12, 30,-12, 23,QPen(Qt::darkBlue,2)));
   // vertical lines on top and bottom of right hand side
-  Lines.push_back(Line( 11,-30, 11,-18,QPen(Qt::darkBlue,2)));
-  Lines.push_back(Line( 11, 30, 11, 18,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 11,-30, 11,-18,QPen(Qt::darkBlue,2)));
+  Lines.push_back(qucs::Line( 11, 30, 11, 18,QPen(Qt::darkBlue,2)));
 
   // downward pointing arrow
-  Lines.push_back(Line(-12,-18,-12, 18,QPen(Qt::darkBlue,1)));
-  Lines.push_back(Line(-12, 18,-17,  9,QPen(Qt::darkBlue,1)));
-  Lines.push_back(Line(-12, 18, -7,  9,QPen(Qt::darkBlue,1)));
+  Lines.push_back(qucs::Line(-12,-18,-12, 18,QPen(Qt::darkBlue,1)));
+  Lines.push_back(qucs::Line(-12, 18,-17,  9,QPen(Qt::darkBlue,1)));
+  Lines.push_back(qucs::Line(-12, 18, -7,  9,QPen(Qt::darkBlue,1)));
 
-  Lines.push_back(Line(-25,-27, 25,-27,QPen(Qt::darkGray,1)));
-  Lines.push_back(Line( 25,-27, 25, 27,QPen(Qt::darkGray,1)));
-  Lines.push_back(Line( 25, 27,-25, 27,QPen(Qt::darkGray,1)));
-  Lines.push_back(Line(-25, 27,-25,-27,QPen(Qt::darkGray,1)));
+  Lines.push_back(qucs::Line(-25,-27, 25,-27,QPen(Qt::darkGray,1)));
+  Lines.push_back(qucs::Line( 25,-27, 25, 27,QPen(Qt::darkGray,1)));
+  Lines.push_back(qucs::Line( 25, 27,-25, 27,QPen(Qt::darkGray,1)));
+  Lines.push_back(qucs::Line(-25, 27,-25,-27,QPen(Qt::darkGray,1)));
 
 
-  Ports.push_back(Port(-30,-30));
-  Ports.push_back(Port(-30, 30));
-  Ports.push_back(Port( 30,-30));
-  Ports.push_back(Port( 30, 30));
+  Ports.push_back(qucs::Port(-30,-30));
+  Ports.push_back(qucs::Port(-30, 30));
+  Ports.push_back(qucs::Port( 30,-30));
+  Ports.push_back(qucs::Port( 30, 30));
 
 
   x1 = -30; y1 = -30;
@@ -66,7 +66,7 @@ vcresistor::vcresistor()
   Model = "vcresistor";
   Name  = "VCR";
 
-  Props.push_back(Property("gain", "1", true,
+  Props.push_back(qucs::Property("gain", "1", true,
 		QObject::tr("resistance gain")));
 }
 

@@ -16,7 +16,7 @@ pad3bit::pad3bit()
   Type = isComponent; // Analogue and digital component.
   Description = QObject::tr ("3bit pattern generator verilog device");
 
-  Props.push_back (Property ("Number", "0", false,
+  Props.push_back(qucs::Property("Number", "0", false,
     QObject::tr ("pad output value")));
  
   createSymbol ();
@@ -45,21 +45,21 @@ Element * pad3bit::info(QString& Name, char * &BitmapFile, bool getNewOne)
 
 void pad3bit::createSymbol()
 {
-  Lines.push_back(Line(-60, -50, 30,-50,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line( 30, -50, 30, 30,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line( 30,  30,-60, 30,QPen(Qt::darkGreen,2)));
-  Lines.push_back(Line(-60,  30,-60,-50,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-60, -50, 30,-50,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line( 30, -50, 30, 30,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line( 30,  30,-60, 30,QPen(Qt::darkGreen,2)));
+  Lines.push_back(qucs::Line(-60,  30,-60,-50,QPen(Qt::darkGreen,2)));
 
-  Lines.push_back(Line( 40,-30, 30,-30,QPen(Qt::darkGreen,2)));  // A
-  Lines.push_back(Line( 40,-10, 30,-10,QPen(Qt::darkGreen,2)));  // B
-  Lines.push_back(Line( 40, 10, 30, 10,QPen(Qt::darkGreen,2))); // C
+  Lines.push_back(qucs::Line( 40,-30, 30,-30,QPen(Qt::darkGreen,2)));  // A
+  Lines.push_back(qucs::Line( 40,-10, 30,-10,QPen(Qt::darkGreen,2)));  // B
+  Lines.push_back(qucs::Line( 40, 10, 30, 10,QPen(Qt::darkGreen,2))); // C
 
-  Texts.push_back(Text(-58,-33, " 0   1   2    3", Qt::darkGreen, 12.0));
-  Texts.push_back(Text(-58, -8, " 4   5   6    7", Qt::darkGreen, 12.0));
+  Texts.push_back(qucs::Text(-58,-33, " 0   1   2    3", Qt::darkGreen, 12.0));
+  Texts.push_back(qucs::Text(-58, -8, " 4   5   6    7", Qt::darkGreen, 12.0));
 
-  Ports.push_back(Port(40, 10));  // C
-  Ports.push_back(Port(40,-10));  // B
-  Ports.push_back(Port(40,-30));  // A
+  Ports.push_back(qucs::Port(40, 10));  // C
+  Ports.push_back(qucs::Port(40,-10));  // B
+  Ports.push_back(qucs::Port(40,-30));  // A
 
   x1 = -64; y1 = -54;
   x2 =  40; y2 =  34;

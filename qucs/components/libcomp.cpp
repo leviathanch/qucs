@@ -32,14 +32,14 @@ LibComp::LibComp()
   Type = isComponent;   // both analog and digital
   Description = QObject::tr("Component taken from Qucs library");
 
-  Ports.push_back(Port(0,  0));  // dummy port because of being device
+  Ports.push_back(qucs::Port(0,  0));  // dummy port because of being device
 
   Model = "Lib";
   Name  = "X";
 
-  Props.push_back(Property("Lib", "", true,
+  Props.push_back(qucs::Property("Lib", "", true,
 		QObject::tr("name of qucs library file")));
-  Props.push_back(Property("Comp", "", true,
+  Props.push_back(qucs::Property("Comp", "", true,
 		QObject::tr("name of component in library")));
 }
 
@@ -66,10 +66,10 @@ void LibComp::createSymbol()
   }
   else {
     // only paint a rectangle
-    Lines.push_back(Line(-15, -15, 15, -15, QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line( 15, -15, 15,  15, QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line(-15,  15, 15,  15, QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line(-15, -15,-15,  15, QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(-15, -15, 15, -15, QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line( 15, -15, 15,  15, QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(-15,  15, 15,  15, QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(-15, -15,-15,  15, QPen(Qt::darkBlue,2)));
 
     x1 = -18; y1 = -18;
     x2 =  18; y2 =  18;

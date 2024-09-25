@@ -1002,7 +1002,7 @@ void QucsApp::slotCursorUp(bool up)
   }else if(up){
     if(view->MAx3 == 0) return;  // edit component namen ?
     auto pc = std::dynamic_pointer_cast<Component>(view->focusElement);
-    const Property &pp = pc->prop(view->MAx3-1);  // current property
+    const qucs::Property &pp = pc->prop(view->MAx3-1);  // current property
     int Begin = pp.Description.indexOf('[');
     if(Begin < 0) return;  // no selection list ?
     int End = pp.Description.indexOf(editText->text(), Begin); // current
@@ -1020,7 +1020,7 @@ void QucsApp::slotCursorUp(bool up)
   }else{ // down
     if(view->MAx3 == 0) return;  // edit component namen ?
     auto pc = std::dynamic_pointer_cast<Component>(view->focusElement);
-    const Property &pp = pc->prop(view->MAx3-1);  // current property
+    const qucs::Property &pp = pc->prop(view->MAx3-1);  // current property
     int Pos = pp.Description.indexOf('[');
     if(Pos < 0) return;  // no selection list ?
     Pos = pp.Description.indexOf(editText->text(), Pos); // current list item
@@ -1092,7 +1092,7 @@ void QucsApp::slotApplyCompText()
     }
   }
 
-  Property *pp = 0;
+  qucs::Property *pp = 0;
   if(view->MAx3 > 0)  pp = &pc->prop(view->MAx3-1); // current property
   else s = pc->name();
 

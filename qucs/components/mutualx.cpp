@@ -31,11 +31,11 @@ MutualX::MutualX()
 
   const int init_coils=2; // initial number of coils
   // must be the first property!
-  Props.push_back(Property("coils", QString::number(init_coils), false,
+  Props.push_back(qucs::Property("coils", QString::number(init_coils), false,
                 QObject::tr("number of mutual inductances")));
 
   for (int i=1;i<=init_coils; i++) {
-      Props.push_back(Property("L"+QString::number(i), "1 mH", false,
+      Props.push_back(qucs::Property("L"+QString::number(i), "1 mH", false,
                                 QObject::tr("inductance of coil") + " " + QString::number(i)));
   }
 
@@ -43,7 +43,7 @@ MutualX::MutualX()
     for(int j = i+1; j <= init_coils; j++) {
        QString nam = "k" + QString::number(i) + QString::number(j);
        QString desc = QObject::tr("coupling factor between coil %1 and coil %2").arg(i).arg(j);
-       Props.push_back(Property(nam,"0.9",false,desc));
+       Props.push_back(qucs::Property(nam,"0.9",false,desc));
     }
 
   createSymbol();
@@ -180,7 +180,7 @@ void MutualX::createSymbol()
           assert(p != Props.end());
           ++p;
         }
-        Props.insert(p, Property("L"+QString::number(Num-i),
+        Props.insert(p, qucs::Property("L"+QString::number(Num-i),
 					      "1 mH", 
 					      false, 
 					      QObject::tr("inductance of coil") + " " + QString::number(Num-i)));
@@ -194,7 +194,7 @@ void MutualX::createSymbol()
                   assert(p != Props.end());
                   ++p;
                 }
-                Props.insert(p, Property("k", "0.9", false, " "));
+                Props.insert(p, qucs::Property("k", "0.9", false, " "));
             }
         }
 
@@ -221,7 +221,7 @@ void MutualX::createSymbol()
 
   // draw symbol
   int x = -10 * (Num-1);
-  Texts.push_back(Text(x-9,-22,"1"));
+  Texts.push_back(qucs::Text(x-9,-22,"1"));
 
   x1 = x-6;  y1 = -30;
   x2 = 10-x; y2 =  30;
@@ -231,16 +231,16 @@ void MutualX::createSymbol()
 
   x -= 6;
   for(int i=0; i<Num; i++) {
-    Arcs.push_back(Arc(x,-18,12,12, 16*270,16*180, QPen(Qt::darkBlue,2)));
-    Arcs.push_back(Arc(x, -6,12,12, 16*270,16*180, QPen(Qt::darkBlue,2)));
-    Arcs.push_back(Arc(x,  6,12,12, 16*270,16*180, QPen(Qt::darkBlue,2)));
+    Arcs.push_back(qucs::Arc(x,-18,12,12, 16*270,16*180, QPen(Qt::darkBlue,2)));
+    Arcs.push_back(qucs::Arc(x, -6,12,12, 16*270,16*180, QPen(Qt::darkBlue,2)));
+    Arcs.push_back(qucs::Arc(x,  6,12,12, 16*270,16*180, QPen(Qt::darkBlue,2)));
 
     x += 6;
-    Lines.push_back(Line(x,-18,x,-30,QPen(Qt::darkBlue,2)));
-    Lines.push_back(Line(x, 18,x, 30,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(x,-18,x,-30,QPen(Qt::darkBlue,2)));
+    Lines.push_back(qucs::Line(x, 18,x, 30,QPen(Qt::darkBlue,2)));
 
-    Ports.push_back(Port(x,-30));
-    Ports.push_back(Port(x, 30));
+    Ports.push_back(qucs::Port(x,-30));
+    Ports.push_back(qucs::Port(x, 30));
     x += 14;
   }
 }
