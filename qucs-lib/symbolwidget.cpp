@@ -30,6 +30,11 @@
 #include "qucslib.h"
 #include "qucslib_common.h"
 
+using qucs::Line;
+using qucs::Arc;
+using qucs::Area;
+using qucs::Text;
+
 /*!
  * \file symbolwidget.cpp
  * \brief Implementation of the SymbolWidget class.
