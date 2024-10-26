@@ -96,8 +96,10 @@ void SP_Sim::recreate(Schematic*)
     prop(3).Name = "Values";
   }
   else {
-    prop(0).Name = "Start";
-    prop(1).Name = "Stop";
-    prop(2).Name = "Points";
+    prop(0).Name = "Type";
+    prop(1).Name = "Start";
+    prop(2).Name = "Stop";
+    prop(3).Name = "Points";
   }
 }
+
