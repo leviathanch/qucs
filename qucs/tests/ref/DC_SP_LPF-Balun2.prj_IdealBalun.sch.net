@@ -1,0 +1,10 @@
+# Qucs
+## declarations 0
+## declarations end
+
+sTr:Tr1 P4 P1 P5 P3 P2 P2 T1="0.5" T2="0.5"
+Port:P3 P3 P3 Num="3" Type="analog"
+Port:P4 P4 P4 Num="4" Type="analog"
+Port:P5 P5 P5 Num="5" Type="analog"
+Port:P2 P2 P2 Num="2" Type="analog"
+Port:P1 P1 P1 Num="1" Type="analog"

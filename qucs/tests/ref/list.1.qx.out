@@ -1,0 +1,64 @@
+Qacs : Qucs alternative command shell
+used for testing only
+This is free software, and you are welcome
+to redistribute it under the terms of 
+the GNU General Public License, version 3 or later.
+See the file "COPYING" for details.
+misc plugins: wip
+legacy plugins: wip
+module protos();
+module sources();
+Idc #(.I(1 mA)) ideal dc current source(unknown_net, unknown_net);
+IProbe #() current probe(unknown_net, unknown_net);
+endmodule // sources
+
+module RF();
+MCOUPLED #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) coupled microstrip line(unknown_net, unknown_net, unknown_net, unknown_net);
+SUBST #(.er(9.8), .h(1 mm), .t(35 um), .tand(2e-4), .rho(0.022e-6), .D(0.15e-6)) substrate definition();
+MCORN #(.Subst(Subst1), .W(1 mm)) microstrip corner(unknown_net, unknown_net);
+MCROSS #(.Subst(Subst1), .W1(1 mm), .W2(2 mm), .W3(1 mm), .W4(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Symbol(showNumbers)) microstrip cross(unknown_net, unknown_net, unknown_net, unknown_net);
+MLANGE #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) microstrip lange coupler(unknown_net, unknown_net, unknown_net, unknown_net);
+MLIN #(.Subst(Subst1), .W(1 mm), .L(10 mm), .Model(Hammerstad), .DispModel(Kirschning), .Temp(26.85)) microstrip line(unknown_net, unknown_net);
+MSTEP #(.Subst(Subst1), .W1(2 mm), .W2(1 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning)) microstrip impedance step(unknown_net, unknown_net);
+MTEE #(.Subst(Subst1), .W1(1 mm), .W2(1 mm), .W3(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Temp(26.85), .Symbol(showNumbers)) microstrip tee(unknown_net, unknown_net, unknown_net);
+endmodule // RF
+
+module nonlinear();
+Switch #(.init(off), .time(1 ms), .Ron(0), .Roff(1e12), .Temp(26.85), .MaxDuration(1e-6), .Transition(spline)) Switch(unknown_net, unknown_net);
+endmodule // nonlinear
+
+module lumped();
+Port #(.Num(1), .Type()) scktport(unknown_net, unknown_net);
+TLIN #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) ideal transmission line(unknown_net, unknown_net);
+endmodule // lumped
+
+endmodule // protos
+
+module protos();
+module sources();
+Idc #(.I(1 mA)) ideal dc current source(unknown_net, unknown_net);
+IProbe #() current probe(unknown_net, unknown_net);
+endmodule // sources
+
+module RF();
+MCOUPLED #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) coupled microstrip line(unknown_net, unknown_net, unknown_net, unknown_net);
+SUBST #(.er(9.8), .h(1 mm), .t(35 um), .tand(2e-4), .rho(0.022e-6), .D(0.15e-6)) substrate definition();
+MCORN #(.Subst(Subst1), .W(1 mm)) microstrip corner(unknown_net, unknown_net);
+MCROSS #(.Subst(Subst1), .W1(1 mm), .W2(2 mm), .W3(1 mm), .W4(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Symbol(showNumbers)) microstrip cross(unknown_net, unknown_net, unknown_net, unknown_net);
+MLANGE #(.Subst(Subst1), .W(1 mm), .L(10 mm), .S(1 mm), .Model(Kirschning), .DispModel(Kirschning), .Temp(26.85)) microstrip lange coupler(unknown_net, unknown_net, unknown_net, unknown_net);
+MLIN #(.Subst(Subst1), .W(1 mm), .L(10 mm), .Model(Hammerstad), .DispModel(Kirschning), .Temp(26.85)) microstrip line(unknown_net, unknown_net);
+MSTEP #(.Subst(Subst1), .W1(2 mm), .W2(1 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning)) microstrip impedance step(unknown_net, unknown_net);
+MTEE #(.Subst(Subst1), .W1(1 mm), .W2(1 mm), .W3(2 mm), .MSModel(Hammerstad), .MSDispModel(Kirschning), .Temp(26.85), .Symbol(showNumbers)) microstrip tee(unknown_net, unknown_net, unknown_net);
+endmodule // RF
+
+module nonlinear();
+Switch #(.init(off), .time(1 ms), .Ron(0), .Roff(1e12), .Temp(26.85), .MaxDuration(1e-6), .Transition(spline)) Switch(unknown_net, unknown_net);
+endmodule // nonlinear
+
+module lumped();
+Port #(.Num(1), .Type()) scktport(unknown_net, unknown_net);
+TLIN #(.Z(50 Ohm), .L(1 mm), .Alpha(0 dB), .Temp(26.85)) ideal transmission line(unknown_net, unknown_net);
+endmodule // lumped
+
+endmodule // protos
+

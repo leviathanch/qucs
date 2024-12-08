@@ -1,0 +1,73 @@
+#!/bin/bash
+
+QUCS=../main/qucs
+out=out
+ref=${srcdir}/ref
+DIFF=diff\ -rup
+VERILOG_PLUGIN=../plugins/verilog/.libs/verilog
+
+base=$( basename $1 )
+eval echo $base ${REDIR}
+eval echo "$@" ${REDIR}
+
+# eval echo $( cd ${srcdir}; ls $base/*.sch ) ${REDIR}
+# eval echo ${srcdir}/$base ${REDIR}
+
+mkdir ${out}
+
+status=PASS
+
+# TODO: cleanup. explicit any to any
+for i in $( cd ${srcdir}; ls $base/*.{sch,vs} ) ; do
+	schname=$(basename $i)
+	eval echo more $base $schname ${REDIR}
+
+	# dump qucsator netlist
+	rm -f "${out}/${base}_${schname}.net"
+	cmd="$QUCS -a $VERILOG_PLUGIN -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.net"
+	eval echo "$cmd" ${REDIR}
+	eval "$cmd" ${REDIR}
+
+	# BUG: use stdout and filter
+	sed -i '1 s/Qucs.*/Qucs/' ${out}/${base}_${schname}.net
+
+	# dump verilog netlist
+	rm -f "${out}/${base}_${schname}.v"
+	cmd="$QUCS -a $VERILOG_PLUGIN -l verilog_nl -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.v"
+	eval echo "$cmd" ${REDIR}
+	eval "$cmd" ${REDIR}
+
+	# BUG: use stdout and filter
+	sed -i '1 s/Qucs.*/Qucs/' ${out}/${base}_${schname}.v
+	
+	# dump legacy schematic
+	rm -f "${out}/${base}_${schname}.sch"
+	cmd="$QUCS -a $VERILOG_PLUGIN -l leg_sch -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.sch"
+	eval echo "$cmd" ${REDIR}
+	eval "$cmd" ${REDIR}
+
+	# dump verilog schematic
+	rm -f "${out}/${base}_${schname}.vs"
+	cmd="$QUCS -a $VERILOG_PLUGIN -l v_sch -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.vs"
+	eval echo "$cmd" ${REDIR}
+	eval "$cmd" ${REDIR}
+
+	# =================================
+
+	files="${base}_${schname}.net ${base}_${schname}.sch ${base}_${schname}.vs ${base}_${schname}.v"
+
+	for F in $files; do
+		cmd="$DIFF ${out}/${F} ${ref}/${F}"
+		eval echo "$cmd" ${REDIR}
+		eval "$cmd" ${REDIR}
+		if [ $? -ne 0 ]; then
+			echo "ERROR $F"
+			status=FAIL;
+		fi
+	done
+
+done
+
+if [ $status = FAIL ]; then
+	exit 1
+fi
