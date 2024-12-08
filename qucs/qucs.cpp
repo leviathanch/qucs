@@ -92,7 +92,7 @@ QucsApp *QucsMain = 0;  // the Qucs application itself
 /*!
  * \brief QucsApp::QucsApp main application
  */
-QucsApp::QucsApp()
+QucsApp::QucsApp(QStringList files)
 {
   setWindowTitle("Qucs " PACKAGE_VERSION);
 
@@ -143,15 +143,14 @@ QucsApp::QucsApp()
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
 
   // load documents given as command line arguments
-  for(int z=1; z<qApp->arguments().size(); z++) {
-    QString arg = qApp->arguments()[z];
-    QByteArray ba = arg.toLatin1();
-    const char *c_arg= ba.data();
-    if(*(c_arg) != '-') {
-      QFileInfo Info(arg);
-      QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
-      arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
+  for(int z=0; z<files.size(); z++) {
+    QString arg = files[z];
+    QFileInfo Info(arg);
+    QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
+    if(Info.isAbsolute()) {
       gotoPage(arg);
+    } else {
+      qCritical() << "Can only handle absolute paths!";
     }
   }
 }

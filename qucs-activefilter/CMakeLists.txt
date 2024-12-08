@@ -1,5 +1,5 @@
 project(qucsactivefilter CXX C)
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.10.0)
 
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
@@ -24,11 +24,8 @@ if(NOT WIN32)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register ")
 endif()
 
-# configure the header config.h
-configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
-               "${PROJECT_BINARY_DIR}/config.h")
-
 include_directories("${PROJECT_BINARY_DIR}")
+include_directories("${PROJECT_BINARY_DIR}/..")
 
 find_package(Qt5 COMPONENTS Gui Svg REQUIRED)
 

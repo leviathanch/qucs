@@ -15,6 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#define TRACE_FUNCTION_CALLS 0
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -42,6 +44,11 @@
 #include "module.h"
 #include "misc.h"
 
+#if TRACE_FUNCTION_CALLS
+#define trace_method_calls() qInfo()<<__FILE__ <<":"<<__func__
+#else
+#define trace_method_calls() {}
+#endif
 
 // Here the subcircuits, SPICE components etc are collected. It must be
 // global to also work within the subcircuits.
@@ -53,6 +60,7 @@ SubMap FileList;
 // string. This is used to copy the selected elements into the clipboard.
 QString Schematic::createClipboardFile()
 {
+  trace_method_calls();
   int z=0;  // counts selected elements
 
   QString s("<Qucs Schematic " PACKAGE_VERSION ">\n");
@@ -107,6 +115,7 @@ QString Schematic::createClipboardFile()
 // Only read fields without loading them.
 bool Schematic::loadIntoNothing(QTextStream *stream)
 {
+  trace_method_calls();
   QString Line, cstr;
   while(!stream->atEnd()) {
     Line = stream->readLine();
@@ -122,6 +131,7 @@ bool Schematic::loadIntoNothing(QTextStream *stream)
 // Paste from clipboard.
 bool Schematic::pasteFromClipboard(QTextStream *stream, SharedObjectList<Element> &pe)
 {
+  trace_method_calls();
   QString Line;
 
   Line = stream->readLine();
@@ -190,6 +200,7 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, SharedObjectList<Element
 // -------------------------------------------------------------
 int Schematic::saveSymbolCpp (void)
 {
+  trace_method_calls();
   QFileInfo info (DocName);
   QString cppfile = info.path () + QDir::separator() + DataSet;
   QFile file (cppfile);
@@ -261,6 +272,7 @@ int Schematic::saveSymbolCpp (void)
 // save symbol paintings in JSON format
 int Schematic::saveSymbolJSON()
 {
+  trace_method_calls();
   QFileInfo info (DocName);
   QString jsonfile = info.path () + QDir::separator()
                    + info.completeBaseName() + "_sym.json";
@@ -346,208 +358,9 @@ int Schematic::saveSymbolJSON()
 }
 
 // -------------------------------------------------------------
-// Returns the number of subcircuit ports.
-int Schematic::saveDocument()
-{
-  QFile file(DocName);
-  if(!file.open(QIODevice::WriteOnly)) {
-    QMessageBox::critical(0, QObject::tr("Error"),
-				QObject::tr("Cannot save document!"));
-    return -1;
-  }
-
-  QTextStream stream(&file);
-
-  stream << "<Qucs Schematic " << PACKAGE_VERSION << ">\n";
-
-  stream << "<Properties>\n";
-  if(symbolMode) {
-    stream << "  <View=" << tmpViewX1<<","<<tmpViewY1<<","
-			 << tmpViewX2<<","<<tmpViewY2<< ",";
-    stream <<tmpScale<<","<<tmpPosX<<","<<tmpPosY << ">\n";
-  }
-  else {
-    stream << "  <View=" << ViewX1<<","<<ViewY1<<","
-			 << ViewX2<<","<<ViewY2<< ",";
-    stream << Scale <<","<<contentsX()<<","<<contentsY() << ">\n";
-  }
-  stream << "  <Grid=" << GridX<<","<<GridY<<","
-			<< GridOn << ">\n";
-  stream << "  <DataSet=" << DataSet << ">\n";
-  stream << "  <DataDisplay=" << DataDisplay << ">\n";
-  stream << "  <OpenDisplay=" << SimOpenDpl << ">\n";
-  stream << "  <Script=" << Script << ">\n";
-  stream << "  <RunScript=" << SimRunScript << ">\n";
-  stream << "  <showFrame=" << showFrame << ">\n";
-
-  QString t;
-  misc::convert2ASCII(t = Frame_Text0);
-  stream << "  <FrameText0=" << t << ">\n";
-  misc::convert2ASCII(t = Frame_Text1);
-  stream << "  <FrameText1=" << t << ">\n";
-  misc::convert2ASCII(t = Frame_Text2);
-  stream << "  <FrameText2=" << t << ">\n";
-  misc::convert2ASCII(t = Frame_Text3);
-  stream << "  <FrameText3=" << t << ">\n";
-  stream << "</Properties>\n";
-
-  stream << "<Symbol>\n";     // save all paintings for symbol
-  for(auto pp = SymbolPaints.begin(); pp != SymbolPaints.end(); ++pp)
-    stream << "  <" << pp->save() << ">\n";
-  stream << "</Symbol>\n";
-
-  stream << "<Components>\n";    // save all components
-  for(auto pc = DocComps.begin(); pc != DocComps.end(); ++pc) {
-    stream << "  "; // BUG language specific.
-    saveComponent(stream, pc.operator->());
-    stream << "\n"; // BUG?
-  }
-  stream << "</Components>\n";
-
-  stream << "<Wires>\n";    // save all wires
-  for(auto pw = DocWires.begin(); pw != DocWires.end(); ++pw) {
-    stream << "  " << pw->save() << "\n";
-  }
-
-  // save all labeled nodes as wires
-  for(auto pn = DocNodes.begin(); pn != DocNodes.end(); ++pn) {
-    if(pn->Label) stream << "  " << pn->Label->save() << "\n";
-  }
-  stream << "</Wires>\n";
-
-  stream << "<Diagrams>\n";    // save all diagrams
-  for(auto pd = DocDiags.begin(); pd != DocDiags.end(); ++pd) {
-    stream << "  " << pd->save() << "\n";
-  }
-  stream << "</Diagrams>\n";
-
-  stream << "<Paintings>\n";     // save all paintings
-  for(auto pp = DocPaints.begin(); pp != DocPaints.end(); ++pp) {
-    stream << "  <" << pp->save() << ">\n";
-  }
-  stream << "</Paintings>\n";
-
-  file.close();
-
-  // additionally save symbol C++ code if in a symbol drawing and the
-  // associated file is a Verilog-A file
-  if (fileSuffix () == "sym") {
-    if (fileSuffix (DataDisplay) == "va") {
-      saveSymbolCpp ();
-      saveSymbolJSON ();
-
-      // TODO slit this into another method, or merge into saveSymbolJSON
-      // handle errors in separate
-      qDebug() << "  -> Run adms for symbol";
-
-      QString vaFile;
-
-//      QDir prefix = QDir(QucsSettings.BinDir);
-
-      QDir include = QDir(QucsSettings.BinDir+"../include/qucs-core");
-
-      //pick admsXml from settings
-      QString admsXml = QucsSettings.AdmsXmlBinDir.canonicalPath();
-
-#ifdef __MINGW32__
-      admsXml = QDir::toNativeSeparators(admsXml+"/"+"admsXml.exe");
-#else
-      admsXml = QDir::toNativeSeparators(admsXml+"/"+"admsXml");
-#endif
-      // BUG: duplicated from qucs_actions.cpp
-      char const* var = getenv("QUCS_USE_PATH");
-      if(var != NULL) {
-	// just use PATH. this is currently bound to a contition, to maintain
-	// backwards compatibility with QUCSDIR
-	qDebug() << "QUCS_USE_PATH";
-	admsXml = "admsXml";
-      }else{
-      }
-
-      QString workDir = QucsSettings.QucsWorkDir.absolutePath();
-
-      qDebug() << "App path : " << qApp->applicationDirPath();
-      qDebug() << "workdir"  << workDir;
-      qDebug() << "homedir"  << QucsSettings.QucsHomeDir.absolutePath();
-      qDebug() << "projsdir"  << QucsSettings.projsDir.absolutePath();
-
-      vaFile = QucsSettings.QucsWorkDir.filePath(fileBase()+".va");
-
-      QStringList Arguments;
-      Arguments << QDir::toNativeSeparators(vaFile)
-                << "-I" << QDir::toNativeSeparators(include.absolutePath())
-                << "-e" << QDir::toNativeSeparators(include.absoluteFilePath("qucsMODULEguiJSONsymbol.xml"))
-                << "-A" << "dyload";
-
-//      QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-
-      QFile file(admsXml);
-      if(var) {
-	// don't do this. it will always report an error.
-      }else if ( !file.exists() ){
-        QMessageBox::critical(this, tr("Error"),
-                              tr("Program admsXml not found: %1\n\n"
-                                  "Set the admsXml location on the application settings.").arg(admsXml));
-        return -1;
-      }
-
-      qDebug() << "Command: " << admsXml << Arguments.join(" ");
-
-      // need to cd into project to run admsXml?
-      QDir::setCurrent(workDir);
-
-      QProcess builder;
-      builder.setProcessChannelMode(QProcess::MergedChannels);
-
-      builder.start(admsXml, Arguments);
-
-
-      // how to capture [warning]? need to modify admsXml?
-      // TODO put stdout, stderr into a dock window, not messagebox
-      if (!builder.waitForFinished()) {
-        QString cmdString = QString("%1 %2\n\n").arg(admsXml, Arguments.join(" "));
-        cmdString = cmdString + builder.errorString();
-        QMessageBox::critical(this, tr("Error"), cmdString);
-      }
-      else {
-        QString cmdString = QString("%1 %2\n\n").arg(admsXml, Arguments.join(" "));
-        cmdString = cmdString + builder.readAll();
-        QMessageBox::information(this, tr("Status"), cmdString);
-      }
-
-      // Append _sym.json into _props.json, save into _symbol.json
-      QFile f1(QucsSettings.QucsWorkDir.filePath(fileBase()+"_props.json"));
-      QFile f2(QucsSettings.QucsWorkDir.filePath(fileBase()+"_sym.json"));
-      f1.open(QIODevice::ReadOnly | QIODevice::Text);
-      f2.open(QIODevice::ReadOnly | QIODevice::Text);
-
-      QString dat1 = QString(f1.readAll());
-      QString dat2 = QString(f2.readAll());
-      QString finalJSON = dat1.append(dat2);
-
-      // remove joining point
-      finalJSON = finalJSON.replace("}{", "");
-
-      QFile f3(QucsSettings.QucsWorkDir.filePath(fileBase()+"_symbol.json"));
-      f3.open(QIODevice::WriteOnly | QIODevice::Text);
-      QTextStream out(&f3);
-      out << finalJSON;
-
-      f1.close();
-      f2.close();
-      f3.close();
-
-      // TODO choose icon, default to something or provided png
-
-    } // if DataDisplay va
-  } // if suffix .sym
-
-  return 0;
-}
-
-// -------------------------------------------------------------
 bool Schematic::loadProperties(QTextStream *stream)
 {
+  trace_method_calls();
   bool ok = true;
   QString Line, cstr, nstr;
   while(!stream->atEnd()) {
@@ -619,26 +432,27 @@ bool Schematic::loadProperties(QTextStream *stream)
 // Inserts a component without performing logic for wire optimization.
 void Schematic::simpleInsertComponent(const std::shared_ptr<Component> &c)
 {
-  std::shared_ptr<Node> pn;
+  trace_method_calls();
   int x, y;
   // connect every node of component
   for (auto pp = c->Ports.begin(); pp != c->Ports.end(); ++pp) {
+    std::shared_ptr<Node> pn;
+    pn.reset();
     x = pp->x+c->cx;
     y = pp->y+c->cy;
-
     // check if new node lies upon existing node
-    for(auto pn = DocNodes.begin(); pn != DocNodes.end(); ++pn) {
-      if(pn->cx == x) if(pn->cy == y) {
-	if (!pn->DType.isEmpty()) {
-	  pp->Type = pn->DType;
-	}
-	if (!pp->Type.isEmpty()) {
-	  pn->DType = pp->Type;
-	}
-	break;
+    for(auto pni = DocNodes.begin(); pni != DocNodes.end(); ++pni) {
+      std::shared_ptr<Node> pnc = pni.ref();
+      if(pnc->cx == x) if(pnc->cy == y) {
+        if (!pnc->DType.isEmpty()) {
+          pp->Type = pnc->DType;
+        }
+        if (!pp->Type.isEmpty()) {
+          pnc->DType = pp->Type;
+        }
+        pn = pnc;
       }
     }
-
     if(!pn) { // create new node, if no existing one lies at this position
       pn.reset(new Node(x, y));
       DocNodes.append(pn);
@@ -647,7 +461,6 @@ void Schematic::simpleInsertComponent(const std::shared_ptr<Component> &c)
     if (!pp->Type.isEmpty()) {
       pn->DType = pp->Type;
     }
-
     pp->Connection = pn;  // connect component node to schematic node
   }
 
@@ -657,6 +470,7 @@ void Schematic::simpleInsertComponent(const std::shared_ptr<Component> &c)
 // -------------------------------------------------------------
 bool Schematic::loadComponents(QTextStream *stream, SharedObjectList<Element> *List)
 {
+  trace_method_calls();
   QString Line;
   while(!stream->atEnd()) {
     Line = stream->readLine();
@@ -688,6 +502,7 @@ bool Schematic::loadComponents(QTextStream *stream, SharedObjectList<Element> *L
 // Inserts a wire without performing logic for optimizing.
 void Schematic::simpleInsertWire(const std::shared_ptr<Wire> &pw)
 {
+  trace_method_calls();
   auto pn = DocNodes.begin();
   // check if first wire node lies upon existing node
   for( ; pn != DocNodes.end(); ++pn)
@@ -728,6 +543,7 @@ void Schematic::simpleInsertWire(const std::shared_ptr<Wire> &pw)
 // -------------------------------------------------------------
 bool Schematic::loadWires(QTextStream *stream, SharedObjectList<Element> *List)
 {
+  trace_method_calls();
   QString Line;
   while(!stream->atEnd()) {
     Line = stream->readLine();
@@ -762,6 +578,7 @@ bool Schematic::loadWires(QTextStream *stream, SharedObjectList<Element> *List)
 // -------------------------------------------------------------
 bool Schematic::loadDiagrams(QTextStream *stream, DiagramList &List)
 {
+  trace_method_calls();
   SharedObjectList<Element> elements;
   bool result = loadDiagrams(stream, elements);
 
@@ -777,6 +594,7 @@ bool Schematic::loadDiagrams(QTextStream *stream, DiagramList &List)
 // -------------------------------------------------------------
 bool Schematic::loadDiagrams(QTextStream *stream, SharedObjectList<Element> &List)
 {
+  trace_method_calls();
   QString Line, cstr;
   while(!stream->atEnd()) {
 
@@ -823,6 +641,7 @@ bool Schematic::loadDiagrams(QTextStream *stream, SharedObjectList<Element> &Lis
 // -------------------------------------------------------------
 bool Schematic::loadPaintings(QTextStream *stream, PaintingList &List)
 {
+  trace_method_calls();
   SharedObjectList<Element> elements;
   bool result = loadPaintings(stream, elements);
 
@@ -838,6 +657,7 @@ bool Schematic::loadPaintings(QTextStream *stream, PaintingList &List)
 // -------------------------------------------------------------
 bool Schematic::loadPaintings(QTextStream *stream, SharedObjectList<Element> &List)
 {
+  trace_method_calls();
   Painting *p=0;
   QString Line, cstr;
   while(!stream->atEnd()) {
@@ -888,6 +708,8 @@ bool Schematic::loadPaintings(QTextStream *stream, SharedObjectList<Element> &Li
  */
 bool Schematic::loadDocument()
 {
+  trace_method_calls();
+  qInfo() << "DocName" << DocName;
   QFile file(DocName);
   if(!file.open(QIODevice::ReadOnly)) {
     /// \todo implement unified error/warning handling GUI and CLI
@@ -977,6 +799,7 @@ bool Schematic::loadDocument()
 // string. This is used to save state for undo operation.
 QString Schematic::createUndoString(char Op)
 {
+  trace_method_calls();
   // Build element document.
   QString s = "  \n";
   s.replace(0,1,Op);
@@ -1009,6 +832,7 @@ QString Schematic::createUndoString(char Op)
 // Same as "createUndoString(char Op)" but for symbol edit mode.
 QString Schematic::createSymbolUndoString(char Op)
 {
+  trace_method_calls();
   // Build element document.
   QString s = "  \n";
   s.replace(0,1,Op);
@@ -1028,6 +852,7 @@ QString Schematic::createSymbolUndoString(char Op)
 // Used for "undo" function.
 bool Schematic::rebuild(const QString &s)
 {
+  trace_method_calls();
   DocWires.clear();	// delete whole document
   DocNodes.clear();
   DocComps.clear();
@@ -1051,6 +876,7 @@ bool Schematic::rebuild(const QString &s)
 // Same as "rebuild(QString *s)" but for symbol edit mode.
 bool Schematic::rebuildSymbol(const QString &s)
 {
+  trace_method_calls();
   SymbolPaints.clear();	// delete whole document
 
   QString Line;
@@ -1076,6 +902,7 @@ bool Schematic::rebuildSymbol(const QString &s)
 void Schematic::createNodeSet(QStringList& Collect, int& countInit,
                               const std::shared_ptr<Conductor> &pw, const std::shared_ptr<Node> &p1)
 {
+  trace_method_calls();
   if(pw->Label)
     if(!pw->Label->initValue.isEmpty())
       Collect.append("NodeSet:NS" + QString::number(countInit++) + " " +
@@ -1086,6 +913,7 @@ void Schematic::createNodeSet(QStringList& Collect, int& countInit,
 void Schematic::throughAllNodes(bool User, QStringList& Collect,
 				int& countInit)
 {
+  trace_method_calls();
   int z=0;
 
   for(auto pn = DocNodes.begin(); pn != DocNodes.end(); ++pn) {
@@ -1115,6 +943,7 @@ void Schematic::throughAllNodes(bool User, QStringList& Collect,
 // It returns the number of subcircuit ports.
 int Schematic::testFile(const QString& DocName)
 {
+  trace_method_calls();
   QFile file(DocName);
   if(!file.open(QIODevice::ReadOnly)) {
     return -1;
@@ -1181,6 +1010,7 @@ int Schematic::testFile(const QString& DocName)
 // Collects the signal names for digital simulations.
 void Schematic::collectDigitalSignals(void)
 {
+  trace_method_calls();
   for(auto pn = DocNodes.begin(); pn != DocNodes.end(); ++pn) {
     DigMap::Iterator it = Signals.find(pn->Name);
     if(it == Signals.end()) { // avoid redeclaration of signal
@@ -1196,6 +1026,7 @@ void Schematic::collectDigitalSignals(void)
 void Schematic::propagateNode(QStringList& Collect,
                           int& countInit, const std::shared_ptr<Node> &pn)
 {
+  trace_method_calls();
   bool setName=false;
   QVector<Node *> Cons;
 
@@ -1245,6 +1076,7 @@ void Schematic::propagateNode(QStringList& Collect,
 bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
                    QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts)
 {
+  trace_method_calls();
   bool r;
   QString s;
 
@@ -1791,6 +1623,7 @@ int NumPorts)
 bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
                      QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts)
 {
+  trace_method_calls();
 //  int Collect_count = Collect.count();   // position for this subcircuit
 
   // TODO: NodeSets have to be put into the subcircuit block.
@@ -1819,6 +1652,7 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
                               QPlainTextEdit *ErrText)
 {
+  trace_method_calls();
   if(showBias > 0) showBias = -1;  // do not show DC bias anymore
 
   isVerilog = false;
@@ -1913,6 +1747,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
 // Write the beginning of digital netlist to the text stream 'stream'.
 void Schematic::beginNetlistDigital(QTextStream& stream)
 {
+  trace_method_calls();
   if (isVerilog) {
     stream << "module TestBench ();\n";
     QList<DigSignal> values = Signals.values();
@@ -1946,6 +1781,7 @@ void Schematic::beginNetlistDigital(QTextStream& stream)
 // Write the end of digital netlist to the text stream 'stream'.
 void Schematic::endNetlistDigital(QTextStream& stream)
 {
+  trace_method_calls();
   if (isVerilog) {
   } else {
     stream << "end architecture;\n";
@@ -1956,6 +1792,7 @@ void Schematic::endNetlistDigital(QTextStream& stream)
 // write all components with node names into the netlist file
 QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
 {
+  trace_method_calls();
   if(!isAnalog) {
     beginNetlistDigital(stream);
   }

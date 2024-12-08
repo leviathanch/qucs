@@ -12,10 +12,6 @@ endif()
 
 add_definitions(-DHAVE_CONFIG_H)
 
-# configure the header config.h
-configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
-               "${PROJECT_BINARY_DIR}/config.h")
-
 include_directories("${PROJECT_BINARY_DIR}")
 
 find_package(Qt4 REQUIRED)
