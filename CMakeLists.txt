@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.10)
 project(qucs-suite CXX)
 
 file(STRINGS "${qucs-suite_SOURCE_DIR}/VERSION" QUCS_VERSION)
@@ -54,16 +54,18 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1.cmake.in
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1.cmake.in
                ${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1)
 
+set(UNIT_TEST "")
+
 add_subdirectory(man)
 add_subdirectory(qucs)
 add_subdirectory(qucs-activefilter)
 add_subdirectory(qucs-attenuator)
-# ADD_SUBDIRECTORY( qucs-doc )
+#add_subdirectory(qucs-doc)
 add_subdirectory(qucs-filter)
 add_subdirectory(qucs-lib)
 add_subdirectory(qucs-transcalc)
 add_subdirectory(qucs-rescodes)
-# ADD_SUBDIRECTORY( examples )
+#add_subdirectory(examples)
 add_subdirectory(translations)
 add_subdirectory(contrib)
 add_subdirectory(qucs-powercombining)
@@ -74,5 +76,4 @@ add_subdirectory(qucs-powercombining)
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/uninstall.cmake.in"
                "${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake" IMMEDIATE @ONLY)
 
-add_custom_target(uninstall-ui COMMAND ${CMAKE_COMMAND} -P
-                                    ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake)
+add_custom_target(uninstall-ui COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake)

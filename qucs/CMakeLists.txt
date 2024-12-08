@@ -11,7 +11,7 @@
 # env CTEST_OUTPUT_ON_FAILURE=1 make test    # for verbose output
 
 project(qucs CXX)
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.10.0)
 
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
