@@ -285,8 +285,8 @@ install(
 install(
   TARGETS qucsschematic
   RUNTIME DESTINATION bin COMPONENT runtime
-  ARCHIVE DESTINATION lib COMPONENT devel
-  LIBRARY DESTINATION lib COMPONENT library)
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT devel
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT library)
 
 #
 # Install needed Qt plugins by copying directories from the qt installation One
