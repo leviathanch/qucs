@@ -4,7 +4,7 @@ project(tests CXX C)
 cmake_minimum_required(VERSION 3.10.0)
 
 # use top VERSION file
-file(STRINGS ${PROJECT_SOURCE_DIR}/../../VERSION QUCS_VERSION)
+file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
 message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
 
 set(PROJECT_VERSION "${QUCS_VERSION}")
@@ -21,10 +21,10 @@ add_definitions(-DHAVE_CONFIG_H)
 add_definitions(-DQUCS_TEST_DIR="${PROJECT_SOURCE_DIR}")
 
 # configure the header config.h
-configure_file("${PROJECT_SOURCE_DIR}/../../config.h.cmake"
-               "${PROJECT_BINARY_DIR}/../config.h")
+configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
+               "${PROJECT_BINARY_DIR}/config.h")
 
-include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/..")
+include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/../qucs")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11

@@ -70,6 +70,11 @@ add_subdirectory(translations)
 add_subdirectory(contrib)
 add_subdirectory(qucs-powercombining)
 
+add_subdirectory(tests)
+
+# enable testing for current directory and below
+enable_testing()
+
 #
 # Custom uninstall target
 #

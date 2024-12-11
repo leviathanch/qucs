@@ -24,19 +24,12 @@
 
 #include <QTest>
 
-#include "ElementTests.h"
+#pragma once
 
-void ElementTests::testConstructor() {
-    Element *e = new Element();
-    // check defaults
-    QCOMPARE(e->Type, isDummyElement);
-    QCOMPARE(e->isSelected, false);
-    QCOMPARE(e->cx, 0);
-    QCOMPARE(e->cy, 0);
-    QCOMPARE(e->x1, 0);
-    QCOMPARE(e->y1, 0);
-    QCOMPARE(e->x2, 0);
-    QCOMPARE(e->y2, 0);
-}
+#include <QTest>
 
-QTEST_MAIN(ElementTests)
+class ElementTests : public QObject {
+  Q_OBJECT
+private slots:
+  void testConstructor();
+};

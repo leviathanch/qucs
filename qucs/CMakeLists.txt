@@ -27,9 +27,6 @@ set(PROJECT_DOMAIN_SECOND "org")
 #
 set(CMAKE_BUILD_TYPE Debug)
 
-# enable testing for current directory and below
-enable_testing()
-
 # If Git hash not defined, try to define it
 if(NOT GIT)
   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/../../.git)
@@ -92,7 +89,6 @@ add_subdirectory(octave)
 add_subdirectory(python)
 add_subdirectory(paintings)
 
-add_subdirectory(tests)
 
 set(QUCS_SRCS
     attach.cpp
