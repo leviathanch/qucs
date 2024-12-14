@@ -72,6 +72,15 @@ add_library(helloworld "${helloworld_SRCS}")
 #set(wire1_SRCS "wire1.cpp")
 #add_library(wire1 "${wire1_SRCS}")
 
+set(QucsAppTest_SRCS QucsAppTest.cpp QucsAppTest.h)
+add_library(QucsAppTest "${QucsAppTest_SRCS}")
+target_link_libraries(QucsAppTest Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg)
+
+set(SignalTests_SRCS SignalTests.cpp SignalTests.h)
+add_executable(SignalTests ${SignalTests_SRCS})
+target_link_libraries(SignalTests Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic QucsAppTest)
+add_test(NAME SignalTests COMMAND SignalTests)
+
 set(ElementTests_SRCS ElementTests.cpp)
 add_executable(ElementTests ${ElementTests_SRCS})
 target_link_libraries(ElementTests Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic element)

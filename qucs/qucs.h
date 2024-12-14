@@ -154,6 +154,7 @@ protected:
 
 class QucsApp : public QMainWindow {
   Q_OBJECT
+  friend class QucsAppTest;
 public:
   QucsApp();
  ~QucsApp();
