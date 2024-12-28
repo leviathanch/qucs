@@ -1,3 +1,0 @@
-void QucsAppTest::testBuildModule() {
-    slotBuildModule();
-}

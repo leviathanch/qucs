@@ -1,5 +1,4 @@
-#include "qucs.h"
-#include "schematic.h"
+#include "QucsAppTest.h"
 
 #include <QDir>
 #include <QTest>
@@ -11,8 +10,8 @@ class SchematicTests : public QObject {
     Q_OBJECT
 
 private:
-    QucsApp *app;
-    void loadSchematics(QString);
+    QucsAppTest *app;
+    Schematic *openSchematic(QString schematic);
 
 private slots:
     void testSchematicsLoading();

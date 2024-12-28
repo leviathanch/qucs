@@ -1,6 +1,7 @@
 # Setup unit tests
 
 project(tests CXX C)
+
 cmake_minimum_required(VERSION 3.10.0)
 
 # use top VERSION file
@@ -93,7 +94,21 @@ add_test(NAME ComponentTests COMMAND ComponentTests)
 
 set(SchematicTests_SRCS SchematicTests.cpp SchematicTests.h)
 add_executable(SchematicTests ${SchematicTests_SRCS})
-target_link_libraries(SchematicTests Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic)
+target_link_libraries(SchematicTests Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic QucsAppTest)
 add_test(NAME SchematicTests COMMAND SchematicTests)
 
-add_custom_command(TARGET SchematicTests COMMENT "Run tests" POST_BUILD COMMAND SchematicTests)
+set(NetlistTests_SRCS NetlistTests.cpp NetlistTests.h)
+add_executable(NetlistTests ${NetlistTests_SRCS})
+target_link_libraries(NetlistTests Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic QucsAppTest)
+add_test(NAME NetlistTests COMMAND NetlistTests)
+
+set(DocumentTests_SRCS DocumentTests.cpp DocumentTests.h)
+add_executable(DocumentTests ${DocumentTests_SRCS})
+target_link_libraries(DocumentTests Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic QucsAppTest)
+add_test(NAME DocumentTests COMMAND DocumentTests)
+
+add_custom_command(TARGET SchematicTests COMMENT "Run schematics tests" POST_BUILD COMMAND SchematicTests)
+add_custom_command(TARGET NetlistTests COMMENT "Run netlist tests" POST_BUILD COMMAND NetlistTests)
+add_custom_command(TARGET DocumentTests COMMENT "Run document tests" POST_BUILD COMMAND DocumentTests)
+add_custom_command(TARGET SignalTests COMMENT "Run signal slot tests" POST_BUILD COMMAND SignalTests)
+

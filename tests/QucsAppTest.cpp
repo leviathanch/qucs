@@ -4,3 +4,17 @@ void QucsAppTest::testBuildModule()
 {
     slotBuildModule();
 }
+
+void QucsAppTest::load()
+{
+    QucsDoc* doc = 0;
+    doc = getDoc(0);
+    if(doc) {
+        doc->load();
+    }
+}
+
+void QucsAppTest::loadPRJ(QString name)
+{
+    openProject(name);
+}

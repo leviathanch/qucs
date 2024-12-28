@@ -5,9 +5,8 @@ class SignalTests : public QObject {
 
 private:
     QucsAppTest *app;
-    void loadSchematics(QString);
+    Schematic *openSchematic(QString schematic);
 
 private slots:
     void testSchematicsLoading();
-    void testCreatingSchematics();
 };
