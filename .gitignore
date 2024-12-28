@@ -59,3 +59,5 @@ stamp-h2
 # generated man pages
 *.1
 
+# ignore Verilog from tests
+tests/*.prj/*.sch.v
