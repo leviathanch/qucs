@@ -54,7 +54,17 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1.cmake.in
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1.cmake.in
                ${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1)
 
-set(UNIT_TEST "")
+#set(UNIT_TEST "")
+
+add_custom_target(
+    qucsator
+    COMMAND pushd ${CMAKE_CURRENT_SOURCE_DIR}/qucsator && autoreconf -ivf && CXX=g++-12 ./configure --prefix=${CMAKE_CURRENT_BINARY_DIR} && make && make install && popd
+)
+
+add_custom_command(
+    TARGET qucsator
+    COMMAND pushd ${CMAKE_CURRENT_SOURCE_DIR}/qucsator && autoreconf -ivf && CXX=g++-12 ./configure --prefix=${CMAKE_CURRENT_BINARY_DIR} && make && make install && popd
+)
 
 add_subdirectory(man)
 add_subdirectory(qucs)
@@ -70,10 +80,9 @@ add_subdirectory(translations)
 add_subdirectory(contrib)
 add_subdirectory(qucs-powercombining)
 
-add_subdirectory(tests)
-
 # enable testing for current directory and below
 enable_testing()
+add_subdirectory(tests)
 
 #
 # Custom uninstall target
@@ -82,3 +91,12 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/uninstall.cmake.in"
                "${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake" IMMEDIATE @ONLY)
 
 add_custom_target(uninstall-ui COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake)
+
+add_custom_target(tests COMMAND
+    tests/ComponentTests &&
+    tests/DocumentTests &&
+    tests/ElementTests &&
+    tests/NetlistTests &&
+    tests/SchematicTests &&
+    tests/SignalTests
+)
