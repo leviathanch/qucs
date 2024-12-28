@@ -21,11 +21,9 @@ add_definitions(-DHAVE_CONFIG_H)
 
 add_definitions(-DQUCS_TEST_DIR="${PROJECT_SOURCE_DIR}")
 
-# configure the header config.h
-configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
-               "${PROJECT_BINARY_DIR}/config.h")
-
-include_directories("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/../qucs")
+include_directories("${PROJECT_BINARY_DIR}")
+include_directories("${PROJECT_BINARY_DIR}/..")
+include_directories("${PROJECT_SOURCE_DIR}/../qucs")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
@@ -75,36 +73,36 @@ add_library(helloworld "${helloworld_SRCS}")
 
 set(QucsAppTest_SRCS QucsAppTest.cpp QucsAppTest.h)
 add_library(QucsAppTest "${QucsAppTest_SRCS}")
-target_link_libraries(QucsAppTest Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg)
+target_link_libraries(QucsAppTest Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic element QucsApp)
 
 set(SignalTests_SRCS SignalTests.cpp SignalTests.h)
 add_executable(SignalTests ${SignalTests_SRCS})
-target_link_libraries(SignalTests Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic QucsAppTest)
+target_link_libraries(SignalTests QucsAppTest)
 add_test(NAME SignalTests COMMAND SignalTests)
 
 set(ElementTests_SRCS ElementTests.cpp)
 add_executable(ElementTests ${ElementTests_SRCS})
-target_link_libraries(ElementTests Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic element)
+target_link_libraries(ElementTests QucsAppTest)
 add_test(NAME ElementTests COMMAND ElementTests)
 
 set(ComponentTests_SRCS ComponentTests.cpp)
 add_executable(ComponentTests ${ComponentTests_SRCS})
-target_link_libraries(ComponentTests Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic)
+target_link_libraries(ComponentTests QucsAppTest)
 add_test(NAME ComponentTests COMMAND ComponentTests)
 
 set(SchematicTests_SRCS SchematicTests.cpp SchematicTests.h)
 add_executable(SchematicTests ${SchematicTests_SRCS})
-target_link_libraries(SchematicTests Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic QucsAppTest)
+target_link_libraries(SchematicTests QucsAppTest)
 add_test(NAME SchematicTests COMMAND SchematicTests)
 
 set(NetlistTests_SRCS NetlistTests.cpp NetlistTests.h)
 add_executable(NetlistTests ${NetlistTests_SRCS})
-target_link_libraries(NetlistTests Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic QucsAppTest)
+target_link_libraries(NetlistTests QucsAppTest)
 add_test(NAME NetlistTests COMMAND NetlistTests)
 
 set(DocumentTests_SRCS DocumentTests.cpp DocumentTests.h)
 add_executable(DocumentTests ${DocumentTests_SRCS})
-target_link_libraries(DocumentTests Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic QucsAppTest)
+target_link_libraries(DocumentTests QucsAppTest)
 add_test(NAME DocumentTests COMMAND DocumentTests)
 
 add_custom_command(TARGET SchematicTests COMMENT "Run schematics tests" POST_BUILD COMMAND SchematicTests)

@@ -15,6 +15,8 @@
  *                                                                         *
  ***************************************************************************/
 
+#define TRACE_FUNCTION_CALLS 0
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif
@@ -42,6 +44,11 @@
 #include "module.h"
 #include "misc.h"
 
+#if TRACE_FUNCTION_CALLS
+#define trace_method_calls() qInfo()<<__FILE__ <<":"<<__func__
+#else
+#define trace_method_calls() {}
+#endif
 
 // Here the subcircuits, SPICE components etc are collected. It must be
 // global to also work within the subcircuits.
@@ -53,6 +60,7 @@ SubMap FileList;
 // string. This is used to copy the selected elements into the clipboard.
 QString Schematic::createClipboardFile()
 {
+  trace_method_calls();
   int z=0;  // counts selected elements
 
   QString s("<Qucs Schematic " PACKAGE_VERSION ">\n");
@@ -107,6 +115,7 @@ QString Schematic::createClipboardFile()
 // Only read fields without loading them.
 bool Schematic::loadIntoNothing(QTextStream *stream)
 {
+  trace_method_calls();
   QString Line, cstr;
   while(!stream->atEnd()) {
     Line = stream->readLine();
@@ -122,6 +131,7 @@ bool Schematic::loadIntoNothing(QTextStream *stream)
 // Paste from clipboard.
 bool Schematic::pasteFromClipboard(QTextStream *stream, SharedObjectList<Element> &pe)
 {
+  trace_method_calls();
   QString Line;
 
   Line = stream->readLine();
@@ -190,6 +200,7 @@ bool Schematic::pasteFromClipboard(QTextStream *stream, SharedObjectList<Element
 // -------------------------------------------------------------
 int Schematic::saveSymbolCpp (void)
 {
+  trace_method_calls();
   QFileInfo info (DocName);
   QString cppfile = info.path () + QDir::separator() + DataSet;
   QFile file (cppfile);
@@ -261,6 +272,7 @@ int Schematic::saveSymbolCpp (void)
 // save symbol paintings in JSON format
 int Schematic::saveSymbolJSON()
 {
+  trace_method_calls();
   QFileInfo info (DocName);
   QString jsonfile = info.path () + QDir::separator()
                    + info.completeBaseName() + "_sym.json";
@@ -349,6 +361,7 @@ int Schematic::saveSymbolJSON()
 // Returns the number of subcircuit ports.
 int Schematic::saveDocument()
 {
+  trace_method_calls();
   QFile file(DocName);
   if(!file.open(QIODevice::WriteOnly)) {
     QMessageBox::critical(0, QObject::tr("Error"),
@@ -548,6 +561,7 @@ int Schematic::saveDocument()
 // -------------------------------------------------------------
 bool Schematic::loadProperties(QTextStream *stream)
 {
+  trace_method_calls();
   bool ok = true;
   QString Line, cstr, nstr;
   while(!stream->atEnd()) {
@@ -619,6 +633,7 @@ bool Schematic::loadProperties(QTextStream *stream)
 // Inserts a component without performing logic for wire optimization.
 void Schematic::simpleInsertComponent(const std::shared_ptr<Component> &c)
 {
+  trace_method_calls();
   std::shared_ptr<Node> pn;
   int x, y;
   // connect every node of component
@@ -657,6 +672,7 @@ void Schematic::simpleInsertComponent(const std::shared_ptr<Component> &c)
 // -------------------------------------------------------------
 bool Schematic::loadComponents(QTextStream *stream, SharedObjectList<Element> *List)
 {
+  trace_method_calls();
   QString Line;
   while(!stream->atEnd()) {
     Line = stream->readLine();
@@ -688,6 +704,7 @@ bool Schematic::loadComponents(QTextStream *stream, SharedObjectList<Element> *L
 // Inserts a wire without performing logic for optimizing.
 void Schematic::simpleInsertWire(const std::shared_ptr<Wire> &pw)
 {
+  trace_method_calls();
   auto pn = DocNodes.begin();
   // check if first wire node lies upon existing node
   for( ; pn != DocNodes.end(); ++pn)
@@ -728,6 +745,7 @@ void Schematic::simpleInsertWire(const std::shared_ptr<Wire> &pw)
 // -------------------------------------------------------------
 bool Schematic::loadWires(QTextStream *stream, SharedObjectList<Element> *List)
 {
+  trace_method_calls();
   QString Line;
   while(!stream->atEnd()) {
     Line = stream->readLine();
@@ -762,6 +780,7 @@ bool Schematic::loadWires(QTextStream *stream, SharedObjectList<Element> *List)
 // -------------------------------------------------------------
 bool Schematic::loadDiagrams(QTextStream *stream, DiagramList &List)
 {
+  trace_method_calls();
   SharedObjectList<Element> elements;
   bool result = loadDiagrams(stream, elements);
 
@@ -777,6 +796,7 @@ bool Schematic::loadDiagrams(QTextStream *stream, DiagramList &List)
 // -------------------------------------------------------------
 bool Schematic::loadDiagrams(QTextStream *stream, SharedObjectList<Element> &List)
 {
+  trace_method_calls();
   QString Line, cstr;
   while(!stream->atEnd()) {
 
@@ -823,6 +843,7 @@ bool Schematic::loadDiagrams(QTextStream *stream, SharedObjectList<Element> &Lis
 // -------------------------------------------------------------
 bool Schematic::loadPaintings(QTextStream *stream, PaintingList &List)
 {
+  trace_method_calls();
   SharedObjectList<Element> elements;
   bool result = loadPaintings(stream, elements);
 
@@ -838,6 +859,7 @@ bool Schematic::loadPaintings(QTextStream *stream, PaintingList &List)
 // -------------------------------------------------------------
 bool Schematic::loadPaintings(QTextStream *stream, SharedObjectList<Element> &List)
 {
+  trace_method_calls();
   Painting *p=0;
   QString Line, cstr;
   while(!stream->atEnd()) {
@@ -888,6 +910,7 @@ bool Schematic::loadPaintings(QTextStream *stream, SharedObjectList<Element> &Li
  */
 bool Schematic::loadDocument()
 {
+  trace_method_calls();
   QFile file(DocName);
   if(!file.open(QIODevice::ReadOnly)) {
     /// \todo implement unified error/warning handling GUI and CLI
@@ -925,6 +948,8 @@ bool Schematic::loadDocument()
 
   Line = Line.mid(16, Line.length()-17);
   VersionTriplet DocVersion = VersionTriplet(Line);
+  qInfo() << "DocVersion:" << DocVersion.toString();
+  qInfo() << "QucsVersion:" << QucsVersion.toString();
   if (DocVersion > QucsVersion) { // wrong version number ?
     if (!QucsSettings.IgnoreFutureVersion) {
       QMessageBox::critical(0, QObject::tr("Error"),
@@ -977,6 +1002,7 @@ bool Schematic::loadDocument()
 // string. This is used to save state for undo operation.
 QString Schematic::createUndoString(char Op)
 {
+  trace_method_calls();
   // Build element document.
   QString s = "  \n";
   s.replace(0,1,Op);
@@ -1009,6 +1035,7 @@ QString Schematic::createUndoString(char Op)
 // Same as "createUndoString(char Op)" but for symbol edit mode.
 QString Schematic::createSymbolUndoString(char Op)
 {
+  trace_method_calls();
   // Build element document.
   QString s = "  \n";
   s.replace(0,1,Op);
@@ -1028,6 +1055,7 @@ QString Schematic::createSymbolUndoString(char Op)
 // Used for "undo" function.
 bool Schematic::rebuild(const QString &s)
 {
+  trace_method_calls();
   DocWires.clear();	// delete whole document
   DocNodes.clear();
   DocComps.clear();
@@ -1051,6 +1079,7 @@ bool Schematic::rebuild(const QString &s)
 // Same as "rebuild(QString *s)" but for symbol edit mode.
 bool Schematic::rebuildSymbol(const QString &s)
 {
+  trace_method_calls();
   SymbolPaints.clear();	// delete whole document
 
   QString Line;
@@ -1076,6 +1105,7 @@ bool Schematic::rebuildSymbol(const QString &s)
 void Schematic::createNodeSet(QStringList& Collect, int& countInit,
                               const std::shared_ptr<Conductor> &pw, const std::shared_ptr<Node> &p1)
 {
+  trace_method_calls();
   if(pw->Label)
     if(!pw->Label->initValue.isEmpty())
       Collect.append("NodeSet:NS" + QString::number(countInit++) + " " +
@@ -1086,6 +1116,7 @@ void Schematic::createNodeSet(QStringList& Collect, int& countInit,
 void Schematic::throughAllNodes(bool User, QStringList& Collect,
 				int& countInit)
 {
+  trace_method_calls();
   int z=0;
 
   for(auto pn = DocNodes.begin(); pn != DocNodes.end(); ++pn) {
@@ -1115,6 +1146,7 @@ void Schematic::throughAllNodes(bool User, QStringList& Collect,
 // It returns the number of subcircuit ports.
 int Schematic::testFile(const QString& DocName)
 {
+  trace_method_calls();
   QFile file(DocName);
   if(!file.open(QIODevice::ReadOnly)) {
     return -1;
@@ -1181,6 +1213,7 @@ int Schematic::testFile(const QString& DocName)
 // Collects the signal names for digital simulations.
 void Schematic::collectDigitalSignals(void)
 {
+  trace_method_calls();
   for(auto pn = DocNodes.begin(); pn != DocNodes.end(); ++pn) {
     DigMap::Iterator it = Signals.find(pn->Name);
     if(it == Signals.end()) { // avoid redeclaration of signal
@@ -1196,6 +1229,7 @@ void Schematic::collectDigitalSignals(void)
 void Schematic::propagateNode(QStringList& Collect,
                           int& countInit, const std::shared_ptr<Node> &pn)
 {
+  trace_method_calls();
   bool setName=false;
   QVector<Node *> Cons;
 
@@ -1245,6 +1279,7 @@ void Schematic::propagateNode(QStringList& Collect,
 bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
                    QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts)
 {
+  trace_method_calls();
   bool r;
   QString s;
 
@@ -1791,6 +1826,7 @@ int NumPorts)
 bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
                      QStringList& Collect, QPlainTextEdit *ErrText, int NumPorts)
 {
+  trace_method_calls();
 //  int Collect_count = Collect.count();   // position for this subcircuit
 
   // TODO: NodeSets have to be put into the subcircuit block.
@@ -1819,6 +1855,7 @@ bool Schematic::createSubNetlist(QTextStream *stream, int& countInit,
 int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
                               QPlainTextEdit *ErrText)
 {
+  trace_method_calls();
   if(showBias > 0) showBias = -1;  // do not show DC bias anymore
 
   isVerilog = false;
@@ -1913,6 +1950,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
 // Write the beginning of digital netlist to the text stream 'stream'.
 void Schematic::beginNetlistDigital(QTextStream& stream)
 {
+  trace_method_calls();
   if (isVerilog) {
     stream << "module TestBench ();\n";
     QList<DigSignal> values = Signals.values();
@@ -1946,6 +1984,7 @@ void Schematic::beginNetlistDigital(QTextStream& stream)
 // Write the end of digital netlist to the text stream 'stream'.
 void Schematic::endNetlistDigital(QTextStream& stream)
 {
+  trace_method_calls();
   if (isVerilog) {
   } else {
     stream << "end architecture;\n";
@@ -1956,6 +1995,7 @@ void Schematic::endNetlistDigital(QTextStream& stream)
 // write all components with node names into the netlist file
 QString Schematic::createNetlist(QTextStream& stream, int NumPorts)
 {
+  trace_method_calls();
   if(!isAnalog) {
     beginNetlistDigital(stream);
   }

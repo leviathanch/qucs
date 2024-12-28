@@ -38,6 +38,7 @@ Schematic *SignalTests::openSchematic(QString schematic)
 
 void SignalTests::testSchematicsLoading()
 {
+    QucsVersion = VersionTriplet(PACKAGE_VERSION);
     QTextStream out(stdout);
     Schematic *sch;
     QDir dirs(QUCS_TEST_DIR);

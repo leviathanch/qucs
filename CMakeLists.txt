@@ -19,6 +19,8 @@ if(EXISTS ${CMAKE_SOURCE_DIR}/../.git)
   message(STATUS "Found Git repository, last commit hash: ${GIT}")
 endif()
 
+set(PROJECT_VERSION ${QUCS_VERSION})
+
 message(STATUS "${PROJECT_NAME} ${CMAKE_INSTALL_PREFIX}
     ${qucs-suite_BINARY_DIR}")
 
@@ -34,6 +36,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1.cmake.in
                ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1.cmake.in
                ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1)
+configure_file(${PROJECT_SOURCE_DIR}/config.h.cmake
+               ${PROJECT_BINARY_DIR}/config.h)
 
 # Tools
 configure_file(

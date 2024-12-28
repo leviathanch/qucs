@@ -25,11 +25,8 @@ set(LANGUAGEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/lang/")
 set(LIBRARYDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/library/")
 set(OCTAVEDIR "${CMAKE_INSTALL_PREFIX}/share/qucs/octave/")
 
-# configure the header config.h
-configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
-               "${PROJECT_BINARY_DIR}/config.h")
-
 include_directories("${PROJECT_BINARY_DIR}")
+include_directories("${PROJECT_BINARY_DIR}/..")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11

@@ -1896,6 +1896,7 @@ bool Schematic::elementsOnGrid()
       deleteWire(pw);
       setOnGrid(wireHolder->x1, wireHolder->y1);
       setOnGrid(wireHolder->x2, wireHolder->y2);
+
       insertWire(wireHolder);
       wireHolder->isSelected = false;
       count = true;

@@ -57,12 +57,9 @@ find_package(
   REQUIRED
 )
 
-# configure the header config.h
-configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
-               "${PROJECT_BINARY_DIR}/config.h")
-
 include_directories("${PROJECT_BINARY_DIR}")
 include_directories(${CMAKE_SOURCE_DIR})
+include_directories("${PROJECT_BINARY_DIR}/..")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
@@ -88,7 +85,6 @@ add_subdirectory(dialogs)
 add_subdirectory(octave)
 add_subdirectory(python)
 add_subdirectory(paintings)
-
 
 set(QUCS_SRCS
     attach.cpp
@@ -251,9 +247,9 @@ target_link_libraries(qucsschematic ${CMAKE_DL_LIBS})
 #
 # CMake's way of creating an executable
 #
-add_executable(qucs MACOSX_BUNDLE WIN32 main.cpp ${RESOURCES_SRCS})
-
-target_link_libraries(qucs Qt::Core Qt::Gui Qt::Widgets Qt::Svg Qt::PrintSupport Qt::Script qucsschematic)
+add_library(QucsApp ${RESOURCES_SRCS})
+add_executable(qucs MACOSX_BUNDLE WIN32 main.cpp)
+target_link_libraries(qucs Qt::Core Qt::Gui Qt::Widgets Qt::Svg Qt::PrintSupport Qt::Script QucsApp qucsschematic)
 
 #
 # Prepare the installation
