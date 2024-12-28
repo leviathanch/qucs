@@ -60,4 +60,5 @@ stamp-h2
 *.1
 
 # ignore Verilog from tests
-tests/*.prj/*.sch.v
+tests/*.prj/*.sch.new.v
+tests/*.prj/*.sch.new.net

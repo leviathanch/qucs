@@ -114,11 +114,11 @@ void NetlistTests::testNetlistsLoading()
                 if(name.endsWith(".sch")) {
                     doNetlist(
                       QDir(dirs.filePath(project_name)).filePath(name),
-                      QDir(dirs.filePath(project_name)).filePath(name+".v")
+                      QDir(dirs.filePath(project_name)).filePath(name+".new.v")
                     );
                     doNetlist(
                       QDir(dirs.filePath(project_name)).filePath(name),
-                      QDir(dirs.filePath(project_name)).filePath(name+".net")
+                      QDir(dirs.filePath(project_name)).filePath(name+".new.net")
                     );
                 }
             }
