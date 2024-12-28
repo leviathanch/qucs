@@ -116,6 +116,10 @@ void NetlistTests::testNetlistsLoading()
                       QDir(dirs.filePath(project_name)).filePath(name),
                       QDir(dirs.filePath(project_name)).filePath(name+".v")
                     );
+                    doNetlist(
+                      QDir(dirs.filePath(project_name)).filePath(name),
+                      QDir(dirs.filePath(project_name)).filePath(name+".net")
+                    );
                 }
             }
         }
