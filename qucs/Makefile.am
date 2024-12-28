@@ -31,8 +31,7 @@ SUBDIRS = \
 	components diagrams \
 	paintings \
 	dialogs \
-	octave \
-	tests
+	octave
 
 all-local: qucs
 
@@ -62,7 +61,7 @@ MOCHEADERS = \
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-noinst_LTLIBRARIES = libqucsschematic.la
+noinst_LTLIBRARIES = libqucsschematic.la libqucs.la
 
 libqucsschematic_la_SOURCES= \
   attach.cpp \
@@ -89,10 +88,14 @@ libqucsschematic_la_LIBADD = \
 libqucsschematic_la_LIBADD += \
   $(X11_LIBS) $(QT_LIBS)
 
+libqucs_la_SOURCES = qucs_.qrc
+libqucs_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
+
 qucs_real_LDFLAGS = $(QT_LIBS)
-qucs_real_SOURCES = main.cpp qucs_.qrc
+qucs_real_SOURCES = main.cpp 
 qucs_real_LDADD = \
-	libqucsschematic.la
+	libqucsschematic.la \
+	libqucs.la
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \

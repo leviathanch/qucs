@@ -1,7 +1,7 @@
 #include "DocumentTests.h"
 
 #ifndef QUCS_TEST_DIR
-#define QUCS_TEST_DIR "."
+#define QUCS_TEST_DIR "../../tests"
 #endif
 
 void DocumentTests::loadDocument(QString name)

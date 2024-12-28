@@ -1,7 +1,7 @@
 #include "SchematicTests.h"
 
 #ifndef QUCS_TEST_DIR
-#define QUCS_TEST_DIR "."
+#define QUCS_TEST_DIR "../../tests"
 #endif
 
 Schematic *SchematicTests::openSchematic(QString schematic)

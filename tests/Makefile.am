@@ -16,36 +16,51 @@
 # Boston, MA 02110-1301, USA.
 #
 
-AM_CPPFLAGS = -I${srcdir}/.. ${QT_CFLAGS} ${QTest_CFLAGS}
+AM_CPPFLAGS = -I${srcdir}/.. -I${srcdir}/../qucs ${QT_CFLAGS} ${QTest_CFLAGS}
 AM_DEFAULT_SOURCE_EXT = .cpp
 
 if COND_WIN32
 check_PROGRAMS =
 else
-check_PROGRAMS = SchematicTests ElementTests ComponentTests
+check_PROGRAMS = ComponentTests DocumentTests ElementTests NetlistTests SchematicTests SignalTests
 endif
 
-SchematicTests_SOURCES = SchematicTests.cpp SchematicTests.moc.cpp
-
-ElementTests_SOURCES = ElementTests.cpp ElementTests.moc.cpp
-ElementTests_CPPFLAGS = ${AM_CPPFLAGS}
+noinst_LTLIBRARIES = libqucsapptest.la
+libqucsapptest_la_SOURCES = QucsAppTest.cpp
+libqucsapptest_la_LIBADD = \
+	../qucs/libqucsschematic.la \
+    ../qucs/libqucs.la \
+    ${QT_LIBS} \
+    ${QTest_LIBS}
 
 ComponentTests_SOURCES = ComponentTests.cpp ComponentTests.moc.cpp
 ComponentTests_CPPFLAGS = ${AM_CPPFLAGS}
+ComponentTests_LDADD = libqucsapptest.la
 
-SchematicTests_LDADD = \
-	../libqucsschematic.la ${QT_LIBS} ${QTest_LIBS}
+DocumentTests_SOURCES = DocumentTests.cpp DocumentTests.moc.cpp
+DocumentTests_CPPFLAGS = ${AM_CPPFLAGS}
+DocumentTests_LDADD = libqucsapptest.la
 
-ElementTests_LDADD = \
-	../libqucsschematic.la ${QT_LIBS} ${QTest_LIBS}
+ElementTests_SOURCES = ElementTests.cpp ElementTests.moc.cpp
+ElementTests_CPPFLAGS = ${AM_CPPFLAGS}
+ElementTests_LDADD = libqucsapptest.la
 
-ComponentTests_LDADD = \
-	../libqucsschematic.la ${QT_LIBS} ${QTest_LIBS}
+NetlistTests_SOURCES = NetlistTests.cpp NetlistTests.moc.cpp
+NetlistTests_CPPFLAGS = ${AM_CPPFLAGS}
+NetlistTests_LDADD = libqucsapptest.la
+
+SchematicTests_SOURCES = SchematicTests.cpp SchematicTests.moc.cpp
+SchematicTests_CPPFLAGS = ${AM_CPPFLAGS}
+SchematicTests_LDADD = libqucsapptest.la
+
+SignalTests_SOURCES = SignalTests.cpp SignalTests.moc.cpp
+SignalTests_CPPFLAGS = ${AM_CPPFLAGS}
+SignalTests_LDADD = libqucsapptest.la
 
 MOCFILES = ${check_PROGRAMS:%=%.moc.cpp}
 BUILT_SOURCES = ${MOCFILES}
 
-include ../../common.mk
+include ../common.mk
 
 if COND_WIN32
 TESTS =
@@ -53,6 +68,6 @@ else
 TESTS = ${check_PROGRAMS}
 endif
 
-EXTRA_DIST = SchematicTests.h ElementTests.h ComponentTests.h
+EXTRA_DIST = ComponentTests.h  DocumentTests.h  ElementTests.h  NetlistTests.h  SchematicTests.h  SignalTests.h
 
 CLEANFILES = *core

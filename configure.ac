@@ -817,7 +817,6 @@ AC_CONFIG_FILES([Makefile
     qucs/diagrams/Makefile
     qucs/paintings/Makefile
     qucs/dialogs/Makefile
-    qucs/tests/Makefile
     tests/Makefile
     translations/Makefile
     man/qucs.1

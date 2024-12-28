@@ -1,7 +1,7 @@
 #include "NetlistTests.h"
 
 #ifndef QUCS_TEST_DIR
-#define QUCS_TEST_DIR "."
+#define QUCS_TEST_DIR "../../tests"
 #endif
 
 Schematic *NetlistTests::openSchematic(QString schematic)
