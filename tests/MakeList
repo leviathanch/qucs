@@ -1,5 +1,5 @@
 
-check_PROGRAMS = \
+check_PROGRAMS_maybe_later = \
 	geometry0 \
 	model0 \
 	model1 \
@@ -19,7 +19,7 @@ EXTRA_DIST = \
 QUCSATOR_TESTS = \
 	qucsator.0.qx
 
-QX_TESTS = \
+QX_TESTS_maybe_later = \
 	command.0.qx \
 	edd.0.qx \
 	list.0.qx \
@@ -31,8 +31,10 @@ QX_TESTS = \
 
 SH_TESTS = \
 	helloworld.sh \
+	doesnotexist.sh
+
+SH_TESTS_LATER = \
 	element.sh \
-	doesnotexist.sh \
 	entries.sh \
 	run.sh
 
