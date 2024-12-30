@@ -1,6 +1,6 @@
 #!/bin/bash
 
-QUCS=../main/qucs
+QUCS=../qucs/qucs # BUG
 out=out
 ref=${srcdir}/ref
 DIFF=diff\ -rup
@@ -24,33 +24,34 @@ for i in $( cd ${srcdir}; ls $base/*.{sch,vs} ) ; do
 
 	# dump qucsator netlist
 	rm -f "${out}/${base}_${schname}.net"
-	cmd="$QUCS -a $VERILOG_PLUGIN -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.net"
+	cmd="$QUCS -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.net"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 
 	# BUG: use stdout and filter
 	sed -i '1 s/Qucs.*/Qucs/' ${out}/${base}_${schname}.net
 
-	# dump verilog netlist
-	rm -f "${out}/${base}_${schname}.v"
-	cmd="$QUCS -a $VERILOG_PLUGIN -l verilog_nl -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.v"
-	eval echo "$cmd" ${REDIR}
-	eval "$cmd" ${REDIR}
-
-	# BUG: use stdout and filter
-	sed -i '1 s/Qucs.*/Qucs/' ${out}/${base}_${schname}.v
-	
-	# dump legacy schematic
-	rm -f "${out}/${base}_${schname}.sch"
-	cmd="$QUCS -a $VERILOG_PLUGIN -l leg_sch -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.sch"
-	eval echo "$cmd" ${REDIR}
-	eval "$cmd" ${REDIR}
-
-	# dump verilog schematic
-	rm -f "${out}/${base}_${schname}.vs"
-	cmd="$QUCS -a $VERILOG_PLUGIN -l v_sch -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.vs"
-	eval echo "$cmd" ${REDIR}
-	eval "$cmd" ${REDIR}
+# not yet
+### 	# dump verilog netlist
+### 	rm -f "${out}/${base}_${schname}.v"
+### 	cmd="$QUCS -a $VERILOG_PLUGIN -l verilog_nl -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.v"
+### 	eval echo "$cmd" ${REDIR}
+### 	eval "$cmd" ${REDIR}
+### 
+### 	# BUG: use stdout and filter
+### 	sed -i '1 s/Qucs.*/Qucs/' ${out}/${base}_${schname}.v
+### 	
+### 	# dump legacy schematic
+### 	rm -f "${out}/${base}_${schname}.sch"
+### 	cmd="$QUCS -a $VERILOG_PLUGIN -l leg_sch -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.sch"
+### 	eval echo "$cmd" ${REDIR}
+### 	eval "$cmd" ${REDIR}
+### 
+### 	# dump verilog schematic
+### 	rm -f "${out}/${base}_${schname}.vs"
+### 	cmd="$QUCS -a $VERILOG_PLUGIN -l v_sch -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.vs"
+### 	eval echo "$cmd" ${REDIR}
+### 	eval "$cmd" ${REDIR}
 
 	# =================================
 

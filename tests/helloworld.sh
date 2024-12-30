@@ -1,7 +1,7 @@
 #!/bin/sh
 # testing basic module loading and unloading.
 
-QUCS=../main/qucs
+QUCS=../qucs/qucs
 refdir=$srcdir/ref
 
 if [ ! -x ${QUCS} ]; then
