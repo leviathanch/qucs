@@ -2,16 +2,9 @@
 #  include <config.h>
 #endif
 
-#include "qucs.h"
-#include "schematic.h"
-#include "module.h"
-#include "misc.h"
+#include "qucs_functions.h"
 
-#include <QDir>
 #include <QTest>
-#include <QApplication>
-#include <QTextStream>
-#include <QObject>
 
 class QucsAppTest : public QucsApp {
 public:

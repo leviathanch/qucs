@@ -19,42 +19,7 @@
  * \brief Implementation of the main application.
  */
 
-#ifdef HAVE_CONFIG_H
-#  include <config.h>
-#endif
-
-#include <iostream>
-
-#include <stdlib.h>
-#include <ctype.h>
-#include <locale.h>
-
-#include <QApplication>
-#include <QString>
-#include <QStringList>
-#include <QTextCodec>
-#include <QTranslator>
-#include <QFile>
-#include <QMessageBox>
-#include <QRegExp>
-#include <QtSvg>
-#include <QDebug>
-
-#include "qucs.h"
-#include "node.h"
-#include "printerwriter.h"
-#include "imagewriter.h"
-
-#include "schematic.h"
-#include "module.h"
-#include "misc.h"
-
-#include "components/components.h"
-
-#ifdef _WIN32
-#include <Windows.h>  //for OutputDebugString
-#endif
-
+#include "qucs_functions.h"
 
 // void attach(const char*); not yet.
 
@@ -100,128 +65,6 @@ void qucsMessageOutput(QtMsgType type, const QMessageLogContext &, const QString
  * \brief attaches shared object code
  */
 void attach(const char* what);
-
-Schematic *openSchematic(QString schematic)
-{
-  qDebug() << "*** try to load schematic :" << schematic;
-
-  // QString to *char
-  QByteArray ba = schematic.toLatin1();
-  const char *c_sch = ba.data();
-
-  QFile file(schematic);  // save simulator messages
-  if(file.open(QIODevice::ReadOnly)) {
-    file.close();
-  }
-  else {
-    fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
-    return NULL;
-  }
-
-  // populate Modules list
-  Module::registerModules ();
-
-  // new schematic from file
-  Schematic *sch = new Schematic(0, schematic);
-
-  // load schematic file if possible
-  if(!sch->loadDocument()) {
-    fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
-    delete sch;
-    return NULL;
-  }
-  return sch;
-}
-
-int doNetlist(QString schematic, QString netlist)
-{
-  Schematic *sch = openSchematic(schematic);
-  if (sch == NULL) {
-    return 1;
-  }
-
-  qDebug() << "*** try to write netlist  :" << netlist;
-
-  // QString to *char
-  QByteArray ba = schematic.toLatin1();
-  const char *c_net = ba.data();
-
-  QStringList Collect;
-
-  QPlainTextEdit *ErrText = new QPlainTextEdit();  //dummy
-  QFile NetlistFile;
-  QTextStream   Stream;
-
-  Collect.clear();  // clear list for NodeSets, SPICE components etc.
-
-  NetlistFile.setFileName(netlist);
-  if(!NetlistFile.open(QIODevice::WriteOnly)) {
-    fprintf(stderr, "Error: Could not load netlist %s\n", c_net);
-    return -1;
-  }
-
-  Stream.setDevice(&NetlistFile);
-  int SimPorts = sch->prepareNetlist(Stream, Collect, ErrText);
-
-  if(SimPorts < -5) {
-    NetlistFile.close();
-    fprintf(stderr, "Error: Could not prepare netlist %s\n", c_net);
-    /// \todo better handling for error/warnings
-    qCritical() << ErrText->toPlainText();
-    return 1;
-  }
-
-  // output NodeSets, SPICE simulations etc.
-  for(QStringList::Iterator it = Collect.begin();
-  it != Collect.end(); ++it) {
-    // don't put library includes into netlist...
-    if ((*it).right(4) != ".lst" &&
-    (*it).right(5) != ".vhdl" &&
-    (*it).right(4) != ".vhd" &&
-    (*it).right(2) != ".v") {
-      Stream << *it << '\n';
-    }
-  }
-
-  Stream << '\n';
-
-  QString SimTime = sch->createNetlist(Stream, SimPorts);
-  delete(sch);
-
-  NetlistFile.close();
-
-  return 0;
-}
-
-int doPrint(QString schematic, QString printFile,
-    QString page, int dpi, QString color, QString orientation)
-{
-  Schematic *sch = openSchematic(schematic);
-  if (sch == NULL) {
-    return 1;
-  }
-
-  sch->Nodes = &(sch->DocNodes);
-  sch->Wires = &(sch->DocWires);
-  sch->Diagrams = &(sch->DocDiags);
-  sch->Paintings = &(sch->DocPaints);
-  sch->Components = &(sch->DocComps);
-  sch->reloadGraphs();
-
-  qDebug() << "*** try to print file  :" << printFile;
-
-  // determine filetype
-  if (printFile.endsWith(".pdf")) {
-    //initial printer
-    PrinterWriter *Printer = new PrinterWriter();
-    Printer->setFitToPage(true);
-    Printer->noGuiPrint(sch, printFile, page, dpi, color, orientation);
-  } else {
-    ImageWriter *Printer = new ImageWriter("");
-    Printer->noGuiPrint(sch, printFile, color);
-  }
-  return 0;
-}
 
 /*!
  * \brief createIcons Create component icons (png) from command line.
@@ -687,6 +530,7 @@ int main(int argc, char *argv[])
 
   bool netlist_flag = false;
   bool print_flag = false;
+  bool dump_flag = false;
   QString page = "A4";
   int dpi = 96;
   QString color = "RGB";
@@ -703,6 +547,7 @@ int main(int argc, char *argv[])
   "  -v, --version  display version information and exit\n"
   "  -n, --netlist  convert Qucs schematic into netlist\n"
   "  -p, --print    print Qucs schematic to file (eps needs inkscape)\n"
+  "  -d, --dump     directly dump input file format into desired output file format\n"
   "  -q, --quit     exit\n"
   "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
   "    --dpi NUMBER                 set dpi value (default 96)\n"
@@ -732,6 +577,9 @@ int main(int argc, char *argv[])
     }
     else if (!strcmp(argv[i], "-p") || !strcmp(argv[i], "--print")) {
       print_flag = true;
+    }
+    else if (!strcmp(argv[i], "-d") || !strcmp(argv[i], "--dump")) {
+      dump_flag = true;
     }
     else if (!strcmp(argv[i], "--page")) {
       page = argv[++i];
@@ -776,10 +624,10 @@ int main(int argc, char *argv[])
   }
 
   // check operation and its required arguments
-  if (netlist_flag and print_flag) {
-    fprintf(stderr, "Error: --print and --netlist cannot be used together\n");
+  if (netlist_flag and print_flag and dump_flag) {
+    fprintf(stderr, "Error: --print, --netlist and --dump cannot be used together\n");
     return -1;
-  } else if (netlist_flag or print_flag) {
+  } else if (netlist_flag or print_flag or dump_flag) {
     if (inputfile.isEmpty()) {
       fprintf(stderr, "Error: Expected input file.\n");
       return -1;
@@ -794,6 +642,9 @@ int main(int argc, char *argv[])
     } else if (print_flag) {
       return doPrint(inputfile, outputfile,
           page, dpi, color, orientation);
+    } else if (dump_flag) {
+      qInfo() << "Dumping";
+      return 0;
     }
   }
 

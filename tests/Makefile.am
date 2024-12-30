@@ -30,6 +30,7 @@ libqucsapptest_la_SOURCES = QucsAppTest.cpp
 libqucsapptest_la_LIBADD = \
 	../qucs/libqucsschematic.la \
     ../qucs/libqucs.la \
+    ../qucs/libqucsfunctions.la \
     ${QT_LIBS} \
     ${QTest_LIBS}
 

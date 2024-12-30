@@ -1,11 +1,5 @@
 #include "QucsAppTest.h"
 
-#include <QDir>
-#include <QTest>
-#include <QApplication>
-#include <QTextStream>
-#include <QObject>
-
 class DocumentTests : public QObject {
     Q_OBJECT
 

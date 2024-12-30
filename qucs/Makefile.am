@@ -61,7 +61,7 @@ MOCHEADERS = \
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-noinst_LTLIBRARIES = libqucsschematic.la libqucs.la
+noinst_LTLIBRARIES = libqucsschematic.la libqucs.la libqucsfunctions.la
 
 libqucsschematic_la_SOURCES= \
   attach.cpp \
@@ -91,10 +91,14 @@ libqucsschematic_la_LIBADD += \
 libqucs_la_SOURCES = qucs_.qrc
 libqucs_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
 
+libqucsfunctions_la_SOURCES = qucs_functions.cpp
+libqucsfunctions_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
+
 qucs_real_LDFLAGS = $(QT_LIBS)
 qucs_real_SOURCES = main.cpp 
 qucs_real_LDADD = \
 	libqucsschematic.la \
+	libqucsfunctions.la \
 	libqucs.la
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \

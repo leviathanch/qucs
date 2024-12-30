@@ -4,38 +4,6 @@
 #define QUCS_TEST_DIR "../../tests"
 #endif
 
-Schematic *SchematicTests::openSchematic(QString schematic)
-{
-    qDebug() << "*** try to load schematic :" << schematic;
-
-    // QString to *char
-    QByteArray ba = schematic.toLatin1();
-    const char *c_sch = ba.data();
-
-    QFile file(schematic);    // save simulator messages
-    if(file.open(QIODevice::ReadOnly)) {
-        file.close();
-    }
-    else {
-        fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
-        return NULL;
-    }
-
-    // populate Modules list
-    Module::registerModules ();
-
-    // new schematic from file
-    Schematic *sch = new Schematic(0, schematic);
-
-    // load schematic file if possible
-    if(!sch->loadDocument()) {
-        fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
-        delete sch;
-        return NULL;
-    }
-    return sch;
-}
-
 void SchematicTests::testCreatingSchematics()
 {
     app = new QucsAppTest();
@@ -72,7 +40,7 @@ void SchematicTests::testSchematicsLoading()
             for (int j = 0; j < schematics_list.size(); ++j) {
                 name = schematics_list.at(j).fileName();
                 if(name.endsWith(".sch")) {
-                    openSchematic(QDir(dirs.filePath(project_name)).filePath(name));
+                    ::openSchematic(QDir(dirs.filePath(project_name)).filePath(name));
                 }
             }
         }

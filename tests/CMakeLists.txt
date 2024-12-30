@@ -73,19 +73,19 @@ add_library(helloworld "${helloworld_SRCS}")
 
 set(QucsAppTest_SRCS QucsAppTest.cpp QucsAppTest.h)
 add_library(QucsAppTest "${QucsAppTest_SRCS}")
-target_link_libraries(QucsAppTest Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic element QucsApp)
+target_link_libraries(QucsAppTest Qt::Test Qt::Core Qt::Gui Qt::Widgets Qt::Script Qt::PrintSupport Qt::Svg qucsschematic element QucsApp QucsFunctions)
 
 set(SignalTests_SRCS SignalTests.cpp SignalTests.h)
 add_executable(SignalTests ${SignalTests_SRCS})
 target_link_libraries(SignalTests QucsAppTest)
 add_test(NAME SignalTests COMMAND SignalTests)
 
-set(ElementTests_SRCS ElementTests.cpp)
+set(ElementTests_SRCS ElementTests.cpp ElementTests.h)
 add_executable(ElementTests ${ElementTests_SRCS})
 target_link_libraries(ElementTests QucsAppTest)
 add_test(NAME ElementTests COMMAND ElementTests)
 
-set(ComponentTests_SRCS ComponentTests.cpp)
+set(ComponentTests_SRCS ComponentTests.cpp ComponentTests.h)
 add_executable(ComponentTests ${ComponentTests_SRCS})
 target_link_libraries(ComponentTests QucsAppTest)
 add_test(NAME ComponentTests COMMAND ComponentTests)
