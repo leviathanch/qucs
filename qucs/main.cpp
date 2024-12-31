@@ -535,6 +535,7 @@ int main(int argc, char *argv[])
   int dpi = 96;
   QString color = "RGB";
   QString orientation = "portrait";
+  QStringList files;
 
   // simple command line parser
   for (int i = 1; i < argc; ++i) {
@@ -601,6 +602,7 @@ int main(int argc, char *argv[])
     }
     else if (!strcmp(argv[i], "-i")) {
       inputfile = argv[++i];
+      files.append(inputfile);
     }
     else if (!strcmp(argv[i], "-o")) {
       outputfile = argv[++i];
@@ -618,12 +620,24 @@ int main(int argc, char *argv[])
       return 0;
     }
     else {
-      fprintf(stderr, "Error: Unknown option: %s\n", argv[i]);
-      return -1;
+      if(!QString(argv[i]).endsWith(".sch") && !QString(argv[i]).endsWith(".sch")) {
+        fprintf(stderr, "Error: Unknown option: %s\n", argv[i]);
+        return -1;
+      }
     }
   }
 
-  QStringList files;
+  // load documents given as command line arguments
+  if(!files.size()) {
+    for (int i = 1; i < argc; ++i) {
+      QString arg = argv[i];
+      QByteArray ba = arg.toLatin1();
+      const char *c_arg = ba.data();
+      if(*(c_arg) != '-') {
+        files.append(arg);
+      }
+    }
+  }
   QucsMain = new QucsApp(files);
 
   // check operation and its required arguments

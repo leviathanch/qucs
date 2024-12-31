@@ -143,16 +143,14 @@ QucsApp::QucsApp(QStringList files)
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
 
   // load documents given as command line arguments
-  for(int z=1; z<files.size(); z++) {
+  for(int z=0; z<files.size(); z++) {
     QString arg = files[z];
+    qInfo() << "Qapp" << arg;
     QByteArray ba = arg.toLatin1();
-    const char *c_arg = ba.data();
-    if(*(c_arg) != '-') {
-      QFileInfo Info(arg);
-      QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
-      arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
-      gotoPage(arg);
-    }
+    QFileInfo Info(arg);
+    QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
+    arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
+    gotoPage(arg);
   }
 }
 
