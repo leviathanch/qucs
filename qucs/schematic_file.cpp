@@ -948,8 +948,6 @@ bool Schematic::loadDocument()
 
   Line = Line.mid(16, Line.length()-17);
   VersionTriplet DocVersion = VersionTriplet(Line);
-  qInfo() << "DocVersion:" << DocVersion.toString();
-  qInfo() << "QucsVersion:" << QucsVersion.toString();
   if (DocVersion > QucsVersion) { // wrong version number ?
     if (!QucsSettings.IgnoreFutureVersion) {
       QMessageBox::critical(0, QObject::tr("Error"),

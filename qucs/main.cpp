@@ -623,6 +623,9 @@ int main(int argc, char *argv[])
     }
   }
 
+  QStringList files;
+  QucsMain = new QucsApp(files);
+
   // check operation and its required arguments
   if (netlist_flag and print_flag and dump_flag) {
     fprintf(stderr, "Error: --print, --netlist and --dump cannot be used together\n");
@@ -643,13 +646,10 @@ int main(int argc, char *argv[])
       return doPrint(inputfile, outputfile,
           page, dpi, color, orientation);
     } else if (dump_flag) {
-      qInfo() << "Dumping";
-      return 0;
+      return doDump(QucsMain, inputfile, outputfile);
     }
   }
 
-  QucsMain = new QucsApp();
-  
   QucsMain->show();
   int result = a.exec();
   //saveApplSettings(QucsMain);

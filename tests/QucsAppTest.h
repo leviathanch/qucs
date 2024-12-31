@@ -8,7 +8,7 @@
 
 class QucsAppTest : public QucsApp {
 public:
-    QucsAppTest();
+    QucsAppTest(QStringList files);
     void testBuildModule();
     void load();
     void loadPRJ(QString name);

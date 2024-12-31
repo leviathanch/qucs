@@ -6,7 +6,8 @@
 
 void SchematicTests::testCreatingSchematics()
 {
-    app = new QucsAppTest();
+    QStringList files;
+    app = new QucsAppTest(files);
     Schematic *sch;
     QString name = QString("");
     sch = new Schematic(app, name);
@@ -26,7 +27,8 @@ void SchematicTests::testCreatingSchematics()
 
 void SchematicTests::testSchematicsLoading()
 {
-    app = new QucsAppTest();
+    QStringList files;
+    app = new QucsAppTest(files);
     QTextStream out(stdout);
     QDir dirs(QUCS_TEST_DIR);
     QString project_name;
@@ -40,6 +42,9 @@ void SchematicTests::testSchematicsLoading()
             for (int j = 0; j < schematics_list.size(); ++j) {
                 name = schematics_list.at(j).fileName();
                 if(name.endsWith(".sch")) {
+                    //files.clear();
+                    //files.append(QDir(dirs.filePath(project_name)).filePath(name));
+                    //app = new QucsAppTest(files);
                     ::openSchematic(QDir(dirs.filePath(project_name)).filePath(name));
                 }
             }

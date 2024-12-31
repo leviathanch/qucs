@@ -6,7 +6,8 @@
 
 void NetlistTests::testNetlistsLoading()
 {
-    app = new QucsAppTest();
+    QStringList files;
+    app = new QucsAppTest(files);
     QTextStream out(stdout);
     QDir dirs(QUCS_TEST_DIR);
     QString project_name;

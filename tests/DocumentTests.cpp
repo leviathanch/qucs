@@ -7,7 +7,8 @@
 void DocumentTests::loadDocument(QString name)
 {
     qInfo() << name;
-    app = new QucsAppTest();
+    QStringList files;
+    app = new QucsAppTest(files);
     app->loadPRJ(name);
     /*
     Schematic *sch;

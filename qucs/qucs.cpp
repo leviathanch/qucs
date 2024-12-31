@@ -92,7 +92,7 @@ QucsApp *QucsMain = 0;  // the Qucs application itself
 /*!
  * \brief QucsApp::QucsApp main application
  */
-QucsApp::QucsApp()
+QucsApp::QucsApp(QStringList files)
 {
   setWindowTitle("Qucs " PACKAGE_VERSION);
 
@@ -143,10 +143,10 @@ QucsApp::QucsApp()
   lastExportFilename = QDir::homePath() + QDir::separator() + "export.png";
 
   // load documents given as command line arguments
-  for(int z=1; z<qApp->arguments().size(); z++) {
-    QString arg = qApp->arguments()[z];
+  for(int z=1; z<files.size(); z++) {
+    QString arg = files[z];
     QByteArray ba = arg.toLatin1();
-    const char *c_arg= ba.data();
+    const char *c_arg = ba.data();
     if(*(c_arg) != '-') {
       QFileInfo Info(arg);
       QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());

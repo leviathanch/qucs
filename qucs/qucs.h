@@ -156,7 +156,7 @@ class QucsApp : public QMainWindow {
   Q_OBJECT
   friend class QucsAppTest;
 public:
-  QucsApp();
+  QucsApp(QStringList files);
  ~QucsApp();
   bool closeTabsRange(int startTab, int stopTab, int exceptTab = -1);
   bool closeAllFiles(int exceptTab = -1);

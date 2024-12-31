@@ -19,7 +19,7 @@ void QucsAppTest::loadPRJ(QString name)
     openProject(name);
 }
 
-QucsAppTest::QucsAppTest() : QucsApp()
+QucsAppTest::QucsAppTest(QStringList files) : QucsApp(files)
 {
     QucsVersion = VersionTriplet(PACKAGE_VERSION);
 }
