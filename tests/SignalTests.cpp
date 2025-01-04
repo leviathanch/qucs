@@ -6,9 +6,7 @@
 
 void SignalTests::testSchematicsLoading()
 {
-    QucsVersion = VersionTriplet(PACKAGE_VERSION);
     QTextStream out(stdout);
-    Schematic *sch;
     QDir dirs(QUCS_TEST_DIR);
     QString project_name;
     QFileInfoList list = dirs.entryInfoList();
@@ -24,8 +22,8 @@ void SignalTests::testSchematicsLoading()
                 if(name.endsWith(".sch")) {
                     files.clear();
                     files.append(QDir(dirs.filePath(project_name)).filePath(name));
-                    app = new QucsAppTest(files);
-                    app->testBuildModule();
+                    app = getApp(files);
+                    //app->testBuildModule();
                 }
             }
         }

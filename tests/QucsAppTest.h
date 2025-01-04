@@ -13,3 +13,5 @@ public:
     void load();
     void loadPRJ(QString name);
 };
+
+QucsAppTest * getApp(QStringList files);

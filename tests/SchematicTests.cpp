@@ -7,7 +7,7 @@
 void SchematicTests::testCreatingSchematics()
 {
     QStringList files;
-    app = new QucsAppTest(files);
+    app = getApp(files);
     Schematic *sch;
     QString name = QString("");
     sch = new Schematic(app, name);
@@ -28,7 +28,7 @@ void SchematicTests::testCreatingSchematics()
 void SchematicTests::testSchematicsLoading()
 {
     QStringList files;
-    app = new QucsAppTest(files);
+    app = getApp(files);
     QTextStream out(stdout);
     QDir dirs(QUCS_TEST_DIR);
     QString project_name;

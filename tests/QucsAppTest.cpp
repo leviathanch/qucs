@@ -21,5 +21,11 @@ void QucsAppTest::loadPRJ(QString name)
 
 QucsAppTest::QucsAppTest(QStringList files) : QucsApp(files)
 {
+}
+
+QucsAppTest * getApp(QStringList files)
+{
     QucsVersion = VersionTriplet(PACKAGE_VERSION);
+    QucsAppTest *app = new QucsAppTest(files);
+    return app;
 }
