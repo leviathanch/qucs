@@ -634,26 +634,26 @@ bool Schematic::loadProperties(QTextStream *stream)
 void Schematic::simpleInsertComponent(const std::shared_ptr<Component> &c)
 {
   trace_method_calls();
-  std::shared_ptr<Node> pn;
   int x, y;
   // connect every node of component
   for (auto pp = c->Ports.begin(); pp != c->Ports.end(); ++pp) {
+    std::shared_ptr<Node> pn;
+    pn.reset();
     x = pp->x+c->cx;
     y = pp->y+c->cy;
-
     // check if new node lies upon existing node
-    for(auto pn = DocNodes.begin(); pn != DocNodes.end(); ++pn) {
+    /*for(auto pni = DocNodes.begin(); pni != DocNodes.end(); ++pni) {
+      pn = pni.ref();
       if(pn->cx == x) if(pn->cy == y) {
-	if (!pn->DType.isEmpty()) {
-	  pp->Type = pn->DType;
-	}
-	if (!pp->Type.isEmpty()) {
-	  pn->DType = pp->Type;
-	}
-	break;
+        if (!pn->DType.isEmpty()) {
+          pp->Type = pn->DType;
+        }
+        if (!pp->Type.isEmpty()) {
+          pn->DType = pp->Type;
+        }
+        break;
       }
-    }
-
+    }*/
     if(!pn) { // create new node, if no existing one lies at this position
       pn.reset(new Node(x, y));
       DocNodes.append(pn);
@@ -662,7 +662,6 @@ void Schematic::simpleInsertComponent(const std::shared_ptr<Component> &c)
     if (!pp->Type.isEmpty()) {
       pn->DType = pp->Type;
     }
-
     pp->Connection = pn;  // connect component node to schematic node
   }
 

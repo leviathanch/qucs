@@ -105,8 +105,8 @@ add_executable(DocumentTests ${DocumentTests_SRCS})
 target_link_libraries(DocumentTests QucsAppTest)
 add_test(NAME DocumentTests COMMAND DocumentTests)
 
-#add_custom_command(TARGET SchematicTests COMMENT "Run schematics tests" POST_BUILD COMMAND SchematicTests)
-#add_custom_command(TARGET NetlistTests COMMENT "Run netlist tests" POST_BUILD COMMAND NetlistTests)
-#add_custom_command(TARGET DocumentTests COMMENT "Run document tests" POST_BUILD COMMAND DocumentTests)
+add_custom_command(TARGET SchematicTests COMMENT "Run schematics tests" POST_BUILD COMMAND SchematicTests)
+add_custom_command(TARGET NetlistTests COMMENT "Run netlist tests" POST_BUILD COMMAND NetlistTests)
+add_custom_command(TARGET DocumentTests COMMENT "Run document tests" POST_BUILD COMMAND DocumentTests)
 #add_custom_command(TARGET SignalTests COMMENT "Run signal slot tests" POST_BUILD COMMAND SignalTests)
 
