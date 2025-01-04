@@ -1121,10 +1121,7 @@ void Schematic::throughAllNodes(bool User, QStringList& Collect,
       continue;  // already named ?
     }
     if(!User) {
-      if(isAnalog)
-	pn->Name = "_net";
-      else
-	pn->Name = "net_net";   // VHDL names must not begin with '_'
+      pn->Name = isAnalog ?  "_net" : "net_net"; // VHDL names must not begin with '_'
       pn->Name += QString::number(z++);  // create numbered node name
     }
     else if(pn->State) {
