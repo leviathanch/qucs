@@ -644,9 +644,7 @@ void Schematic::simpleInsertComponent(const std::shared_ptr<Component> &c)
     // check if new node lies upon existing node
     for(auto pni = DocNodes.begin(); pni != DocNodes.end(); ++pni) {
       std::shared_ptr<Node> pnc = pni.ref();
-      qInfo() << "Node found x" << pnc->cx << "y" << pnc->cy;
       if(pnc->cx == x) if(pnc->cy == y) {
-        qInfo() << "Found overlap";
         if (!pnc->DType.isEmpty()) {
           pp->Type = pnc->DType;
         }
