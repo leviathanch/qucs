@@ -663,7 +663,7 @@ QString Component::netlist()
 
   // output all properties
   for(auto p2 = Props.begin(); p2 != Props.end(); ++p2) {
-    if (p2->Name != "Symbol"){
+    if ( (p2->Name != "Symbol") && (p2->Name != "File") ){
       s += " " + p2->Name + "=\"" + p2->Value + "\"";
     }else{
       // BUG: what is this?

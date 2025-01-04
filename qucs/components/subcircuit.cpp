@@ -209,8 +209,11 @@ QString Subcircuit::netlist()
   s += " Type=\""+misc::properName(f)+"\"";
 
   // output all user defined properties
-  for(auto pp = Props.begin(); pp != Props.end(); ++pp)
-    s += " "+pp->Name+"=\""+pp->Value+"\"";
+  for(auto pp = Props.begin(); pp != Props.end(); ++pp) {
+    if(pp->Name != "File") {
+      s += " "+pp->Name+"=\""+pp->Value+"\"";
+    }
+  }
   return s + '\n';
 }
 
