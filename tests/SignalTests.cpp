@@ -20,6 +20,7 @@ void SignalTests::testSchematicsLoading()
             for (int j = 0; j < schematics_list.size(); ++j) {
                 name = schematics_list.at(j).fileName();
                 if(name.endsWith(".sch")) {
+                    qInfo() << name;
                     files.clear();
                     files.append(QDir(dirs.filePath(project_name)).filePath(name));
                     app = getApp(files);

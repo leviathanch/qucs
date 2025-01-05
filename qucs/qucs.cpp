@@ -146,11 +146,10 @@ QucsApp::QucsApp(QStringList files)
   for(int z=0; z<files.size(); z++) {
     QString arg = files[z];
     qInfo() << "Qapp" << arg;
-    QByteArray ba = arg.toLatin1();
     QFileInfo Info(arg);
     QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
-    arg = QucsSettings.QucsWorkDir.filePath(Info.fileName());
-    gotoPage(arg);
+    qInfo() << "path:" << Info.fileName();
+    gotoPage(Info.fileName());
   }
 }
 
