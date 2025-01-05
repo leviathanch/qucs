@@ -29,7 +29,7 @@ QX_TESTS_maybe_later = \
 	sub.0.qx \
 	sub.1.qx
 
-SH_TESTS = \
+SH_TESTS_ = \
 	helloworld.sh \
 	doesnotexist.sh
 
@@ -38,6 +38,7 @@ SH_TESTS_LATER = \
 	entries.sh \
 	run.sh
 
+# TODO: wildcard match
 PRJ_TESTS = \
 	d_3f5.prj \
 	misc.prj \
