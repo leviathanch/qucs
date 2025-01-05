@@ -638,6 +638,7 @@ int main(int argc, char *argv[])
       }
     }
   }
+  // Open the files
   QucsMain = new QucsApp(files);
 
   // check operation and its required arguments
@@ -660,7 +661,7 @@ int main(int argc, char *argv[])
       return doPrint(inputfile, outputfile,
           page, dpi, color, orientation);
     } else if (dump_flag) {
-      return doDump(QucsMain, inputfile, outputfile);
+      return doDump(inputfile, outputfile);
     }
   }
 

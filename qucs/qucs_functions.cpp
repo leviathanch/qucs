@@ -137,18 +137,13 @@ int doPrint(QString schematic, QString printFile,
  * Exporting the schematics to an output file with the format based
  * on the suffix of the file name.
  */
-int doDump(QucsApp *app, QString inputfile, QString outputfile)
+int doDump(QString inputfile, QString outputfile)
 {
-    qInfo() << "Dumping";
-    QucsDoc *Doc = app->getDoc();
-    if(Doc) {
-        qInfo() << Doc->DocName;
-    }
-    /*Schematic *sch = openSchematic(schematic);
+    Schematic *sch = openSchematic(inputfile);
     if (sch == NULL) {
       return 1;
     }
-    //sch->setName(outFile);
-    sch->save();*/
+    sch->DocName = outputfile;
+    sch->save();
     return 0;
 }
