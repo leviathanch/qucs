@@ -41,11 +41,11 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 ### 	# BUG: use stdout and filter
 ### 	sed -i '1 s/Qucs.*/Qucs/' ${out}/${base}_${schname}.v
 ### 	
-### 	# dump legacy schematic
-### 	rm -f "${out}/${base}_${schname}.sch"
-### 	cmd="$QUCS -a $VERILOG_PLUGIN -l leg_sch -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.sch"
-### 	eval echo "$cmd" ${REDIR}
-### 	eval "$cmd" ${REDIR}
+	# dump legacy schematic
+	rm -f "${out}/${base}_${schname}.sch"
+	cmd="$QUCS -i ${srcdir}/$i --dump -o ${out}/${base}_${schname}.sch"
+	eval echo "$cmd" ${REDIR}
+	eval "$cmd" ${REDIR}
 ### 
 ### 	# dump verilog schematic
 ### 	rm -f "${out}/${base}_${schname}.vs"
@@ -55,7 +55,7 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 
 	# =================================
 
-	files="${base}_${schname}.net ${base}_${schname}.sch ${base}_${schname}.vs ${base}_${schname}.v"
+	files="${base}_${schname}.net ${base}_${schname}.sch" # later " ${base}_${schname}.vs ${base}_${schname}.v"
 
 	for F in $files; do
 		cmd="$DIFF ${out}/${F} ${ref}/${F}"
