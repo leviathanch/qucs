@@ -40,6 +40,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QScrollBar>
+#include <QCoreApplication>
 
 #include "projectView.h"
 #include "qucs.h"
@@ -1448,6 +1449,7 @@ void QucsApp::slotBuildModule()
 {
     qDebug() << "slotBuildModule";
 
+
     // reset message dock on entry
     messageDock->reset();
 
@@ -1465,7 +1467,19 @@ void QucsApp::slotBuildModule()
 
     QDir prefix = QDir(QucsSettings.BinDir+"../");
 
-    QDir include = QDir(QucsSettings.BinDir+"../include/qucs-core");
+    // check for relocation env variable
+    QDir include;
+    char* var = getenv("QUCSDIR");
+    QDir QucsDir;
+    if (var && std::string(var)!="")
+    {
+        include = QDir(QString(var)+"/include/qucsator");
+        qDebug() << "QUCSDIR set: " << QucsDir.absolutePath();
+    }
+    else
+    {
+        include = QDir(QucsSettings.BinDir+"../include/qucsator");
+    }
 
     QString workDir = QucsSettings.QucsWorkDir.absolutePath();
 
@@ -1478,6 +1492,7 @@ void QucsApp::slotBuildModule()
     // get current va document
     QucsDoc *Doc = getDoc();
     QString vaModule = Doc->fileBase(Doc->DocName);
+    if(vaModule=="") return;
 
     QString admsXml = QucsSettings.AdmsXmlBinDir.canonicalPath();
 

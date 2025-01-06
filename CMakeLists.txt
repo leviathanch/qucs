@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.10)
 project(qucs-suite CXX)
 
 file(STRINGS "${qucs-suite_SOURCE_DIR}/VERSION" QUCS_VERSION)
@@ -19,6 +19,8 @@ if(EXISTS ${CMAKE_SOURCE_DIR}/../.git)
   message(STATUS "Found Git repository, last commit hash: ${GIT}")
 endif()
 
+set(PROJECT_VERSION ${QUCS_VERSION})
+
 message(STATUS "${PROJECT_NAME} ${CMAKE_INSTALL_PREFIX}
     ${qucs-suite_BINARY_DIR}")
 
@@ -34,6 +36,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1.cmake.in
                ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsdigilib.1)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1.cmake.in
                ${CMAKE_CURRENT_SOURCE_DIR}/man/qucsveri.1)
+configure_file(${PROJECT_SOURCE_DIR}/config.h.cmake
+               ${PROJECT_BINARY_DIR}/config.h)
 
 # Tools
 configure_file(
@@ -54,19 +58,35 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-rescodes/qucsrescodes.1.cmake.in
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1.cmake.in
                ${CMAKE_CURRENT_SOURCE_DIR}/qucs-transcalc/qucstrans.1)
 
+#set(UNIT_TEST "")
+
+add_custom_target(
+    qucsator
+    COMMAND pushd ${CMAKE_CURRENT_SOURCE_DIR}/qucsator && autoreconf -ivf && CXX=g++-12 ./configure --prefix=${CMAKE_CURRENT_BINARY_DIR} && make && make install && popd
+)
+
+add_custom_command(
+    TARGET qucsator
+    COMMAND pushd ${CMAKE_CURRENT_SOURCE_DIR}/qucsator && autoreconf -ivf && CXX=g++-12 ./configure --prefix=${CMAKE_CURRENT_BINARY_DIR} && make && make install && popd
+)
+
 add_subdirectory(man)
 add_subdirectory(qucs)
 add_subdirectory(qucs-activefilter)
 add_subdirectory(qucs-attenuator)
-# ADD_SUBDIRECTORY( qucs-doc )
+#add_subdirectory(qucs-doc)
 add_subdirectory(qucs-filter)
 add_subdirectory(qucs-lib)
 add_subdirectory(qucs-transcalc)
 add_subdirectory(qucs-rescodes)
-# ADD_SUBDIRECTORY( examples )
+add_subdirectory(examples)
 add_subdirectory(translations)
 add_subdirectory(contrib)
 add_subdirectory(qucs-powercombining)
+
+# enable testing for current directory and below
+enable_testing()
+add_subdirectory(tests)
 
 #
 # Custom uninstall target
@@ -74,5 +94,4 @@ add_subdirectory(qucs-powercombining)
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/uninstall.cmake.in"
                "${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake" IMMEDIATE @ONLY)
 
-add_custom_target(uninstall-ui COMMAND ${CMAKE_COMMAND} -P
-                                    ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake)
+add_custom_target(uninstall-ui COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/uninstall.cmake)

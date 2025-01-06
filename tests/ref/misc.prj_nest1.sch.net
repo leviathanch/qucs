@@ -1,0 +1,17 @@
+# Qucs
+## declarations 1
+### item Sub:nest2
+# sckt Sub:nest2
+
+.Def:nest2 P1 P2
+# 26
+R:R1 P1 P2 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+C:C1 gnd P2 C="1 pF" V=""
+.Def:End
+## declarations end
+
+Port:P2 P2 P2 Num="2" Type="analog"
+Port:P1 P1 P1 Num="1" Type="analog"
+C:C1 gnd P2 C="1 pF" V=""
+Sub:SC2 P2 _net9 Type="nest2"
+R:R1 P1 _net9 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

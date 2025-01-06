@@ -11,7 +11,7 @@
 # env CTEST_OUTPUT_ON_FAILURE=1 make test    # for verbose output
 
 project(qucs CXX)
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.10.0)
 
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
@@ -26,9 +26,6 @@ set(PROJECT_DOMAIN_SECOND "org")
 
 #
 set(CMAKE_BUILD_TYPE Debug)
-
-# enable testing for current directory and below
-enable_testing()
 
 # If Git hash not defined, try to define it
 if(NOT GIT)
@@ -60,12 +57,9 @@ find_package(
   REQUIRED
 )
 
-# configure the header config.h
-configure_file("${PROJECT_SOURCE_DIR}/../config.h.cmake"
-               "${PROJECT_BINARY_DIR}/config.h")
-
 include_directories("${PROJECT_BINARY_DIR}")
 include_directories(${CMAKE_SOURCE_DIR})
+include_directories("${PROJECT_BINARY_DIR}/..")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ") # enable warning level
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ") # enable C++11
@@ -92,8 +86,6 @@ add_subdirectory(octave)
 add_subdirectory(python)
 add_subdirectory(paintings)
 
-add_subdirectory(tests)
-
 set(QUCS_SRCS
     attach.cpp
     element.cpp
@@ -110,6 +102,7 @@ set(QUCS_SRCS
     mouseactions.cpp
     qucs_actions.cpp
     schematic_file.cpp
+    schematic_file_write.cpp
     wirelabel.cpp
     node.cpp
     qucs_init.cpp
@@ -255,9 +248,11 @@ target_link_libraries(qucsschematic ${CMAKE_DL_LIBS})
 #
 # CMake's way of creating an executable
 #
-add_executable(qucs MACOSX_BUNDLE WIN32 main.cpp ${RESOURCES_SRCS})
-
-target_link_libraries(qucs Qt::Core Qt::Gui Qt::Widgets Qt::Svg Qt::PrintSupport Qt::Script qucsschematic)
+add_library(QucsFunctions qucs_functions.cpp qucs_functions.h)
+target_link_libraries(QucsFunctions Qt::Core Qt::Gui Qt::Widgets Qt::Svg Qt::PrintSupport Qt::Script qucsschematic)
+add_library(QucsApp ${RESOURCES_SRCS})
+add_executable(qucs MACOSX_BUNDLE WIN32 main.cpp)
+target_link_libraries(qucs QucsApp QucsFunctions qucsschematic)
 
 #
 # Prepare the installation
@@ -289,8 +284,8 @@ install(
 install(
   TARGETS qucsschematic
   RUNTIME DESTINATION bin COMPONENT runtime
-  ARCHIVE DESTINATION lib COMPONENT devel
-  LIBRARY DESTINATION lib COMPONENT library)
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT devel
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT library)
 
 #
 # Install needed Qt plugins by copying directories from the qt installation One

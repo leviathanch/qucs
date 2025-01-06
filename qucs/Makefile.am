@@ -31,8 +31,7 @@ SUBDIRS = \
 	components diagrams \
 	paintings \
 	dialogs \
-	octave \
-	tests
+	octave
 
 all-local: qucs
 
@@ -62,15 +61,15 @@ MOCHEADERS = \
 
 MOCFILES = $(MOCHEADERS:.h=.moc.cpp)
 
-noinst_LTLIBRARIES = libqucsschematic.la
+noinst_LTLIBRARIES = libqucsschematic.la libqucs.la libqucsfunctions.la
 
 libqucsschematic_la_SOURCES= \
   attach.cpp \
   node.cpp element.cpp qucsdoc.cpp wire.cpp mouseactions.cpp   \
   qucs.cpp wirelabel.cpp qucs_init.cpp qucs_actions.cpp            \
   viewpainter.cpp mnemo.cpp schematic.cpp schematic_element.cpp textdoc.cpp \
-  schematic_file.cpp syntax.cpp module.cpp octave_window.cpp \
-  messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
+  schematic_file.cpp schematic_file_write.cpp syntax.cpp module.cpp \
+  octave_window.cpp messagedock.cpp misc.cpp imagewriter.cpp printerwriter.cpp \
   projectView.cpp
 
 nodist_libqucsschematic_la_SOURCES = $(MOCFILES)
@@ -89,10 +88,18 @@ libqucsschematic_la_LIBADD = \
 libqucsschematic_la_LIBADD += \
   $(X11_LIBS) $(QT_LIBS)
 
+libqucs_la_SOURCES = qucs_.qrc
+libqucs_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
+
+libqucsfunctions_la_SOURCES = qucs_functions.cpp
+libqucsfunctions_la_LDFLAGS = $(X11_LDFLAGS) $(QT_LIBS)
+
 qucs_real_LDFLAGS = $(QT_LIBS)
-qucs_real_SOURCES = main.cpp qucs_.qrc
+qucs_real_SOURCES = main.cpp 
 qucs_real_LDADD = \
-	libqucsschematic.la
+	libqucsschematic.la \
+	libqucsfunctions.la \
+	libqucs.la
 
 noinst_HEADERS = $(MOCHEADERS) wire.h qucsdoc.h element.h node.h \
   wirelabel.h viewpainter.h mnemo.h mouseactions.h syntax.h module.h misc.h \

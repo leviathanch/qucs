@@ -776,8 +776,6 @@ void QucsApp::initMenuBar()
   alignMenu->addAction(distrHor);
   alignMenu->addAction(distrVert);
 
-
-
   insMenu = new QMenu(tr("&Insert"));  // menuBar entry insMenu
   insMenu->addAction(insWire);
   insMenu->addAction(insLabel);
@@ -786,7 +784,6 @@ void QucsApp::initMenuBar()
   insMenu->addAction(insPort);
   insMenu->addAction(setMarker);
   insMenu->addAction(insEntity);
-
 
   projMenu = new QMenu(tr("&Project"));  // menuBar entry projMenu
   projMenu->addAction(projNew);
@@ -905,18 +902,18 @@ void QucsApp::initMenuBar()
   helpMenu->addAction(helpAboutApp);
   helpMenu->addAction(helpAboutQt);
 
-
-  menuBar()->addMenu(fileMenu);
-  menuBar()->addMenu(editMenu);
-  menuBar()->addMenu(alignMenu);
-  menuBar()->addMenu(insMenu);
-  menuBar()->addMenu(projMenu);
-  menuBar()->addMenu(toolMenu);
-  menuBar()->addMenu(simMenu);
-  menuBar()->addMenu(viewMenu);
-  menuBar()->addSeparator();
-  menuBar()->addMenu(helpMenu);
-
+  QMenuBar *menubar = new QMenuBar();
+  menubar->addMenu(fileMenu);
+  menubar->addMenu(editMenu);
+  menubar->addMenu(alignMenu);
+  menubar->addMenu(insMenu);
+  menubar->addMenu(projMenu);
+  menubar->addMenu(toolMenu);
+  menubar->addMenu(simMenu);
+  menubar->addMenu(viewMenu);
+  menubar->addSeparator();
+  menubar->addMenu(helpMenu);
+  setMenuBar(menubar);
 }
 
 // ----------------------------------------------------------
