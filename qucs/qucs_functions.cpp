@@ -1,22 +1,26 @@
 #include "qucs_functions.h"
 
+#include <QDebug>
+#include <QMessageLogger>
+#include <QtGlobal>
+
 /*
  * Open a given file name path and return a schematics object
  */
-Schematic *openSchematic(QString schematic)
+Schematic *openSchematic(QString inputfile)
 {
+  QString schematic = inputfile;
+  if(!QFileInfo(inputfile).isAbsolute()) {
+    schematic = QDir(QDir::currentPath()).absoluteFilePath(inputfile);
+  }
   qDebug() << "*** try to load schematic :" << schematic;
-
-  // QString to *char
-  QByteArray ba = schematic.toLatin1();
-  const char *c_sch = ba.data();
 
   QFile file(schematic);  // save simulator messages
   if(file.open(QIODevice::ReadOnly)) {
     file.close();
-  }
-  else {
-    fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
+  } else {
+    qFatal("Error: Could not load schematic");
+    //qFatal() << "Error: Could not load schematic" << schematic;
     return NULL;
   }
 
@@ -28,7 +32,7 @@ Schematic *openSchematic(QString schematic)
 
   // load schematic file if possible
   if(!sch->loadDocument()) {
-    fprintf(stderr, "Error: Could not load schematic %s\n", c_sch);
+    //qFatal() << "Error: Could not load schematic" << schematic;
     delete sch;
     return NULL;
   }

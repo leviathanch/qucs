@@ -102,6 +102,7 @@ set(QUCS_SRCS
     mouseactions.cpp
     qucs_actions.cpp
     schematic_file.cpp
+    schematic_file_write.cpp
     wirelabel.cpp
     node.cpp
     qucs_init.cpp

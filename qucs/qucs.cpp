@@ -145,11 +145,9 @@ QucsApp::QucsApp(QStringList files)
   // load documents given as command line arguments
   for(int z=0; z<files.size(); z++) {
     QString arg = files[z];
-    qInfo() << "Qapp" << arg;
     QFileInfo Info(arg);
     QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
-    qInfo() << "path:" << Info.fileName();
-    gotoPage(Info.fileName());
+    gotoPage(arg);
   }
 }
 
