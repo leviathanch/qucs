@@ -1,9 +1,0 @@
-load legacy
-load misc
-load qucsator
-
-<Components>
-</Components>
-
-netlist lang=qucsator
-quit
