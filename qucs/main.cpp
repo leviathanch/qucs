@@ -648,6 +648,7 @@ int main(int argc, char *argv[])
       }
     }
   }
+
   // Open the files
   QucsMain = new QucsApp(files);
 
@@ -671,7 +672,6 @@ int main(int argc, char *argv[])
       return doPrint(inputfile, outputfile,
           page, dpi, color, orientation);
     } else if (dump_flag) {
-      qInfo() << "The inputfile" << inputfile;
       return doDump(inputfile, outputfile);
     }
   }
