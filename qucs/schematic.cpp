@@ -1442,11 +1442,13 @@ bool Schematic::load()
   symbolMode = true;
   setChanged(false, true); // "not changed" state, but put on undo stack
   undoSymbolIdx = 0;
-  undoSymbol[undoSymbolIdx].replace(1, 1, 'i');
+  if(undoSymbol.size()>1)
+    undoSymbol[undoSymbolIdx].replace(1, 1, 'i');
   symbolMode = false;
   setChanged(false, true); // "not changed" state, but put on undo stack
   undoActionIdx = 0;
-  undoAction[undoActionIdx].replace(1, 1, 'i');
+  if(undoAction.size()>1)
+    undoAction[undoActionIdx].replace(1, 1, 'i');
 
   // The undo stack of the circuit symbol is initialized when first
   // entering its edit mode.

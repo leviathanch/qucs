@@ -641,9 +641,8 @@ int main(int argc, char *argv[])
       const char *c_arg = ba.data();
       if(*(c_arg) != '-') {
         if(!QFileInfo(arg).isAbsolute()) {
-          arg = QDir(QDir::currentPath()).absoluteFilePath(arg);
+          arg = QDir::cleanPath(QDir(QDir::currentPath()).filePath(arg));
         }
-        qInfo() << "Loading arg" << arg;
         files.append(arg);
       }
     }

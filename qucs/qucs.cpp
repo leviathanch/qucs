@@ -147,7 +147,11 @@ QucsApp::QucsApp(QStringList files)
     QString arg = files[z];
     QFileInfo Info(arg);
     QucsSettings.QucsWorkDir.setPath(Info.absoluteDir().absolutePath());
-    gotoPage(arg);
+    if(Info.isAbsolute()) {
+      gotoPage(arg);
+    } else {
+      qCritical() << "Can only handle absolute paths!";
+    }
   }
 }
 
