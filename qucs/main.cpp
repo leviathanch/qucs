@@ -602,10 +602,16 @@ int main(int argc, char *argv[])
     }
     else if (!strcmp(argv[i], "-i")) {
       inputfile = argv[++i];
+      if(!QFileInfo(inputfile).isAbsolute()) {
+        inputfile = QDir(QDir::currentPath()).absoluteFilePath(inputfile);
+      }
       files.append(inputfile);
     }
     else if (!strcmp(argv[i], "-o")) {
       outputfile = argv[++i];
+      if(!QFileInfo(outputfile).isAbsolute()) {
+        outputfile = QDir(QDir::currentPath()).absoluteFilePath(outputfile);
+      }
     }
     else if(!strcmp(argv[i], "-icons")) {
       createIcons();
@@ -634,6 +640,10 @@ int main(int argc, char *argv[])
       QByteArray ba = arg.toLatin1();
       const char *c_arg = ba.data();
       if(*(c_arg) != '-') {
+        if(!QFileInfo(arg).isAbsolute()) {
+          arg = QDir(QDir::currentPath()).absoluteFilePath(arg);
+        }
+        qInfo() << "Loading arg" << arg;
         files.append(arg);
       }
     }
@@ -661,6 +671,7 @@ int main(int argc, char *argv[])
       return doPrint(inputfile, outputfile,
           page, dpi, color, orientation);
     } else if (dump_flag) {
+      qInfo() << "The inputfile" << inputfile;
       return doDump(inputfile, outputfile);
     }
   }
