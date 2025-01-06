@@ -24,7 +24,7 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 
 	# dump qucsator netlist
 	rm -f "${out}/${base}_${schname}.net"
-	cmd="$QUCS -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.net"
+	cmd="$QUCS -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.net -platform offscreen"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 
@@ -43,7 +43,7 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 ### 	
 	# dump legacy schematic
 	rm -f "${out}/${base}_${schname}.sch"
-	cmd="$QUCS -i ${srcdir}/$i --dump -o ${out}/${base}_${schname}.sch"
+	cmd="$QUCS -i ${srcdir}/$i --dump -o ${out}/${base}_${schname}.sch -platform offscreen"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 ### 
