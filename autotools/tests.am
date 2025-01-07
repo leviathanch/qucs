@@ -24,7 +24,7 @@ examplesdir=$(srcdir)/../examples
 
 AM_DEFAULT_SOURCE_EXT = .cpp
 # check_LTLIBRARIES = helloworld.la element.la
-LIBQUCS = ${top_builddir}/src/libqucs.la
+# LIBQUCS = ${top_builddir}/src/libqucs.la
 
 # does not work
 # helloworld_la_LDFLAGS = -shared -no-undefined -module -avoid-version -rpath /dev/null
