@@ -33,19 +33,29 @@
 #define trace_method_calls() {}
 #endif
 
-// -------------------------------------------------------------
-// Returns the number of subcircuit ports.
-int Schematic::saveDocument()
+int Schematic::saveVerilogDocument(QFile *file)
 {
   trace_method_calls();
-  QFile file(DocName);
-  if(!file.open(QIODevice::WriteOnly)) {
-    QMessageBox::critical(0, QObject::tr("Error"),
-        QObject::tr("Cannot save document!"));
-    return -1;
-  }
+  QTextStream stream(file);
+  stream << "module " << QFileInfo(DocName).baseName() << "(";
+  // input signals
+  stream << ");\n";
+  // wires
+  // sub components
+  stream << "endmodule\n";
+  stream.flush();
+  file->flush();
+  file->close();
+  return 0;
+}
 
-  QTextStream stream(&file);
+// -------------------------------------------------------------
+// Returns the number of subcircuit ports.
+int Schematic::saveSchematicDocument(QFile *file)
+{
+  trace_method_calls();
+
+  QTextStream stream(file);
 
   stream << "<Qucs Schematic " << PACKAGE_VERSION << ">\n";
 
@@ -116,7 +126,8 @@ int Schematic::saveDocument()
   }
   stream << "</Paintings>\n";
 
-  file.close();
+  file->flush();
+  file->close();
 
   // additionally save symbol C++ code if in a symbol drawing and the
   // associated file is a Verilog-A file
@@ -232,4 +243,29 @@ int Schematic::saveDocument()
   } // if suffix .sym
 
   return 0;
+}
+
+// Decide whether we wanna generate Verilog or a Schematic file
+int Schematic::saveDocument()
+{
+  trace_method_calls();
+  if(OutputFile.isEmpty())
+    OutputFile = DocName;
+
+  QFile *file = new QFile(OutputFile);
+  if(!file->open(QIODevice::WriteOnly)) {
+    QMessageBox::critical(0, QObject::tr("Error"),
+        QObject::tr("Cannot save document!"));
+    delete file;
+    return -1;
+  }
+  if(QFileInfo(OutputFile).suffix()=="sch" || OutputType=="sch") {
+      return saveSchematicDocument(file);
+  }
+  if(QFileInfo(OutputFile).suffix()=="vs" || OutputType=="vs") {
+      return saveVerilogDocument(file);
+  }
+  QMessageBox::critical(0, QObject::tr("Error"),
+      QObject::tr("Cannot save document: File format not supported!"));
+  return -1;
 }

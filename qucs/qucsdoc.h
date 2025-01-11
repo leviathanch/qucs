@@ -47,6 +47,8 @@ public:
   QString DocName;
   QString DataSet;     // name of the default dataset
   QString DataDisplay; // name of the default data display
+  QString OutputFile; // Work around when writing to /dev/stdout
+  QString OutputType; // Work around when writing to /dev/stdout
   QString Script;
   QString SimTime;     // used for VHDL simulation, but stored in datadisplay
   QDateTime lastSaved;

@@ -141,13 +141,14 @@ int doPrint(QString schematic, QString printFile,
  * Exporting the schematics to an output file with the format based
  * on the suffix of the file name.
  */
-int doDump(QString inputfile, QString outputfile)
+int doDump(QString inputfile, QString outputfile, QString outputtype)
 {
     Schematic *sch = openSchematic(inputfile);
     if (sch == NULL) {
       return 1;
     }
-    sch->DocName = outputfile;
+    sch->OutputFile = outputfile;
+    sch->OutputType = outputtype;
     sch->save();
     return 0;
 }

@@ -309,6 +309,8 @@ public:
 
 private:
   int  saveDocument();
+  int  saveSchematicDocument(QFile *file);
+  int  saveVerilogDocument(QFile *file);
 
   bool loadProperties(QTextStream*);
   void simpleInsertComponent(const std::shared_ptr<Component> &);
