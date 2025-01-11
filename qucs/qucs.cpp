@@ -97,7 +97,8 @@ QucsApp::QucsApp(QStringList files)
   setWindowTitle("Qucs " PACKAGE_VERSION);
 
   QucsFileFilter =
-    tr("Schematic") + " (*.sch);;" +
+    tr("Legacy Schematic") + " (*.sch);;" +
+    tr("Verilog Schematic") + " (*.vs);;" +
     tr("Data Display") + " (*.dpl);;" +
     tr("Qucs Documents") + " (*.sch *.dpl);;" +
     tr("VHDL Sources") + " (*.vhdl *.vhd);;" +

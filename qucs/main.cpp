@@ -527,6 +527,7 @@ int main(int argc, char *argv[])
 
   QString inputfile;
   QString outputfile;
+  QString outputtype;
 
   bool netlist_flag = false;
   bool print_flag = false;
@@ -548,8 +549,11 @@ int main(int argc, char *argv[])
   "  -v, --version  display version information and exit\n"
   "  -n, --netlist  convert Qucs schematic into netlist\n"
   "  -p, --print    print Qucs schematic to file (eps needs inkscape)\n"
-  "  -d, --dump     directly dump input file format into desired output file format\n"
-  "  -q, --quit     exit\n"
+  "  -platform [xcb,vnc,offscreen,...]  Allows you to select a platform plugin.\n"
+  "                                     In case you ar trying to run it headless it will give you a list\n"
+  "  -d, --dump     Directly dump input file format into desired output file format\n"
+  "  -t, --type [sch|vs] Output format for dump operation: Verilog Schematic or Legacy Schematic \n"
+  "  -q, --quit     Exit quietly\n"
   "    --page [A4|A3|B4|B5]         set print page size (default A4)\n"
   "    --dpi NUMBER                 set dpi value (default 96)\n"
   "    --color [RGB|RGB]            set color mode (default RGB)\n"
@@ -593,6 +597,9 @@ int main(int argc, char *argv[])
     }
     else if (!strcmp(argv[i], "--orin")) {
       orientation = argv[++i];
+    }
+    else if (!strcmp(argv[i], "--type") || !strcmp(argv[i], "-t")) {
+      outputtype = argv[++i];
     }
     else if (!strcmp(argv[i], "-a")) {
       attach(argv[++i]);
@@ -671,7 +678,7 @@ int main(int argc, char *argv[])
       return doPrint(inputfile, outputfile,
           page, dpi, color, orientation);
     } else if (dump_flag) {
-      return doDump(inputfile, outputfile);
+      return doDump(inputfile, outputfile, outputtype);
     }
   }
 

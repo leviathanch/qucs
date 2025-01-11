@@ -57,4 +57,4 @@ int doPrint(QString schematic, QString printFile,
  * Exporting the schematics to an output file with the format based
  * on the suffix of the file name.
  */
-int doDump(QString inputfile, QString outputfile);
+int doDump(QString inputfile, QString outputfile, QString outputtype);

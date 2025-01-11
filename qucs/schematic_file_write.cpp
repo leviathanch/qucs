@@ -33,19 +33,31 @@
 #define trace_method_calls() {}
 #endif
 
-// -------------------------------------------------------------
-// Returns the number of subcircuit ports.
-int Schematic::saveDocument()
+int Schematic::saveVerilogDocument(QFile *file)
 {
   trace_method_calls();
-  QFile file(DocName);
-  if(!file.open(QIODevice::WriteOnly)) {
-    QMessageBox::critical(0, QObject::tr("Error"),
-        QObject::tr("Cannot save document!"));
-    return -1;
-  }
+  QTextStream stream(file);
+  stream << "module " << QFileInfo(DocName).baseName() << "(";
+  // input signals
+  stream << ");\n";
+  // wires
+  // sub components
+  stream << "endmodule\n";
+  stream.flush();
+  file->flush();
+  file->close();
+  delete file;
+  file = NULL;
+  return 0;
+}
 
-  QTextStream stream(&file);
+// -------------------------------------------------------------
+// Returns the number of subcircuit ports.
+int Schematic::saveSchematicDocument(QFile *file)
+{
+  trace_method_calls();
+
+  QTextStream stream(file);
 
   stream << "<Qucs Schematic " << PACKAGE_VERSION << ">\n";
 
@@ -116,7 +128,10 @@ int Schematic::saveDocument()
   }
   stream << "</Paintings>\n";
 
-  file.close();
+  file->flush();
+  file->close();
+  delete file;
+  file = NULL;
 
   // additionally save symbol C++ code if in a symbol drawing and the
   // associated file is a Verilog-A file
@@ -232,4 +247,29 @@ int Schematic::saveDocument()
   } // if suffix .sym
 
   return 0;
+}
+
+// Decide whether we wanna generate Verilog or a Schematic file
+int Schematic::saveDocument(QString OutputFileName, QString OutputTypeName)
+{
+  trace_method_calls();
+  if(OutputFileName.isEmpty())
+    OutputFileName = DocName;
+
+  QFile *file = new QFile(OutputFileName);
+  if(!file->open(QIODevice::WriteOnly)) {
+    QMessageBox::critical(0, QObject::tr("Error"),
+        QObject::tr("Cannot save document!"));
+    delete file;
+    return -1;
+  }
+  if(QFileInfo(OutputFileName).suffix()=="sch" || OutputTypeName=="sch") {
+      return saveSchematicDocument(file);
+  }
+  if(QFileInfo(OutputFileName).suffix()=="vs" || OutputTypeName=="vs") {
+      return saveVerilogDocument(file);
+  }
+  QMessageBox::critical(0, QObject::tr("Error"),
+      QObject::tr("Cannot save document: File format not supported!"));
+  return -1;
 }

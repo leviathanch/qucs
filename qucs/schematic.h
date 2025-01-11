@@ -121,6 +121,7 @@ public:
   bool    paste(QTextStream*, SharedObjectList<Element> &);
   bool    load();
   int     save();
+  int     saveAs(QString OutputFileName, QString OutputTypeName);
   int     saveSymbolCpp (void);
   int     saveSymbolJSON (void);
   void    becomeCurrent(bool);
@@ -308,7 +309,9 @@ public:
   void highlightWireLabels (void);
 
 private:
-  int  saveDocument();
+  int  saveDocument(QString OutputFileName, QString OutputTypeName);
+  int  saveSchematicDocument(QFile *file);
+  int  saveVerilogDocument(QFile *file);
 
   bool loadProperties(QTextStream*);
   void simpleInsertComponent(const std::shared_ptr<Component> &);
