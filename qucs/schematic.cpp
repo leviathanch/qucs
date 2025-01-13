@@ -1466,10 +1466,10 @@ bool Schematic::load()
 
 // ---------------------------------------------------
 // Saves this Qucs document. Returns the number of subcircuit ports.
-int Schematic::save()
+int Schematic::saveAs(QString OutputFileName, QString OutputTypeName)
 {
   int result = adjustPortNumbers();// same port number for schematic and symbol
-  if(saveDocument() < 0)
+  if(saveDocument(OutputFileName, OutputTypeName) < 0)
      return -1;
 
   QFileInfo Info(DocName);
@@ -1495,6 +1495,11 @@ int Schematic::save()
   QucsMain->updateSpiceNameHash();
 
   return result;
+}
+
+int Schematic::save()
+{
+  return saveAs("","");
 }
 
 // ---------------------------------------------------

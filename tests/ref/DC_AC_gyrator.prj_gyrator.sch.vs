@@ -1,0 +1,2 @@
+module gyrator();
+endmodule

@@ -46,16 +46,16 @@ for i in $( cd ${srcdir}; ls $base/*.sch ) ; do
 	cmd="$QUCS -i ${srcdir}/$i --dump -o ${out}/${base}_${schname}.sch -platform offscreen"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
-### 
-### 	# dump verilog schematic
-### 	rm -f "${out}/${base}_${schname}.vs"
-### 	cmd="$QUCS -a $VERILOG_PLUGIN -l v_sch -n -i ${srcdir}/$i -o ${out}/${base}_${schname}.vs"
-### 	eval echo "$cmd" ${REDIR}
-### 	eval "$cmd" ${REDIR}
+
+	# dump verilog schematic
+	rm -f "${out}/${base}_${schname}.vs"
+	cmd="$QUCS -i ${srcdir}/$i --dump -t vs -o ${out}/${base}_${schname}.vs -platform offscreen"
+	eval echo "$cmd" ${REDIR}
+	eval "$cmd" ${REDIR}
 
 	# =================================
 
-	files="${base}_${schname}.net ${base}_${schname}.sch" # later " ${base}_${schname}.vs ${base}_${schname}.v"
+	files="${base}_${schname}.net ${base}_${schname}.sch ${base}_${schname}.vs" # later " ${base}_${schname}.v"
 
 	for F in $files; do
 		cmd="$DIFF ${out}/${F} ${ref}/${F}"
