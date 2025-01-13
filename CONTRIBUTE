@@ -14,7 +14,7 @@ your contribution under GPLv3-or-later.
 - Explain the intent of a change. Apply 50/72 rule or so.
 - Avoid huge patches. Review time is >quadratic in patch size.
 - Run the tests, add more that cover the code you are changing.
-- Synchronise tests with each commit, so they pass.
+- Synchronise tests/ref with each commit, so they pass, cf. tests/README.
 - Do not change white space. Yes, it's a mess. Diff noise is worse.
 - Do not reformat obsolete code. Mark it obsolete with a comment.
 

@@ -1,34 +1,21 @@
---
--- README
---
--- Copyright (C) 2003, 2005, 2011 Stefan Jahn <stefan@lkcc.org>
---
--- This is free software; you can redistribute it and/or modify
--- it under the terms of the GNU General Public License as published by
--- the Free Software Foundation; either version 2, or (at your option)
--- any later version.
---
--- This software is distributed in the hope that it will be useful,
--- but WITHOUT ANY WARRANTY; without even the implied warranty of
--- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--- GNU General Public License for more details.
---
--- You should have received a copy of the GNU General Public License
--- along with this package; see the file COPYING.  If not, write to
--- the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
--- Boston, MA 02110-1301, USA.
---
-
-
 Description
 ===========
 
-Qucs is a graphical user interface for circuit simulation and related tasks.
-The software aims to support all kinds of circuits. This is a work in
-progress.
+Qucs is a graphical user interface for circuit simulation and related tasks
+(c) Stefan Jahn 2003, 2005, 2011, GPLv2+, see AUTHORS. This modified,
+community maintained version is developped and distributed under GPL3+.
+
+The current work in progress coordinated by Gnucap developpers adds
+standardisation and interoperability with other tools. The Gnucap project is
+funded through the NGI0 Entrust Fund, a fund established by NLnet with
+financial support from the European Commission's Next Generation Internet
+programme, under the aegis of DG Communications Networks, Content and
+Technology under grant agreement No 101069594.
+
+History
+=======
 
 Old homepage: https://qucs.sourceforge.net
-
 
 Requirements
 ============

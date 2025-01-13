@@ -7,7 +7,18 @@
   compare against reference.
 - "qx", qucs scripts. cli end-to-end tests.
 
-== Keeping track of test status
+== Anatomy of a test
+
+A test consists of running the program with different inputs, storing the
+output, and comparing the output against a reference. A test is passed if
+there is no difference between the output and the provided reference.
+
+Test reference files are shipped under $(srcdir)/tests/ref. During a run,
+files with the same basename are created under $(top_builddir)/tests/out.
+
+The command "make check" runs all tests.
+
+== Keeping track of test status (planned).
 
 (Borrowed from Gnucap) A test hook ('{' in a suitable context) that is not
 reached by the tests is followed by "untested();" or "itested();". This
