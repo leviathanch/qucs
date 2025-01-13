@@ -1,2 +1,2 @@
-module DC_TR_active_mixer();
+module active_mixer();
 endmodule

@@ -1,2 +1,2 @@
-module DC_AC_gyrator();
+module gyrator();
 endmodule

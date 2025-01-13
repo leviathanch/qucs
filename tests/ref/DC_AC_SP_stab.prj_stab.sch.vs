@@ -1,2 +1,2 @@
-module DC_AC_SP_stab();
+module stab();
 endmodule

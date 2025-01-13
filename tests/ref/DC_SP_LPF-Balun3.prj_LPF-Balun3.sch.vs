@@ -1,2 +1,2 @@
-module DC_SP_LPF-Balun3();
+module LPF-Balun3();
 endmodule

@@ -1,2 +1,2 @@
-module DC_AC_SP_Spiral_BPF();
+module Spiral_BPF();
 endmodule

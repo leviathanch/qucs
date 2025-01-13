@@ -1,2 +1,2 @@
-module DC_AC_active_lp();
+module active_lp();
 endmodule

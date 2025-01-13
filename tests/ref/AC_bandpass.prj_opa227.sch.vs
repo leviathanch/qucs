@@ -1,2 +1,2 @@
-module AC_bandpass();
+module opa227();
 endmodule

@@ -1,2 +1,2 @@
-module DC_SP_opamp_gyrator();
+module opamp_gyrator();
 endmodule

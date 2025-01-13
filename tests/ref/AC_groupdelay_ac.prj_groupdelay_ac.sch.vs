@@ -1,2 +1,2 @@
-module AC_groupdelay_ac();
+module groupdelay_ac();
 endmodule

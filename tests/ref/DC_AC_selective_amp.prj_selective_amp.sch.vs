@@ -1,2 +1,2 @@
-module DC_AC_selective_amp();
+module selective_amp();
 endmodule

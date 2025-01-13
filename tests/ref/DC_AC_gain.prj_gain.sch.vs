@@ -1,2 +1,2 @@
-module DC_AC_gain();
+module gain();
 endmodule

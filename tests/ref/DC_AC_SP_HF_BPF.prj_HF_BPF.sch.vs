@@ -1,2 +1,2 @@
-module DC_AC_SP_HF_BPF();
+module HF_BPF();
 endmodule

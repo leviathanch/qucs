@@ -1,2 +1,2 @@
-module DC_AC_bbv();
+module bbv();
 endmodule

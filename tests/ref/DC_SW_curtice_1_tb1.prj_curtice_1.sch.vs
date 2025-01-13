@@ -1,2 +1,2 @@
-module DC_SW_curtice_1_tb1();
+module curtice_1();
 endmodule

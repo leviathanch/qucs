@@ -1,2 +1,2 @@
-module AC_SW_resonance();
+module resonance();
 endmodule
