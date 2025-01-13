@@ -1,0 +1,23 @@
+Thanks for wanting to contribute to Qucs.
+
+Qucs is a monolithic Qt application that requires some refactoring. We still
+accept patches that fix bugs or clean up the data. Patches will be merged as
+soon as they pass review.
+
+There is no official review process (yet), and we are looking for a maintainer.
+So, we might be slow, but will try not to reject useful patches.
+
+Anyway, check your contribution against the following criteria to streamline
+the review merge process. Also make sure that you have the permission to submit
+your contribution under GPLv3-or-later.
+
+- Explain the intent of a change. Apply 50/72 rule or so.
+- Avoid huge patches. Review time is >quadratic in patch size.
+- Run the tests, add more that cover the code you are changing.
+- Synchronise tests with each commit, so they pass.
+- Do not change white space. Yes, it's a mess. Diff noise is worse.
+- Do not reformat obsolete code. Mark it obsolete with a comment.
+
+Consider our ROADMAP for long term plans. At the time of writing we are working
+on data exchange. Your contribution to Qucs might as well be an independent
+project supporting the file format.

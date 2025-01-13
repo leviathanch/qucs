@@ -23,12 +23,11 @@
 Description
 ===========
 
-Qucs is a circuit simulator with graphical user interface.  The
-software aims to support all kinds of circuit simulation types,
-e.g. DC, AC, S-parameter and harmonic balance analysis.  For
-details see homepage:
+Qucs is a graphical user interface for circuit simulation and related tasks.
+The software aims to support all kinds of circuits. This is a work in
+progress.
 
-http://qucs.sourceforge.net
+Old homepage: https://qucs.sourceforge.net
 
 
 Requirements
@@ -41,7 +40,7 @@ to Qt.
 Qt packages have strange names. Try these for Qt5/6 respectively
 
 # apt install qtbase5-dev qttools5-dev libqt5svg5-dev
-# apt-install qt6-base-dev qt6-svg-dev
+# apt install qt6-base-dev qt6-svg-dev
 
 Development
 ===========
@@ -50,6 +49,11 @@ Qucs source code is stored in a git repo. Two build systems are included.
 The traditional autotools build system needs to be created by developpers,
 when not using a tarball. Run ./bootstrap after cloning. The CMake build
 system does not require this step. Choose your pick.
+
+Contribute
+==========
+
+See CONTRIBUTE.
 
 Installation
 ============
