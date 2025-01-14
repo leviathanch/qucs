@@ -1,35 +1,21 @@
---
--- README
---
--- Copyright (C) 2003, 2005, 2011 Stefan Jahn <stefan@lkcc.org>
---
--- This is free software; you can redistribute it and/or modify
--- it under the terms of the GNU General Public License as published by
--- the Free Software Foundation; either version 2, or (at your option)
--- any later version.
---
--- This software is distributed in the hope that it will be useful,
--- but WITHOUT ANY WARRANTY; without even the implied warranty of
--- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--- GNU General Public License for more details.
---
--- You should have received a copy of the GNU General Public License
--- along with this package; see the file COPYING.  If not, write to
--- the Free Software Foundation, Inc., 51 Franklin Street - Fifth Floor,
--- Boston, MA 02110-1301, USA.
---
-
-
 Description
 ===========
 
-Qucs is a circuit simulator with graphical user interface.  The
-software aims to support all kinds of circuit simulation types,
-e.g. DC, AC, S-parameter and harmonic balance analysis.  For
-details see homepage:
+Qucs is a graphical user interface for circuit simulation and related tasks
+(c) Stefan Jahn 2003, 2005, 2011, GPLv2+, see AUTHORS. This modified,
+community maintained version is developped and distributed under GPL3+.
 
-http://qucs.sourceforge.net
+The current work in progress coordinated by Gnucap developpers adds
+standardisation and interoperability with other tools. The Gnucap project is
+funded through the NGI0 Entrust Fund, a fund established by NLnet with
+financial support from the European Commission's Next Generation Internet
+programme, under the aegis of DG Communications Networks, Content and
+Technology under grant agreement No 101069594.
 
+History
+=======
+
+Old homepage: https://qucs.sourceforge.net
 
 Requirements
 ============
@@ -41,7 +27,7 @@ to Qt.
 Qt packages have strange names. Try these for Qt5/6 respectively
 
 # apt install qtbase5-dev qttools5-dev libqt5svg5-dev
-# apt-install qt6-base-dev qt6-svg-dev
+# apt install qt6-base-dev qt6-svg-dev
 
 Development
 ===========
@@ -50,6 +36,11 @@ Qucs source code is stored in a git repo. Two build systems are included.
 The traditional autotools build system needs to be created by developpers,
 when not using a tarball. Run ./bootstrap after cloning. The CMake build
 system does not require this step. Choose your pick.
+
+Contribute
+==========
+
+See CONTRIBUTE.
 
 Installation
 ============
