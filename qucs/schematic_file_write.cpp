@@ -33,15 +33,100 @@
 #define trace_method_calls() {}
 #endif
 
+/*
+
+We wanna print out something in the following form.
+It's not yet Verilog AMS neither is it Verilog-A, but
+our own little Verilog schematics hacking.
+
+(* qucs_symbol="capacitor.svg" *)
+module capacitor(p, n);
+(* x=0, y=0 *) inout p;
+(* x=10, y=0 *) inout n;
+[..]
+endmodule
+
+*/
+
 int Schematic::saveVerilogDocument(QFile *file)
 {
   trace_method_calls();
+  QStringList Collect;
+  int countInit = 0;
+  QStringList ioPorts;
+  QStringList wireList;
+  QMap<QString,QString> ioPortDeclarations;
+  QString componentInstanceString = "";
+  throughAllNodes(false, Collect, countInit);
+  for (auto it = DocComps.begin(); it != DocComps.end(); ++it) {
+    Component *pc = it.operator->();
+    if(pc->obsolete_model_hack() == "Port") {
+      ioPorts.append(pc->name());
+      ioPortDeclarations[pc->name()] = QString("    (* x=%1, y=%2 *) inout %3;\n").arg(pc->cx).arg(pc->cy).arg(pc->name());
+      componentInstanceString += QString("    net _%1(%1,n_%2_%3);\n").arg(pc->name()).arg(pc->cx).arg(pc->cy);
+      wireList.append(QString("n_%1_%2").arg(pc->cx).arg(pc->cy));
+    } else {
+      QStringList conns;
+      QString tcon;
+      for (auto pp = pc->Ports.begin(); pp != pc->Ports.end(); ++pp) {
+        auto con = pp->getConnection();
+        if(con) {
+          tcon = QString("n_%1_%2").arg(con->cx).arg(con->cy);
+          conns.append(tcon);
+          wireList.append(tcon);
+        }
+      }
+      componentInstanceString += QString("    (* x=%3, y=%4 *) %1 %2(%5);\n").arg(pc->obsolete_model_hack()).arg(pc->name()).arg(pc->cx).arg(pc->cy).arg(conns.join(','));
+    }
+  }
+
+  /*
+   * <280 100 460 100 "" 0 0 0> == wire w1(.a(n_280_100), .b(n_460_100));
+   */
+  QString netString;
+  int wire_index = 0;
+  for (auto it = DocWires.begin(); it != DocWires.end(); ++it) {
+    QString name_label;
+    if(it->Label && !it->Label->Name.isEmpty()) {
+      name_label = it->Label->Name;
+    } else {
+      name_label = QString("net%1").arg(wire_index);
+      wire_index++;
+    }
+    netString += QString("    (* S0_x1=%2, S0_y1=%3, S0_x2=%4, S0_y2=%5 *) net %1(n_%2_%3, n_%4_%5);\n").arg(name_label).arg(it->x1).arg(it->y1).arg(it->x2).arg(it->y2);
+    wireList.append(QString("n_%1_%2").arg(it->x1).arg(it->y1));
+    wireList.append(QString("n_%1_%2").arg(it->x2).arg(it->y2));
+  }
+
+  ioPorts.sort();
+  wireList.removeDuplicates();
+  wireList.sort();
+
+  // Writing stuff out
   QTextStream stream(file);
-  stream << "module " << QFileInfo(DocName).baseName() << "(";
-  // input signals
+  QString module_name = QFileInfo(DocName).baseName();
+  if(DocName.contains(".prj_")) {
+    module_name = DocName.split(".prj_").at(1);
+    module_name.replace(".sch","");
+    module_name.replace(".vs","");
+  }
+  stream << "module " << module_name << "(";
+  stream << ioPorts.join(',');
   stream << ");\n";
-  // wires
+  // io defines
+  for (auto it = ioPorts.begin(); it != ioPorts.end(); ++it) {
+    if(ioPortDeclarations.contains(*it)) {
+      stream << ioPortDeclarations[*it];
+    }
+  }
+  // The wires (subnets)
+  for (auto it = wireList.begin(); it != wireList.end(); ++it) {
+    stream << "    wire " << *it << ";\n";
+  }
   // sub components
+  stream << componentInstanceString;
+  // net connections (connecting the nodes)
+  stream << netString;
   stream << "endmodule\n";
   stream.flush();
   file->flush();
