@@ -447,9 +447,9 @@ VersionTriplet::VersionTriplet(const QString& raw_version) {
     major = minor = patch = 0;
   } else {
     QStringList vl = version.split('.');
-    major = vl.at(0).toUInt();
-    minor = vl.at(1).toUInt();
-    patch = vl.at(2).toUInt();
+    major = vl.size()>0?vl.at(0).toUInt():0;
+    minor = vl.size()>1?vl.at(1).toUInt():0;
+    patch = vl.size()>2?vl.at(2).toUInt():0;
   }
 }
 
