@@ -19,8 +19,7 @@ Schematic *openSchematic(QString inputfile)
   if(file.open(QIODevice::ReadOnly)) {
     file.close();
   } else {
-    qFatal("Error: Could not load schematic");
-    //qFatal() << "Error: Could not load schematic" << schematic;
+    qCritical() << "Error: Could not load schematic" << schematic;
     return NULL;
   }
 
