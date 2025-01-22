@@ -411,6 +411,13 @@ bool Schematic::loadProperties(QTextStream *stream)
     else if(cstr == "FrameText1") misc::convert2Unicode(Frame_Text1 = nstr);
     else if(cstr == "FrameText2") misc::convert2Unicode(Frame_Text2 = nstr);
     else if(cstr == "FrameText3") misc::convert2Unicode(Frame_Text3 = nstr);
+    else if(cstr == "PosX") qInfo() << "TODO: Implement " << cstr;
+    else if(cstr == "PosY") qInfo() << "TODO: Implement " << cstr;
+    else if(cstr == "ViewScale") qInfo() << "TODO: Implement " << cstr;
+    else if(cstr == "ViewX1") qInfo() << "TODO: Implement " << cstr;
+    else if(cstr == "ViewX2") qInfo() << "TODO: Implement " << cstr;
+    else if(cstr == "ViewY1") qInfo() << "TODO: Implement " << cstr;
+    else if(cstr == "ViewY2") qInfo() << "TODO: Implement " << cstr;
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
 	   QObject::tr("Format Error:\nUnknown property: ")+cstr);
