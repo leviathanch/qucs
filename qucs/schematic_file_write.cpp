@@ -53,52 +53,53 @@ int Schematic::saveVerilogDocument(QFile *file)
   trace_method_calls();
   QStringList Collect;
   int countInit = 0;
-  QStringList ioPorts;
   QStringList wireList;
-  QMap<QString,QString> ioPortDeclarations;
+  QStringList ioPorts;
+  QStringList ioPortNets;
   QString componentInstanceString = "";
+
   throughAllNodes(false, Collect, countInit);
+
   for (auto it = DocComps.begin(); it != DocComps.end(); ++it) {
-    Component *pc = it.operator->();
-    if(pc->obsolete_model_hack() == "Port") {
-      ioPorts.append(pc->name());
-      ioPortDeclarations[pc->name()] = QString("    (* x=%1, y=%2 *) inout %3;\n").arg(pc->cx).arg(pc->cy).arg(pc->name());
-      componentInstanceString += QString("    net _%1(%1,n_%2_%3);\n").arg(pc->name()).arg(pc->cx).arg(pc->cy);
-      wireList.append(QString("n_%1_%2").arg(pc->cx).arg(pc->cy));
-    } else {
-      QStringList conns;
-      QString tcon;
-      for (auto pp = pc->Ports.begin(); pp != pc->Ports.end(); ++pp) {
-        auto con = pp->getConnection();
-        if(con) {
-          tcon = QString("n_%1_%2").arg(con->cx).arg(con->cy);
-          conns.append(tcon);
-          wireList.append(tcon);
-        }
-      }
-      componentInstanceString += QString("    (* x=%3, y=%4 *) %1 %2(%5);\n").arg(pc->obsolete_model_hack()).arg(pc->name()).arg(pc->cx).arg(pc->cy).arg(conns.join(','));
+    if(it->obsolete_model_hack() == "Port") {
+      QString net = QString("n_%1_%2")
+          .arg(it->cx)
+          .arg(it->cy);
+      net.replace("-","m");
+      ioPorts.append(QString(".%1(%2)").arg(it->name()).arg(net));
+      ioPortNets.append(net);
     }
+    componentInstanceString += QString("    ") + it->verilogSchematicDump() + QString("\n");
   }
 
   /*
-   * <280 100 460 100 "" 0 0 0> == wire w1(.a(n_280_100), .b(n_460_100));
+   * <280 100 460 100 "" 0 0 0> == net w1(n_280_100, n_460_100);
    */
   QString netString;
   int wire_index = 0;
   for (auto it = DocWires.begin(); it != DocWires.end(); ++it) {
     QString name_label;
+    QString net1, net2;
     if(it->Label && !it->Label->Name.isEmpty()) {
       name_label = it->Label->Name;
     } else {
       name_label = QString("net%1").arg(wire_index);
       wire_index++;
     }
-    netString += QString("    (* S0_x1=%2, S0_y1=%3, S0_x2=%4, S0_y2=%5 *) net %1(n_%2_%3, n_%4_%5);\n").arg(name_label).arg(it->x1).arg(it->y1).arg(it->x2).arg(it->y2);
-    wireList.append(QString("n_%1_%2").arg(it->x1).arg(it->y1));
-    wireList.append(QString("n_%1_%2").arg(it->x2).arg(it->y2));
+    net1= QString("n_%1_%2").arg(it->x1).arg(it->y1);
+    net2 = QString("n_%1_%2").arg(it->x2).arg(it->y2);
+    wireList.append(net1);
+    wireList.append(net2);
+    netString += QString("    (* S0_x1=%1, S0_y1=%2, S0_x2=%3, S0_y2=%4 *) net %5(%6, %7);\n")
+        .arg(it->x1)
+        .arg(it->y1)
+        .arg(it->x2)
+        .arg(it->y2)
+        .arg(name_label)
+        .arg(net1)
+        .arg(net2);
   }
 
-  ioPorts.sort();
   wireList.removeDuplicates();
   wireList.sort();
 
@@ -114,14 +115,14 @@ int Schematic::saveVerilogDocument(QFile *file)
   stream << ioPorts.join(',');
   stream << ");\n";
   // io defines
-  for (auto it = ioPorts.begin(); it != ioPorts.end(); ++it) {
-    if(ioPortDeclarations.contains(*it)) {
-      stream << ioPortDeclarations[*it];
-    }
+  for (auto it = ioPortNets.begin(); it != ioPortNets.end(); ++it) {
+    stream << "    inout " << *it << ";\n";
   }
   // The wires (subnets)
   for (auto it = wireList.begin(); it != wireList.end(); ++it) {
-    stream << "    wire " << *it << ";\n";
+    if(!ioPortNets.contains(*it)) {
+      stream << "    wire " << *it << ";\n";
+    }
   }
   // sub components
   stream << componentInstanceString;
