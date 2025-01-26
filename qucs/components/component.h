@@ -89,6 +89,8 @@ public:
   bool showName;
 
 public:
+  QString verilogSchematicDump(); // Return the Verilog schematic string
+
   QString const& obsolete_model_hack() const{
 	  // BUG. do not use
 	  return Model;
