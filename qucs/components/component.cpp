@@ -724,6 +724,49 @@ QString Component::get_Verilog_Code(int NumPorts)
   return s;
 }
 
+/*
+ * -------------------------------------------------------
+ * The Verilog schematic dump functions
+ * -------------------------------------------------------
+ */
+
+QStringList Component::verilogSchematicDumpNets()
+{
+  QStringList nets;
+  QString net;
+  for (auto pp = Ports.begin(); pp != Ports.end(); ++pp) {
+    auto con = pp->getConnection();
+    if(con) {
+      net = QString("n_%1_%2").arg(con->cx).arg(con->cy);
+      net.replace("-","m");
+      nets.append(net);
+    }
+  }
+  return nets;
+}
+
+QString Component::verilogSchematicDump()
+{
+  QString ret;
+  QStringList port_list;
+  int port_idx = 0;
+  for (auto pp = Ports.begin(); pp != Ports.end(); ++pp) {
+    auto con = pp->getConnection();
+    if(con) {
+      port_list.append(QString("S0_x%1=%2, S0_y%1=%3")
+          .arg(++port_idx)
+          .arg(con->cx)
+          .arg(con->cy));
+    }
+  }
+  ret = QString("(* %1 *) %2 %3(%4);")
+      .arg(port_list.join(", "))
+      .arg(Model)
+      .arg(Name)
+      .arg(verilogSchematicDumpNets().join(","));
+  return ret;
+}
+
 // -------------------------------------------------------
 QString Component::vhdlCode(int)
 {
