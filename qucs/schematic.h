@@ -311,6 +311,7 @@ public:
 private:
   int  saveDocument(QString OutputFileName, QString OutputTypeName);
   int  saveSchematicDocument(QFile *file);
+  void dumpVerilogSchematicComponent(QTextStream *stream, Component c);
   int  saveVerilogDocument(QFile *file);
 
   bool loadProperties(QTextStream*);
