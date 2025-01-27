@@ -40,6 +40,7 @@
 #include <QStringList>
 #include <QFileInfo>
 #include <QAbstractScrollArea>
+#include <QPoint>
 
 class QTextStream;
 class QTextEdit;
@@ -311,6 +312,11 @@ public:
 private:
   int  saveDocument(QString OutputFileName, QString OutputTypeName);
   int  saveSchematicDocument(QFile *file);
+  QString getWireName(const QPoint *p);
+  void dumpIdentifier(QTextStream *stream, QString name);
+  void dumpDeclaration(QTextStream *stream, QString model, QString name, QList<QPoint> ports);
+  void dumpVerilogSchematicComponent(QTextStream *stream, Component *c);
+  void dumpVerilogSchematicWire(QTextStream *stream, Wire *w);
   int  saveVerilogDocument(QFile *file);
 
   bool loadProperties(QTextStream*);

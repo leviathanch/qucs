@@ -48,59 +48,124 @@ endmodule
 
 */
 
+QString Schematic::getWireName(const QPoint *p)
+{
+  QString net = QString("n_%1_%2")
+      .arg(p->x())
+      .arg(p->y());
+  net.replace("-","m");
+  return net;
+}
+
+void Schematic::dumpIdentifier(QTextStream *stream, QString name)
+{
+  if (name.size() && (isalpha(name[0].toLatin1()) || name[0] == '_')) {
+    *stream << name;
+  } else {
+    *stream << '\\' << name << ' ';
+  }
+}
+
+void Schematic::dumpDeclaration(QTextStream *stream, QString model, QString name, QList<QPoint> ports)
+{
+  QStringList port_list;
+  QStringList nets;
+  QString net;
+  int port_idx = 0;
+  for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
+    port_list.append(QString("S0_x%1=%2, S0_y%1=%3")
+        .arg(++port_idx)
+        .arg(pp->x())
+        .arg(pp->y())
+    );
+    nets.append(getWireName(&(*pp)));
+  }
+  *stream << QString("    ");
+  *stream << QString("(* ");
+  *stream << port_list.join(", ");
+  *stream << QString(" *) ");
+  *stream << model;
+  *stream << QString(" ");
+  dumpIdentifier(stream, name);
+  *stream << QString(" ( ");
+  *stream << nets.join(", ");
+  *stream << QString(" );\n");
+}
+
+void Schematic::dumpVerilogSchematicComponent(QTextStream *stream, Component *c)
+{
+  QList<QPoint> ports;
+  QString model = c->obsolete_model_hack();
+  QString name = c->name();
+  for (auto pp = c->Ports.begin(); pp != c->Ports.end(); ++pp) {
+    auto con = pp->getConnection();
+    if(con) {
+      ports.append(QPoint(con->cx,con->cy));
+    }
+  }
+  dumpDeclaration(stream, model, name, ports);
+}
+
+
+/*
+ * <280 100 460 100 "" 0 0 0> == net w1(n_280_100, n_460_100);
+ */
+
+void Schematic::dumpVerilogSchematicWire(QTextStream *stream, Wire *w)
+{
+  QList<QPoint> ports;
+  QString name;
+  static int wire_index = 1;
+  if(w->Label && !w->Label->Name.isEmpty()) {
+    name = w->Label->Name;
+  } else {
+    name = QString("net%1").arg(wire_index);
+    wire_index++;
+  }
+  ports.append(QPoint(w->x1,w->y1));
+  ports.append(QPoint(w->x2,w->y2));
+  dumpDeclaration(stream, "net", name, ports);
+}
+
 int Schematic::saveVerilogDocument(QFile *file)
 {
   trace_method_calls();
-  QStringList Collect;
-  int countInit = 0;
+  QList<QPoint> ioPortNets;
+  QList<QPoint> wireList;
   QStringList ioPorts;
-  QStringList wireList;
-  QMap<QString,QString> ioPortDeclarations;
-  QString componentInstanceString = "";
-  throughAllNodes(false, Collect, countInit);
+
   for (auto it = DocComps.begin(); it != DocComps.end(); ++it) {
-    Component *pc = it.operator->();
-    if(pc->obsolete_model_hack() == "Port") {
-      ioPorts.append(pc->name());
-      ioPortDeclarations[pc->name()] = QString("    (* x=%1, y=%2 *) inout %3;\n").arg(pc->cx).arg(pc->cy).arg(pc->name());
-      componentInstanceString += QString("    net _%1(%1,n_%2_%3);\n").arg(pc->name()).arg(pc->cx).arg(pc->cy);
-      wireList.append(QString("n_%1_%2").arg(pc->cx).arg(pc->cy));
+    QPoint p;
+    if(it->obsolete_model_hack() == "Port") {
+      p = QPoint(it->cx,it->cy);
+      ioPorts.append(QString(".%1(%2)").arg(it->name()).arg(getWireName(&p)));
+      ioPortNets.append(p);
     } else {
-      QStringList conns;
-      QString tcon;
-      for (auto pp = pc->Ports.begin(); pp != pc->Ports.end(); ++pp) {
-        auto con = pp->getConnection();
-        if(con) {
-          tcon = QString("n_%1_%2").arg(con->cx).arg(con->cy);
-          conns.append(tcon);
-          wireList.append(tcon);
-        }
-      }
-      componentInstanceString += QString("    (* x=%3, y=%4 *) %1 %2(%5);\n").arg(pc->obsolete_model_hack()).arg(pc->name()).arg(pc->cx).arg(pc->cy).arg(conns.join(','));
+      p = QPoint(it->cx,it->cy);
+      if(!wireList.contains(p))
+        wireList.append(p);
     }
   }
 
-  /*
-   * <280 100 460 100 "" 0 0 0> == wire w1(.a(n_280_100), .b(n_460_100));
-   */
-  QString netString;
-  int wire_index = 0;
   for (auto it = DocWires.begin(); it != DocWires.end(); ++it) {
-    QString name_label;
-    if(it->Label && !it->Label->Name.isEmpty()) {
-      name_label = it->Label->Name;
-    } else {
-      name_label = QString("net%1").arg(wire_index);
-      wire_index++;
-    }
-    netString += QString("    (* S0_x1=%2, S0_y1=%3, S0_x2=%4, S0_y2=%5 *) net %1(n_%2_%3, n_%4_%5);\n").arg(name_label).arg(it->x1).arg(it->y1).arg(it->x2).arg(it->y2);
-    wireList.append(QString("n_%1_%2").arg(it->x1).arg(it->y1));
-    wireList.append(QString("n_%1_%2").arg(it->x2).arg(it->y2));
+    QPoint p;
+    p = QPoint(it->x1,it->y1);
+    if(!wireList.contains(p))
+      wireList.append(p);
+    p = QPoint(it->x2,it->y2);
+    if(!wireList.contains(p))
+      wireList.append(p);
   }
 
-  ioPorts.sort();
-  wireList.removeDuplicates();
-  wireList.sort();
+  std::sort(wireList.begin(), wireList.end(),
+    [&](const QPoint& p1, const QPoint& p2){
+      if( p1.x() < p2.x() )
+         return true;
+      if( (p1.x() == p2.x()) && (p1.y() < p2.y()) )
+         return true;
+      return false;
+    }
+  );
 
   // Writing stuff out
   QTextStream stream(file);
@@ -110,23 +175,34 @@ int Schematic::saveVerilogDocument(QFile *file)
     module_name.replace(".sch","");
     module_name.replace(".vs","");
   }
-  stream << "module " << module_name << "(";
-  stream << ioPorts.join(',');
-  stream << ");\n";
+
+  stream << "module " << module_name << "(" << ioPorts.join(", ") << ");\n";
+
   // io defines
-  for (auto it = ioPorts.begin(); it != ioPorts.end(); ++it) {
-    if(ioPortDeclarations.contains(*it)) {
-      stream << ioPortDeclarations[*it];
-    }
+  for (auto it = ioPortNets.begin(); it != ioPortNets.end(); ++it) {
+    stream << "    ";
+    stream << "inout " << getWireName(&*it) << ";\n";
   }
+
   // The wires (subnets)
   for (auto it = wireList.begin(); it != wireList.end(); ++it) {
-    stream << "    wire " << *it << ";\n";
+    if(!ioPortNets.contains(*it)) {
+      stream << "    ";
+      stream << "wire " << getWireName(&*it) << ";\n";
+    }
   }
+
   // sub components
-  stream << componentInstanceString;
+  for (auto it = DocComps.begin(); it != DocComps.end(); ++it) {
+    dumpVerilogSchematicComponent(&stream, &(*it));
+  }
+
   // net connections (connecting the nodes)
-  stream << netString;
+  for (auto it = DocWires.begin(); it != DocWires.end(); ++it) {
+    dumpVerilogSchematicWire(&stream, &(*it));
+  }
+
+  // done
   stream << "endmodule\n";
   stream.flush();
   file->flush();
