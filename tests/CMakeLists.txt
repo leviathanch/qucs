@@ -4,6 +4,8 @@ project(tests CXX C)
 
 cmake_minimum_required(VERSION 3.10.0)
 
+include(${PROJECT_SOURCE_DIR}/../cmake/readMakeList.cmake)
+
 # use top VERSION file
 file(STRINGS ${PROJECT_SOURCE_DIR}/../VERSION QUCS_VERSION)
 message(STATUS "Configuring ${PROJECT_NAME} (GUI): VERSION ${QUCS_VERSION}")
@@ -104,3 +106,23 @@ set(DocumentTests_SRCS DocumentTests.cpp DocumentTests.h)
 add_executable(DocumentTests ${DocumentTests_SRCS})
 target_link_libraries(DocumentTests QucsAppTest)
 add_test(NAME DocumentTests COMMAND DocumentTests)
+
+readVariable(${PROJECT_SOURCE_DIR}/MakeList PRJ_TESTS PRJ_TESTS)
+#message(STATUS "Got following PRJ_TESTS: ${PRJ_TESTS}")
+
+#string(REGEX REPLACE ";" " " PRJ_TESTS "${PRJ_TESTS}")
+
+set(check_commands)
+foreach(project IN LISTS PRJ_TESTS)
+    file(GLOB schematics "${PROJECT_SOURCE_DIR}/${project}/*.sch")
+    foreach(schematic ${schematics})
+        string(REPLACE "${PROJECT_SOURCE_DIR}" "${PROJECT_SOURCE_DIR}/ref" outfile ${schematic})
+        string(REPLACE "prj/" "prj_" outfile ${outfile})
+        # For compatibility this is commented for now until felix can fix his automake implementation too
+        #string(REPLACE ".sch" "" outfile ${outfile})
+        list(APPEND check_commands COMMAND ${PROJECT_BINARY_DIR}/../qucs/qucs --dump -i ${schematic} -o ${outfile}.sch)
+        list(APPEND check_commands COMMAND ${PROJECT_BINARY_DIR}/../qucs/qucs --dump -i ${schematic} -o ${outfile}.vs)
+    endforeach()
+endforeach()
+
+add_custom_target(update_refs ${check_commands})
