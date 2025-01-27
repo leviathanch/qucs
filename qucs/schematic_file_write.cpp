@@ -48,7 +48,7 @@ endmodule
 
 */
 
-QString Schematic::getWireName(const QPoint *p)
+QString Schematic::getWireName(const QPoint *p) const
 {
   QString net = QString("n_%1_%2")
       .arg(p->x())
@@ -57,43 +57,50 @@ QString Schematic::getWireName(const QPoint *p)
   return net;
 }
 
-void Schematic::dumpIdentifier(QTextStream *stream, QString name)
+static void dumpIdentifier(QTextStream& stream, QString const& name)
 {
-  if (name.size() && (isalpha(name[0].toLatin1()) || name[0] == '_')) {
-    *stream << name;
+  if (!name.size()){
+	  //incomplete();
+ // }else if name contains special character
+    // stream << '\\' << name << ' ';
+  }else if(isalpha(name[0].toLatin1()) || name[0] == '_') {
+    stream << name;
   } else {
-    *stream << '\\' << name << ' ';
+    stream << '\\' << name << ' ';
   }
 }
 
-void Schematic::dumpDeclaration(QTextStream *stream, QString model, QString name, QList<QPoint> ports)
+// BUG. what does it do?
+// BUG: wrong compilation unit
+void Schematic::dumpDeclaration(QTextStream& stream, QString model, QString name, QList<QPoint> ports) const
 {
   QStringList port_list;
   QStringList nets;
   QString net;
   int port_idx = 0;
+  int x,y;
+  stream << "    (* ";
+  QString sep;
   for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
-    port_list.append(QString("S0_x%1=%2, S0_y%1=%3")
+    stream << sep << QString("S0_x%1=%2, S0_y%1=%3")
         .arg(++port_idx)
         .arg(pp->x())
-        .arg(pp->y())
-    );
+        .arg(pp->y());
     nets.append(getWireName(&(*pp)));
   }
-  *stream << QString("    ");
-  *stream << QString("(* ");
-  *stream << port_list.join(", ");
-  *stream << QString(" *) ");
-  *stream << model;
-  *stream << QString(" ");
+  stream << QString(" *) ");
+  dumpIdentifier(stream, model);
+  stream << " #() "; // BUG incomplete
   dumpIdentifier(stream, name);
-  *stream << QString(" ( ");
-  *stream << nets.join(", ");
-  *stream << QString(" );\n");
+  stream << " ( ";
+  stream << nets.join(", ");
+  stream << " );\n";
 }
 
-void Schematic::dumpVerilogSchematicComponent(QTextStream *stream, Component *c)
+// BUG: wrong compilation unit
+void Schematic::dumpVerilogComponent(QTextStream& stream, Component const* c) const
 {
+  assert(c);
   QList<QPoint> ports;
   QString model = c->obsolete_model_hack();
   QString name = c->name();
@@ -106,13 +113,13 @@ void Schematic::dumpVerilogSchematicComponent(QTextStream *stream, Component *c)
   dumpDeclaration(stream, model, name, ports);
 }
 
-
 /*
  * <280 100 460 100 "" 0 0 0> == net w1(n_280_100, n_460_100);
  */
-
-void Schematic::dumpVerilogSchematicWire(QTextStream *stream, Wire *w)
+// BUG: wrong compilation unit
+void Schematic::dumpVerilogWire(QTextStream& stream, Wire const* w) const
 {
+	assert(w);
   QList<QPoint> ports;
   QString name;
   static int wire_index = 1;
@@ -127,6 +134,7 @@ void Schematic::dumpVerilogSchematicWire(QTextStream *stream, Wire *w)
   dumpDeclaration(stream, "net", name, ports);
 }
 
+// BUG: wrong compilation unit
 int Schematic::saveVerilogDocument(QFile *file)
 {
   trace_method_calls();
@@ -194,12 +202,13 @@ int Schematic::saveVerilogDocument(QFile *file)
 
   // sub components
   for (auto it = DocComps.begin(); it != DocComps.end(); ++it) {
-    dumpVerilogSchematicComponent(&stream, &(*it));
+    dumpVerilogComponent(stream, &*it);
   }
 
   // net connections (connecting the nodes)
   for (auto it = DocWires.begin(); it != DocWires.end(); ++it) {
-    dumpVerilogSchematicWire(&stream, &(*it));
+	  // BUG: Wire is not a Component. (why?)
+    dumpVerilogWire(stream, &*it);
   }
 
   // done
@@ -434,3 +443,5 @@ int Schematic::saveDocument(QString OutputFileName, QString OutputTypeName)
       QObject::tr("Cannot save document: File format not supported!"));
   return -1;
 }
+/*--------------------------------------------------------------------------*/
+// vim:ts=8:sw=2:noet:
