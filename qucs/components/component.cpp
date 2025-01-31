@@ -750,6 +750,40 @@ QString Component::get_VHDL_Code(int NumPorts)
 }
 
 // -------------------------------------------------------
+// number of parameters
+int Component::param_count() const
+{
+  return Props.size();
+}
+
+// whether a parameter is shown in a dump
+bool Component::param_is_printable(int i) const
+{
+  return true;
+}
+
+QString Component::param_id_tag(int i) const
+{
+  return QString("");
+}
+
+QString Component::param_name(int i) const
+{
+  auto it = Props.begin();
+  // BUG: Missing random access
+  std::advance(it, i);
+  return it->Name;
+}
+
+QString Component::param_value(int i) const
+{
+  auto it = Props.begin();
+  // BUG: Missing random access
+  std::advance(it, i);
+  return it->Value;
+}
+
+// -------------------------------------------------------
 // save a component
 // FIXME: part of corresponding SchematicSerializer implementation
 // BUG: c must be const (cannot because of QT3)

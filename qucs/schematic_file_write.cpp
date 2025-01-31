@@ -70,15 +70,37 @@ static void dumpIdentifier(QTextStream& stream, QString const& name)
   }
 }
 
+/*static void print_attributes(QTextStream& o, QStringList attributes)
+{
+  o << "(* " << attributes.join(", ") << " *) ";
+}*/
+
+#define INACTIVE 0
+static void print_args(QTextStream& o, Component const* x)
+{
+  assert(x);
+  o << " #(";
+  {
+    QString sep = "";
+    //for (int ii = x->param_count() - 1; ii >= 0; --ii) {
+    for (int ii = 0; ii < x->param_count(); ++ii) {
+      if (x->param_is_printable(ii)) {
+        o << sep;
+        o << '.' << x->param_name(ii) << '(' << x->param_value(ii) << ')';
+        sep = ',';
+      }else{
+      }
+    }
+  }
+  o << ") ";
+}
+
 // BUG. what does it do?
 // BUG: wrong compilation unit
-void Schematic::dumpDeclaration(QTextStream& stream, QString model, QString name, QList<QPoint> ports) const
+void Schematic::dumpDeclaration(QTextStream& stream, Component const* c, QString model, QString name, QList<QPoint> ports) const
 {
-  QStringList port_list;
   QStringList nets;
-  QString net;
   int port_idx = 0;
-  int x,y;
   stream << "    (* ";
   QString sep;
   for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
@@ -88,9 +110,10 @@ void Schematic::dumpDeclaration(QTextStream& stream, QString model, QString name
         .arg(pp->y());
     nets.append(getWireName(&(*pp)));
   }
+  //print_attributes(o, nets);
   stream << QString(" *) ");
   dumpIdentifier(stream, model);
-  stream << " #() "; // BUG incomplete
+  if(c) print_args(stream, c);
   dumpIdentifier(stream, name);
   stream << " ( ";
   stream << nets.join(", ");
@@ -110,7 +133,7 @@ void Schematic::dumpVerilogComponent(QTextStream& stream, Component const* c) co
       ports.append(QPoint(con->cx,con->cy));
     }
   }
-  dumpDeclaration(stream, model, name, ports);
+  dumpDeclaration(stream, c, model, name, ports);
 }
 
 /*
@@ -131,7 +154,7 @@ void Schematic::dumpVerilogWire(QTextStream& stream, Wire const* w) const
   }
   ports.append(QPoint(w->x1,w->y1));
   ports.append(QPoint(w->x2,w->y2));
-  dumpDeclaration(stream, "net", name, ports);
+  dumpDeclaration(stream, NULL, "net", name, ports);
 }
 
 // BUG: wrong compilation unit
