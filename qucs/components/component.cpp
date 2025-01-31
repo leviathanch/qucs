@@ -761,6 +761,22 @@ bool Component::param_is_printable(int i) const
   return true;
 }
 
+bool Component::use_obsolete_callback_print() const
+{
+  return false;
+}
+
+void Component::print_args_obsolete_callback(QTextStream& o) const
+{
+  // never happens here. just to make the code work I was told
+  // to just copy and paste...
+}
+
+QString Component::param_id_tag(int i) const
+{
+  return QString("");
+}
+
 // BUG: Missing random access
 QString Component::param_name(int i) const
 {
