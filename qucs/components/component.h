@@ -52,7 +52,7 @@ public:
   void    mirrorY();  // mirror about Y axis
   bool    load(const QString&);
 
-  // GNU Cap stuff
+public: // parameter access
   virtual int param_count() const;
   virtual bool param_is_printable(int i) const;
   virtual QString param_name(int i) const;

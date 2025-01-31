@@ -750,29 +750,30 @@ QString Component::get_VHDL_Code(int NumPorts)
 }
 
 // -------------------------------------------------------
-// GNU Cap stuff
+// number of parameters
 int Component::param_count() const
 {
   return Props.size();
 }
 
+// whether a parameter is shown in a dump
 bool Component::param_is_printable(int i) const
 {
   return true;
 }
 
-// BUG: Missing random access
 QString Component::param_name(int i) const
 {
   auto it = Props.begin();
+  // BUG: Missing random access
   std::advance(it, i);
   return it->Name;
 }
 
-// BUG: Missing random access
 QString Component::param_value(int i) const
 {
   auto it = Props.begin();
+  // BUG: Missing random access
   std::advance(it, i);
   return it->Value;
 }
