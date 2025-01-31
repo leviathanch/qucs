@@ -17,7 +17,7 @@ set(CMAKE_BUILD_TYPE Debug)
 add_definitions(-DHAVE_CONFIG_H)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x ")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 ")
 
 # flag not available in mingw 4.8.2, MSVC10
 if(NOT WIN32)
