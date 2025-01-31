@@ -762,6 +762,11 @@ bool Component::param_is_printable(int i) const
   return true;
 }
 
+QString Component::param_id_tag(int i) const
+{
+  return QString("");
+}
+
 QString Component::param_name(int i) const
 {
   auto it = Props.begin();

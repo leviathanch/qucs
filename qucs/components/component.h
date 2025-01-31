@@ -21,6 +21,8 @@
 #include "element.h"
 #include <list>
 
+#include <QTextStream>
+
 class Schematic;
 class ViewPainter;
 class QString;
@@ -57,6 +59,7 @@ public: // parameter access
   virtual bool param_is_printable(int i) const;
   virtual QString param_name(int i) const;
   virtual QString param_value(int i) const;
+  virtual QString param_id_tag(int i) const;
 
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not
