@@ -19,7 +19,7 @@ module resonance();
     (* S0_x1=320, S0_y1=180S0_x2=320, S0_y2=120 *) L #(.L(13 nH),.I()) L1 ( n_320_180, n_320_120 );
     (*  *) \.SW  #(.Sim(AC1),.Type(log),.Start(R_par),.Stop(1 Ohm),.Points(20 Ohm),.Points(6)) SW1 (  );
     (*  *) \.AC  #(.Type(lin),.Start(0.9 GHz),.Stop(1.1 GHz),.Points(150),.Noise(no)) AC1 (  );
-    (* S0_x1=120, S0_y1=180S0_x2=120, S0_y2=240 *) netnet1 ( n_120_180, n_120_240 );
-    (* S0_x1=120, S0_y1=60S0_x2=320, S0_y2=60 *) netnet2 ( n_120_60, n_320_60 );
-    (* S0_x1=120, S0_y1=60S0_x2=120, S0_y2=120 *) netnet3 ( n_120_60, n_120_120 );
+    (* S0_x1=120, S0_y1=180S0_x2=120, S0_y2=240 *) net #() net1 ( n_120_180, n_120_240 );
+    (* S0_x1=120, S0_y1=60S0_x2=320, S0_y2=60 *) net #() net2 ( n_120_60, n_320_60 );
+    (* S0_x1=120, S0_y1=60S0_x2=120, S0_y2=120 *) net #() net3 ( n_120_60, n_120_120 );
 endmodule

@@ -78,9 +78,9 @@ static void dumpIdentifier(QTextStream& stream, QString const& name)
 #define INACTIVE 0
 static void print_args(QTextStream& o, Component const* x)
 {
-  assert(x);
+  // assert(x);
   o << " #(";
-  {
+  if(x) {
     QString sep = "";
     //for (int ii = x->param_count() - 1; ii >= 0; --ii) {
     for (int ii = 0; ii < x->param_count(); ++ii) {
@@ -91,6 +91,8 @@ static void print_args(QTextStream& o, Component const* x)
       }else{
       }
     }
+  }else{
+    // BUG
   }
   o << ") ";
 }
@@ -113,7 +115,7 @@ void Schematic::dumpDeclaration(QTextStream& stream, Component const* c, QString
   //print_attributes(o, nets);
   stream << QString(" *) ");
   dumpIdentifier(stream, model);
-  if(c) print_args(stream, c);
+  print_args(stream, c);
   dumpIdentifier(stream, name);
   stream << " ( ";
   stream << nets.join(", ");
