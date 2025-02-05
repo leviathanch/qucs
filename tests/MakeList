@@ -41,8 +41,6 @@ SH_TESTS_LATER = \
 # TODO: wildcard match
 PRJ_TESTS = \
 	d_3f5.prj \
-	misc.prj \
-	verilog.prj \
 	mixed.prj \
 	tline.prj \
 	AC_bandpass.prj \
@@ -58,7 +56,6 @@ PRJ_TESTS = \
 	DC_AC_SP_HF_BPF.prj \
 	DC_AC_SP_Spiral_BPF.prj \
 	DC_AC_SP_stab.prj \
-	DC_SP_HICUM-fig10.prj \
 	DC_SP_LPF-Balun2.prj \
 	DC_SP_LPF-Balun3.prj \
 	DC_SP_opamp_gyrator.prj \
@@ -72,9 +69,12 @@ PRJ_TESTS = \
 	TR_chargepump.prj \
 	TR_Puls3b.prj \
 	TR_resistor.prj \
-	TR_sawtooth-1.prj
+	TR_sawtooth-1.prj \
+	misc.prj
 
 LATER_TESTS = \
+	verilog.prj \
+	DC_SP_HICUM-fig10.prj \
 	AC_SW_swr_meter.prj \
 	AC_wattmeter.prj \
 	DC_SW_bridge.prj \

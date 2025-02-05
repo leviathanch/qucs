@@ -7,15 +7,8 @@
   <FrameText2=Date:>
   <FrameText3=Revision:>
   <OpenDisplay=0>
-  <PosX=0>
-  <PosY=0>
   <RunScript=0>
   <Script=test_circuit.m>
-  <ViewScale=1.23842>
-  <ViewX1=86>
-  <ViewX2=820>
-  <ViewY1=0>
-  <ViewY2=483>
   <showFrame=0>
 </Properties>
 <Symbol>
