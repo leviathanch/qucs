@@ -7,27 +7,20 @@
   <FrameText2=Date:>
   <FrameText3=Revision:>
   <OpenDisplay=1>
-  <PosX=0>
-  <PosY=0>
   <RunScript=0>
   <Script=short_circuit.m>
-  <ViewScale=1>
-  <ViewX1=0>
-  <ViewX2=800>
-  <ViewY1=0>
-  <ViewY2=800>
   <showFrame=0>
 </Properties>
 <Symbol>
   <.ID -20 14 SC>
-  <.PortSym -30 0  2>
+  <.PortSym -30 0 1 2>
   <Line -20 -10 40 0 #000080 2 1>
   <Line 20 -10 0 20 #000080 2 1>
   <Line -20 10 40 0 #000080 2 1>
   <Line -20 -10 0 20 #000080 2 1>
   <Line -30 0 10 0 #000080 2 1>
   <Line 20 0 10 0 #000080 2 1>
-  <.PortSym 30 0  1>
+  <.PortSym 30 0 0 1>
   <Line -20 0 40 0 #0000ff 3 1>
 </Symbol>
 <Components>

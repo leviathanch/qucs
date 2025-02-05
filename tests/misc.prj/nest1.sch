@@ -7,21 +7,14 @@
   <FrameText2=Date:>
   <FrameText3=Revision:>
   <OpenDisplay=1>
-  <PosX=NA(-2147483648)>
-  <PosY=800>
   <RunScript=0>
   <Script=short_circuit.m>
-  <ViewScale=NA(-2147483648)>
-  <ViewX1=Y2>
-  <ViewX2=NA(-2147483648)>
-  <ViewY1=NA(-2147483648)>
-  <ViewY2=NA(-2147483648)>
   <showFrame=0>
 </Properties>
 <Symbol>
   <.ID -20 14 SC1>
-  <.PortSym -30 0  1>
-  <.PortSym 30 0  2>
+  <.PortSym -30 0 9 1>
+  <.PortSym 30 0 10 2>
 </Symbol>
 <Components>
   <Port P2 1 400 180 4 -52 0 2 "2" 1 "analog" 0>
