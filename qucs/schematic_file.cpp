@@ -684,13 +684,14 @@ bool Schematic::loadPaintings(QTextStream *stream, SharedObjectList<Element> &Li
     else if(cstr == "Ellipse") p = new Ellipse();
     else {
       QMessageBox::critical(0, QObject::tr("Error"),
-		QObject::tr("Format Error:\nUnknown painting!"));
+		QObject::tr("Format Error:\nUnknown painting: ") + Line);
       return false;
     }
 
     if(!p->load(Line)) {
+      // BUG; missing context.
       QMessageBox::critical(0, QObject::tr("Error"),
-	QObject::tr("Format Error:\nWrong 'painting' line format!"));
+	QObject::tr("Format Error:\nWrong 'painting' line format in ") + Line);
       delete p;
       return false;
     }
