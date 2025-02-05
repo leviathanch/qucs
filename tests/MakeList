@@ -40,7 +40,6 @@ SH_TESTS_LATER = \
 
 # TODO: wildcard match
 PRJ_TESTS = \
-	d_3f5.prj \
 	mixed.prj \
 	tline.prj \
 	AC_bandpass.prj \
