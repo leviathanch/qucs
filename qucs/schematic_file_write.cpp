@@ -48,11 +48,10 @@ endmodule
 
 */
 
-QString Schematic::getWireName(const QPoint *p) const
-{
+static QString coordsToWireName(int x, int y) {
   QString net = QString("n_%1_%2")
-      .arg(p->x())
-      .arg(p->y());
+      .arg(x)
+      .arg(y);
   net.replace("-","m");
   return net;
 }
@@ -69,11 +68,6 @@ static void dumpIdentifier(QTextStream& stream, QString const& name)
     stream << '\\' << name << ' ';
   }
 }
-
-/*static void print_attributes(QTextStream& o, QStringList attributes)
-{
-  o << "(* " << attributes.join(", ") << " *) ";
-}*/
 
 #define INACTIVE 0
 static void print_args(QTextStream& o, Component const* x)
@@ -97,66 +91,45 @@ static void print_args(QTextStream& o, Component const* x)
   o << ") ";
 }
 
-// BUG. what does it do?
-// BUG: wrong compilation unit
-void Schematic::dumpDeclaration(QTextStream& stream, Component const* c, QString model, QString name, QList<QPoint> ports) const
+/*
+ * <280 100 460 100 "" 0 0 0> == net w1(n_280_100, n_460_100);
+ */
+void Schematic::dumpVerilogWire(QTextStream& stream, Wire const* w) const
 {
-  QStringList nets;
-  int port_idx = 0;
-  stream << "    (* ";
-  QString sep;
-  for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
-    stream << sep << QString("S0_x%1=%2, S0_y%1=%3")
-        .arg(++port_idx)
-        .arg(pp->x())
-        .arg(pp->y());
-    nets.append(getWireName(&(*pp)));
-  }
-  //print_attributes(o, nets);
-  stream << QString(" *) ");
-  dumpIdentifier(stream, model);
-  print_args(stream, c);
-  dumpIdentifier(stream, name);
+  assert(w);
+  static int wire_idx = 1;
+  stream << "    "; // Indent
+  stream << "(* ";
+  stream << w->attributes();
+  stream << " *) ";
+  stream << "net #() ";
+  dumpIdentifier(stream, QString("net%1").arg(wire_idx));
   stream << " ( ";
-  stream << nets.join(", ");
+  stream << coordsToWireName(w->x1,w->y1);
+  stream << ", ";
+  stream << coordsToWireName(w->x2,w->y2);
   stream << " );\n";
+  wire_idx++;
 }
 
 // BUG: wrong compilation unit
 void Schematic::dumpVerilogComponent(QTextStream& stream, Component const* c) const
 {
   assert(c);
-  QList<QPoint> ports;
-  QString model = c->obsolete_model_hack();
-  QString name = c->name();
+  QStringList nets;
   for (auto pp = c->Ports.begin(); pp != c->Ports.end(); ++pp) {
-    auto con = pp->getConnection();
-    if(con) {
-      ports.append(QPoint(con->cx,con->cy));
-    }
+    nets.append(coordsToWireName(pp->getConnection()->cx,pp->getConnection()->cy));
   }
-  dumpDeclaration(stream, c, model, name, ports);
-}
-
-/*
- * <280 100 460 100 "" 0 0 0> == net w1(n_280_100, n_460_100);
- */
-// BUG: wrong compilation unit
-void Schematic::dumpVerilogWire(QTextStream& stream, Wire const* w) const
-{
-	assert(w);
-  QList<QPoint> ports;
-  QString name;
-  static int wire_index = 1;
-  if(w->Label && !w->Label->Name.isEmpty()) {
-    name = w->Label->Name;
-  } else {
-    name = QString("net%1").arg(wire_index);
-    wire_index++;
-  }
-  ports.append(QPoint(w->x1,w->y1));
-  ports.append(QPoint(w->x2,w->y2));
-  dumpDeclaration(stream, NULL, "net", name, ports);
+  stream << "    "; // Indent
+  stream << "(* ";
+  stream << c->attributes();
+  stream << QString(" *) ");
+  dumpIdentifier(stream, c->obsolete_model_hack());
+  print_args(stream, c);
+  dumpIdentifier(stream, c->name());
+  stream << " ( ";
+  stream << nets.join(", ");
+  stream << " );\n";
 }
 
 // BUG: wrong compilation unit
@@ -171,7 +144,7 @@ int Schematic::saveVerilogDocument(QFile *file)
     QPoint p;
     if(it->obsolete_model_hack() == "Port") {
       p = QPoint(it->cx,it->cy);
-      ioPorts.append(QString(".%1(%2)").arg(it->name()).arg(getWireName(&p)));
+      ioPorts.append(QString(".%1(%2)").arg(it->name()).arg(coordsToWireName(it->cx,it->cy)));
       ioPortNets.append(p);
     } else {
       p = QPoint(it->cx,it->cy);
@@ -214,14 +187,14 @@ int Schematic::saveVerilogDocument(QFile *file)
   // io defines
   for (auto it = ioPortNets.begin(); it != ioPortNets.end(); ++it) {
     stream << "    ";
-    stream << "inout " << getWireName(&*it) << ";\n";
+    stream << "inout " << coordsToWireName(it->x(),it->y()) << ";\n";
   }
 
   // The wires (subnets)
   for (auto it = wireList.begin(); it != wireList.end(); ++it) {
     if(!ioPortNets.contains(*it)) {
       stream << "    ";
-      stream << "wire " << getWireName(&*it) << ";\n";
+      stream << "wire " << coordsToWireName(it->x(),it->y()) << ";\n";
     }
   }
 
@@ -232,7 +205,7 @@ int Schematic::saveVerilogDocument(QFile *file)
 
   // net connections (connecting the nodes)
   for (auto it = DocWires.begin(); it != DocWires.end(); ++it) {
-	  // BUG: Wire is not a Component. (why?)
+    // BUG: Wire is not a Component. (why?)
     dumpVerilogWire(stream, &*it);
   }
 

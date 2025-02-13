@@ -783,6 +783,23 @@ QString Component::param_value(int i) const
   return it->Value;
 }
 
+// Simplify attribute dump
+QString Component::attributes() const
+{
+  QStringList attrs;
+  int port_idx = 1;
+  for (auto pp = Ports.begin(); pp != Ports.end(); ++pp) {
+    attrs.append(
+      QString("S0_x%1=%2, S0_y%1=%3")
+        .arg(port_idx)
+        .arg(pp->getConnection()->cx)
+        .arg(pp->getConnection()->cy)
+    );
+    port_idx++;
+  }
+  return attrs.join(", ");
+}
+
 // -------------------------------------------------------
 // save a component
 // FIXME: part of corresponding SchematicSerializer implementation

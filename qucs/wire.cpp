@@ -212,3 +212,19 @@ bool Wire::load(const QString& _s)
 
   return true;
 }
+
+// Simplify attribute dump
+QString Wire::attributes() const
+{
+  QString attr;
+  attr = QString("S0_x%1=%2, S0_y%1=%3")
+    .arg(1)
+    .arg(x1)
+    .arg(y1);
+  attr += ", ";
+  attr += QString("S0_x%1=%2, S0_y%1=%3")
+    .arg(2)
+    .arg(x2)
+    .arg(y2);
+  return attr;
+}

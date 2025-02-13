@@ -61,6 +61,9 @@ public: // parameter access
   virtual QString param_value(int i) const;
   virtual QString param_id_tag(int i) const;
 
+  // Simplify attribute dump
+  virtual QString attributes() const;
+
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not
   int  rotated;     // rotation angle divided by 90 degrees
