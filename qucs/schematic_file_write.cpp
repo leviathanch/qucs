@@ -48,14 +48,6 @@ endmodule
 
 */
 
-static QString coordsToWireName(int x, int y) {
-  QString net = QString("n_%1_%2")
-      .arg(x)
-      .arg(y);
-  net.replace("-","m");
-  return net;
-}
-
 static void dumpIdentifier(QTextStream& stream, QString const& name)
 {
   if (!name.size()){
@@ -105,9 +97,9 @@ void Schematic::dumpVerilogWire(QTextStream& stream, Wire const* w) const
   stream << "net #() ";
   dumpIdentifier(stream, QString("net%1").arg(wire_idx));
   stream << " ( ";
-  stream << coordsToWireName(w->x1,w->y1);
+  stream << w->port_value(0);
   stream << ", ";
-  stream << coordsToWireName(w->x2,w->y2);
+  stream << w->port_value(1);
   stream << " );\n";
   wire_idx++;
 }
@@ -116,19 +108,20 @@ void Schematic::dumpVerilogWire(QTextStream& stream, Wire const* w) const
 void Schematic::dumpVerilogComponent(QTextStream& stream, Component const* c) const
 {
   assert(c);
-  QStringList nets;
-  for (auto pp = c->Ports.begin(); pp != c->Ports.end(); ++pp) {
-    nets.append(coordsToWireName(pp->getConnection()->cx,pp->getConnection()->cy));
-  }
   stream << "    "; // Indent
   stream << "(* ";
   stream << c->attributes();
-  stream << QString(" *) ");
+  stream << " *) ";
   dumpIdentifier(stream, c->obsolete_model_hack());
   print_args(stream, c);
   dumpIdentifier(stream, c->name());
   stream << " ( ";
-  stream << nets.join(", ");
+  for (int i = 0; i < c->port_count()-1; i++) {
+    stream << c->port_value(i) << ", ";
+  }
+  if(c->port_count()) {
+    stream << c->port_value(c->port_count()-1);
+  }
   stream << " );\n";
 }
 
@@ -136,42 +129,26 @@ void Schematic::dumpVerilogComponent(QTextStream& stream, Component const* c) co
 int Schematic::saveVerilogDocument(QFile *file)
 {
   trace_method_calls();
-  QList<QPoint> ioPortNets;
-  QList<QPoint> wireList;
   QStringList ioPorts;
+  QStringList wireList;
+  QStringList ioPortNets;
 
   for (auto it = DocComps.begin(); it != DocComps.end(); ++it) {
     QPoint p;
-    if(it->obsolete_model_hack() == "Port") {
-      p = QPoint(it->cx,it->cy);
-      ioPorts.append(QString(".%1(%2)").arg(it->name()).arg(coordsToWireName(it->cx,it->cy)));
-      ioPortNets.append(p);
+    if(it->obsolete_model_hack() == "Port" && it->port_count()) {
+      ioPorts.append(QString(".%1(%2)").arg(it->name()).arg(it->port_value(0)));
+      ioPortNets.append(it->port_value(0));
     } else {
-      p = QPoint(it->cx,it->cy);
-      if(!wireList.contains(p))
-        wireList.append(p);
+      for(int i=0;i<it->port_count();i++) {
+        wireList.append(it->port_value(i));
+      }
     }
   }
 
-  for (auto it = DocWires.begin(); it != DocWires.end(); ++it) {
-    QPoint p;
-    p = QPoint(it->x1,it->y1);
-    if(!wireList.contains(p))
-      wireList.append(p);
-    p = QPoint(it->x2,it->y2);
-    if(!wireList.contains(p))
-      wireList.append(p);
-  }
-
-  std::sort(wireList.begin(), wireList.end(),
-    [&](const QPoint& p1, const QPoint& p2){
-      if( p1.x() < p2.x() )
-         return true;
-      if( (p1.x() == p2.x()) && (p1.y() < p2.y()) )
-         return true;
-      return false;
-    }
-  );
+  ioPortNets.sort();
+  wireList.sort();
+  ioPortNets.removeDuplicates();
+  wireList.removeDuplicates();
 
   // Writing stuff out
   QTextStream stream(file);
@@ -187,14 +164,14 @@ int Schematic::saveVerilogDocument(QFile *file)
   // io defines
   for (auto it = ioPortNets.begin(); it != ioPortNets.end(); ++it) {
     stream << "    ";
-    stream << "inout " << coordsToWireName(it->x(),it->y()) << ";\n";
+    stream << "inout " << *it << ";\n";
   }
 
   // The wires (subnets)
   for (auto it = wireList.begin(); it != wireList.end(); ++it) {
     if(!ioPortNets.contains(*it)) {
       stream << "    ";
-      stream << "wire " << coordsToWireName(it->x(),it->y()) << ";\n";
+      stream << "wire " << *it << ";\n";
     }
   }
 

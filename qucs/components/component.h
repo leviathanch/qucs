@@ -61,6 +61,10 @@ public: // parameter access
   virtual QString param_value(int i) const;
   virtual QString param_id_tag(int i) const;
 
+  virtual int port_count() const;
+  virtual QString port_name(int i) const;
+  virtual QString port_value(int i) const;
+
   // Simplify attribute dump
   virtual QString attributes() const;
 

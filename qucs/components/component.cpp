@@ -753,12 +753,15 @@ QString Component::get_VHDL_Code(int NumPorts)
 // number of parameters
 int Component::param_count() const
 {
-  return Props.size();
+  if(Model=="Eqn") return 2;
+  else return Props.size();
 }
 
 // whether a parameter is shown in a dump
 bool Component::param_is_printable(int i) const
 {
+  QString pname = param_name(i);
+  if(pname=="Symbol") return false;
   return true;
 }
 
@@ -769,6 +772,9 @@ QString Component::param_id_tag(int i) const
 
 QString Component::param_name(int i) const
 {
+  if(((std::list<qucs::Property>::size_type)i)>=Props.size()) {
+    qCritical("Out of bounds!");
+  }
   auto it = Props.begin();
   // BUG: Missing random access
   std::advance(it, i);
@@ -777,6 +783,9 @@ QString Component::param_name(int i) const
 
 QString Component::param_value(int i) const
 {
+  if(((std::list<qucs::Property>::size_type)i)>=Props.size()) {
+    qCritical("Out of bounds!");
+  }
   auto it = Props.begin();
   // BUG: Missing random access
   std::advance(it, i);
@@ -787,17 +796,52 @@ QString Component::param_value(int i) const
 QString Component::attributes() const
 {
   QStringList attrs;
-  int port_idx = 1;
-  for (auto pp = Ports.begin(); pp != Ports.end(); ++pp) {
+  if(Model=="Eqn" || Model==".TR") {
     attrs.append(
       QString("S0_x%1=%2, S0_y%1=%3")
-        .arg(port_idx)
-        .arg(pp->getConnection()->cx)
-        .arg(pp->getConnection()->cy)
+        .arg(1)
+        .arg(cx)
+        .arg(cy)
     );
-    port_idx++;
+  } else {
+    int port_idx = 1;
+    for (auto pp = Ports.begin(); pp != Ports.end(); ++pp) {
+      attrs.append(
+        QString("S0_x%1=%2, S0_y%1=%3")
+          .arg(port_idx)
+          .arg(pp->getConnection()->cx)
+          .arg(pp->getConnection()->cy)
+      );
+      port_idx++;
+    }
   }
   return attrs.join(", ");
+}
+
+int Component::port_count() const
+{
+  return Ports.size();
+}
+
+QString Component::port_name(int i) const
+{
+  return QString("");
+}
+
+QString Component::port_value(int i) const
+{
+  if(((std::list<qucs::Port>::size_type)i)>=Ports.size()) {
+    qCritical("Out of bounds!");
+  }
+  auto it = Ports.begin();
+  // BUG: Missing random access
+  std::advance(it, i);
+  QString val;
+  val = QString("n_%1_%2")
+      .arg(it->getConnection()->cx)
+      .arg(it->getConnection()->cy);
+  val.replace("-","m");
+  return val;
 }
 
 // -------------------------------------------------------

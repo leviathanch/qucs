@@ -42,6 +42,7 @@ public:
 
   // Simplify attribute dump
   virtual QString attributes() const;
+  virtual QString port_value(int i) const;
 
   //  TODO: would like to turn this into a weak pointer, but the pointer value
   //  is sometimes used as flag set while moving the full wire.

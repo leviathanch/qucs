@@ -228,3 +228,21 @@ QString Wire::attributes() const
     .arg(y2);
   return attr;
 }
+
+QString Wire::port_value(int i) const
+{
+  QString val;
+  if(i==0) {
+    val = QString("n_%1_%2")
+        .arg(x1)
+        .arg(y1);
+  } else if(i==1) {
+    val = QString("n_%1_%2")
+        .arg(x2)
+        .arg(y2);
+  } else {
+    qCritical("Wires only have two ports!");
+  }
+  val.replace("-","m");
+  return val;
+}
