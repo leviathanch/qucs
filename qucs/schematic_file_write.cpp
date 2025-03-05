@@ -256,6 +256,8 @@ int Schematic::saveVerilogDocument(QFile *file)
   // stream << ", ";
   // stream << attr_get();
   stream << " *) ";
+  // New line
+  stream << "\n";
 
   stream << "module " << module_name << "(" << ioPorts.join(", ") << ");\n";
 
