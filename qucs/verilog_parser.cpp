@@ -98,6 +98,10 @@ istream_t::istream_t(istream_t::WHOLE_FILE, const std::string& name)
 		_stream = new QTextStream(d);
 	}
 }
+istream_t::istream_t(QTextStream* s)
+{
+  _stream = s;
+}
 /*--------------------------------------------------------------------------*/
 /// borrowed from ap_*.cc
 int istream_t::ctoi()

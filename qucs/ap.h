@@ -24,11 +24,9 @@
  */
 #ifndef AP_H
 #define AP_H
-//#include "md.h"
 #include <string.h>
 #include <QTextStream>
 #include "platform.h"
-//#include "io_trace.h"
 #define CS istream_t
 #define AP_MOD AP_MOD_
 /*--------------------------------------------------------------------------*/
@@ -65,6 +63,7 @@ private:
   int _line_number;
 public:
   // construction, destruction, and re-construction
+  explicit    CS(QTextStream*);
   explicit    CS(STDIN);
   explicit    CS(INC_FILE, const std::string& name);
   explicit    CS(WHOLE_FILE, const std::string& name);
