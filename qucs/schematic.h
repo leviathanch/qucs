@@ -308,6 +308,7 @@ public:
   QString createNetlist(QTextStream&, int);
   bool loadDocument();
   bool readLegacy(QFile &file);
+  bool readVerilogPreamble(QTextStream &stream);
   bool readVerilog(QFile &file);
   void highlightWireLabels (void);
 

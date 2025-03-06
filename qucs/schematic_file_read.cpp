@@ -14,6 +14,7 @@
 #include <QProcess>
 #include <QDebug>
 
+#include "ap.h"
 #include "qucs.h"
 #include "node.h"
 #include "schematic.h"
@@ -75,9 +76,19 @@ bool Schematic::readLegacy(QFile &file) {
   return true;
 }
 
+bool Schematic::readVerilogPreamble(QTextStream& stream)
+{
+  return true;
+}
+
 bool Schematic::readVerilog(QFile &file)
 {
   trace_method_calls();
+  file.reset();
+  QTextStream stream(&file);
+  if(!readVerilogPreamble(stream)) {
+    return false;
+  }
   file.close();
   return true;
 }
