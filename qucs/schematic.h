@@ -27,6 +27,7 @@
 #  define prechecked_cast dynamic_cast
 #endif
 
+#include "ap.h"
 #include "wire.h"
 #include "node.h"
 #include "qucsdoc.h"
@@ -308,7 +309,7 @@ public:
   QString createNetlist(QTextStream&, int);
   bool loadDocument();
   bool readLegacy(QFile &file);
-  bool readVerilogPreamble(QTextStream &stream);
+  void readVerilogPreamble(istream_t &cmd);
   bool readVerilog(QFile &file);
   void highlightWireLabels (void);
 
