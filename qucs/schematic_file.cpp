@@ -737,7 +737,7 @@ bool Schematic::loadDocument()
     Line = stream.readLine();
   } while(Line.isEmpty());
 
-  if(Line.left(2) == "(*" && Line.right(2) == "*)") {
+  if(Line.contains("(*") && Line.contains("*)")) {
     return readVerilog(file);
   } else if(Line.left(16) == "<Qucs Schematic ") { // Legacy format
     Line = Line.mid(16, Line.length()-17);
