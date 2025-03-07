@@ -53,6 +53,8 @@ class QMouseEvent;
 class QDragEnterEvent;
 class QPainter;
 
+class CS;
+
 // digital signal data
 struct DigSignal {
   DigSignal() { Name=""; Type=""; }
@@ -307,9 +309,18 @@ public:
   int  prepareNetlist(QTextStream&, QStringList&, QPlainTextEdit*);
   QString createNetlist(QTextStream&, int);
   bool loadDocument();
-  bool readLegacy(QFile &file);
-  bool readVerilog(QFile &file);
+  void readLegacy(QTextStream &stream);
   void highlightWireLabels (void);
+  // Verilog
+  void readVerilog(QTextStream &stream);
+  void skip_attributes(CS& cmd);
+  void parse_attributes(CS& cmd, Component* x);
+  Component *get_component(std::string);
+  Component *parse_instance(CS& cmd, Component* x);
+  void parse_type(CS& cmd, Component* x);
+  void parse_args_instance(CS& cmd, Component* x);
+  void parse_label(CS& cmd, Component* x);
+  void parse_ports(CS& cmd, Component* x, bool all_new);
 
 private:
   int  saveDocument(QString OutputFileName, QString OutputTypeName);
