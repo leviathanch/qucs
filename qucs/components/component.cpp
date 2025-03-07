@@ -25,6 +25,8 @@
 #include "viewpainter.h"
 #include "module.h"
 #include "misc.h"
+#include "exception.h"
+#include "trace.h"
 
 #include <QPen>
 #include <QString>
@@ -749,6 +751,68 @@ QString Component::get_VHDL_Code(int NumPorts)
   return "  " + Node1 + " <= " + port(1).getConnection()->Name + ";\n";
 }
 
+void Component::set_port_by_index(int num, std::string const& ext_name)
+{
+  incomplete();
+}
+
+// Attributes
+void Component::set_attributes(std::string s)
+{
+  incomplete();
+  //_attr = s;
+  std::cout << "set_attributes:" << s << std::endl;
+  QStringList attrs = QString::fromStdString(s).split(",");
+  QMap<int, int> port_x;
+  QMap<int, int> port_y;
+  int highest_index = 0;
+  int index = 0;
+  for(auto sp = attrs.begin(); sp<attrs.end(); sp++) {
+    QStringList pair = sp->split("=");
+    if(pair.size()>1) {
+      if(pair[0].contains("S0_x")) {
+        index = pair[0].replace("S0_x","").trimmed().toInt();
+        port_x.insert(index, pair[1].trimmed().toInt());
+      }
+      if(pair[0].contains("S0_y")) {
+        index = pair[0].replace("S0_y","").trimmed().toInt();
+        port_y.insert(index, pair[1].trimmed().toInt());
+      }
+      if(index>highest_index) highest_index = index;
+      qDebug() << *sp;
+    }
+  }
+  if(port_x.contains(1)) {
+    cx = port_x[1];
+    x1 = port_x[1];
+  }
+  if(port_x.contains(highest_index)) {
+    x2 = port_x[highest_index]; // BUG: figure out correct way
+  }
+  if(port_y.contains(1)) {
+    cy = port_y[1];
+    y1 = port_y[1];
+  }
+  if(port_y.contains(highest_index)) {
+    y2 = port_y[highest_index]; // BUG: figure out correct way
+  }
+  for(int i=0; i<highest_index; i++) {
+    if(port_x.contains(i+1)&&port_y.contains(i+1)) {
+      int x,y;
+      x = port_x[i+1];
+      y = port_y[i+1];
+      //qDebug() << "Adding port (" << x << "," << y << " to " << Name;
+      qucs::Port port;
+      Node *node = new Node(x,y);
+      node->cx = x;
+      node->cy = y;
+      port.avail = true;
+      port.Connection = std::shared_ptr<Node>(node);
+      Ports.push_back(port);
+    }
+  }
+}
+
 // -------------------------------------------------------
 // number of parameters
 int Component::param_count() const
@@ -759,11 +823,13 @@ int Component::param_count() const
 // whether a parameter is shown in a dump
 bool Component::param_is_printable(int i) const
 {
+  incomplete();
   return true;
 }
 
 QString Component::param_id_tag(int i) const
 {
+  incomplete();
   return QString("");
 }
 
@@ -781,6 +847,41 @@ QString Component::param_value(int i) const
   // BUG: Missing random access
   std::advance(it, i);
   return it->Value;
+}
+
+void Component::set_param_by_index(int i, std::string const& Value)
+{
+  incomplete();
+}
+
+void Component::set_param_by_name(std::string const& name, std::string const& v)
+{
+  Props.push_back(
+    qucs::Property(
+      QString::fromStdString(name),
+      QString::fromStdString(v),
+      false,
+      ""
+    )
+  );
+}
+
+void Component::set_dev_type(std::string const& type)
+{
+  untested();
+  Model = QString::fromStdString(type);
+}
+
+void Component::set_label(std::string const& name)
+{
+  untested();
+  Name = QString::fromStdString(name);
+}
+
+void Component::set_port_by_name(std::string const&, std::string const&)
+{
+  incomplete();
+  assert(false);
 }
 
 // -------------------------------------------------------

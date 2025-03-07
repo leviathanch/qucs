@@ -58,6 +58,7 @@ public:
 public: // attributes
   virtual std::string attr_get()const {return _attr;}
   virtual void attr_add(std::string s) {_attr += ", " + s;}
+  virtual void set_attributes(std::string s);
 
 public: // parameter access
   virtual int param_count() const;
@@ -65,6 +66,12 @@ public: // parameter access
   virtual QString param_name(int i) const;
   virtual QString param_value(int i) const;
   virtual QString param_id_tag(int i) const;
+  virtual void set_param_by_index(int i, std::string const& Value);
+  virtual void set_param_by_name(std::string const& name, std::string const& v);
+  virtual void set_label(std::string const& name);
+  virtual void set_port_by_name(std::string const&, std::string const&);
+  virtual void set_port_by_index(int num, std::string const& ext_name);
+  virtual void set_dev_type(std::string const& type);
 
   // to hold track of the component appearance for saving and copying
   bool mirroredX;   // is it mirrored about X axis or not
