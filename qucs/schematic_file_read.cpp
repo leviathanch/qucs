@@ -28,6 +28,7 @@
 #include "misc.h"
 #include "trace.h"
 #include "exception.h"
+#include "components.h"
 
 #if TRACE_FUNCTION_CALLS
 #define trace_method_calls() qInfo()<<__FILE__ <<":"<<__func__
@@ -78,15 +79,18 @@ void Schematic::skip_attributes(CS& cmd)
   }
 }
 
-Component *Schematic::get_component(std::string)
+Component *Schematic::get_component(std::string type)
 {
+  std::cout << "Got type " << type << std::endl;
   incomplete();
-  Component *c = new Component();
-  c->isActive = 1;
+  Component *c = NULL;
+  if(type=="R") c=new Resistor(true);
+  if(type=="C") c=new Capacitor();
+  if(type=="GND") c=new Ground();
   return c;
 }
 
-void Schematic::parse_attributes(CS& cmd, Component* x)
+void Schematic::parse_attributes(CS& cmd, std::shared_ptr<Component> x)
 {
   assert(x);
   incomplete();
@@ -99,7 +103,7 @@ void Schematic::parse_attributes(CS& cmd, Component* x)
   }
 }
 
-void Schematic::parse_type(CS& cmd, Component* x)
+void Schematic::parse_type(CS& cmd, std::shared_ptr<Component> x)
 {
   assert(x);
   //incomplete();
@@ -108,7 +112,7 @@ void Schematic::parse_type(CS& cmd, Component* x)
   x->set_dev_type(new_type);
 }
 
-void Schematic::parse_args_instance(CS& cmd, Component* x)
+void Schematic::parse_args_instance(CS& cmd, std::shared_ptr<Component> x)
 {
   assert(x);
   if (cmd >> "#(") {
@@ -146,7 +150,7 @@ void Schematic::parse_args_instance(CS& cmd, Component* x)
   }
 }
 
-void Schematic::parse_label(CS &cmd, Component *x)
+void Schematic::parse_label(CS &cmd, std::shared_ptr<Component> x)
 {
   assert(x);
   std::string my_name;
@@ -159,7 +163,7 @@ void Schematic::parse_label(CS &cmd, Component *x)
   }
 }
 
-void Schematic::parse_ports(CS& cmd, Component* x, bool all_new)
+void Schematic::parse_ports(CS& cmd, std::shared_ptr<Component> x, bool all_new)
 {
   assert(x);
   if (cmd >> '(') {
@@ -230,7 +234,7 @@ void Schematic::parse_ports(CS& cmd, Component* x, bool all_new)
   }
 }
 
-Component *Schematic::parse_instance(CS& cmd, Component* x)
+std::shared_ptr<Component> Schematic::parse_instance(CS& cmd, std::shared_ptr<Component> x)
 {
   assert(x);
   cmd.reset();
@@ -259,10 +263,13 @@ void Schematic::readVerilog(QTextStream &stream)
     }else{
       std::string type;
       cmd >> type;
-      Component*x=get_component(type);
-      if(type!="net" && type!="wire") { // BUG: Wire and nets aren't components
+      if(type=="net") continue;
+      if(type=="wire") continue;
+      QString qtype = QString::fromStdString(type);
+      auto x = Module::getComponent(qtype);
+      if(x) {
         parse_instance(cmd, x);
-        DocComps.append(x);
+        simpleInsertComponent(x);
       }
     }
   }

@@ -761,7 +761,12 @@ void Component::set_attributes(std::string s)
 {
   incomplete();
   //_attr = s;
-  std::cout << "set_attributes:" << s << std::endl;
+  /*
+  std::cout << "set_attributes:" << s
+            << " port list size "
+            << Ports.size()
+            << std::endl;
+  */
   QStringList attrs = QString::fromStdString(s).split(",");
   QMap<int, int> port_x;
   QMap<int, int> port_y;
@@ -769,47 +774,31 @@ void Component::set_attributes(std::string s)
   int index = 0;
   for(auto sp = attrs.begin(); sp<attrs.end(); sp++) {
     QStringList pair = sp->split("=");
-    if(pair.size()>1) {
-      if(pair[0].contains("S0_x")) {
-        index = pair[0].replace("S0_x","").trimmed().toInt();
-        port_x.insert(index, pair[1].trimmed().toInt());
-      }
-      if(pair[0].contains("S0_y")) {
-        index = pair[0].replace("S0_y","").trimmed().toInt();
-        port_y.insert(index, pair[1].trimmed().toInt());
-      }
+    if((pair.size()>1)&&pair[0].contains("S0_x")) {
+      index = pair[0].replace("S0_x","").trimmed().toInt();
+      port_x.insert(index, pair[1].trimmed().toInt());
       if(index>highest_index) highest_index = index;
-      qDebug() << *sp;
+    } else if((pair.size()>1)&&pair[0].contains("S0_y")) {
+      index = pair[0].replace("S0_y","").trimmed().toInt();
+      port_y.insert(index, pair[1].trimmed().toInt());
+      if(index>highest_index) highest_index = index;
+    } else {
+      if(!sp->trimmed().isEmpty()) {
+        attr_add(sp->trimmed().toStdString());
+      }
     }
   }
-  if(port_x.contains(1)) {
-    cx = port_x[1];
-    x1 = port_x[1];
-  }
-  if(port_x.contains(highest_index)) {
-    x2 = port_x[highest_index]; // BUG: figure out correct way
-  }
-  if(port_y.contains(1)) {
-    cy = port_y[1];
-    y1 = port_y[1];
-  }
-  if(port_y.contains(highest_index)) {
-    y2 = port_y[highest_index]; // BUG: figure out correct way
-  }
-  for(int i=0; i<highest_index; i++) {
-    if(port_x.contains(i+1)&&port_y.contains(i+1)) {
-      int x,y;
-      x = port_x[i+1];
-      y = port_y[i+1];
-      //qDebug() << "Adding port (" << x << "," << y << " to " << Name;
-      qucs::Port port;
-      Node *node = new Node(x,y);
-      node->cx = x;
-      node->cy = y;
-      port.avail = true;
-      port.Connection = std::shared_ptr<Node>(node);
-      Ports.push_back(port);
-    }
+  assert(highest_index==(int)Ports.size());
+  cx = port_x[1]+(port_x[highest_index]-port_x[1])/2;
+  cy = port_y[1]+(port_y[highest_index]-port_y[1])/2;
+  int i=1;
+  for(auto pp = Ports.begin(); pp!=Ports.end(); pp++, i++) {
+    int x=port_x[i],y=port_y[i];
+    std::shared_ptr<Node> node(new Node(x,y));
+    pp->Connection = node;
+    assert(pp->getConnection());
+    pp->getConnection()->cx=x;
+    pp->getConnection()->cy=y;
   }
 }
 
@@ -856,14 +845,11 @@ void Component::set_param_by_index(int i, std::string const& Value)
 
 void Component::set_param_by_name(std::string const& name, std::string const& v)
 {
-  Props.push_back(
-    qucs::Property(
-      QString::fromStdString(name),
-      QString::fromStdString(v),
-      false,
-      ""
-    )
-  );
+  for(auto ap = Props.begin(); ap!=Props.end(); ap++) {
+    if(ap->Name.toStdString() == name) {
+      ap->Value = QString::fromStdString(v);
+    }
+  }
 }
 
 void Component::set_dev_type(std::string const& type)

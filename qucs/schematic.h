@@ -314,13 +314,13 @@ public:
   // Verilog
   void readVerilog(QTextStream &stream);
   void skip_attributes(CS& cmd);
-  void parse_attributes(CS& cmd, Component* x);
-  Component *get_component(std::string);
-  Component *parse_instance(CS& cmd, Component* x);
-  void parse_type(CS& cmd, Component* x);
-  void parse_args_instance(CS& cmd, Component* x);
-  void parse_label(CS& cmd, Component* x);
-  void parse_ports(CS& cmd, Component* x, bool all_new);
+  void parse_attributes(CS& cmd, std::shared_ptr<Component> x);
+  Component *get_component(std::string type);
+  std::shared_ptr<Component> parse_instance(CS& cmd, std::shared_ptr<Component> x);
+  void parse_type(CS& cmd, std::shared_ptr<Component> x);
+  void parse_args_instance(CS& cmd, std::shared_ptr<Component> x);
+  void parse_label(CS& cmd, std::shared_ptr<Component> x);
+  void parse_ports(CS& cmd, std::shared_ptr<Component> x, bool all_new);
 
 private:
   int  saveDocument(QString OutputFileName, QString OutputTypeName);
