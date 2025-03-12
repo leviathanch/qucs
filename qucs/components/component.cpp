@@ -776,25 +776,30 @@ void Component::set_attribute(std::string name, std::string value)
   QString qname = QString::fromStdString(name);
   QString qvalue = QString::fromStdString(value);
   if(qname.contains("S0_x")||qname.contains("S0_y")) {
-    int i=1,x=0,y=0,index=0;
+    int i=1,dx=0,dy=0,x=0,y=0,index=0;
     bool setx = false;
     for(auto pp = Ports.begin(); pp!=Ports.end(); pp++) {
       setx = qname.contains("S0_x");
       index = qname.replace("S0_x","").replace("S0_y","").trimmed().toInt();
+      qDebug() << "Getting orig: (" <<x1<<","<<y1<<")";
       if(i==index) {
         if(setx) {
           x = qvalue.trimmed().toInt();
           y = (pp->getConnection())?pp->getConnection()->cy:0;
+          dx = x - x1;
         } else {
           x = (pp->getConnection())?pp->getConnection()->cx:0;
           y = qvalue.trimmed().toInt();
+          dy = y - y1;
         }
-        if(i==1) setCenter(x, y, true);
+        if(i==1) {
+          setCenter(dx, dy, true);
+        }
         std::shared_ptr<Node> node(new Node(x,y));
         pp->Connection = node;
         assert(pp->getConnection());
         break;
-         }
+      }
       i++;
     }
   } else if(qname.contains("qucs_mirroredX")) {
