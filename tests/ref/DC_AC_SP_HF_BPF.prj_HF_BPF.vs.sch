@@ -16,6 +16,19 @@
 <Symbol>
 </Symbol>
 <Components>
+  <INDQ INDQ1 1 520 90 -26 17 0 0 "1.82uH" 1 "Ql" 1 "f0" 0 "SquareRoot" 0 "26.85" 0>
+  <INDQ INDQ3 1 630 200 17 -26 0 1 "221.8nH" 1 "Ql" 1 "f0" 0 "SquareRoot" 0 "26.85" 0>
+  <CAPQ CAPQ3 1 590 200 17 -26 0 1 "560 pF" 1 "Qc" 1 "f0" 0 "Linear" 0 "26.85" 0>
+  <GND \* 5 800 220 0 0 0 0>
+  <Pac P1 1 800 140 -26 -72 0 2 "2" 1 "50 Ohm" 1 "0 W" 0 "1 GHz" 0 "-273.15" 0>
+  <INDQ INDQ2 1 310 200 17 -26 0 1 "221.8nH" 1 "Ql" 1 "f0" 0 "SquareRoot" 0 "26.85" 0>
+  <CAPQ CAPQ1 1 380 90 -26 17 0 0 "68 pF" 1 "Qc" 1 "f0" 0 "Linear" 0 "26.85" 0>
+  <CAPQ CAPQ2 1 270 200 17 -26 0 1 "560 pF" 1 "Qc" 1 "f0" 0 "Linear" 0 "26.85" 0>
+  <GND \* 5 310 220 0 0 0 0>
+  <GND \* 5 100 220 0 0 0 0>
+  <Pac P2 1 100 120 -26 -72 0 2 "1" 1 "50 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "-273.15" 0>
+  <GND \* 5 630 290 0 0 0 0>
+  <Vdc V1 1 630 220 -26 -54 0 2 "1.1 V" 1>
 </Components>
 <Wires>
 </Wires>

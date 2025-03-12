@@ -14,8 +14,19 @@
   <FrameText3=Revision:>
 </Properties>
 <Symbol>
+  <.PortSym 40 20 3 0>
+  <.PortSym 40 60 4 0>
+  <.PortSym 40 100 5 0>
+  <.PortSym 40 140 2 0>
+  <.PortSym 40 180 1 0>
 </Symbol>
 <Components>
+  <sTr Tr1 1 410 140 -29 -132 0 2 "0.5" 1 "0.5" 1>
+  <Port P3 1 460 280 4 -48 0 2 "3" 1 "analog" 0>
+  <Port P4 1 460 140 4 -48 0 2 "4" 1 "analog" 0>
+  <Port P5 1 340 390 12 4 0 1 "5" 1 "analog" 0>
+  <Port P2 1 260 360 -23 12 0 0 "2" 1 "analog" 0>
+  <Port P1 1 260 180 -23 12 0 0 "1" 1 "analog" 0>
 </Components>
 <Wires>
 </Wires>

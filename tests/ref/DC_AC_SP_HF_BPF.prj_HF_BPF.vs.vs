@@ -1,2 +1,28 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="HF_BPF.dat", qucs_DataDisplay="HF_BPF.dpl", qucs_SimOpenDpl=1, qucs_Script="HF_BPF.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module HF_BPF();
+    wire n_100_120;
+    wire n_100_220;
+    wire n_270_200;
+    wire n_310_200;
+    wire n_310_220;
+    wire n_380_90;
+    wire n_520_90;
+    wire n_590_200;
+    wire n_630_200;
+    wire n_630_220;
+    wire n_630_290;
+    wire n_800_140;
+    wire n_800_220;
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=490, S0_y1=90, S0_x2=550, S0_y2=90 *) INDQ #(.L(1.82uH),.Q(Ql),.f(f0),.Mode(SquareRoot),.Temp(26.85)) INDQ1 ( n_490_90, n_550_90 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=630, S0_y1=230, S0_x2=630, S0_y2=170 *) INDQ #(.L(221.8nH),.Q(Ql),.f(f0),.Mode(SquareRoot),.Temp(26.85)) INDQ3 ( n_630_230, n_630_170 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=590, S0_y1=230, S0_x2=590, S0_y2=170 *) CAPQ #(.C(560 pF),.Q(Qc),.f(f0),.Mode(Linear),.Temp(26.85)) CAPQ3 ( n_590_230, n_590_170 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=800, S0_y1=220 *) GND #() \\*  ( n_800_220 );
+    (* qucs_mirrored=0, qucs_rotated=2, S0_x1=770, S0_y1=140, S0_x2=830, S0_y2=140 *) Pac #(.Num(2),.Z(50 Ohm),.P(0 W),.f(1 GHz),.Temp(-273.15)) P1 ( n_770_140, n_830_140 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=310, S0_y1=230, S0_x2=310, S0_y2=170 *) INDQ #(.L(221.8nH),.Q(Ql),.f(f0),.Mode(SquareRoot),.Temp(26.85)) INDQ2 ( n_310_230, n_310_170 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=350, S0_y1=90, S0_x2=410, S0_y2=90 *) CAPQ #(.C(68 pF),.Q(Qc),.f(f0),.Mode(Linear),.Temp(26.85)) CAPQ1 ( n_350_90, n_410_90 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=270, S0_y1=230, S0_x2=270, S0_y2=170 *) CAPQ #(.C(560 pF),.Q(Qc),.f(f0),.Mode(Linear),.Temp(26.85)) CAPQ2 ( n_270_230, n_270_170 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=310, S0_y1=220 *) GND #() \\*  ( n_310_220 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=100, S0_y1=220 *) GND #() \\*  ( n_100_220 );
+    (* qucs_mirrored=0, qucs_rotated=2, S0_x1=70, S0_y1=120, S0_x2=130, S0_y2=120 *) Pac #(.Num(1),.Z(50 Ohm),.P(0 dBm),.f(1 GHz),.Temp(-273.15)) P2 ( n_70_120, n_130_120 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=630, S0_y1=290 *) GND #() \\*  ( n_630_290 );
+    (* qucs_mirrored=0, qucs_rotated=2, S0_x1=600, S0_y1=220, S0_x2=660, S0_y2=220 *) Vdc #(.U(1.1 V)) V1 ( n_600_220, n_660_220 );
 endmodule

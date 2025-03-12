@@ -1,2 +1,16 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="curtice_1_tb1.dat", qucs_DataDisplay="curtice_1_tb1.dpl", qucs_SimOpenDpl=1, qucs_Script="curtice_1_tb1.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module curtice_1_tb1();
+    wire n_0_0;
+    wire n_80_130;
+    wire n_80_190;
+    wire n_210_160;
+    wire n_350_60;
+    wire n_380_90;
+    wire n_380_160;
+    (* qucs_mirrored=0, qucs_rotated=2, S0_x1=50, S0_y1=130, S0_x2=110, S0_y2=130 *) Vdc #(.U(Vgs)) V2 ( n_50_130, n_110_130 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=80, S0_y1=190 *) GND #() \\*  ( n_80_190 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=380, S0_y1=160 *) GND #() \\*  ( n_380_160 );
+    (* qucs_mirrored=0, qucs_rotated=2, S0_x1=350, S0_y1=90, S0_x2=410, S0_y2=90 *) Vdc #(.U(Vds)) V1 ( n_350_90, n_410_90 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=210, S0_y1=160 *) GND #() \\*  ( n_210_160 );
+    (* qucs_mirrored=0, qucs_rotated=2, S0_x1=380, S0_y1=60, S0_x2=320, S0_y2=60 *) IProbe #() Pr1 ( n_380_60, n_320_60 );
+    (* qucs_mirrored=0, qucs_rotated=0,  *) Sub #(.File(curtice_1.sch)) Curtice1 (  );
 endmodule

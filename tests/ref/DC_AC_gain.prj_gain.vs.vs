@@ -1,2 +1,25 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="gain.dat", qucs_DataDisplay="gain.dpl", qucs_SimOpenDpl=1, qucs_Script="gain.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module gain();
+    wire n_0_0;
+    wire n_40_200;
+    wire n_40_270;
+    wire n_100_310;
+    wire n_130_90;
+    wire n_130_150;
+    wire n_160_310;
+    wire n_210_340;
+    wire n_210_400;
+    wire n_290_310;
+    wire n_360_300;
+    (* qucs_mirrored=0, qucs_rotated=2, S0_x1=10, S0_y1=200, S0_x2=70, S0_y2=200 *) Vac #(.U(1 uV),.f(2 kHz),.Phase(0),.Theta(0)) V4 ( n_10_200, n_70_200 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=40, S0_y1=270 *) GND #() \\*  ( n_40_270 );
+    (* qucs_mirrored=0, qucs_rotated=2, S0_x1=320, S0_y1=310, S0_x2=260, S0_y2=310 *) R #(.R(50k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_320_310, n_260_310 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=100, S0_y1=310 *) GND #() \\*  ( n_100_310 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=360, S0_y1=330, S0_x2=360, S0_y2=270 *) R #(.R(100k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_360_330, n_360_270 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=360, S0_y1=300 *) GND #() \\*  ( n_360_300 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=130, S0_y1=150 *) GND #() \\*  ( n_130_150 );
+    (* qucs_mirrored=0, qucs_rotated=2, S0_x1=100, S0_y1=90, S0_x2=160, S0_y2=90 *) Vdc #(.U(2.5 V)) V3 ( n_100_90, n_160_90 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=210, S0_y1=400 *) GND #() \\*  ( n_210_400 );
+    (* qucs_mirrored=0, qucs_rotated=2, S0_x1=180, S0_y1=340, S0_x2=240, S0_y2=340 *) Vdc #(.U(-2.5 V)) V6 ( n_180_340, n_240_340 );
+    (* qucs_mirrored=0, qucs_rotated=0,  *) Sub #(.File(singleOPV.sch)) OPV1 (  );
+    (* qucs_mirrored=0, qucs_rotated=2, S0_x1=190, S0_y1=310, S0_x2=130, S0_y2=310 *) R #(.R(1.7k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_190_310, n_130_310 );
 endmodule

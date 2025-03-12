@@ -1,2 +1,20 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="bridge.dat", qucs_DataDisplay="bridge.dpl", qucs_SimOpenDpl=1, qucs_Script="bridge.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module bridge();
+    wire n_180_170;
+    wire n_180_300;
+    wire n_280_160;
+    wire n_280_300;
+    wire n_310_200;
+    wire n_370_200;
+    wire n_460_160;
+    wire n_460_300;
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=280, S0_y1=200, S0_x2=340, S0_y2=200 *) IProbe #() Pr1 ( n_280_200, n_340_200 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=460, S0_y1=190, S0_x2=460, S0_y2=130 *) R #(.R(500 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_460_190, n_460_130 );
+    (* qucs_mirrored=0, qucs_rotated=2, S0_x1=150, S0_y1=170, S0_x2=210, S0_y2=170 *) Vdc #(.U(1 V)) V1 ( n_150_170, n_210_170 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=280, S0_y1=300 *) GND #() \\*  ( n_280_300 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=460, S0_y1=300 *) GND #() \\*  ( n_460_300 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=460, S0_y1=330, S0_x2=460, S0_y2=270 *) R #(.R(Rmeasure),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R5 ( n_460_330, n_460_270 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=180, S0_y1=300 *) GND #() \\*  ( n_180_300 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=280, S0_y1=190, S0_x2=280, S0_y2=130 *) R #(.R(Rbranch),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_280_190, n_280_130 );
+    (* qucs_mirrored=0, qucs_rotated=1, S0_x1=280, S0_y1=330, S0_x2=280, S0_y2=270 *) R #(.R(Rbranch),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R4 ( n_280_330, n_280_270 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=340, S0_y1=200, S0_x2=400, S0_y2=200 *) R #(.R(500 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_340_200, n_400_200 );
 endmodule
