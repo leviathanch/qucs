@@ -58,7 +58,7 @@ public:
 public: // attributes
   virtual std::string attr_get()const {return _attr;}
   virtual void attr_add(std::string s) {_attr += ", " + s;}
-  virtual void set_attributes(std::string s);
+  virtual void set_attribute(std::string name, std::string value);
 
 public: // parameter access
   virtual int param_count() const;

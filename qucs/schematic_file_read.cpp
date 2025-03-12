@@ -90,18 +90,25 @@ Component *Schematic::get_component(std::string type)
   return c;
 }
 
+void Schematic::parse_attributes(CS& cmd, std::shared_ptr<Wire> x)
+{
+}
+
 void Schematic::parse_attributes(CS& cmd, std::shared_ptr<Component> x)
 {
   assert(x);
   incomplete();
   while (cmd >> "(*") {
-    std::string attrib_string;
-    while(cmd.ns_more() && !(cmd >> "*)")) {
-      attrib_string += cmd.ctoc();
+    while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
+      std::string name, value;
+      cmd >> name >> "=" >> value;
+      x->set_attribute(name, value);
     }
-    x->set_attributes(attrib_string);
   }
 }
+
+void Schematic::parse_type(CS& cmd, std::shared_ptr<Wire> x)
+{}
 
 void Schematic::parse_type(CS& cmd, std::shared_ptr<Component> x)
 {
@@ -111,6 +118,9 @@ void Schematic::parse_type(CS& cmd, std::shared_ptr<Component> x)
   cmd >> new_type;
   x->set_dev_type(new_type);
 }
+
+void Schematic::parse_args_instance(CS& cmd, std::shared_ptr<Wire> x)
+{}
 
 void Schematic::parse_args_instance(CS& cmd, std::shared_ptr<Component> x)
 {
@@ -150,6 +160,10 @@ void Schematic::parse_args_instance(CS& cmd, std::shared_ptr<Component> x)
   }
 }
 
+void Schematic::parse_label(CS &cmd, std::shared_ptr<Wire> x)
+{
+}
+
 void Schematic::parse_label(CS &cmd, std::shared_ptr<Component> x)
 {
   assert(x);
@@ -161,6 +175,11 @@ void Schematic::parse_label(CS &cmd, std::shared_ptr<Component> x)
     x->set_label(std::string("_unnamed")); //BUG// not unique
     cmd.warn(bDANGER, "label required");
   }
+}
+
+void Schematic::parse_ports(CS& cmd, std::shared_ptr<Wire> x, bool all_new)
+{
+
 }
 
 void Schematic::parse_ports(CS& cmd, std::shared_ptr<Component> x, bool all_new)
@@ -248,6 +267,20 @@ std::shared_ptr<Component> Schematic::parse_instance(CS& cmd, std::shared_ptr<Co
   return x;
 }
 
+std::shared_ptr<Wire> Schematic::parse_wire(CS& cmd, std::shared_ptr<Wire> x)
+{
+  assert(x);
+  cmd.reset();
+  parse_attributes(cmd, x);
+  parse_type(cmd, x);
+  parse_args_instance(cmd, x);
+  parse_label(cmd, x);
+  parse_ports(cmd, x, false/*allow dups*/);
+  cmd >> ';';
+  cmd.check(0, "what's this?");
+  return x;
+}
+
 void Schematic::readVerilog(QTextStream &stream)
 {
   trace_method_calls();
@@ -263,13 +296,20 @@ void Schematic::readVerilog(QTextStream &stream)
     }else{
       std::string type;
       cmd >> type;
-      if(type=="net") continue;
-      if(type=="wire") continue;
-      QString qtype = QString::fromStdString(type);
-      auto x = Module::getComponent(qtype);
-      if(x) {
-        parse_instance(cmd, x);
-        simpleInsertComponent(x);
+      if(type=="wire") continue; // BUG: Not a component
+      if(type=="net") {
+        std::shared_ptr<Wire> w(new Wire(0,0,0,0, (Node*)4,(Node*)4));
+        if(w) {
+          parse_wire(cmd, w);
+          simpleInsertWire(w);
+        }
+      } else {
+        QString qtype = QString::fromStdString(type);
+        auto x = Module::getComponent(qtype);
+        if(x) {
+          parse_instance(cmd, x);
+          simpleInsertComponent(x);
+        }
       }
     }
   }

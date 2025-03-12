@@ -757,48 +757,38 @@ void Component::set_port_by_index(int num, std::string const& ext_name)
 }
 
 // Attributes
-void Component::set_attributes(std::string s)
+void Component::set_attribute(std::string name, std::string value)
 {
-  incomplete();
-  //_attr = s;
-  /*
-  std::cout << "set_attributes:" << s
-            << " port list size "
-            << Ports.size()
-            << std::endl;
-  */
-  QStringList attrs = QString::fromStdString(s).split(",");
-  QMap<int, int> port_x;
-  QMap<int, int> port_y;
-  int highest_index = 0;
-  int index = 0;
-  for(auto sp = attrs.begin(); sp<attrs.end(); sp++) {
-    QStringList pair = sp->split("=");
-    if((pair.size()>1)&&pair[0].contains("S0_x")) {
-      index = pair[0].replace("S0_x","").trimmed().toInt();
-      port_x.insert(index, pair[1].trimmed().toInt());
-      if(index>highest_index) highest_index = index;
-    } else if((pair.size()>1)&&pair[0].contains("S0_y")) {
-      index = pair[0].replace("S0_y","").trimmed().toInt();
-      port_y.insert(index, pair[1].trimmed().toInt());
-      if(index>highest_index) highest_index = index;
-    } else {
-      if(!sp->trimmed().isEmpty()) {
-        attr_add(sp->trimmed().toStdString());
+  QString qname = QString::fromStdString(name);
+  QString qvalue = QString::fromStdString(value);
+  if(qname.contains("S0_x")||qname.contains("S0_y")) {
+    int i=1,x=0,y=0,index=0;
+    bool setx = false;
+    for(auto pp = Ports.begin(); pp!=Ports.end(); pp++) {
+      setx = qname.contains("S0_x");
+      index = qname.replace("S0_x","").replace("S0_y","").trimmed().toInt();
+      if(i==index) {
+        if(setx) {
+          x = qvalue.trimmed().toInt();
+          y = (pp->getConnection())?pp->getConnection()->cy:0;
+        } else {
+          x = (pp->getConnection())?pp->getConnection()->cx:0;
+          y = qvalue.trimmed().toInt();
+        }
+        if(i==1) setCenter(x, y, true);
+        std::shared_ptr<Node> node(new Node(x,y));
+        pp->Connection = node;
+        assert(pp->getConnection());
+        break;
       }
+      i++;
     }
-  }
-  assert(highest_index==(int)Ports.size());
-  cx = port_x[1]+(port_x[highest_index]-port_x[1])/2;
-  cy = port_y[1]+(port_y[highest_index]-port_y[1])/2;
-  int i=1;
-  for(auto pp = Ports.begin(); pp!=Ports.end(); pp++, i++) {
-    int x=port_x[i],y=port_y[i];
-    std::shared_ptr<Node> node(new Node(x,y));
-    pp->Connection = node;
-    assert(pp->getConnection());
-    pp->getConnection()->cx=x;
-    pp->getConnection()->cy=y;
+  } else if(qname.contains("qucs_mirroredX")) {
+    mirroredX=qvalue.trimmed().toInt();
+  } else if(qname.contains("qucs_rotated")) {
+    for(int i=0; i<qvalue.trimmed().toInt(); i++) {
+      rotate();
+    }
   }
 }
 
