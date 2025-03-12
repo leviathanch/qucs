@@ -744,7 +744,9 @@ bool Schematic::loadDocument()
    */
   if( (Line.left(2) == "(*") && Line.contains("*)") ) { untested();
     // this is asking for a magic byte/sting in a schematic, which we do not have yet.
-    return readVerilog(file);
+    readVerilog(stream);
+    file.close();
+    return true;
   } else if(Line.left(16) == "<Qucs Schematic ") { // Legacy format
     Line = Line.mid(16, Line.length()-17);
     VersionTriplet DocVersion = VersionTriplet(Line);
@@ -754,9 +756,10 @@ bool Schematic::loadDocument()
                               QObject::tr("Wrong document version: %1").arg(DocVersion.toString()));
       }
     }
-    return readLegacy(file);
+    readLegacy(stream);
+    file.close();
+    return true;
   } else { untested();
-    return readVerilog(file);
     // BUG. implicit file type.
     // possibly use file extension as a fallback?
     // (OK for now)
