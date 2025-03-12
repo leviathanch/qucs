@@ -784,7 +784,9 @@ void Component::set_attribute(std::string name, std::string value)
       i++;
     }
   } else if(qname.contains("qucs_mirroredX")) {
-    mirroredX=qvalue.trimmed().toInt();
+    if(qvalue.trimmed().toInt()) {
+      mirrorX();
+    }
   } else if(qname.contains("qucs_rotated")) {
     for(int i=0; i<qvalue.trimmed().toInt(); i++) {
       rotate();
