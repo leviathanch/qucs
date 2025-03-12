@@ -133,11 +133,6 @@ void Schematic::dumpDeclaration(outputStream& stream, Component const* c, QStrin
     nets.append(getWireName(&(*pp)));
   }
   //print_attributes(o, nets);
-  if(c) stream
-      << ", qucs_mirroredX="
-      << c->mirroredX
-      << ", qucs_rotated="
-      << c->rotated; // BUG: needs cleanup
   std::string attr;
   if(c){
     attr = c->attr_get();
