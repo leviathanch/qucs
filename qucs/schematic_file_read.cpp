@@ -26,6 +26,9 @@
 #include "components/libcomp.h"
 #include "module.h"
 #include "misc.h"
+#include "trace.h"
+#include "exception.h"
+#include "components.h"
 
 #if TRACE_FUNCTION_CALLS
 #define trace_method_calls() qInfo()<<__FILE__ <<":"<<__func__
@@ -35,10 +38,8 @@
 
 bool Schematic::readLegacy(QFile &file) {
   trace_method_calls();
-  file.reset();
   QString Line;
   QTextStream stream(&file);
-  Line = stream.readLine();
   while(!stream.atEnd()) {
     Line = stream.readLine();
     Line = Line.trimmed();
@@ -73,27 +74,5 @@ bool Schematic::readLegacy(QFile &file) {
     }
   }
   file.close();
-  return true;
-}
-
-// BUG; this is not Schematic code.
-bool Schematic::readVerilog(QFile /* BUG: need CS */ &file)
-{
-  trace_method_calls();
-  file.reset(); // BUG. why?
-  QTextStream stream(&file); // BUG, remove
-  CS cmd(&stream); // BUG. remove
-  //std::cout << "Dummy read" << std::endl;
-  //std::cout << "-------------" << std::endl;
-  char c;
-  while(!cmd.atEnd()) {
-    cmd.read_line();
-    do {
-      c = cmd.ctoc();
-      //std::cout << c;
-    } while(c);
-  }
-  //std::cout << std::endl << "-------------" << std::endl;
-  file.close(); // BUG. see above.
   return true;
 }

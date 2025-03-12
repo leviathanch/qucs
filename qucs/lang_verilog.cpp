@@ -15,6 +15,12 @@
 #include "exception.h"
 #include "components/component.h"
 
+#if TRACE_FUNCTION_CALLS
+#define trace_method_calls() qInfo()<<__FILE__ <<":"<<__func__
+#else
+#define trace_method_calls() {}
+#endif
+
 void skip_attributes(CS& cmd)
 {
   while (cmd >> "(*") {
@@ -22,12 +28,11 @@ void skip_attributes(CS& cmd)
   }
 }
 
-// BUG. need extra function, Wire is not a Component.
-void parse_attributes(CS& cmd, Wire* x)
+void parse_attributes(CS& cmd, Wire *x)
 {
 }
 
-void parse_attributes(CS& cmd, Component* x)
+void parse_attributes(CS& cmd, Component *x)
 {
   assert(x);
   incomplete();
@@ -40,12 +45,10 @@ void parse_attributes(CS& cmd, Component* x)
   }
 }
 
-// BUG. need extra function, Wire is not a Component.
-void parse_type(CS& cmd, Wire* x)
-{
-}
+void parse_type(CS& cmd, Wire *x)
+{}
 
-void parse_type(CS& cmd, Component* x)
+void parse_type(CS& cmd, Component *x)
 {
   assert(x);
   //incomplete();
@@ -54,11 +57,10 @@ void parse_type(CS& cmd, Component* x)
   x->set_dev_type(new_type);
 }
 
-// BUG. need extra function, Wire is not a Component.
-void parse_args_instance(CS& cmd, Wire* x)
+void parse_args_instance(CS& cmd, Wire *x)
 {}
 
-void parse_args_instance(CS& cmd, Component* x)
+void parse_args_instance(CS& cmd, Component *x)
 {
   assert(x);
   if (cmd >> "#(") {
@@ -96,12 +98,11 @@ void parse_args_instance(CS& cmd, Component* x)
   }
 }
 
-// BUG. see above
-void parse_label(CS &cmd, Wire* x)
+void parse_label(CS &cmd, Wire *x)
 {
 }
 
-void parse_label(CS &cmd, Component* x)
+void parse_label(CS &cmd, Component *x)
 {
   assert(x);
   std::string my_name;
@@ -114,12 +115,12 @@ void parse_label(CS &cmd, Component* x)
   }
 }
 
-void parse_ports(CS& cmd, Wire* x, bool all_new)
+void parse_ports(CS& cmd, Wire *x, bool all_new)
 {
 
 }
 
-void parse_ports(CS& cmd, Component* x, bool all_new)
+void parse_ports(CS& cmd, Component *x, bool all_new)
 {
   assert(x);
   if (cmd >> '(') {
@@ -190,7 +191,7 @@ void parse_ports(CS& cmd, Component* x, bool all_new)
   }
 }
 
-void parse_instance(CS& cmd, Component* x)
+Component *parse_instance(CS& cmd, Component *x)
 {
   assert(x);
   cmd.reset();
@@ -201,10 +202,10 @@ void parse_instance(CS& cmd, Component* x)
   parse_ports(cmd, x, false/*allow dups*/);
   cmd >> ';';
   cmd.check(0, "what's this?");
-  // return x;
+  return x;
 }
 
-void parse_wire(CS& cmd, Wire* x)
+Wire *parse_wire(CS& cmd, Wire *x)
 {
   assert(x);
   cmd.reset();
@@ -215,5 +216,39 @@ void parse_wire(CS& cmd, Wire* x)
   parse_ports(cmd, x, false/*allow dups*/);
   cmd >> ';';
   cmd.check(0, "what's this?");
-  // return x;
+  return x;
+}
+
+bool Schematic::readVerilog(CS &cmd)
+{
+  assert(cmd);
+  trace_method_calls();
+  while(!cmd.atEnd()) {
+    cmd.read_line();
+    skip_attributes(cmd);
+    if(cmd>>"module") {
+      //ignore for now;
+    }else if(cmd>>"endmodule"){
+      //ignore for now;
+    }else{
+      std::string type;
+      cmd >> type;
+      if(type=="wire") continue; // BUG: Not a component
+      if(type=="net") {
+        std::shared_ptr<Wire> w(new Wire(0,0,0,0, (Node*)4,(Node*)4));
+        if(w) {
+          parse_wire(cmd, w.get());
+          simpleInsertWire(w);
+        }
+      } else {
+        QString qtype = QString::fromStdString(type);
+        auto x = Module::getComponent(qtype);
+        if(x) {
+          parse_instance(cmd, x.get());
+          simpleInsertComponent(x);
+        }
+      }
+    }
+  }
+  return true;
 }

@@ -31,6 +31,7 @@
 #include <QProcess>
 #include <QDebug>
 
+#include "ap.h"
 #include "qucs.h"
 #include "node.h"
 #include "schematic.h"
@@ -743,8 +744,13 @@ bool Schematic::loadDocument()
    * (* is at the beginning at some point it has to be closed
    */
   if( (Line.left(2) == "(*") && Line.contains("*)") ) { untested();
-    // this is asking for a magic byte/sting in a schematic, which we do not have yet.
-    return readVerilog(file);
+    /* this is asking for a magic byte/sting in a schematic, which we do not have yet.
+     * we had to look whether a preamble is there in the above hack, now we have to reset
+     * the file
+     */
+    file.reset();
+    CS cmd(&stream);
+    return readVerilog(cmd);
   } else if(Line.left(16) == "<Qucs Schematic ") { // Legacy format
     Line = Line.mid(16, Line.length()-17);
     VersionTriplet DocVersion = VersionTriplet(Line);
@@ -756,7 +762,6 @@ bool Schematic::loadDocument()
     }
     return readLegacy(file);
   } else { untested();
-    return readVerilog(file);
     // BUG. implicit file type.
     // possibly use file extension as a fallback?
     // (OK for now)

@@ -311,22 +311,9 @@ public:
   QString createNetlist(QTextStream&, int);
   bool loadDocument();
   bool readLegacy(QFile &file);
-  bool readVerilog(QFile &file);
   void highlightWireLabels (void);
   // Verilog
-  void skip_attributes(CS& cmd);
-  void parse_attributes(CS& cmd, std::shared_ptr<Component> x);
-  void parse_attributes(CS& cmd, std::shared_ptr<Wire> x);
-  std::shared_ptr<Component> parse_instance(CS& cmd, std::shared_ptr<Component> x);
-  std::shared_ptr<Wire> parse_wire(CS& cmd, std::shared_ptr<Wire> x);
-  void parse_type(CS& cmd, std::shared_ptr<Component> x);
-  void parse_type(CS& cmd, std::shared_ptr<Wire> x);
-  void parse_args_instance(CS& cmd, std::shared_ptr<Component> x);
-  void parse_args_instance(CS& cmd, std::shared_ptr<Wire> x);
-  void parse_label(CS& cmd, std::shared_ptr<Component> x);
-  void parse_label(CS& cmd, std::shared_ptr<Wire> x);
-  void parse_ports(CS& cmd, std::shared_ptr<Component> x, bool all_new);
-  void parse_ports(CS& cmd, std::shared_ptr<Wire> x, bool all_new);
+  bool readVerilog(CS &cmd);
 
 private:
   int  saveDocument(QString OutputFileName, QString OutputTypeName);
