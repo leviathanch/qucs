@@ -54,6 +54,7 @@ class QDragEnterEvent;
 class QPainter;
 
 class outputStream;
+class CS;
 
 // digital signal data
 struct DigSignal {
@@ -310,7 +311,7 @@ public:
   QString createNetlist(QTextStream&, int);
   bool loadDocument();
   bool readLegacy(QFile &file);
-  bool readVerilog(QFile &file);
+  bool readVerilog(CS &cmd);
   void highlightWireLabels (void);
 
 private:
