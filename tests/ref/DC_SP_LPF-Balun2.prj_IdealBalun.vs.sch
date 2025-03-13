@@ -21,12 +21,12 @@
   <.PortSym 40 180 1 0>
 </Symbol>
 <Components>
-  <sTr Tr1 1 0 0 -29 78 0 0 "0.5" 1 "0.5" 1>
-  <Port P3 1 0 0 -23 12 0 0 "3" 1 "analog" 0>
-  <Port P4 1 0 0 -23 12 0 0 "4" 1 "analog" 0>
-  <Port P5 1 0 0 -23 12 0 0 "5" 1 "analog" 0>
-  <Port P2 1 0 0 -23 12 0 0 "2" 1 "analog" 0>
-  <Port P1 1 0 0 -23 12 0 0 "1" 1 "analog" 0>
+  <sTr Tr1 1 380 70 -29 -132 0 2 "0.5" 1 "0.5" 1>
+  <Port P3 1 460 280 4 -48 0 2 "3" 1 "analog" 0>
+  <Port P4 1 460 140 4 -48 0 2 "4" 1 "analog" 0>
+  <Port P5 1 340 390 12 4 0 1 "5" 1 "analog" 0>
+  <Port P2 1 260 360 -23 12 0 0 "2" 1 "analog" 0>
+  <Port P1 1 260 180 -23 12 0 0 "1" 1 "analog" 0>
 </Components>
 <Wires>
 </Wires>
