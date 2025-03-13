@@ -239,9 +239,9 @@ bool readVerilog(CS &cmd, Schematic*s)
           parse_wire(cmd, w);
           s->pushBack(w);
         }else{
-		  }
+        }
       } else {
-        QString qtype = QString::fromStdString(type);
+      QString qtype = QString::fromStdString(type);
 		  std::shared_ptr<Component> x = Module::getComponent(qtype); // BUG. need proper dispatcher.
         if(x) {
           parse_instance(cmd, x.get());

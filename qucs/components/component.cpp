@@ -773,6 +773,25 @@ std::string Component::attr_get() const
 
 void Component::set_attribute(std::string name, std::string value)
 {
+  if(name == "S0_x1"){
+    cx = std::stoi(value) - Ports.begin()->x;
+  }
+  else
+  if(name == "S0_y1"){
+    cy = std::stoi(value) - Ports.begin()->y;
+  }
+  else
+  if(name == "qucs_mirroredX"){
+    if(std::stoi(value)) {
+      mirrorX();
+    }
+  }
+  else
+  if(name == "qucs_rotated"){
+    for(int i=1; i<std::stoi(value)-1; i++) {
+      rotate();
+    }
+  }
   // TODO: parse "qucs_" attributes
   incomplete();
 }
