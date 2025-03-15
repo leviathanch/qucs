@@ -18,8 +18,8 @@
   <.PortSym 40 60 1 0>
 </Symbol>
 <Components>
-  <Port P2 1 400 180 4 -58 0 2 "2" 1 "analog" 0>
-  <Port P1 1 180 180 -23 -58 1 0 "1" 1 "analog" 0>
+  <Port P2 1 400 180 4 -48 0 2 "2" 1 "analog" 0>
+  <Port P1 1 180 180 -23 -48 1 0 "1" 1 "analog" 0>
   <GND * 5 380 360 0 0 0 0>
   <C C1 1 380 280 17 -26 0 1 "1 pF" 1 "" 0 "neutral" 0>
   <Sub SC2 1 340 180 -26 21 0 0 "nest2.sch" 0>
