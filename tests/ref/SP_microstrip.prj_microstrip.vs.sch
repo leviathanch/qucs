@@ -27,7 +27,7 @@
   <MLIN MS1 1 0 0 -26 15 0 0 "Aluminia" 1 "1 mm" 1 "10 mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0>
   <MLIN MS2 1 0 0 -26 15 0 0 "Aluminia" 1 "1 mm" 1 "10 mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0>
   <SUBST Aluminia 1 0 0 -30 24 0 0 "9.8" 1 "1 mm" 1 "35 um" 1 "1e-3" 1 "0.022e-6" 1 "0.15e-6" 1>
-  <MTEE MS4 1 0 0 -26 -130 0 0 "Aluminia" 1 "1 mm" 1 "1 mm" 1 "0.5 mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "showNumbers" 0>
+  <MTEE MS4 1 0 0 -26 -105 0 0 "Aluminia" 1 "1 mm" 1 "1 mm" 1 "0.5 mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0 "showNumbers" 0>
   <MLIN Stub 1 0 0 -26 15 0 0 "Aluminia" 1 "0.5 mm" 1 "10 mm" 1 "Hammerstad" 0 "Kirschning" 0 "26.85" 0>
 </Components>
 <Wires>
