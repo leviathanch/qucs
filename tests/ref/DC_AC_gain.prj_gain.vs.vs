@@ -10,6 +10,6 @@
     (* S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30, qucs_mirrored=0, qucs_rotated=1 *) Vdc #(.U(2.5 V)) V3 ( n_0_m30, n_0_30 );
     (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) GND #() \\*  ( n_0_0 );
     (* S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30, qucs_mirrored=0, qucs_rotated=1 *) Vdc #(.U(-2.5 V)) V6 ( n_0_m30, n_0_30 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(singleOPV.sch)) OPV1 (  );
+    (* S0_x1=-40, S0_y1=20, S0_x2=-40, S0_y2=-20, S0_x3=10, S0_y3=-50, S0_x4=10, S0_y4=50, S0_x5=60, S0_y5=0, qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(singleOPV.sch)) OPV ( n_m40_20, n_m40_m20, n_10_m50, n_10_50, n_60_0 );
     (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) R #(.R(1.7k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_m30_0, n_30_0 );
 endmodule

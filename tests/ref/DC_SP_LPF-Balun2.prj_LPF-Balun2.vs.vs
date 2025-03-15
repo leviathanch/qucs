@@ -12,8 +12,8 @@
     (* S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30, qucs_mirrored=0, qucs_rotated=1 *) Pac #(.Num(1),.Z(100 Ohm),.P(0 dBm),.f(1 GHz),.Temp(26.85)) P1 ( n_0_m30, n_0_30 );
     (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) GND #() \\*  ( n_0_0 );
     (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) GND #() \\*  ( n_0_0 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(IdealBalun.sch)) Balun1 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(IdealBalun.sch)) Balun2 (  );
+    (* S0_x1=-30, S0_y1=-60, S0_x2=30, S0_y2=-60, S0_x3=-30, S0_y3=0, S0_x4=30, S0_y4=0, S0_x5=-30, S0_y5=60, qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(IdealBalun.sch)) Balun1 ( n_m30_m60, n_30_m60, n_m30_0, n_30_0, n_m30_60 );
+    (* S0_x1=-30, S0_y1=-60, S0_x2=30, S0_y2=-60, S0_x3=-30, S0_y3=0, S0_x4=30, S0_y4=0, S0_x5=-30, S0_y5=60, qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(IdealBalun.sch)) Balun2 ( n_m30_m60, n_30_m60, n_m30_0, n_30_0, n_m30_60 );
     (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) GND #() \\*  ( n_0_0 );
     (* S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30, qucs_mirrored=0, qucs_rotated=1 *) Vdc #(.U(1V)) V1 ( n_0_m30, n_0_30 );
     (* S0_x1=-10, S0_y1=20, S0_x2=10, S0_y2=20, qucs_mirrored=0, qucs_rotated=0 *) VProbe #() Pr1 ( n_m10_20, n_10_20 );

@@ -27,7 +27,7 @@
   <R R2 1 0 0 -26 15 0 0 "3k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
   <C C2 1 0 0 -26 17 0 0 "0.01uF" 1 "0V" 0 "neutral" 0>
   <C C1 1 0 0 -26 17 0 0 "0.01u" 1 "0V" 0 "neutral" 0>
-  <Sub SUB1 1 0 0 -26 21 0 0 "timer_555.sch" 0>
+  <Sub SUB 1 0 0 0 104 0 0 "timer_555.sch" 0>
 </Components>
 <Wires>
 </Wires>

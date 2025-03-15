@@ -17,7 +17,7 @@
 </Symbol>
 <Components>
   <GND \* 5 0 0 0 0 0 0>
-  <Sub SUB1 1 0 0 -26 21 0 0 "fet.sch" 0>
+  <Sub SUB 1 0 0 30 -6 0 0 "fet.sch" 0>
   <L L1 1 0 0 -26 10 0 0 "1.1 nH" 1 "" 0>
   <L L2 1 0 0 -26 10 0 0 "4.0 nH" 1 "" 0>
   <GND \* 5 0 0 0 0 0 0>

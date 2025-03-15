@@ -11,5 +11,5 @@
     (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) R #(.R(3k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_m30_0, n_30_0 );
     (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) C #(.C(0.01uF),.V(0V),.Symbol(neutral)) C2 ( n_m30_0, n_30_0 );
     (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) C #(.C(0.01u),.V(0V),.Symbol(neutral)) C1 ( n_m30_0, n_30_0 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_555.sch)) SUB1 (  );
+    (* S0_x1=-50, S0_y1=-60, S0_x2=-50, S0_y2=-20, S0_x3=-50, S0_y3=20, S0_x4=-50, S0_y4=60, S0_x5=80, S0_y5=60, S0_x6=80, S0_y6=20, S0_x7=80, S0_y7=-20, S0_x8=80, S0_y8=-60, qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_555.sch)) SUB ( n_m50_m60, n_m50_m20, n_m50_20, n_m50_60, n_80_60, n_80_20, n_80_m20, n_80_m60 );
 endmodule

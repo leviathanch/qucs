@@ -6,5 +6,5 @@
     (* S0_x1=0, S0_y1=-30, S0_x2=0, S0_y2=30, qucs_mirrored=0, qucs_rotated=1 *) Vdc #(.U(Vds)) V1 ( n_0_m30, n_0_30 );
     (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) GND #() \\*  ( n_0_0 );
     (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) IProbe #() Pr1 ( n_m30_0, n_30_0 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(curtice_1.sch)) Curtice1 (  );
+    (* S0_x1=0, S0_y1=40, S0_x2=-30, S0_y2=0, S0_x3=0, S0_y3=-40, qucs_mirrored=0, qucs_rotated=0 *) Sub #(.RG(curtice_1.sch),.RD(0),.RS(0),.VBR(10e10),.LG(1e-15),.LD(1e-15),.LS(1e-15),.IS(10f),.N(1),.XTI(0),.EG(1.11),.Beta(3m),.Lambda(40m),.VT0(-6),.Temp(27),.Alpha(0.8),.CDS(300f),.TAU(10p),.RIN(1m),.CGS(300f),.CGD(300f)) Curtice ( n_0_40, n_m30_0, n_0_m40 );
 endmodule

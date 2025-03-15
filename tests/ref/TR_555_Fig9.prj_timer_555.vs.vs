@@ -18,9 +18,9 @@
     (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) Port #(.Num(8),.Type(analog)) P_VCC ( n_0_0 );
     (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) Port #(.Num(2),.Type(analog)) P_TRIGGER ( n_0_0 );
     (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) Port #(.Num(6),.Type(analog)) P_THRESH ( n_0_0 );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_Discharge.sch)) SUB5 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_digital_comb.sch)) SUB3 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_amp.sch)) SUB4 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_trig.sch)) SUB6 (  );
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_thresh.sch)) SUB7 (  );
+    (* S0_x1=-50, S0_y1=20, S0_x2=50, S0_y2=-30, S0_x3=10, S0_y3=80, qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_Discharge.sch)) SUB ( n_m50_20, n_50_m30, n_10_80 );
+    (* S0_x1=-30, S0_y1=0, S0_x2=-30, S0_y2=20, S0_x3=-30, S0_y3=40, S0_x4=50, S0_y4=0, S0_x5=50, S0_y5=40, qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_digital_comb.sch)) SUB ( n_m30_0, n_m30_20, n_m30_40, n_50_0, n_50_40 );
+    (* S0_x1=-40, S0_y1=-30, S0_x2=-40, S0_y2=30, S0_x3=90, S0_y3=0, qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_amp.sch)) SUB ( n_m40_m30, n_m40_30, n_90_0 );
+    (* S0_x1=-30, S0_y1=-40, S0_x2=-30, S0_y2=30, S0_x3=80, S0_y3=-5, qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_trig.sch)) SUB ( n_m30_m40, n_m30_30, n_80_m5 );
+    (* S0_x1=-30, S0_y1=-30, S0_x2=-30, S0_y2=30, S0_x3=90, S0_y3=0, qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_thresh.sch)) SUB ( n_m30_m30, n_m30_30, n_90_0 );
 endmodule

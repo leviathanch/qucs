@@ -1,6 +1,6 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="555_Fig7.dat", qucs_DataDisplay="555_Fig7.dpl", qucs_SimOpenDpl=1, qucs_Script="555_Fig7.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module 555_Fig7();
     wire n_0_0;
-    (* qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_555.sch)) SUB1 (  );
+    (* S0_x1=-50, S0_y1=-60, S0_x2=-50, S0_y2=-20, S0_x3=-50, S0_y3=20, S0_x4=-50, S0_y4=60, S0_x5=80, S0_y5=60, S0_x6=80, S0_y6=20, S0_x7=80, S0_y7=-20, S0_x8=80, S0_y8=-60, qucs_mirrored=0, qucs_rotated=0 *) Sub #(.File(timer_555.sch)) SUB ( n_m50_m60, n_m50_m20, n_m50_20, n_m50_60, n_80_60, n_80_20, n_80_m20, n_80_m60 );
     (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) GND #() \\*  ( n_0_0 );
     (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) GND #() \\*  ( n_0_0 );
     (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) GND #() \\*  ( n_0_0 );

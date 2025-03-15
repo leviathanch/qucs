@@ -249,6 +249,7 @@ bool readVerilog(CS &cmd, Schematic*s)
 		  std::shared_ptr<Component> x = Module::getComponent(qtype); // BUG. need proper dispatcher.
         if(x) {
           parse_instance(cmd, x.get());
+          x->recreate(0);
           s->pushBack(x);
         }else{
 		  }

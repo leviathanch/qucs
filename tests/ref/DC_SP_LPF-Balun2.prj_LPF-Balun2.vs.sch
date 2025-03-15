@@ -28,8 +28,8 @@
   <Pac P1 1 0 0 18 -26 0 1 "1" 1 "100 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
   <GND \* 5 0 0 0 0 0 0>
   <GND \* 5 0 0 0 0 0 0>
-  <Sub Balun1 1 0 0 -26 21 0 0 "IdealBalun.sch" 0>
-  <Sub Balun2 1 0 0 -26 21 0 0 "IdealBalun.sch" 0>
+  <Sub Balun1 1 0 0 -26 81 0 0 "IdealBalun.sch" 0>
+  <Sub Balun2 1 0 0 -26 81 0 0 "IdealBalun.sch" 0>
   <GND \* 5 0 0 0 0 0 0>
   <Vdc V1 1 0 0 18 -26 0 1 "1V" 1>
   <VProbe Pr1 1 0 0 28 -31 0 0>

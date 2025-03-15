@@ -13,5 +13,5 @@
     (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) R #(.R(RG),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) Rg ( n_m30_0, n_30_0 );
     (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) L #(.L(LG),.I()) Lg ( n_m30_0, n_30_0 );
     (* S0_x1=0, S0_y1=0, qucs_mirrored=0, qucs_rotated=0 *) Port #(.Num(2),.Type(analog)) Gate ( n_0_0 );
-    (* S0_x1=-30, S0_y1=0, S0_x2=30, S0_y2=0, qucs_mirrored=0, qucs_rotated=0 *) EDD #(.Type(explicit),.Branches(4),.I1(V1<-VBR+50*Vt ? -IsT*(1+exp(-(VBR+V1)/Vt)) + GMIN*V1 : 0),.Q1(0)) D1 ( n_m30_0, n_30_0 );
+    (* S0_x1=-30, S0_y1=-90, S0_x2=30, S0_y2=-90, S0_x3=-30, S0_y3=-30, S0_x4=30, S0_y4=-30, S0_x5=-30, S0_y5=30, S0_x6=30, S0_y6=30, S0_x7=-30, S0_y7=90, S0_x8=30, S0_y8=90, qucs_mirrored=0, qucs_rotated=0 *) EDD #(.Type(explicit),.Branches(4),.I1(V1<-VBR+50*Vt ? -IsT*(1+exp(-(VBR+V1)/Vt)) + GMIN*V1 : 0),.Q1(0),.I2(0),.Q2(0),.I3(0),.Q3(0),.I4(0),.Q4(0)) D1 ( n_m30_m90, n_30_m90, n_m30_m30, n_30_m30, n_m30_30, n_30_30, n_m30_90, n_30_90 );
 endmodule

@@ -35,11 +35,11 @@
   <Port P_VCC 1 0 0 -23 12 0 0 "8" 1 "analog" 0>
   <Port P_TRIGGER 1 0 0 -23 12 0 0 "2" 1 "analog" 0>
   <Port P_THRESH 1 0 0 -23 12 0 0 "6" 1 "analog" 0>
-  <Sub SUB5 1 0 0 -26 21 0 0 "timer_Discharge.sch" 0>
-  <Sub SUB3 1 0 0 -26 21 0 0 "timer_digital_comb.sch" 0>
-  <Sub SUB4 1 0 0 -26 21 0 0 "timer_amp.sch" 0>
-  <Sub SUB6 1 0 0 -26 21 0 0 "timer_trig.sch" 0>
-  <Sub SUB7 1 0 0 -26 21 0 0 "timer_thresh.sch" 0>
+  <Sub SUB 1 0 0 -50 104 0 0 "timer_Discharge.sch" 0>
+  <Sub SUB 1 0 0 -15 74 0 0 "timer_digital_comb.sch" 0>
+  <Sub SUB 1 0 0 -20 99 0 0 "timer_amp.sch" 0>
+  <Sub SUB 1 0 0 5 39 0 0 "timer_trig.sch" 0>
+  <Sub SUB 1 0 0 5 49 0 0 "timer_thresh.sch" 0>
 </Components>
 <Wires>
 </Wires>

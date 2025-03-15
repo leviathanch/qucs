@@ -26,7 +26,7 @@
   <Vdc V3 1 0 0 18 -26 0 1 "2.5 V" 1>
   <GND \* 5 0 0 0 0 0 0>
   <Vdc V6 1 0 0 18 -26 0 1 "-2.5 V" 1>
-  <Sub OPV1 1 0 0 -26 21 0 0 "singleOPV.sch" 0>
+  <Sub OPV 1 0 0 25 -51 0 0 "singleOPV.sch" 0>
   <R R3 1 0 0 -26 15 0 0 "1.7k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
 </Components>
 <Wires>
