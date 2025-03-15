@@ -19,15 +19,15 @@
   <.PortSym 40 100 3 0>
 </Symbol>
 <Components>
-  <Port PinP 1 0 0 -23 12 0 0 "1" 1 "analog" 0>
-  <Port PinN 1 0 0 -23 12 0 0 "2" 1 "analog" 0>
-  <GND \* 5 0 0 0 0 0 0>
-  <Idc I1 1 0 0 18 -26 0 1 "0.1 uA" 1>
-  <R R4 1 0 0 -26 15 0 0 "1k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <Port POUT 1 0 0 -23 12 0 0 "3" 1 "analog" 0>
-  <GND \* 5 0 0 0 0 0 0>
-  <OpAmp OP1 1 0 0 -26 42 0 0 "1e6" 1 "1 V" 0>
-  <C C1 1 0 0 -26 17 0 0 "1 nF" 1 "" 0 "neutral" 0>
+  <Port PinP 1 60 120 -23 12 0 0 "1" 1 "analog" 0>
+  <Port PinN 1 60 180 -23 12 0 0 "2" 1 "analog" 0>
+  <GND * 5 245 35 0 0 0 0>
+  <Idc I1 1 160 60 18 -26 0 1 "0.1 uA" 1>
+  <R R4 1 320 150 -26 15 0 0 "1k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <Port POUT 1 390 150 4 -48 0 2 "3" 1 "analog" 0>
+  <GND * 5 370 235 0 0 0 0>
+  <OpAmp OP1 1 225 150 -26 42 0 0 "1e6" 1 "1 V" 0>
+  <C C1 1 370 205 17 -26 0 1 "1 nF" 1 "" 0 "neutral" 0>
 </Components>
 <Wires>
 </Wires>

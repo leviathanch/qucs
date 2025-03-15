@@ -24,22 +24,22 @@
   <.PortSym 40 300 6 0>
 </Symbol>
 <Components>
-  <Port P_GND 1 0 0 -23 12 0 0 "1" 1 "analog" 0>
-  <Port P_OUTPUT 1 0 0 -23 12 0 0 "3" 1 "analog" 0>
-  <R R1 1 0 0 -26 15 0 0 "5k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <Port P_RESET 1 0 0 -23 12 0 0 "4" 1 "analog" 0>
-  <R R2 1 0 0 -26 15 0 0 "5k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <R R3 1 0 0 -26 15 0 0 "5k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <Port P_CONTROL 1 0 0 -23 12 0 0 "5" 1 "analog" 0>
-  <Port P_DISCHARGE 1 0 0 -23 12 0 0 "7" 1 "analog" 0>
-  <Port P_VCC 1 0 0 -23 12 0 0 "8" 1 "analog" 0>
-  <Port P_TRIGGER 1 0 0 -23 12 0 0 "2" 1 "analog" 0>
-  <Port P_THRESH 1 0 0 -23 12 0 0 "6" 1 "analog" 0>
-  <Sub SUB5 1 0 0 -26 21 0 0 "timer_Discharge.sch" 0>
-  <Sub SUB3 1 0 0 -26 21 0 0 "timer_digital_comb.sch" 0>
-  <Sub SUB4 1 0 0 -26 21 0 0 "timer_amp.sch" 0>
-  <Sub SUB6 1 0 0 -26 21 0 0 "timer_trig.sch" 0>
-  <Sub SUB7 1 0 0 -26 21 0 0 "timer_thresh.sch" 0>
+  <Port P_GND 1 820 300 4 12 1 2 "1" 1 "analog" 0>
+  <Port P_OUTPUT 1 820 230 4 -48 0 2 "3" 1 "analog" 0>
+  <R R1 1 220 100 15 -26 0 1 "5k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <Port P_RESET 1 150 40 -23 12 0 0 "4" 1 "analog" 0>
+  <R R2 1 220 250 15 -26 0 1 "5k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <R R3 1 220 400 15 -26 0 1 "5k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <Port P_CONTROL 1 150 200 -23 12 0 0 "5" 1 "analog" 0>
+  <Port P_DISCHARGE 1 820 360 4 12 1 2 "7" 1 "analog" 0>
+  <Port P_VCC 1 220 30 -64 -23 0 3 "8" 1 "analog" 0>
+  <Port P_TRIGGER 1 140 355 -23 12 0 0 "2" 1 "analog" 0>
+  <Port P_THRESH 1 120 140 -23 12 0 0 "6" 1 "analog" 0>
+  <Sub SUB5 1 610 410 -26 21 0 0 "timer_Discharge.sch" 0>
+  <Sub SUB3 1 505 200 -26 21 0 0 "timer_digital_comb.sch" 0>
+  <Sub SUB4 1 690 200 -26 21 0 0 "timer_amp.sch" 0>
+  <Sub SUB6 1 275 280 -26 21 0 0 "timer_trig.sch" 0>
+  <Sub SUB7 1 255 140 -26 21 0 0 "timer_thresh.sch" 0>
 </Components>
 <Wires>
 </Wires>
