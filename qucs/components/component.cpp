@@ -795,9 +795,52 @@ std::string Component::attr_get() const
   return ret;
 }
 
-void Component::set_attribute(std::string name, std::string value)
+void Component::set_attribute_by_name(std::string name, std::string value)
 {
-  // TODO: parse "qucs_" attributes
+  if(name == "S0_x1"){
+    cx = std::stoi(value) - Ports.begin()->x;
+  }
+  else
+  if(name == "S0_y1"){
+    cy = std::stoi(value) - Ports.begin()->y;
+  }
+  else
+  if(name == "qucs_mirrored") {
+    //if(std::stoi(value)) mirrorX();
+    mirroredX = std::stoi(value);
+  }
+  else
+  if(name == "qucs_rotated"){
+    bool mmir = mirroredX;
+    if(mmir) mirrorX();
+    if(rotated) { // undo initial rotations after saving state
+      for(int z=4-rotated;z;z--) {
+        rotate();
+      }
+    }
+    int rrot = std::stoi(value);
+    if (mmir && !rrot) {
+      mirrorX();
+    }
+    else
+    if (mmir && rrot==1) { // mirrorX and rotate 90 = mirrorX
+      mirrorX();
+      rotate();
+    }
+    else
+    if (mmir && rrot==2) { // mirrorX and rotate 180 = mirrorY
+      mirrorY();
+    }
+    else
+    if (mmir && rrot==3) { // mirrorX and rotate 270 = mirrorX
+      mirrorX();
+      rotate();rotate();rotate();
+    }
+    else
+    if (!mmir && rrot) {
+      for(int z=0;z<rrot;z++) rotate();
+    }
+  }
   incomplete();
 }
 
