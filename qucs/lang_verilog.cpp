@@ -35,7 +35,7 @@ void parse_attributes(CS& cmd, Component* x)
     while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
       std::string name, value;
       cmd >> name >> "=" >> value;
-      x->set_attribute(name, value);
+      x->set_attribute_by_name(name, value);
     }
   }
 }
