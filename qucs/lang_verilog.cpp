@@ -35,7 +35,7 @@ void parse_attributes(CS& cmd, Component* x)
     while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
       std::string name, value;
       cmd >> name >> "=" >> value;
-      x->set_attribute(name, value);
+      x->set_attribute_by_name(name, value);
     }
   }
 }
@@ -250,9 +250,10 @@ bool readVerilog(CS &cmd, Schematic*s)
         //trace3("readVerilog, gotComponent", type, x->tx, x->ty);
         if(x) {
           parse_instance(cmd, x.get());
+          x->recreate(0);
           // BUG: Gives inconsisten values when generating refs
           // setting text position to 0,0 for now.
-	  x->set_qucs_text_position(0, 0);
+          x->set_qucs_text_position(0, 0);
           s->pushBack(x);
         }else{
 		  }

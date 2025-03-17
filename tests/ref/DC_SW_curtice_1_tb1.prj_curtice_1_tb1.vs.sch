@@ -16,13 +16,13 @@
 <Symbol>
 </Symbol>
 <Components>
-  <Vdc V2 1 0 0 0 0 0 1 "Vgs" 1>
-  <GND \* 5 0 0 0 0 0 0>
-  <GND \* 5 0 0 0 0 0 0>
-  <Vdc V1 1 0 0 0 0 0 1 "Vds" 1>
-  <GND \* 5 0 0 0 0 0 0>
-  <IProbe Pr1 1 0 0 0 0 0 0>
-  <Sub Curtice1 1 0 0 0 0 0 0 "curtice_1.sch" 0>
+  <Vdc V2 1 80 160 0 0 0 1 "Vgs" 1>
+  <GND \* 5 80 190 0 0 0 0>
+  <GND \* 5 380 160 0 0 0 0>
+  <Vdc V1 1 380 120 0 0 0 1 "Vds" 1>
+  <GND \* 5 210 160 0 0 0 0>
+  <IProbe Pr1 1 380 60 0 0 1 2>
+  <Sub Curtice 1 210 160 0 0 0 0 "curtice_1.sch" 0 "0" 1 "0" 1 "10e10" 1 "1e-15" 1 "1e-15" 1 "1e-15" 1 "10f" 1 "1" 1 "0" 1 "1.11" 1 "3m" 1 "40m" 1 "-6" 1 "27" 1 "0.8" 1 "300f" 1 "10p" 1 "1m" 1 "300f" 1 "300f" 1>
 </Components>
 <Wires>
 </Wires>
