@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  /home/leviathan/GNUCap/qucs/tests/TR_555_Fig9.prj/timer_thresh.sch
 
 Idc:I1 gnd _net0 I="0.1 uA"
 R:R4 _net2 _net3 R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

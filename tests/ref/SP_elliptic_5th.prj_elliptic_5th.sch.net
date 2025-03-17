@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  /home/leviathan/GNUCap/qucs/tests/SP_elliptic_5th.prj/elliptic_5th.sch
 
 C:C1 gnd _net0 C="35.69 pF" V=""
 C:C2 _net0 _net1 C="63.31 pF" V=""

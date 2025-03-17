@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  /home/leviathan/GNUCap/qucs/tests/DC_SW_fgummel.prj/fgummel.sch
 
 Vdc:VBE _net0 gnd U="Vbe"
 Vdc:VCE _net1 gnd U="Vbe"

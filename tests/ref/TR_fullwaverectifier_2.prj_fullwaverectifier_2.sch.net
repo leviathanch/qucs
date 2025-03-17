@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  /home/leviathan/GNUCap/qucs/tests/TR_fullwaverectifier_2.prj/fullwaverectifier_2.sch
 
 R:R1 gnd out R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 Eqn:Eqn1 Veff="220" Vamp="Veff*sqrt(2)" Vfreq="50" Tperiod="1/Vfreq" Tmax="2*Tperiod" Export="yes"

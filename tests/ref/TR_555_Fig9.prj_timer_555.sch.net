@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  /home/leviathan/GNUCap/qucs/tests/TR_555_Fig9.prj/timer_555.sch
 
 .Def:timer_Discharge _net0 _net3 _net2
 R:R1 _net0 _net1 R="10K" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  /home/leviathan/GNUCap/qucs/tests/SP_groupdelay_sp.prj/groupdelay_sp.sch
 
 C:C1 gnd _net0 C="39.01pF" V=""
 L:L1 _net0 _net1 L="280.9nH" I=""

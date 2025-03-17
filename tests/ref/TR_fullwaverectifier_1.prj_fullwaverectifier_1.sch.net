@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  /home/leviathan/GNUCap/qucs/tests/TR_fullwaverectifier_1.prj/fullwaverectifier_1.sch
 
 sTr:Tr1 _net0 in gnd _net1 gnd gnd T1="1" T2="1"
 R:R1 gnd out R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

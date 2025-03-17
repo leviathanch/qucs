@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  /home/leviathan/GNUCap/qucs/tests/TR_sawtooth-3.prj/sawtooth-3.sch
 
 R:RfT1 VfT2 Vf R="1000" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 R:RfL2 _net0 Vf R="20" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

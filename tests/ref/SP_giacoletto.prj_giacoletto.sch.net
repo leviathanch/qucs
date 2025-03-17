@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  /home/leviathan/GNUCap/qucs/tests/SP_giacoletto.prj/giacoletto.sch
 
 L:L1 _net0 _net1 L="1.5 nH" I=""
 R:R2 gnd _net2 R="66.7 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
