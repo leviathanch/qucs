@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  test_circuit.vs
 
 .Def:short_circuit _net0 _net0
 .Def:End

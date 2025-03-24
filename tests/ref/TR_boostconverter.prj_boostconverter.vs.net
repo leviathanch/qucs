@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  boostconverter.vs
 
 L:L1 _net0 _net1 L="47uH" I="0"
 Vdc:V2 _net2 _net3 U="12V"

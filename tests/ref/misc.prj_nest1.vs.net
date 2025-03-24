@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  nest1.vs
 
 .Def:nest2 _net1 _net0
 R:R1 _net1 _net0 R="0 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

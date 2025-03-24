@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  active_lp.sch
 
 R:R2 _net0 _net1 R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 R:R1 _net1 _net2 R="10k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

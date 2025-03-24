@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  charac.vs
 
 IProbe:Collector _net0 _net1
 Vdc:V1 _net2 _net3 U="Uce"

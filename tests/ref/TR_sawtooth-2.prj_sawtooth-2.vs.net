@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  sawtooth-2.vs
 
 OpAmp:OP1 _net0 _net1 _net2 G="1e4" Umax="15 V"
 OpAmp:OP2 _net0 _net1 _net2 G="1e4" Umax="15 V"

@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  HF_BPF.vs
 
 INDQ:INDQ1 _net0 _net1 L="1.82uH" Q="Ql" f="f0" Mode="SquareRoot" Temp="26.85"
 INDQ:INDQ3 _net0 _net1 L="221.8nH" Q="Ql" f="f0" Mode="SquareRoot" Temp="26.85"

@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  gyrator.vs
 
 Vdc:V1 _net0 _net1 U="10 V"
 Vac:V2 _net0 _net1 U="1 V" f="1 GHz" Phase="0" Theta="0"

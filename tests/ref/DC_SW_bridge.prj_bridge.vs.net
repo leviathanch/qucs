@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  bridge.vs
 
 IProbe:Pr1 _net0 _net1
 R:R2 _net0 _net1 R="500 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

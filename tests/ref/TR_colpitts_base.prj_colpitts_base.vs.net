@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  colpitts_base.vs
 
 L:L1 _net0 _net1 L="5u" I=""
 Vdc:Vp _net2 _net3 U="5 V"

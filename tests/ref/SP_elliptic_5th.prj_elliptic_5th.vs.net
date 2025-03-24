@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  elliptic_5th.vs
 
 C:C1 _net0 _net1 C="35.69 pF" V=""
 C:C2 _net0 _net1 C="63.31 pF" V=""

@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  lc_osc.vs
 
 C:C1 _net0 _net1 C="2p" V=""
 C:C2 _net0 _net1 C="2p" V=""

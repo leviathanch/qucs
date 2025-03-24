@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  sawtooth-3.vs
 
 R:RfT1 _net0 _net1 R="1000" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 R:RfL2 _net0 _net1 R="20" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

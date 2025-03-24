@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  timer_trig.sch
 
 Idc:I1 _net0 gnd I="500 nA"
 R:R4 _net2 _net3 R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

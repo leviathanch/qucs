@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  Spiral_BPF.vs
 
 C:C1 _net0 _net1 C="195 fF" V=""
 SPIRALIND:SPIRALIND1 _net0 _net1 Subst="Subst1" Geometry="Circular" W="25 um" Di="91 um" S="25 um" N="2" Temp="26.85"

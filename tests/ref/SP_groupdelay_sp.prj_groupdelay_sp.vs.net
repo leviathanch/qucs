@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  groupdelay_sp.vs
 
 C:C1 _net0 _net1 C="39.01pF" V=""
 L:L1 _net0 _net1 L="280.9nH" I=""

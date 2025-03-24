@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  fullwaverectifier_1.vs
 
 sTr:Tr1 _net0 _net1 _net2 _net3 _net4 _net5 T1="1" T2="1"
 R:R1 _net6 _net7 R="1k" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

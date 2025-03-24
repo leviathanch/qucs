@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  bandpass.sch
 
 .Def:opa227 _net3 _net4 _net1
 VCVS:SRC2 _net0 _net1 gnd gnd G="1" T="0"

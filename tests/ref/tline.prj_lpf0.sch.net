@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  lpf0.sch
 
 L:L2 gnd _net0 L="5.228 nH" I=""
 R:R1 _net1 _net0 R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

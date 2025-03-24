@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  colpitts_base.sch
 
 L:L1 _net0 Output L="5u" I=""
 Vdc:Vp _net0 gnd U="5 V"

@@ -1164,6 +1164,7 @@ bool Schematic::throughAllComps(QTextStream *stream, int& countInit,
 	continue;
       }
       QString scfile = pc->getSubcircuitFile();
+      if(pc->Props.size() < 2) continue;
       s = scfile + "/" + pc->prop(1).Value;
       SubMap::Iterator it = FileList.find(s);
       if(it != FileList.end())
@@ -1701,7 +1702,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
     stream << "//";
   else
     stream << "--";
-  stream << " Qucs " << PACKAGE_VERSION << "  " << DocName << "\n";
+  stream << " Qucs " << PACKAGE_VERSION << "  " << QFileInfo(DocName).fileName() << "\n";
 
   // set timescale property for verilog schematics
   if (isVerilog) {

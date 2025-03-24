@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  buckconverter.vs
 
 Vrect:V2 _net0 _net1 U="1V" TH="Ton" TL="Toff" Tr="1 ns" Tf="1 ns" Td="0 ns"
 Vdc:V1 _net0 _net1 U="12V"

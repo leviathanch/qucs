@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  tline0.vs
 
 TLIN:Line1 _net0 _net1 Z="50 Ohm" L=".1" Alpha="0 dB" Temp="26.85"
 R:R1 _net0 _net1 R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"

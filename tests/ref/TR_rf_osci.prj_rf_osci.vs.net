@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  rf_osci.vs
 
 C:C1 _net0 _net1 C="10 nF" V=""
 L:L1 _net0 _net1 L="0.5 mH" I=""

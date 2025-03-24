@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  lc_osc.sch
 
 C:C1 pos _net0 C="2p" V=""
 C:C2 neg _net0 C="2p" V=""

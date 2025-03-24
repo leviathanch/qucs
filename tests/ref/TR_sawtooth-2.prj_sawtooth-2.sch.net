@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  sawtooth-2.sch
 NodeSet:NS0 TOUT U="15 V"
 NodeSet:NS1 TOUT2 U="0"
 

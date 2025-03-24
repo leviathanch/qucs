@@ -1,4 +1,4 @@
-# Qucs
+# Qucs 0.0.21-dev  fgummel.vs
 
 Vdc:VBE _net0 _net1 U="Vbe"
 Vdc:VCE _net0 _net1 U="Vbe"
