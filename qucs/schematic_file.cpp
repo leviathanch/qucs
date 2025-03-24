@@ -1701,7 +1701,7 @@ int Schematic::prepareNetlist(QTextStream& stream, QStringList& Collect,
     stream << "//";
   else
     stream << "--";
-  stream << " Qucs " << PACKAGE_VERSION << "  " << DocName << "\n";
+  stream << " Qucs\n";
 
   // set timescale property for verilog schematics
   if (isVerilog) {

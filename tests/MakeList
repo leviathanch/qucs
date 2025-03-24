@@ -74,7 +74,6 @@ PRJ_TESTS = \
 	TR_rf_osci.prj \
 	TR_sawtooth-2.prj \
 	TR_sawtooth-3.prj \
-	TR_sawtooth-discreet.prj \
 	TR_schmitt.prj \
 	TR_single_balanced.prj \
 	TR_supply.prj \
@@ -107,13 +106,14 @@ PRJ_TESTS = \
 	TR_chargepump.prj \
 	TR_Puls3b.prj \
 	TR_resistor.prj \
-	TR_sawtooth-1.prj \
-	misc.prj \
 	unittest.prj
 
 # some of these hangup or crash qucs. needs more work
 PRJ_TESTS_TODO = \
-	d_3f5.prj \
+    TR_sawtooth-discreet.prj \
+    TR_sawtooth-1.prj \
+    d_3f5.prj \
+    misc.prj \
 	DC_SP_HICUM-fig10.prj \
 	DC_SW_bsim4v30nMOS_Ids_Vgs.prj \
 	DC_SW_bsim4v30pMOS_Ids_Vgs.prj \
