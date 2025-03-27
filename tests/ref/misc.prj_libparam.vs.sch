@@ -16,10 +16,10 @@
 <Symbol>
 </Symbol>
 <Components>
-  <Vdc V1 1 0 0 0 0 0 1 "1 V" 1>
-  <GND \* 5 0 0 0 0 0 0>
-  <R R1 1 0 0 0 0 0 0 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <Lib IB1 1 0 0 0 0 0 0 "Ideal" 1 "Notch2" 1>
+  <Vdc V1 1 140 250 0 0 0 1 "1 V" 1>
+  <GND \* 5 140 320 0 0 0 0>
+  <R R1 1 340 250 0 0 1 3 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <Lib IB1 1 -1162167622 -1162167622 0 0 0 0 "Ideal" 1 "Notch2" 1>
 </Components>
 <Wires>
 </Wires>
