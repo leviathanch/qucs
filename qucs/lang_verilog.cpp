@@ -26,7 +26,29 @@ void skip_attributes(CS& cmd)
 // BUG. need extra function, Wire is not a Component.
 void parse_attributes(CS& cmd, Wire* x)
 {
+  assert(x);
   incomplete();
+  while (cmd >> "(*") {
+    while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
+      std::string name, value;
+      cmd >> name >> "=" >> value;
+      if(name == "S0_x1"){
+        x->x1=std::stoi(value);
+      }
+      else
+      if(name == "S0_y1"){
+        x->y1=std::stoi(value);
+      }
+      else
+      if(name == "S0_x2"){
+        x->x2=std::stoi(value);
+      }
+      else
+      if(name == "S0_y2"){
+        x->y2=std::stoi(value);
+      }
+    }
+  }
 }
 
 void parse_attributes(CS& cmd, Component* x)
