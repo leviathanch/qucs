@@ -26,7 +26,29 @@ void skip_attributes(CS& cmd)
 // BUG. need extra function, Wire is not a Component.
 void parse_attributes(CS& cmd, Wire* x)
 {
+  assert(x);
   incomplete();
+  while (cmd >> "(*") {
+    while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
+      std::string name, value;
+      cmd >> name >> "=" >> value;
+      if(name == "S0_x1"){
+        x->set_qucs_x1(std::stoi(value));
+      }
+      else
+      if(name == "S0_y1"){
+        x->set_qucs_y1(std::stoi(value));
+      }
+      else
+      if(name == "S0_x2"){
+        x->set_qucs_x2(std::stoi(value));
+      }
+      else
+      if(name == "S0_y2"){
+        x->set_qucs_y2(std::stoi(value));
+      }
+    }
+  }
 }
 
 void parse_attributes(CS& cmd, Component* x)
@@ -119,7 +141,6 @@ void parse_label(CS &cmd, Component* x)
 
 void parse_ports(CS& cmd, Wire* x, bool all_new)
 {
-
 }
 
 void parse_ports(CS& cmd, Component* x, bool all_new)
@@ -193,7 +214,8 @@ void parse_ports(CS& cmd, Component* x, bool all_new)
   }
 }
 
-void parse_instance(CS& cmd, Component* x)
+template <class T>
+void parse_instance(CS& cmd, T* x)
 {
   assert(x);
   cmd.reset();
@@ -204,21 +226,6 @@ void parse_instance(CS& cmd, Component* x)
   parse_ports(cmd, x, false/*allow dups*/);
   cmd >> ';';
   cmd.check(0, "what's this?");
-  // return x;
-}
-
-void parse_wire(CS& cmd, Wire* x)
-{
-  assert(x);
-  cmd.reset();
-  parse_attributes(cmd, x);
-  parse_type(cmd, x);
-  parse_args_instance(cmd, x);
-  parse_label(cmd, x);
-  parse_ports(cmd, x, false/*allow dups*/);
-  cmd >> ';';
-  cmd.check(0, "what's this?");
-  // return x;
 }
 
 class inspect_attributes {
@@ -268,7 +275,7 @@ bool readVerilog(CS &cmd, Schematic*s)
       }else if(type=="net") {
         Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
         if(w) {
-          parse_wire(cmd, w);
+          parse_instance(cmd, w);
           s->pushBack(w);
         }else{
 		  }
