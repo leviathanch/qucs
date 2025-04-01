@@ -16,6 +16,13 @@
 #include "components/component.h"
 #include "qt_compat.h"
 
+void unescape_string(std::string &str)
+{
+  if(str[0] == '\\' && !isalpha(str[1]) && str[1] != '_') {
+    str.erase(0,1);
+  }
+}
+
 void skip_attributes(CS& cmd)
 {
   while (cmd >> "(*") {
@@ -66,6 +73,7 @@ void parse_type(CS& cmd, Component* x)
   //incomplete();
   std::string new_type;
   cmd >> new_type;
+  unescape_string(new_type);
   x->set_dev_type(new_type);
 }
 
@@ -121,6 +129,7 @@ void parse_label(CS &cmd, Component* x)
   assert(x);
   std::string my_name;
   if (cmd >> my_name) {
+    unescape_string(my_name);
     x->set_label(my_name);
   }else{ untested();
     //x->set_label(x->id_letter() + std::string("_unnamed")); //BUG// not unique
@@ -270,6 +279,7 @@ bool readVerilog(CS &cmd, Schematic*s)
         }else{
 		  }
       } else {
+        unescape_string(type);
         QString qtype = QString::fromStdString(type);
 	if(attr.has_type()){
 	  qtype = QString::fromStdString(attr.type());

@@ -25,7 +25,10 @@ EDD:D1 _net4 _net1 _net4 _net1 _net5 _net1 _net4 _net3 I1="D1.I1" Q1="D1.Q1" I2=
 .Def:End
 
 Vdc:V2 _net0 gnd U="Vgs"
+.DC:DC1 Temp="26.85" reltol="0.001" abstol="1 pA" vntol="1 uV" saveOPs="no" MaxIter="150" saveAll="no" convHelper="none" Solver="CroutLU"
 Eqn:Eqn1 y="1" Export="yes"
+.SW:SW1 Sim="DC1" Type="lin" Param="R1" Start="Vds" Stop="-10" Points="41"
+.SW:SW2 Sim="SW1" Type="lin" Param="R1" Start="Vgs" Stop="-5" Points="6"
 Vdc:V1 _net1 gnd U="Vds"
 IProbe:Pr1 _net1 _net2
 Sub:Curtice1 Type="curtice_1"
