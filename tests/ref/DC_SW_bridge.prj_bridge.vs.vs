@@ -26,10 +26,10 @@
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=310, S0_y1=200, S0_x2=370, S0_y2=200 *) IProbe #() Pr1 ( n_310_200, n_370_200 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=460, S0_y1=160, S0_x2=460, S0_y2=100 *) R #(.R(500 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_460_160, n_460_100 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=180, S0_y1=170, S0_x2=180, S0_y2=230 *) Vdc #(.U(1 V)) V1 ( n_180_170, n_180_230 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=280, S0_y1=300 *) GND #() \\*  ( n_280_300 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=460, S0_y1=300 *) GND #() \\*  ( n_460_300 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=280, S0_y1=300 *) GND #() \\\*  ( n_280_300 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=460, S0_y1=300 *) GND #() \\\*  ( n_460_300 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=460, S0_y1=300, S0_x2=460, S0_y2=240 *) R #(.R(Rmeasure),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R5 ( n_460_300, n_460_240 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=180, S0_y1=300 *) GND #() \\*  ( n_180_300 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=180, S0_y1=300 *) GND #() \\\*  ( n_180_300 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=280, S0_y1=160, S0_x2=280, S0_y2=100 *) R #(.R(Rbranch),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_280_160, n_280_100 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=280, S0_y1=300, S0_x2=280, S0_y2=240 *) R #(.R(Rbranch),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R4 ( n_280_300, n_280_240 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=370, S0_y1=200, S0_x2=430, S0_y2=200 *) R #(.R(500 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_370_200, n_430_200 );

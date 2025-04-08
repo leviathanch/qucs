@@ -29,9 +29,9 @@
     wire n_410_50;
     wire n_410_160;
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=340, S0_y1=180, S0_x2=340, S0_y2=140, S0_x3=410, S0_y3=160 *) OpAmp #(.G(1e6),.Umax(15 V)) OP1 ( n_340_180, n_340_140, n_410_160 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=300, S0_y1=180 *) GND #() \\*  ( n_300_180 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=180, S0_y1=260 *) GND #() \\*  ( n_180_260 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=60, S0_y1=260 *) GND #() \\*  ( n_60_260 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=300, S0_y1=180 *) GND #() \\\*  ( n_300_180 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=180, S0_y1=260 *) GND #() \\\*  ( n_180_260 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=60, S0_y1=260 *) GND #() \\\*  ( n_60_260 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=60, S0_y1=200, S0_x2=60, S0_y2=260 *) Vac #(.U(1 V),.f(1 GHz),.Phase(0),.Theta(0)) V1 ( n_60_200, n_60_260 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=100, S0_y1=140, S0_x2=160, S0_y2=140 *) R #(.R(390),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_100_140, n_160_140 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=180, S0_y1=260, S0_x2=180, S0_y2=200 *) R #(.R(5.6k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_180_260, n_180_200 );

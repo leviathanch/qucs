@@ -36,7 +36,7 @@
     wire n_500_80;
     wire n_520_80;
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=310, S0_y1=80, S0_x2=370, S0_y2=80 *) R #(.R(200m),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) RD ( n_310_80, n_370_80 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=280, S0_y1=300 *) GND #() \\*  ( n_280_300 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=280, S0_y1=300 *) GND #() \\\*  ( n_280_300 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=280, S0_y1=240, S0_x2=280, S0_y2=300 *) Vdc #(.U(13.5V)) VDC ( n_280_240, n_280_300 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=40, S0_y1=140, S0_x2=40, S0_y2=200 *) Vdc #(.U(200V)) VGEN ( n_40_140, n_40_200 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=160, S0_y1=200, S0_x2=160, S0_y2=140 *) C #(.C(40nF),.V()) CS ( n_160_200, n_160_140 );

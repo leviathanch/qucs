@@ -34,7 +34,7 @@
     wire n_516_407;
     wire n_516_437;
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=56, S0_y1=247, S0_x2=56, S0_y2=307 *) Vac #(.U(150 V),.f(1 GHz),.Phase(0),.Theta(0)) V1 ( n_56_247, n_56_307 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=56, S0_y1=437 *) GND #() \\*  ( n_56_437 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=56, S0_y1=437 *) GND #() \\\*  ( n_56_437 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=306, S0_y1=287, S0_x2=306, S0_y2=227 *) R #(.R(15 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_306_287, n_306_227 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=406, S0_y1=287, S0_x2=406, S0_y2=227 *) R #(.R(6 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_406_287, n_406_227 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=516, S0_y1=287, S0_x2=516, S0_y2=227 *) R #(.R(8 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R3 ( n_516_287, n_516_227 );

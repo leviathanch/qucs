@@ -92,16 +92,37 @@ static void print_args(outputStream& o, Component const* x)
 }
 
 template<class S>
-void dumpIdentifier(outputStream& stream, S const& name)
+void dump_identifier(outputStream& o, S const& name)
 {
-  if (!name.size()){
-    //incomplete();
- // }else if name contains special character
-    // stream << '\\' << name << ' ';
-  }else if(isalpha(name[0]) || name[0] == '_') {
-    stream << name;
-  } else {
-    stream << '\\' << name << ' ';
+  bool plain = true;
+
+  if(isalpha(name[0])){
+  }else if(name[0] == '$'){ untested();
+  }else if(name[0] == '_'){ untested();
+  }else{
+    plain = false;
+  }
+
+  for(size_t i=1; plain && i<name.size(); ++i){
+    if(isalnum(name[i])){
+    }else if(name[i] == '_'){
+    }else{ untested();
+      plain = false;
+    }
+  }
+
+  if(plain){
+    o << name;
+  }else{
+    o << '\\';
+    for(size_t i=0; i<name.size(); ++i){
+      if(name[i] == '\\'){
+  o << '\\';
+      }else{
+      }
+      o << name[i];
+    }
+    o << ' ';
   }
 }
 
@@ -162,13 +183,13 @@ static void dumpDeclaration(outputStream& stream, Element const* e, QList<QPoint
   auto w = dynamic_cast<Wire const*>(e);
   if(c){
     std::string type = c->dev_type();
-    dumpIdentifier(stream, type);
+    dump_identifier(stream, type);
   }else{
     stream << "net"; // BUG
   }
   print_args(stream, c);
   if(c){
-    dumpIdentifier(stream, c->name().toStdString());
+    dump_identifier(stream, c->name().toStdString());
   }else if(w){
     // BUG. Wire is not a Component.
     stream << wirelabel(w);

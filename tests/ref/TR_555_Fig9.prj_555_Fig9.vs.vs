@@ -41,11 +41,11 @@
     wire n_670_610;
     wire n_690_290;
     wire n_690_650;
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=590, S0_y1=430 *) GND #() \\*  ( n_590_430 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=300, S0_y1=220 *) GND #() \\*  ( n_300_220 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=390, S0_y1=250 *) GND #() \\*  ( n_390_250 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=410, S0_y1=540 *) GND #() \\*  ( n_410_540 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=160, S0_y1=460 *) GND #() \\*  ( n_160_460 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=590, S0_y1=430 *) GND #() \\\*  ( n_590_430 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=300, S0_y1=220 *) GND #() \\\*  ( n_300_220 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=390, S0_y1=250 *) GND #() \\\*  ( n_390_250 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=410, S0_y1=540 *) GND #() \\\*  ( n_410_540 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=160, S0_y1=460 *) GND #() \\\*  ( n_160_460 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=410, S0_y1=470, S0_x2=410, S0_y2=530 *) Vpulse #(.U1(5 V),.U2(0 V),.T1(0),.T2(0.02 ms),.Tr(5 ns),.Tf(5 ns)) V3 ( n_410_470, n_410_530 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=300, S0_y1=160, S0_x2=300, S0_y2=220 *) Vdc #(.U(5 V)) V1 ( n_300_160, n_300_220 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=160, S0_y1=260, S0_x2=160, S0_y2=200 *) R #(.R(3.9k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_160_260, n_160_200 );

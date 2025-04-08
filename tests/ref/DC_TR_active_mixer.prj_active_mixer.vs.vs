@@ -57,13 +57,13 @@
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=570, S0_y1=100, S0_x2=570, S0_y2=40 *) R #(.R(100k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R4 ( n_570_100, n_570_40 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=250, S0_y1=100, S0_x2=250, S0_y2=40 *) R #(.R(100k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R5 ( n_250_100, n_250_40 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=350, S0_y1=100, S0_x2=350, S0_y2=40 *) R #(.R(1.5k),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R2 ( n_350_100, n_350_40 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=320, S0_y1=410 *) GND #() \\*  ( n_320_410 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=410, S0_y1=410 *) GND #() \\*  ( n_410_410 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=320, S0_y1=410 *) GND #() \\\*  ( n_320_410 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=410, S0_y1=410 *) GND #() \\\*  ( n_410_410 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=150, S0_y1=210, S0_x2=210, S0_y2=210, S0_x3=210, S0_y3=270, S0_x4=150, S0_y4=270 *) Tr #(.T(1)) Tr1 ( n_150_210, n_210_210, n_210_270, n_150_270 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=90, S0_y1=100 *) GND #() \\*  ( n_90_100 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=90, S0_y1=100 *) GND #() \\\*  ( n_90_100 );
     (* qucs_mirrored=1, qucs_rotated=0, S0_x1=90, S0_y1=210, S0_x2=150, S0_y2=210 *) R #(.R(50 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R8 ( n_90_210, n_150_210 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=90, S0_y1=270 *) GND #() \\*  ( n_90_270 );
-    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=90, S0_y1=410 *) GND #() \\*  ( n_90_410 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=90, S0_y1=270 *) GND #() \\\*  ( n_90_270 );
+    (* qucs_mirrored=0, qucs_rotated=0, S0_x1=90, S0_y1=410 *) GND #() \\\*  ( n_90_410 );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=90, S0_y1=40, S0_x2=90, S0_y2=100 *) Vdc #(.U(10 V)) V2 ( n_90_40, n_90_100 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=610, S0_y1=180 *) Eqn #(.y(1),.Export(yes)) Eqn1 (  );
     (* qucs_mirrored=1, qucs_rotated=1, S0_x1=90, S0_y1=210, S0_x2=90, S0_y2=270 *) Vac #(.U(0.5 V),.f(10 kHz),.Phase(0),.Theta(0)) LO ( n_90_210, n_90_270 );
