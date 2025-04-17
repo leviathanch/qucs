@@ -72,22 +72,36 @@ void Schematic::dumpVerilogQucsPreamble(outputStream& stream) const
 #define INACTIVE 0
 static void print_args(outputStream& o, Component const* x)
 {
-  // assert(x);
+  assert(x);
   o << " #(";
-  if(x) {
-    QString sep = "";
-    //for (int ii = x->param_count() - 1; ii >= 0; --ii) {
-    for (int ii = 0; ii < x->param_count(); ++ii) {
-      if (x->param_is_printable(ii)) {
-        o << sep;
-        o << '.' << x->param_name(ii) << '(' << x->param_value(ii) << ')';
-        sep = ',';
-      }else{
-      }
+  QString sep = "";
+  //for (int ii = x->param_count() - 1; ii >= 0; --ii) {
+  for (int ii = 0; ii < x->param_count(); ++ii) {
+    if (x->param_is_printable(ii)) {
+      o << sep;
+      o << '.' << x->param_name(ii) << '(' << x->param_value(ii) << ')';
+      sep = ',';
+    }else{
     }
-  }else{
-    // BUG
   }
+  o << ") ";
+}
+
+static void print_args(outputStream& o, Wire const* w)
+{
+  assert(w);
+  o << " #(";
+  /*
+  if(w->Label) {
+    int x1, x2, y1, y2;
+    w->Label->getLabelBounding(x1, y1, x2, y2);
+    o << ".has_label(1),";
+    o << ".label_x1("<<x1<<"),";
+    o << ".label_y1("<<y1<<")";
+  } else {
+    o << ".has_label(0)";
+  }
+  */
   o << ") ";
 }
 
@@ -173,13 +187,11 @@ static std::string parse_identifier(CS& cmd, std::string const& term)
 }
 
 template<class T>
-void dump_attributes(outputStream& stream, T const* c, QList<QPoint> ports, Schematic const* s)
+void dump_attributes(outputStream& stream, T const* c)
 {
-  //assert(c);
-  QStringList nets;
-  int port_idx = 0;
+  assert(c);
+  stream << "    ";
   stream << "(* ";
-  //print_attributes(o, nets);
   std::string attr;
   if(c){
     attr = c->attr_get();
@@ -191,21 +203,6 @@ void dump_attributes(outputStream& stream, T const* c, QList<QPoint> ports, Sche
   if(attr.size()){
     sep = ", ";
   }else{
-  }
-  if(!ports.size()) {
-    stream << sep << QString("S0_x%1=%2, S0_y%1=%3")
-      .arg(++port_idx)
-      .arg(c->cx)
-      .arg(c->cy);
-  }else{
-  for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
-    stream << sep << QString("S0_x%1=%2, S0_y%1=%3")
-        .arg(++port_idx)
-        .arg(pp->x())
-        .arg(pp->y());
-    sep = ", ";
-    nets.append(s->getWireName(&(*pp)));
-  }
   }
   stream << QString(" *) ");
 }
@@ -222,8 +219,8 @@ static std::string wirelabel(Wire const* w)
   return name;
 }
 
-static void dumpDeclaration(outputStream& stream, Element const* e, QList<QPoint> ports,
-    Schematic const* s)
+template<class T>
+static void dumpDeclaration(outputStream& stream, T const* e)
 {
   auto c = dynamic_cast<Component const*>(e);
   auto w = dynamic_cast<Wire const*>(e);
@@ -233,7 +230,7 @@ static void dumpDeclaration(outputStream& stream, Element const* e, QList<QPoint
   }else{
     stream << "net"; // BUG
   }
-  print_args(stream, c);
+  print_args(stream, e);
   if(c){
     dump_identifier(stream, c->name().toStdString());
   }else if(w){
@@ -244,76 +241,51 @@ static void dumpDeclaration(outputStream& stream, Element const* e, QList<QPoint
   }
   stream << " ( ";
   std::string sep;
-  for (auto pp = ports.begin(); pp != ports.end(); ++pp) {
-    stream << sep << s->getWireName(&(*pp));
+  for(int i=0; i<e->net_nodes(); i++) {
+    stream << sep << e->port_value(i);
     sep = ", ";
   }
   stream << " );\n";
 }
 
-void Schematic::dumpVerilogComponent(outputStream& stream, Element const* e) const
+template<class T>
+void Schematic::dumpVerilogComponent(outputStream& stream, T const* e) const
 {
   assert(e);
-  QList<QPoint> ports;
-  if(auto c = dynamic_cast<Component const*>(e)){
-    for (auto pp = c->Ports.begin(); pp != c->Ports.end(); ++pp) {
-      auto con = pp->getConnection();
-      if(con) {
-  ports.append(QPoint(con->cx,con->cy));
-      }
-    }
-  }else if(auto w = dynamic_cast<Wire const*>(e)){
-    // BUG. wire is not a component.
-    ports.append(QPoint(w->x1,w->y1));
-    ports.append(QPoint(w->x2,w->y2));
-  }else{
-    unreachable()
-  }
-  stream << "    ";
-
-  dump_attributes(stream, e, ports, this);
-  dumpDeclaration(stream, e, ports, this);
+  dump_attributes(stream, e);
+  dumpDeclaration(stream, e);
 }
 
 int Schematic::saveVerilogDocument(QFile *file)
 {
   trace_method_calls();
-  QList<QPoint> ioPortNets;
-  QList<QPoint> wireList;
-  QStringList ioPorts;
+  std::list<std::string> ioPortNets;
+  std::list<std::string> wireList;
+  std::list<std::string> ioPorts;
 
   for (auto it = DocComps.begin(); it != DocComps.end(); ++it) {
-    QPoint p;
     if(it->obsolete_model_hack() == "Port") {
-      p = QPoint(it->cx,it->cy);
-      ioPorts.append(QString(".%1(%2)").arg(it->name()).arg(getWireName(&p)));
-      ioPortNets.append(p);
+      ioPorts.push_back("."+it->name().toStdString()+"("+it->port_value(0)+")");
+      ioPortNets.push_back(it->port_value(0));
     } else {
-      p = QPoint(it->cx,it->cy);
-      if(!wireList.contains(p))
-        wireList.append(p);
+      for(int i=0; i<it->net_nodes(); i++) {
+        if((std::find(wireList.begin(), wireList.end(), it->port_value(i))== wireList.end())) {
+          wireList.push_back(it->port_value(i));
+        }
+      }
     }
   }
 
   for (auto it = DocWires.begin(); it != DocWires.end(); ++it) {
-    QPoint p;
-    p = QPoint(it->x1,it->y1);
-    if(!wireList.contains(p))
-      wireList.append(p);
-    p = QPoint(it->x2,it->y2);
-    if(!wireList.contains(p))
-      wireList.append(p);
+    for(int i=0;i<2;i++) {
+      if((std::find(wireList.begin(), wireList.end(), it->port_value(i))== wireList.end())) {
+        wireList.push_back(it->port_value(i));
+      }
+    }
   }
 
-  std::sort(wireList.begin(), wireList.end(),
-    [&](const QPoint& p1, const QPoint& p2){
-      if( p1.x() < p2.x() )
-         return true;
-      if( (p1.x() == p2.x()) && (p1.y() < p2.y()) )
-         return true;
-      return false;
-    }
-  );
+  wireList.sort();
+  ioPortNets.sort();
 
   // Writing stuff out
   QTextStream Qs(file);
@@ -331,19 +303,25 @@ int Schematic::saveVerilogDocument(QFile *file)
   // stream << attr_get();
   stream << " *) ";
 
-  stream << "module " << module_name << "(" << ioPorts.join(", ") << ");\n";
+  stream << "module " << module_name << "(";
+  std::string sep;
+  for (auto it = ioPorts.begin(); it != ioPorts.end(); ++it) {
+    stream << sep << *it;
+    sep = ",";
+  }
+  stream << ");\n";
 
   // io defines
   for (auto it = ioPortNets.begin(); it != ioPortNets.end(); ++it) {
     stream << "    ";
-    stream << "inout " << getWireName(&*it) << ";\n";
+    stream << "inout " << *it << ";\n";
   }
 
   // The wires (subnets)
   for (auto it = wireList.begin(); it != wireList.end(); ++it) {
-    if(!ioPortNets.contains(*it)) {
+    if((std::find(ioPortNets.begin(), ioPortNets.end(), *it)==ioPortNets.end())) {
       stream << "    ";
-      stream << "wire " << getWireName(&*it) << ";\n";
+      stream << "wire " << *it << ";\n";
     }
   }
 
@@ -409,6 +387,9 @@ void parse_attributes(CS& cmd, T* x)
 // BUG. need extra function, Wire is not a Component.
 void parse_type(CS& cmd, Wire* x)
 {
+  std::string new_type;
+  new_type = parse_identifier(cmd, ",=(){};");
+  assert(new_type=="net"); // Something would be seriously wrong otherwise
 }
 
 void parse_type(CS& cmd, Component* x)
@@ -420,11 +401,8 @@ void parse_type(CS& cmd, Component* x)
   x->set_dev_type(new_type);
 }
 
-// BUG. need extra function, Wire is not a Component.
-void parse_args_instance(CS& cmd, Wire* x)
-{}
-
-void parse_args_instance(CS& cmd, Component* x)
+template <class T>
+void parse_args_instance(CS& cmd, T* x)
 {
   assert(x);
   if (cmd >> "#(") {
@@ -465,6 +443,11 @@ void parse_args_instance(CS& cmd, Component* x)
 // BUG. see above
 void parse_label(CS &cmd, Wire* x)
 {
+  std::string my_name;
+  my_name = parse_identifier(cmd, ",=(){};");
+  // BUG: Initial value missing
+  QString initial_value="";
+  x->setName(QString::fromStdString(my_name),initial_value,0,0,0);
 }
 
 void parse_label(CS &cmd, Component* x)
@@ -481,11 +464,8 @@ void parse_label(CS &cmd, Component* x)
   }
 }
 
-void parse_ports(CS& cmd, Wire* x, bool all_new)
-{
-}
-
-void parse_ports(CS& cmd, Component* x, bool all_new)
+template <class T>
+void parse_ports(CS& cmd, T* x, bool all_new)
 {
   assert(x);
   if (cmd >> '(') {
@@ -565,6 +545,11 @@ void parse_instance(CS& cmd, T* x)
   parse_type(cmd, x);
   parse_args_instance(cmd, x);
   parse_label(cmd, x);
+  auto c = dynamic_cast<Component*>(x);
+  if(c) {
+    c->recreate(0);
+    c->apply_qucs_values();
+  }
   parse_ports(cmd, x, false/*allow dups*/);
   cmd >> ';';
   cmd.check(0, "what's this?");
@@ -573,7 +558,7 @@ void parse_instance(CS& cmd, T* x)
 class inspect_attributes {
   std::string _type;
 public:
-  explicit inspect_attributes(CS& cmd) { untested();
+  explicit inspect_attributes(CS& cmd, Schematic*s) { untested();
     while (cmd >> "(*") { untested();
       while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) { untested();
 	std::string name, value;
@@ -586,6 +571,46 @@ public:
 	trace2("inspect", name, value);
 	if(name=="qucs_type") { untested();
 	  _type = value;
+  } else if(name=="qucs_ViewX1") { untested();
+    s->ViewX1=std::stoi(value);
+  } else if(name=="qucs_ViewY1") { untested();
+    s->ViewY1=std::stoi(value);
+  } else if(name=="qucs_ViewX2") { untested();
+    s->ViewX2=std::stoi(value);
+  } else if(name=="qucs_ViewY2") { untested();
+    s->ViewY2=std::stoi(value);
+  } else if(name=="qucs_Scale") { untested();
+    s->Scale=std::stof(value);
+  } else if(name=="qucs_tmpViewX1") { untested();
+    s->tmpViewX1=std::stoi(value);
+  } else if(name=="qucs_tmpViewY1") { untested();
+    s->tmpViewY1=std::stoi(value);
+  } else if(name=="qucs_GridX") { untested();
+    s->GridX=std::stoi(value);
+  } else if(name=="qucs_GridY") { untested();
+    s->GridY=std::stoi(value);
+  } else if(name=="qucs_GridOn") { untested();
+    s->GridOn=std::stoi(value);
+  } else if(name=="qucs_DataSet") { untested();
+    s->DataSet=QString::fromStdString(value);
+  } else if(name=="qucs_DataDisplay") { untested();
+    s->DataDisplay=QString::fromStdString(value);
+  } else if(name=="qucs_SimOpenDpl") { untested();
+    s->SimOpenDpl=std::stoi(value);
+  } else if(name=="qucs_Script") { untested();
+    s->Script=QString::fromStdString(value);
+  } else if(name=="qucs_SimRunScript") { untested();
+    s->SimRunScript=std::stoi(value);
+  } else if(name=="qucs_showFrame") { untested();
+    s->showFrame=std::stoi(value);
+  } else if(name=="qucs_FrameText0") { untested();
+    s->Frame_Text0=QString::fromStdString(value);
+  } else if(name=="qucs_FrameText1") { untested();
+    s->Frame_Text1=QString::fromStdString(value);
+  } else if(name=="qucs_FrameText2") { untested();
+    s->Frame_Text2=QString::fromStdString(value);
+  } else if(name=="qucs_FrameText3") { untested();
+    s->Frame_Text3=QString::fromStdString(value);
 	}else{ untested();
 	}
       }
@@ -603,7 +628,7 @@ bool readVerilog(CS &cmd, Schematic*s)
   // todo: catch ExceptionEOF.
   while(!cmd.atEnd()) {
     cmd.read_line();
-    inspect_attributes attr(cmd);
+    inspect_attributes attr(cmd, s);
     trace1("inspected", cmd.tail());
     if(cmd>>"module") { untested();
       //ignore for now;
@@ -612,10 +637,18 @@ bool readVerilog(CS &cmd, Schematic*s)
     }else{
       std::string type;
       type = parse_identifier(cmd, ",=(){};");
-      if(type=="wire") {
+      if(type=="wire" || type=="inout") {
 	 // BUG: Not a component
-      }else if(type=="net") {
-        Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
+      } else if(type=="net") {
+        Node *node1 = new Node(0, 0);
+        Node *node2 = new Node(0, 0);
+        std::shared_ptr<Node> pn1;
+        std::shared_ptr<Node> pn2;
+        pn1.reset(node1);
+        pn2.reset(node2);
+        s->DocNodes.append(pn1);
+        s->DocNodes.append(pn2);
+        Wire* w = new Wire(0,0,0,0,node1,node2);
         if(w) {
           parse_instance(cmd, w);
           s->pushBack(w);
@@ -628,8 +661,16 @@ bool readVerilog(CS &cmd, Schematic*s)
 	}else{
 	}
         std::shared_ptr<Component> x = Module::getComponent(qtype); // BUG. need proper dispatcher.
+
         if(x) {
-	  trace3("readVerilog, gotComponent", qtype, x->tx(), x->ty());
+    trace3("readVerilog, gotComponent", qtype, x->tx(), x->ty());
+          for (auto pp = x->Ports.begin(); pp!=x->Ports.end(); pp++) {
+            Node *node = new Node(pp->x+x->cx, pp->y+x->cy);
+            std::shared_ptr<Node> pn;
+            pn.reset(node);
+            pp->Connection=pn;
+            s->DocNodes.append(pn);
+          }
           parse_instance(cmd, x.get());
           // BUG: Gives inconsisten values when generating refs
           // setting text position to 0,0 for now.

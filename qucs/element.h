@@ -160,6 +160,7 @@ public:
   virtual void paintScheme(QPainter *);
   virtual void setCenter(int, int, bool relative=false);
   virtual void getCenter(int&, int&);
+  virtual std::string port_name_hack(const int x, const int y) const;
 
   bool isSelected;
   int  Type;    // whether it is Component, Wire, ...

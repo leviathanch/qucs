@@ -34,6 +34,7 @@ class QTextStream; // BUG
 
 class Component : public Element {
   std::string _attr;
+  std::vector<std::string> _portvalues;
 
 public: // BUG.
   std::list<qucs::Port>   Ports;
@@ -70,6 +71,7 @@ public:
 
 public: // attributes
   std::string attr_get()const override;
+  virtual std::string extra_attr_get() const { return ""; }
   virtual void attr_add(std::string s) {_attr += ", " + s;}
   virtual void set_attribute(std::string name, std::string value);
   virtual void set_label(std::string const& name);
@@ -85,7 +87,7 @@ public: // parameter access
 public: // ports
   virtual int net_nodes()const{return Ports.size();}
   virtual std::string port_name(int)const{incomplete(); return "???";}
-  virtual std::string port_value(int)const{incomplete(); return "???";}
+  virtual std::string port_value(int i)const;
   virtual void set_port_by_name(std::string const&, std::string const&);
   virtual void set_port_by_index(int num, std::string const& ext_name);
 

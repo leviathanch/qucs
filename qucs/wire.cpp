@@ -224,6 +224,53 @@ void Wire::set_attribute(std::string name, std::string value)
   }
 }
 
+std::string Wire::attr_get() const
+{
+  std::string ret;
+  ret += (QString("S0_x%1=%2, S0_y%1=%3")
+    .arg(1)
+    .arg(x1)
+    .arg(y1)).toStdString();
+  ret += ", ";
+  ret += (QString("S0_x%1=%2, S0_y%1=%3")
+    .arg(2)
+    .arg(x2)
+    .arg(y2)).toStdString();
+  return ret;
+}
+
+std::string Wire::port_value(int i)const{
+  assert(i<net_nodes());
+  std::string ret;
+  Node *p = (i==0)?_port0:_port1;
+  assert(p);
+  ret = p->Name.toStdString();
+  if(ret!="") {
+    return ret;
+  } else {
+    return port_name_hack(p->cx,p->cy);
+  }
+}
+
+void Wire::set_port_by_index(int num, std::string const& ext_name)
+{
+  assert(num<2);
+  if(num==0) {
+    _port0->Name=QString::fromStdString(ext_name);;
+    _port0->cx=x1;
+    _port0->cy=y1;
+    if(Label) {
+      setName(Label->Name,Label->Name,0,x1,y1);
+      Label->setCenter(x1,y1,true);
+    }
+  } else {
+    _port1->Name=QString::fromStdString(ext_name);;
+    _port1->cx=x2;
+    _port1->cy=y2;
+  }
+}
+
+
 // ----------------------------------------------------------------
 bool is_wire(Element const* e)
 {

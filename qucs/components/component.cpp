@@ -779,14 +779,52 @@ QString Component::get_VHDL_Code(int NumPorts)
   return "  " + Node1 + " <= " + port(1).getConnection()->Name + ";\n";
 }
 
+std::string Component::port_value(int i) const
+{
+  if(_portvalues.size()) {
+    if(i<_portvalues.size()) {
+      return _portvalues.at(i);
+    } else {
+      return "nc";
+    }
+  } else {
+    auto c = port(i).getConnection();
+    if(c) {
+      std::string ret = c->Name.toStdString();
+      if(ret!="") {
+        return ret;
+      } else {
+        return port_name_hack(c->cx,c->cy);
+      }
+    } else {
+      return "nc";
+    }
+  }
+}
+
 void Component::set_port_by_index(int num, std::string const& ext_name)
 {
-  incomplete();
+  if(num<Ports.size()) {
+    auto p = port(num);
+    if(p.getConnection()) {
+      p.getConnection()->Name=QString::fromStdString(ext_name);
+      p.getConnection()->cx=p.x+cx;
+      p.getConnection()->cy=p.y+cy;
+    } else {
+      std::cerr << "Connection is NULL pointer" << std::endl;
+    }
+  } else {
+    if(_portvalues.size()<num+1) {
+      _portvalues.resize(num+1);
+    }
+    _portvalues.insert(_portvalues.begin()+num,ext_name);
+  }
 }
 
 // Attributes
 std::string Component::attr_get() const
 {
+  int port_idx = 0;
   std::string ret;
   ret += "qucs_mirrored=";
   ret += std::to_string(mirroredX);
@@ -795,6 +833,26 @@ std::string Component::attr_get() const
   if(_attr.size()){ untested();
     ret += ", " + _attr;
   }else{
+  }
+  ret += ", ";
+  ret += extra_attr_get();
+  std::string sep;
+  if(!Ports.size()) {
+    ret += sep + (QString("S0_x%1=%2, S0_y%1=%3")
+      .arg(++port_idx)
+      .arg(cx)
+      .arg(cy)).toStdString();
+  }else{
+    for (auto pp = Ports.begin(); pp != Ports.end(); ++pp) {
+      auto c = pp->getConnection();
+      if(c) {
+        ret += sep + (QString("S0_x%1=%2, S0_y%1=%3")
+            .arg(++port_idx)
+            .arg(c->cx)
+            .arg(c->cy)).toStdString();
+      }
+      sep = ", ";
+    }
   }
   return ret;
 }
@@ -816,7 +874,7 @@ void Component::set_attribute(std::string name, std::string value)
 
 void Component::apply_qucs_values()
 {
-  if(_qucs_mirrored){
+  if(!mirroredX && _qucs_mirrored){
     mirrorX();
   }
   if(rotated > _qucs_rotated)

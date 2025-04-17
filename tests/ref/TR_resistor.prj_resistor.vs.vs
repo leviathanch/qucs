@@ -1,15 +1,11 @@
-(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="resistor.dat", qucs_DataDisplay="resistor.dpl", qucs_SimOpenDpl=1, qucs_Script="resistor.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module resistor();
-    wire n_260_300;
+(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="resistor.dat", qucs_DataDisplay="resistor.dpl", qucs_SimOpenDpl=0, qucs_Script="TR_resistor.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module resistor();
     wire n_450_270;
     wire n_450_290;
-    wire n_450_320;
     wire n_450_350;
     wire n_450_360;
     wire n_500_270;
-    wire n_530_270;
     wire n_560_270;
     wire n_580_270;
-    wire n_610_270;
     wire n_640_270;
     wire n_660_270;
     wire n_660_360;
@@ -24,7 +20,7 @@
     (* S0_x1=660, S0_y1=360, S0_x2=660, S0_y2=370 *) net #() net3 ( n_660_360, n_660_370 );
     (* S0_x1=660, S0_y1=270, S0_x2=660, S0_y2=360 *) net #() net4 ( n_660_270, n_660_360 );
     (* S0_x1=450, S0_y1=270, S0_x2=450, S0_y2=290 *) net #() net5 ( n_450_270, n_450_290 );
-    (* S0_x1=450, S0_y1=270, S0_x2=500, S0_y2=270 *) net #() net6 ( n_450_270, n_500_270 );
-    (* S0_x1=560, S0_y1=270, S0_x2=580, S0_y2=270 *) net #() net7 ( n_560_270, n_580_270 );
-    (* S0_x1=640, S0_y1=270, S0_x2=660, S0_y2=270 *) net #() net8 ( n_640_270, n_660_270 );
+    (* S0_x1=450, S0_y1=270, S0_x2=500, S0_y2=270 *) net #() Vin ( n_450_270, n_500_270 );
+    (* S0_x1=560, S0_y1=270, S0_x2=580, S0_y2=270 *) net #() Vout ( n_560_270, n_580_270 );
+    (* S0_x1=640, S0_y1=270, S0_x2=660, S0_y2=270 *) net #() net6 ( n_640_270, n_660_270 );
 endmodule

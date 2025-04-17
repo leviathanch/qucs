@@ -317,11 +317,11 @@ private:
   int  saveSchematicDocument(QFile *file);
 
 public:
-  QString getWireName(const QPoint *p)const; // BUG // names are key!
   // position getNodePosition(std::string)const; // TODO
 
 private: /// BUG // move to Verilog class, create if needed.
-  void dumpVerilogComponent(outputStream& stream, Element const* c) const;
+  template<class T>
+  void dumpVerilogComponent(outputStream& stream, const T *c) const;
   void dumpVerilogWire(outputStream& stream, Wire const* w) const;
   void dumpVerilogQucsPreamble(outputStream& stream) const;
   int  saveVerilogDocument(QFile *file);

@@ -1,9 +1,9 @@
 # Qucs
 
-C:C1 gnd _net0 C="39.01pF" V=""
-L:L1 _net0 _net1 L="280.9nH" I=""
-C:C2 gnd _net1 C="39.01pF" V=""
-Pac:P1 _net0 gnd Num="1" Z="60 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+C:C1 _net2 net3 C="39.01pF" V=""
+L:L1 net3 net4 L="280.9nH" I=""
+C:C2 _net5 net7 C="39.01pF" V=""
+Pac:P1 net6 _net6 Num="1" Z="60 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
 .SP:SP1 Type="log" Start="1MHz" Stop="200MHz" Points="458" Noise="no" NoiseIP="1" NoiseOP="2" saveCVs="no" saveAll="no"
-Pac:P2 _net1 gnd Num="2" Z="60 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+Pac:P2 net8 _net7 Num="2" Z="60 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
 Eqn:Eqn1 y="1" Export="yes"

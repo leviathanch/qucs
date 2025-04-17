@@ -32,7 +32,7 @@ public:
 
 private:
   bool param_is_printable(int i)const {return i;}
-  std::string attr_get()const override;
+  std::string extra_attr_get()const override;
   void set_attribute(std::string name, std::string value)override;
 
 public:

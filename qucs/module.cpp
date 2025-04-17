@@ -80,6 +80,8 @@ std::shared_ptr<Component> Module::getComponent (QString Model) {
 	Component* c=nullptr;
   if (Model == "Verilog") {
 	  c = new_verilog_file ();
+  }if (Model == "analog") {
+    c = new SubCirPort();
   }if (Model == "Lib") {
 	  c = new LibComp ();
   }else if (Model == "Eqn") {

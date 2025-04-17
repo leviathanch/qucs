@@ -2,10 +2,10 @@
 <Properties>
   <View=0,0,800,800,1,0,0>
   <Grid=10,10,1>
-  <DataSet=libparam.dat>
-  <DataDisplay=libparam.dpl>
-  <OpenDisplay=1>
-  <Script=libparam.m>
+  <DataSet=test_circuit.dat>
+  <DataDisplay=test_circuit.dpl>
+  <OpenDisplay=0>
+  <Script=test_circuit.m>
   <RunScript=0>
   <showFrame=0>
   <FrameText0=Title>
@@ -19,18 +19,18 @@
   <Vdc V1 1 140 250 0 0 0 1 "1 V" 1>
   <GND * 5 140 320 0 0 0 0>
   <R R1 1 340 250 0 0 1 3 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <Lib IB1 1 220 200 0 0 0 0 "Ideal" 1 "Notch2" 1>
+  <Lib N2F 1 250 200 0 0 0 0 "Ideal" 1 "Notch2" 1 "1E3" 1 "1" 1>
   <.DC DC1 1 140 380 0 0 0 0 "26.85" 0 "0.001" 0 "1 pA" 0 "1 uV" 0 "no" 0 "150" 0 "no" 0 "none" 0 "CroutLU" 0>
 </Components>
 <Wires>
-  <140 280 140 300 "" 0 0 0 "">
-  <140 300 140 320 "" 0 0 0 "">
-  <140 300 340 300 "" 0 0 0 "">
-  <340 280 340 300 "" 0 0 0 "">
-  <140 200 140 220 "" 0 0 0 "">
-  <140 200 220 200 "" 0 0 0 "">
-  <340 200 340 220 "" 0 0 0 "">
-  <280 200 340 200 "" 0 0 0 "">
+  <140 280 140 300 "net1" 140 280 0 "">
+  <140 300 140 320 "net2" 140 300 0 "">
+  <140 300 340 300 "net3" 140 300 0 "">
+  <340 280 340 300 "net4" 340 280 0 "">
+  <140 200 140 220 "net5" 140 200 0 "">
+  <140 200 220 200 "net6" 140 200 0 "">
+  <340 200 340 220 "net7" 340 200 0 "">
+  <280 200 340 200 "net8" 280 200 0 "">
 </Wires>
 <Diagrams>
 </Diagrams>

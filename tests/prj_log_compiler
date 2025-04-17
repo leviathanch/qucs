@@ -13,7 +13,7 @@ eval echo "$@" ${REDIR}
 # eval echo $( cd ${srcdir}; ls $base/*.sch ) ${REDIR}
 # eval echo ${srcdir}/$base ${REDIR}
 
-mkdir ${out}
+mkdir -p ${out}
 
 status=PASS
 

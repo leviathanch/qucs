@@ -36,6 +36,16 @@ public:
  ~Wire();
 
   int net_nodes()const {return 2;}
+  virtual std::string port_name(int)const{incomplete(); return "???";}
+  virtual std::string port_value(int i)const;
+  virtual void set_port_by_name(std::string const&, std::string const&) {}
+  virtual void set_port_by_index(int num, std::string const& ext_name);
+  virtual void set_param_by_index(int i, std::string const& Value) {}
+  virtual void set_param_by_name(std::string const& name, std::string const& v) {}
+  virtual int param_count() const {return 0;}
+  QString const& name() const{
+    return Label?Label->Name:"";
+  }
  // BUG. Port&
   Node*& ports(int i){
 	  assert(i<net_nodes());
@@ -44,7 +54,6 @@ public:
 	  }else{
 		  return _port1;
 	  }
-
   }
 
   void paint(ViewPainter*);
@@ -63,7 +72,7 @@ public:
   virtual void set_qucs_y2(int y) {y2 = y;}
   virtual void set_attribute(std::string name, std::string value);
   virtual void apply_qucs_values() {}
-
+  std::string attr_get()const override;
 
   void    rotate();
   QString save();

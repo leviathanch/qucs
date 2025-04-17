@@ -44,7 +44,7 @@ void SubCirPort::set_attribute(std::string name, std::string value)
 	if(name == "qucs_Num"){
 	  assert(Props.size());
 	  Props.front().Value = QString::fromStdString(value);
-	}else if(name == "qucs_Type"){
+	}else if(name == "qucs_type"){
 	  assert(Props.size()>1);
 	  prop(1).Value = QString::fromStdString(value);
 	}else{

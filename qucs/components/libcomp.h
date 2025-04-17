@@ -39,7 +39,7 @@ private: // parameters
   std::string param_value(int i)const override;
 
 private:
-  std::string attr_get()const override;
+  std::string extra_attr_get()const override;
 
 public:
   std::string dev_type()const override;

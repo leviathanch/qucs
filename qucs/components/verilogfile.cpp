@@ -48,16 +48,14 @@ public:
   std::string dev_type()const override;
   void set_dev_type(std::string const&)override;
   void set_attribute(std::string name, std::string value)override;
-
-  std::string attr_get() const override {
-	  std::string ret = Component::attr_get();
-	  ret += ", qucs_type=\"Verilog\"";
-	  assert(Props.size());
-	  ret += ", qucs_File=\"" + prop(0).Value.toStdString() + "\"";
-	  return ret;
+  std::string extra_attr_get() const override {
+    std::string ret;
+	ret += "qucs_type=\"Verilog\"";
+	assert(Props.size());
+	ret += ", qucs_File=\"" + prop(0).Value.toStdString() + "\"";
+    ret += ", ";
+	return ret;
   }
-  std::string port_name(int i)const override;
-  std::string port_value(int i)const override;
 
 protected:
   QString verilogCode(int);
@@ -296,24 +294,6 @@ void Verilog_File::set_attribute(std::string name, std::string value)
 	}else{
 		Component::set_attribute(name, value);
 	}
-}
-
-// -------------------------------------------------------
-std::string Verilog_File::port_name(int i)const
-{
-//	assert(i<max_nodes());
-  if(_proto){
-	  return _proto->port_value(i);
-  }else{
-	  return "????";
-  }
-}
-
-// -------------------------------------------------------
-std::string Verilog_File::port_value(int i)const
-{
-	assert(i<net_nodes());
-	return "??";
 }
 
 // -------------------------------------------------------
