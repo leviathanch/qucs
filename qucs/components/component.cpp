@@ -851,7 +851,7 @@ void Component::set_attribute(std::string name, std::string value)
 
 void Component::apply_qucs_values()
 {
-  if(_qucs_mirrored){
+  if(!mirroredX && _qucs_mirrored){
     mirrorX();
   }
   if(rotated > _qucs_rotated)
