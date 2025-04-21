@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=56,-10,840,509,1,0,0>
   <Grid=10,10,1>
   <DataSet=groupdelay_sp.dat>
   <DataDisplay=groupdelay_sp.dpl>
@@ -8,9 +8,9 @@
   <Script=groupdelay_sp.m>
   <RunScript=0>
   <showFrame=0>
-  <FrameText0=Title>
-  <FrameText1=Drawn By:>
-  <FrameText2=Date:>
+  <FrameText0=Titel>
+  <FrameText1=Gezeichnet von:>
+  <FrameText2=Datum:>
   <FrameText3=Revision:>
 </Properties>
 <Symbol>
@@ -29,14 +29,14 @@
   <Eqn Eqn1 1 310 300 0 0 0 0 "y=1" 1 "yes" 0>
 </Components>
 <Wires>
-  <220 100 220 150 "" 0 0 0 "">
-  <360 100 360 150 "" 0 0 0 "">
-  <220 100 260 100 "" 0 0 0 "">
-  <320 100 360 100 "" 0 0 0 "">
-  <110 100 220 100 "" 0 0 0 "">
-  <110 100 110 150 "" 0 0 0 "">
-  <360 100 500 100 "" 0 0 0 "">
-  <500 100 500 160 "" 0 0 0 "">
+  <220 100 220 150 "net1" 220 100 0 "">
+  <360 100 360 150 "net2" 360 100 0 "">
+  <220 100 260 100 "net3" 220 100 0 "">
+  <320 100 360 100 "net4" 320 100 0 "">
+  <110 100 220 100 "net5" 110 100 0 "">
+  <110 100 110 150 "net6" 110 100 0 "">
+  <360 100 500 100 "net7" 360 100 0 "">
+  <500 100 500 160 "net8" 500 100 0 "">
 </Wires>
 <Diagrams>
 </Diagrams>

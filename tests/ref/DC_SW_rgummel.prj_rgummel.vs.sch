@@ -1,6 +1,6 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=-41,0,634,560,1,0,0>
   <Grid=10,10,1>
   <DataSet=rgummel.dat>
   <DataDisplay=rgummel.dpl>
@@ -8,9 +8,9 @@
   <Script=rgummel.m>
   <RunScript=0>
   <showFrame=0>
-  <FrameText0=Title>
-  <FrameText1=Drawn By:>
-  <FrameText2=Date:>
+  <FrameText0=Titel>
+  <FrameText1=Gezeichnet von:>
+  <FrameText2=Datum:>
   <FrameText3=Revision:>
 </Properties>
 <Symbol>
@@ -29,12 +29,12 @@
   <Vdc VBE 1 60 150 0 0 1 3 "0 V" 1>
 </Components>
 <Wires>
-  <200 50 200 90 "" 0 0 0 "">
-  <60 120 170 120 "" 0 0 0 "">
-  <200 150 200 180 "" 0 0 0 "">
-  <380 50 380 120 "" 0 0 0 "">
-  <200 50 380 50 "" 0 0 0 "">
-  <230 120 290 120 "" 0 0 0 "">
+  <200 50 200 90 "net1" 200 50 0 "">
+  <60 120 170 120 "net2" 60 120 0 "">
+  <200 150 200 180 "net3" 200 150 0 "">
+  <380 50 380 120 "net4" 380 50 0 "">
+  <200 50 380 50 "net5" 200 50 0 "">
+  <230 120 290 120 "net6" 230 120 0 "">
 </Wires>
 <Diagrams>
 </Diagrams>

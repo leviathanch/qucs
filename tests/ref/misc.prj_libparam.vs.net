@@ -10,7 +10,7 @@ C:C1 _net4 _net2 C="C" V="0"
 .Def:End
   
 
-Vdc:V1 _net0 gnd U="1 V"
-R:R1 _net1 gnd R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-Sub:IB1 _net0 Type="Ideal_Notch2"
+Vdc:V1 net6 net1 U="1 V"
+R:R1 net7 net4 R="50 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Sub:N2F net6 net8 Type="Ideal_Notch2" fc="1E3" Q="1"
 .DC:DC1 Temp="26.85" reltol="0.001" abstol="1 pA" vntol="1 uV" saveOPs="no" MaxIter="150" saveAll="no" convHelper="none" Solver="CroutLU"

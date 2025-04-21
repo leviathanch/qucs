@@ -1,13 +1,13 @@
 # Qucs
 
-IProbe:Pr1 _net0 _net1
-R:R2 _net2 _net3 R="500 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-Vdc:V1 _net3 gnd U="1 V"
-R:R5 gnd _net2 R="Rmeasure" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-R:R1 _net0 _net3 R="Rbranch" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-R:R4 gnd _net0 R="Rbranch" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+IProbe:Pr1 net10 _net2
+R:R2 net3 net1 R="500 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+Vdc:V1 net7 net8 U="1 V"
+R:R5 gnd net9 R="Rmeasure" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R1 net2 net1 R="Rbranch" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+R:R4 gnd net10 R="Rbranch" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
 .DC:DC1 Temp="26.85" reltol="0.001" abstol="1 pA" vntol="1 uV" saveOPs="no" MaxIter="150" saveAll="no" convHelper="none" Solver="CroutLU"
-R:R3 _net1 _net2 R="500 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
-.SW:SW1 Sim="DC1" Type="lin" Param="R1" Start="Rmeasure" Stop="10 Ohm" Points="100"
-.SW:SW2 Sim="SW1" Type="lin" Param="R1" Start="Rbranch" Stop="200 Ohm" Points="4"
+R:R3 _net2 net4 R="500 Ohm" Temp="26.85" Tc1="0.0" Tc2="0.0" Tnom="26.85"
+.SW:SW1 Sim="DC1" Type="lin" Start="R1" Stop="Rmeasure" Points="10 Ohm" Points="100"
+.SW:SW2 Sim="SW1" Type="lin" Start="R1" Stop="Rbranch" Points="200 Ohm" Points="4"
 Eqn:Eqn1 y="1" Export="yes"

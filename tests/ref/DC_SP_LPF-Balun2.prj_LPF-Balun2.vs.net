@@ -1,17 +1,23 @@
 # Qucs
 
-L:L1 _net0 _net1 L="1.2uH" I=""
-L:L2 _net1 _net2 L="470nH" I=""
-C:C1 _net3 _net0 C="270pF" V=""
-C:C2 _net4 _net1 C="270pF" V=""
-L:L3 _net5 _net0 L="470nH" I=""
-L:L4 _net6 _net3 L="470nH" I=""
-L:L5 _net3 _net4 L="1.2uH" I=""
-L:L6 _net4 _net7 L="470nH" I=""
-Pac:P1 _net8 gnd Num="1" Z="100 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
-Vdc:V1 _net9 gnd U="1V"
-VProbe:Pr1 _net10 gnd
-Pac:P2 _net11 gnd Num="2" Z="100 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+.Def:IdealBalun _net1 _net4 _net3 _net0 _net2
+sTr:Tr1 _net0 _net1 _net2 _net3 _net4 _net4 T1="0.5" T2="0.5"
+.Def:End
+
+L:L1 net3 net4 L="1.2uH" I=""
+L:L2 net5 net22 L="470nH" I=""
+C:C1 net6 net3 C="270pF" V=""
+C:C2 net9 net5 C="270pF" V=""
+L:L3 net13 net7 L="470nH" I=""
+L:L4 net14 net8 L="470nH" I=""
+L:L5 net10 net11 L="1.2uH" I=""
+L:L6 net12 net24 L="470nH" I=""
+Pac:P1 net17 net15 Num="1" Z="100 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
+Sub:Balun1 net17 _net21 _net22 _net23 _net24 Type="IdealBalun"
+Sub:Balun2 net28 _net25 _net26 _net27 _net28 Type="IdealBalun"
+Vdc:V1 net27 net26 U="1V"
+VProbe:Pr1 net32 net31
+Pac:P2 net29 net30 Num="2" Z="100 Ohm" P="0 dBm" f="1 GHz" Temp="26.85"
 .SP:SP1 Type="log" Start="1MHz" Stop="100MHz" Points="1001" Noise="no" NoiseIP="1" NoiseOP="2" saveCVs="no" saveAll="no"
 Eqn:Eqn1 y="1" Export="yes"
 .DC:DC1 Temp="26.85" reltol="0.001" abstol="1 pA" vntol="1 uV" saveOPs="no" MaxIter="150" saveAll="no" convHelper="none" Solver="CroutLU"
