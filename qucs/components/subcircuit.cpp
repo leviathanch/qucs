@@ -26,8 +26,6 @@
 
 #include <limits.h>
 
-
-
 Subcircuit::Subcircuit()
 {
   Type = isComponent;   // both analog and digital
@@ -65,26 +63,28 @@ std::string Subcircuit::dev_type() const
 void Subcircuit::set_dev_type(std::string const& t)
 { untested();
 	assert(Props.size());
-	prop(0).Value = QString::fromStdString(t);
+  if(prop(0).Value.isEmpty())
+    prop(0).Value = QString::fromStdString(t);
 }
 
 // ---------------------------------------------------------------------
 void Subcircuit::set_attribute(std::string name, std::string value)
 {
-	if(name == "qucs_File"){
+  if(name == "qucs_File"){
 	  assert(Props.size());
-	  Props.front().Value = QString::fromStdString(value);
+    Props.front().Value = QString::fromStdString(value);
 	}else{
 		Component::set_attribute(name, value);
 	}
 }
 // ---------------------------------------------------------------------
-std::string Subcircuit::attr_get() const
+std::string Subcircuit::extra_attr_get() const
 {
-  std::string ret = Component::attr_get();
-  ret += ", qucs_Type=\"Sub\"";
+  std::string ret;
+  ret += "qucs_type=\"Sub\"";
   assert(Props.size());
   ret += ", qucs_File=\"" + prop(0).Value.toStdString() + "\"";
+  ret += ", ";
   return ret;
 }
 

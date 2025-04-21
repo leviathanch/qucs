@@ -157,7 +157,6 @@ void LibComp::createSymbol()
 			QObject::tr("name of component in library")));
   }else{
   }
-
 }
 
 // ---------------------------------------------------------------------
@@ -362,10 +361,11 @@ bool LibComp::createSubNetlist(QTextStream *stream, QStringList &FileList,
 }
 
 // -------------------------------------------------------
-std::string LibComp::attr_get() const
+std::string LibComp::extra_attr_get() const
 {
-  std::string ret = Component::attr_get();
-  ret += ", qucs_type=\"Lib\"";
+  std::string ret;
+  ret += "qucs_type=\"Lib\"";
+  ret += ", ";
   return ret;
 }
 
