@@ -779,9 +779,44 @@ QString Component::get_VHDL_Code(int NumPorts)
   return "  " + Node1 + " <= " + port(1).getConnection()->Name + ";\n";
 }
 
+std::string Component::port_value(int i) const
+{
+  if(_portvalues.size()>i) {
+    return _portvalues.at(i);
+  } else if(Ports.size()>i) {
+    auto c = port(i).getConnection();
+    if(c) {
+      std::string ret = c->Name.toStdString();
+      if(ret!="") {
+        return ret;
+      } else {
+        return "n_"
+        +std::string((c->cx<0)?"m"+std::to_string(-c->cx):std::to_string(c->cx))
+        +std::string("_")
+        +std::string((c->cy<0)?"m"+std::to_string(-c->cy):std::to_string(c->cy));
+      }
+    }
+  } else {
+    return "nc";
+  }
+}
+
 void Component::set_port_by_index(int num, std::string const& ext_name)
 {
-  incomplete();
+  if(_portvalues.size()<num+1) {
+    _portvalues.resize(num+1);
+  }
+  _portvalues[num]=ext_name;
+}
+
+int Component::net_nodes()const{
+  if(_portvalues.size()) {
+    return _portvalues.size();
+  } else if(Ports.size()) {
+    return Ports.size();
+  } else {
+    return 0;
+  }
 }
 
 // Attributes

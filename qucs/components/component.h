@@ -76,6 +76,7 @@ public:
   QString verilogCode(int);
 
   bool param_is_printable(int i)const override;
+  void set_port_by_index(int num, std::string const& ext_name)override {}
 
 protected:
   void createSymbol();
