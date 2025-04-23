@@ -49,7 +49,7 @@ for i in $( cd ${srcdir}; ls $base/*.{sch,vs} ) ; do
 
 	# dump verilog schematic
 	rm -f "${out}/${base}_${schname}.vs"
-	cmd="$QUCS -i ${srcdir}/$i --dump -t vs -o ${out}/${base}_${schname}.vs -platform offscreen"
+	cmd="$QUCS -i ${srcdir}/$i --dump -t vs -o ${out}/${base}_${schname}.vs -platform offscreen > ${out}/${base}_${schname}.vs.log"
 	eval echo "$cmd" ${REDIR}
 	eval "$cmd" ${REDIR}
 
