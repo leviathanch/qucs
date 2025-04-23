@@ -42,6 +42,8 @@
 #include <QAbstractScrollArea>
 #include <QPoint>
 
+#include <sstream>
+
 class QTextStream;
 class QTextEdit;
 class QPlainTextEdit;
@@ -316,11 +318,14 @@ private:
   int  saveDocument(QString OutputFileName, QString OutputTypeName);
   int  saveSchematicDocument(QFile *file);
 
+private:
+  std::stringstream mLogStream;
 public:
   QString getWireName(const QPoint *p)const; // BUG // names are key!
   // position getNodePosition(std::string)const; // TODO
   std::string nodename_at(const int x, const int y) const;
   void warn(int mask, std::string msg);
+  void saveWarnings();
 
 private: /// BUG // move to Verilog class, create if needed.
   void dumpVerilogComponent(outputStream& stream, Element const* c) const;

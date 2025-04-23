@@ -642,6 +642,12 @@ bool readVerilog(CS &cmd, Schematic*s)
     }
     trace2("readVerilog3", cmd.fullstring(), cmd.atEnd());
   }
+
+  for(auto c=s->DocComps.begin();c!=s->DocComps.end();c++){
+    c->check_node_positions(s);
+  }
+  s->saveWarnings();
+
   return true;
 }
 // vim:ts=8:sw=2:noet:

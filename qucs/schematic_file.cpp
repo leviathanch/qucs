@@ -717,7 +717,14 @@ std::string Schematic::nodename_at(const int x, const int y) const
 void Schematic::warn(int mask, std::string msg)
 {
   (void)mask; // Disable unused warning
-  std::cout << "Warning: " << msg << std::endl;
+  //std::cout << "Warning: " << msg << std::endl;
+  mLogStream << msg << std::endl;
+}
+
+void Schematic::saveWarnings()
+{
+  //qDebug() << mLogStream.string();
+  std::cout << mLogStream.str();
 }
 
 // TODO: language header.
