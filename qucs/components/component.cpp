@@ -787,6 +787,30 @@ void Component::set_port_by_index(int num, std::string const& ext_name)
   _portvalues[num]=ext_name;
 }
 
+void Component::check_node_positions(Schematic* schematic)
+{
+  int i=0;
+  for(auto p=Ports.begin();p!=Ports.end();p++) {
+    try {
+      if(schematic->nodename_at(p->x,p->y) != _portvalues[++i])
+        schematic->warn(0,
+          "Port "+std::to_string(i)
+          +" of component "+Name.toStdString()
+          +" at position ("+std::to_string(p->x)+std::to_string(p->y)+")"
+          +" should be connected to "+_portvalues[i]+" but isn't!");
+    }
+    catch (const std::out_of_range& e)
+    {
+      schematic->warn(1,
+        "Node "+_portvalues[i]+" on port "+std::to_string(i)
+        +" of component "+Name.toStdString()
+        +" not found at ("+std::to_string(p->x)+std::to_string(p->y)+")!\n"
+        +"Exception:"+e.what()
+      );
+    }
+  }
+}
+
 // Attributes
 std::string Component::attr_get() const
 {

@@ -1,0 +1,8 @@
+(* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=-200, qucs_tmpViewY1=-200, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="integrity1.dat", qucs_DataDisplay="integrity1.dpl", qucs_SimOpenDpl=1, qucs_Script="integrity1.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module integrity1();
+    wire n_780_580;
+    wire n_1010_440;
+    wire n_1010_580;
+    wire n_9999_580;
+    (* S0_x1=780, S0_y1=580, S0_x2=1010, S0_y2=580 *) net #() net1 ( n_780_580, n_1010_580 );
+    (* S0_x1=1010, S0_y1=440, S0_x2=9999, S0_y2=580 *) net #() net2 ( n_1010_440, n_9999_580 );
+endmodule
