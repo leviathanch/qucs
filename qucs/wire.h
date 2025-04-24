@@ -45,9 +45,7 @@ public:
 		  return _port1;
 	  }
   }
-
-  // BUG: wire is not a Component
-  Node*& ports(int i)const /*override*/ {
+  Node const* ports(int i) const{
 	  assert(i<net_nodes());
 	  if(i==0){
 		  return _port0;

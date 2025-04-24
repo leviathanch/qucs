@@ -1,16 +1,14 @@
 (* qucs_ViewX1=0, qucs_ViewY1=0, qucs_ViewX2=800, qucs_ViewY2=800, qucs_Scale=1, qucs_tmpViewX1=0, qucs_tmpViewY1=0, qucs_GridX=10, qucs_GridY=10, qucs_GridOn=1, qucs_DataSet="short_circuit.dat", qucs_DataDisplay="short_circuit.dpl", qucs_SimOpenDpl=1, qucs_Script="short_circuit.m", qucs_SimRunScript=0, qucs_showFrame=0, qucs_FrameText0="Title", qucs_FrameText1="Drawn By:", qucs_FrameText2="Date:", qucs_FrameText3="Revision:" *) module short_circuit(.P2(n_400_180), .P1(n_180_180));
-    inout n_400_180;
     inout n_180_180;
+    inout n_400_180;
     wire n_240_180;
     wire n_240_260;
     wire n_260_260;
-    wire n_290_260;
     wire n_320_260;
     wire n_340_180;
     wire n_340_260;
     wire n_380_180;
     wire n_380_250;
-    wire n_380_280;
     wire n_380_310;
     wire n_380_360;
     (* qucs_mirrored=0, qucs_rotated=2, qucs_Num=2, qucs_Type="analog", S0_x1=400, S0_y1=180 *) Port #() P2 ( n_400_180 );
