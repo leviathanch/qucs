@@ -33,13 +33,17 @@
 #define trace_method_calls() {}
 #endif
 
+// BUG: This function should be eliminated and
+// Node::label() used directly
 QString Schematic::getWireName(const QPoint *p) const
-{
-  QString net = QString("n_%1_%2")
-      .arg(p->x())
-      .arg(p->y());
-  net.replace("-","m");
-  return net;
+{untested();
+  // nodename_at throws exceptions but in the context we
+  // keep this function for de dedublication for now
+  // an exception is impossible to happen because it's
+  // only applied on nodes which have previously been
+  // added anyway, so all the nodes checked are in the
+  // set of nodes checked against.
+  return QString::fromStdString(nodename_at(p->x(),p->y()));
 }
 
 // -------------------------------------------------------------
