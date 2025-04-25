@@ -344,10 +344,10 @@ int Schematic::saveVerilogDocument(QFile *file)
   }
 
   // The wires (subnets)
-  for (auto it = wireList.begin(); it != wireList.end(); ++it) {
-    if((std::find(ioPortNets.begin(), ioPortNets.end(), *it)==ioPortNets.end())) {
+  for (auto it = DocNodes.begin(); it != DocNodes.end(); ++it) {
+    if((std::find(ioPortNets.begin(), ioPortNets.end(), it->label())==ioPortNets.end())) {
       stream << "    ";
-      stream << "wire " << *it << ";\n";
+      stream << "wire " << it->label() << ";\n";
     }
   }
 
@@ -591,18 +591,18 @@ public:
   explicit inspect_attributes(CS& cmd) { untested();
     while (cmd >> "(*") { untested();
       while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) { untested();
-	std::string name, value;
-	cmd >> name;
+  std::string name, value;
+  cmd >> name;
         if(cmd >> "="){
-	  cmd >> value;
-	}else{
-	  value = "1";
-	}
-	trace2("inspect", name, value);
-	if(name=="qucs_type") { untested();
-	  _type = value;
-	}else{ untested();
-	}
+    cmd >> value;
+  }else{
+    value = "1";
+  }
+  trace2("inspect", name, value);
+  if(name=="qucs_type") { untested();
+    _type = value;
+  }else{ untested();
+  }
       }
     }
   }
@@ -628,31 +628,31 @@ bool readVerilog(CS &cmd, Schematic*s)
       std::string type;
       type = parse_identifier(cmd, ",=(){};");
       if(type=="wire") {
-	 // BUG: Not a component
+   // BUG: Not a component
       }else if(type=="net") {
         Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
         if(w) {
           parse_instance(cmd, w);
           s->pushBack(w);
         }else{
-		  }
+      }
       } else {
         QString qtype = QString::fromStdString(type);
-	if(attr.has_type()){
-	  qtype = QString::fromStdString(attr.type());
-	}else{
-	}
+  if(attr.has_type()){
+    qtype = QString::fromStdString(attr.type());
+  }else{
+  }
         std::shared_ptr<Component> x = Module::getComponent(qtype); // BUG. need proper dispatcher.
         if(x) {
-	  trace3("readVerilog, gotComponent", qtype, x->tx(), x->ty());
+    trace3("readVerilog, gotComponent", qtype, x->tx(), x->ty());
           parse_instance(cmd, x.get());
           // BUG: Gives inconsisten values when generating refs
           // setting text position to 0,0 for now.
-	  x->set_qucs_text_position(0, 0);
+    x->set_qucs_text_position(0, 0);
           s->pushBack(x);
         }else{
-	  trace1("readVerilog, no Component", qtype);
-	}
+    trace1("readVerilog, no Component", qtype);
+  }
       }
     }
     trace2("readVerilog3", cmd.fullstring(), cmd.atEnd());
