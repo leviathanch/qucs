@@ -346,6 +346,14 @@ int Schematic::saveVerilogDocument(QFile *file)
       stream << "wire " << getWireName(&*it) << ";\n";
     }
   }
+  // The wires (subnets)
+  for (auto it = DocNodes.begin(); it != DocNodes.end(); ++it) {
+    if((std::find(ioPortNets.begin(), ioPortNets.end(), QPoint(it->cx,it->cy))==ioPortNets.end())) {
+      stream << "    ";
+      QPoint p = QPoint(it->cx,it->cy);
+      stream << "wire " << getWireName(&p) << ";\n";
+    }
+  }
 
   // sub components
   for (auto it = DocComps.begin(); it != DocComps.end(); ++it) {

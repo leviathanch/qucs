@@ -13,6 +13,15 @@
     wire n_410_260;
     wire n_500_120;
     wire n_500_320;
+    wire n_320_150;
+    wire n_380_150;
+    wire n_410_120;
+    wire n_410_180;
+    wire n_340_320;
+    wire n_400_320;
+    wire n_410_260;
+    wire n_500_120;
+    wire n_500_320;
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=320, S0_y1=150, S0_x2=380, S0_y2=150 *) R #(.R(10K),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_320_150, n_380_150 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=1, qucs_Type="analog", S0_x1=255, S0_y1=150 *) Port #() P_control_in ( n_255_150 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_Num=3, qucs_Type="analog", S0_x1=260, S0_y1=260 *) Port #() P_GND ( n_260_260 );

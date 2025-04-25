@@ -11,6 +11,14 @@
     wire n_320_240;
     wire n_440_70;
     wire n_440_200;
+    wire n_120_120;
+    wire n_120_180;
+    wire n_320_240;
+    wire n_120_240;
+    wire n_320_120;
+    wire n_320_60;
+    wire n_320_180;
+    wire n_120_60;
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=120, S0_y1=120, S0_x2=120, S0_y2=180 *) Vac #(.U(1 V),.f(1 GHz),.Phase(0),.Theta(0)) V1 ( n_120_120, n_120_180 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=320, S0_y1=240 *) GND #() \*  ( n_320_240 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=120, S0_y1=240 *) GND #() \*  ( n_120_240 );

@@ -13,6 +13,16 @@
     wire n_350_170;
     wire n_350_200;
     wire n_350_260;
+    wire n_260_280;
+    wire n_170_140;
+    wire n_170_200;
+    wire n_350_200;
+    wire n_350_140;
+    wire n_170_80;
+    wire n_350_80;
+    wire n_350_260;
+    wire n_170_260;
+    wire n_260_260;
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=280 *) GND #() \*  ( n_260_280 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=80, S0_y1=360 *) \.DC  #(.Temp(26.85),.reltol(0.001),.abstol(1 pA),.vntol(1 uV),.saveOPs(no),.MaxIter(150),.saveAll(no),.convHelper(none),.Solver(CroutLU)) DC1 (  );
     (* qucs_mirrored=0, qucs_rotated=1, S0_x1=170, S0_y1=140, S0_x2=170, S0_y2=200 *) Idc #(.I(Idiode)) I1 ( n_170_140, n_170_200 );

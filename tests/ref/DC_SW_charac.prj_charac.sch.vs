@@ -18,6 +18,18 @@
     wire n_500_160;
     wire n_500_190;
     wire n_500_220;
+    wire n_460_140;
+    wire n_400_140;
+    wire n_500_220;
+    wire n_320_210;
+    wire n_210_250;
+    wire n_500_160;
+    wire n_210_190;
+    wire n_290_180;
+    wire n_320_150;
+    wire n_210_180;
+    wire n_320_140;
+    wire n_500_140;
     (* qucs_mirrored=1, qucs_rotated=2, S0_x1=460, S0_y1=140, S0_x2=400, S0_y2=140 *) IProbe #() Collector ( n_460_140, n_400_140 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=500, S0_y1=220 *) GND #() \*  ( n_500_220 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=320, S0_y1=210 *) GND #() \*  ( n_320_210 );

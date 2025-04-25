@@ -13,6 +13,16 @@
     wire n_380_280;
     wire n_380_310;
     wire n_380_360;
+    wire n_260_260;
+    wire n_320_260;
+    wire n_380_360;
+    wire n_380_310;
+    wire n_380_250;
+    wire n_240_260;
+    wire n_340_260;
+    wire n_380_180;
+    wire n_340_180;
+    wire n_240_180;
     (* qucs_mirrored=0, qucs_rotated=2, qucs_Num=2, qucs_Type="analog", S0_x1=400, S0_y1=180 *) Port #() P2 ( n_400_180 );
     (* qucs_mirrored=1, qucs_rotated=0, qucs_Num=1, qucs_Type="analog", S0_x1=180, S0_y1=180 *) Port #() P1 ( n_180_180 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=260, S0_y1=260, S0_x2=320, S0_y2=260 *) R #(.R(0 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_260_260, n_320_260 );

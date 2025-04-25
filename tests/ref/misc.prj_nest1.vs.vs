@@ -11,6 +11,14 @@
     wire n_380_280;
     wire n_380_310;
     wire n_380_360;
+    wire n_380_360;
+    wire n_380_310;
+    wire n_380_250;
+    wire n_200_180;
+    wire n_260_180;
+    wire n_380_180;
+    wire n_340_180;
+    wire n_280_180;
     (* qucs_mirrored=0, qucs_rotated=2, qucs_Num=2, qucs_Type="analog", S0_x1=400, S0_y1=180 *) Port #() P2 ( n_400_180 );
     (* qucs_mirrored=1, qucs_rotated=0, qucs_Num=1, qucs_Type="analog", S0_x1=180, S0_y1=180 *) Port #() P1 ( n_180_180 );
     (* qucs_mirrored=0, qucs_rotated=0, S0_x1=380, S0_y1=360 *) GND #() \*  ( n_380_360 );
