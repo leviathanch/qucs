@@ -591,6 +591,47 @@ void parse_instance(CS& cmd, T* x)
   cmd.check(0, "what's this?");
 }
 
+void parse_painting(CS& cmd, Painting*p)
+{
+  assert(p);
+  incomplete();
+  cmd.reset();
+  while (cmd >> "(*") {
+    while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
+      std::string name, value;
+      cmd >> name >> "=" >> value;
+      if(name=="S0_text" && value.size()) {
+        auto t = dynamic_cast<GraphicText*>(p);
+        if(t) {
+          t->Text=QString::fromStdString(value);
+          //t->Text.replace("\\n","\n");
+        }
+      }
+      if(name=="S0_x") {
+        p->cx=std::stoi(value);
+      }
+      if(name=="S0_y") {
+        p->cy=std::stoi(value);
+      }
+    }
+  }
+}
+
+Painting *get_painting(CS& cmd) {
+  incomplete();
+  cmd.reset();
+  while (cmd >> "(*") {
+    while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
+      std::string name, value;
+      cmd >> name >> "=" >> value;
+      if(name=="S0_text" && value.size()) {
+        return new GraphicText();
+      }
+    }
+  }
+  return NULL;
+}
+
 class inspect_attributes {
   std::string _type;
 public:
@@ -635,6 +676,12 @@ bool readVerilog(CS &cmd, Schematic*s)
       type = parse_identifier(cmd, ",=(){};");
       if(type=="wire") {
 	 // BUG: Not a component
+      }else if(type.rfind("S0_text", 0) == 0) {
+        auto p = get_painting(cmd);
+        if(p) {
+          parse_painting(cmd,p);
+          s->DocPaints.append(p);
+        }
       }else if(type=="net") {
         Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
         if(w) {

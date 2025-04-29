@@ -85,4 +85,8 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 430 290 12 #000000 0 "intrinsic FET  ">
+  <Text 410 370 12 #000000 0 "source ">
+  <Text -20 110 12 #000000 0 "gate ">
+  <Text 640 110 12 #000000 0 "drain ">
 </Paintings>

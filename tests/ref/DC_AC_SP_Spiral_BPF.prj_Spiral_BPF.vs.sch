@@ -65,4 +65,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 610 500 12 #000000 0 "Cauer low-pass filtern10GHz cutoff, PI-type,nimpedance matching 50 Ohm">
 </Paintings>

@@ -59,4 +59,6 @@
     (* S0_x1=380, S0_y1=250, S0_x2=560, S0_y2=250 *) net #() net18 ( n_380_250, n_560_250 );
     (* S0_x1=560, S0_y1=250, S0_x2=660, S0_y2=250 *) net #() net19 ( n_560_250, n_660_250 );
     (* S0_x1=560, S0_y1=230, S0_x2=560, S0_y2=250 *) net #() net20 ( n_560_230, n_560_250 );
+    (* S0_x=50, S0_y=40, S0_text="Boost converter circuit." *) S0_text1;
+    (* S0_x=50, S0_y=80, S0_text="Change duty cycle ("Bduty" in the equations) to manipulate output voltage." *) S0_text2;
 endmodule

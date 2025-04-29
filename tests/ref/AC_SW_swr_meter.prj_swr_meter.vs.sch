@@ -52,4 +52,7 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 590 260 12 #000000 0 "load (e.g. antenna)">
+  <Text 160 240 12 #000000 0 "generator">
+  <Text 220 420 12 #000000 0 "This is a VSWR meter often used to measure if the antennanis matched. It is connected between generator and load.nIt creates a voltage proportional to the forward voltage andnone proportional to the reflected voltage. The equationsnon this page calculates the reflection coefficient usingnthe definition and using the voltages. As can be seen theynequal each other. The mismatch created by the VSWR meternis very low.">
 </Paintings>
