@@ -46,4 +46,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 270 240 12 #000000 0 "ideal Wilkinson divider:n- power into port 1 is split equally to port 2 and 3n- port 2 and 3 are decoupledn- if port 2 and 3 are terminated equally, no powern  is consumed by R1n- a wider bandwidth can be achieved by usingn  more than one Line2/Line3/R1 section">
 </Paintings>
