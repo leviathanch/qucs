@@ -16,8 +16,8 @@
 <Symbol>
 </Symbol>
 <Components>
-  <R R1 1 2030 -280 0 0 0 0 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <C C1 1 2140 -280 0 0 0 0 "1 pF" 1 "" 0 "neutral" 0>
+  <R R1 1 2030 -280 -26 15 0 0 "50 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <C C1 1 2140 -280 -26 17 0 0 "1 pF" 1 "" 0 "neutral" 0>
 </Components>
 <Wires>
 </Wires>

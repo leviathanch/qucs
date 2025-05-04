@@ -373,10 +373,26 @@ bool GraphicText::Dialog()
 std::string GraphicText::attr_get()const
 {
   std::string ret;
-  ret="qucs_type=\"Text\"";
+  ret+="S0_x="+std::to_string(cx);
+  ret+=", ";
+  ret+="S0_y="+std::to_string(cy);
+  ret+=", ";
+  ret+="qucs_type=\"Text\"";
   ret+=", ";
   ret+="S0_text=\"";
   ret+=QString(Text).replace("\n","\\n").replace("\"","\\\"").toStdString();// Otherwise the text will be overwritten";
   ret+="\"";
   return ret;
+}
+
+void GraphicText::set_attribute(std::string name, std::string value)
+{
+  if(name=="S0_text" && value.size()) {
+    Text=QString::fromStdString(value);
+    //Text.replace("\\n","\n");
+  } else if(name=="S0_y") {
+    cx = std::stoi(value);
+  } else if(name=="S0_y") {
+    cy = std::stoi(value);
+  }
 }

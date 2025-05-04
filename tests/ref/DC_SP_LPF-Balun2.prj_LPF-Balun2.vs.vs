@@ -106,4 +106,5 @@
     (* S0_x1=860, S0_y1=150, S0_x2=910, S0_y2=150 *) net #() net32 ( n_860_150, n_910_150 );
     (* S0_x1=850, S0_y1=130, S0_x2=860, S0_y2=130 *) net #() net33 ( n_850_130, n_860_130 );
     (* S0_x1=860, S0_y1=130, S0_x2=860, S0_y2=150 *) net #() net34 ( n_860_130, n_860_150 );
+    (* S0_x=340, S0_y=0, qucs_type="Text", S0_text="Butterworth low-pass filtern10MHz cutoff, PI-type,nimpedance matching 100 Ohm" *) S0_text #() S0_text1;
 endmodule

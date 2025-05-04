@@ -17,14 +17,14 @@
 </Symbol>
 <Components>
   <GND * 5 240 130 0 0 0 0>
-  <L L1 1 130 110 0 0 0 0 "1.1 nH" 1 "" 0>
-  <L L2 1 180 180 0 0 0 1 "4.0 nH" 1 "" 0>
+  <L L1 1 130 110 -26 10 0 0 "1.1 nH" 1 "" 0>
+  <L L2 1 180 180 10 -26 0 1 "4.0 nH" 1 "" 0>
   <GND * 5 180 210 0 0 0 0>
   <GND * 5 40 210 0 0 0 0>
-  <Pac P1 1 40 180 0 0 0 1 "1" 1 "50 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
+  <Pac P1 1 40 180 18 -26 0 1 "1" 1 "50 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
   <GND * 5 400 170 0 0 0 0>
-  <Pac P2 1 400 140 0 0 0 1 "2" 1 "50 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
-  <.SP SP1 1 310 220 0 0 0 0 "lin" 1 "1 GHz" 1 "20 GHz" 1 "39" 1 "yes" 0 "1" 0 "2" 0 "no" 0 "no" 0>
+  <Pac P2 1 400 140 18 -26 0 1 "2" 1 "50 Ohm" 1 "0 dBm" 0 "1 GHz" 0 "26.85" 0>
+  <.SP SP1 1 310 220 0 51 0 0 "lin" 1 "1 GHz" 1 "20 GHz" 1 "39" 1 "yes" 0 "1" 0 "2" 0 "no" 0 "no" 0>
 </Components>
 <Wires>
   <160 110 180 110 "" 0 0 0 "">
@@ -38,4 +38,6 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 50 0 12 #000000 0 "For a description of the FET noisenmodel take a look into its subcircuit.">
+  <Text 260 0 12 #000000 0 "This amplifier is noise matched at the inputnfor a frequency of 10GHz.nThus, the noise optimum Sopt of the overallncircuit is zero. (Okay, the matching circuitnis really ugly, but hey, this is a simulation.)">
 </Paintings>
