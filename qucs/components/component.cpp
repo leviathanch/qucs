@@ -924,11 +924,6 @@ void Component::set_param_by_name(std::string const& name, std::string const& v)
   }
 }
 
-void Component::set_dev_type(std::string const& type)
-{
-  Model = QString::fromStdString(type);
-}
-
 void Component::set_label(std::string const& name)
 {
   Name = QString::fromStdString(name);

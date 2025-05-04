@@ -32,6 +32,9 @@ public:
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
+  std::string attr_get()const override;
+  void set_attribute(std::string name, std::string value)override;
+
   bool load(const QString&);
   QString save();
   QString saveCpp();

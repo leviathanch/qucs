@@ -23,6 +23,7 @@
 ID_Text::ID_Text(int cx_, int cy_)
 {
   Name = ".ID ";
+  Model = ".ID";
   isSelected = false;
   cx = cx_;
   cy = cy_;

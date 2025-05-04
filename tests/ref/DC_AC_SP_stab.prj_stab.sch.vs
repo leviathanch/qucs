@@ -93,9 +93,9 @@
     (* S0_x1=470, S0_y1=200, S0_x2=470, S0_y2=270 *) net #() net18 ( n_470_200, n_470_270 );
     (* S0_x1=220, S0_y1=270, S0_x2=220, S0_y2=280 *) net #() net19 ( n_220_270, n_220_280 );
     (* S0_x1=220, S0_y1=270, S0_x2=300, S0_y2=270 *) net #() net20 ( n_220_270, n_300_270 );
-    (* S0_x=60, S0_y=20 *) S0_text #() S0_text1;
-    (* S0_x=70, S0_y=140, qucs_type="Text", S0_text="bias stabilisation" *) S0_text #() S0_text2;
-    (* S0_x=390, S0_y=200 *) S0_text #() S0_text3;
-    (* S0_x=20, S0_y=240, qucs_type="Text", S0_text="Circuits of this kind are used to\nstabilize the bias of RF\ntransistors. But sometimes they\ntend to LF oscillations. This\nschematic shows how to\ndetermine the degree of stability\nby simulating magnitude and\nphase margin of the loop gain.\nResult: As a rule of thumb,\nit should be  C2 >> C1" *) S0_text #() S0_text4;
-    (* S0_x=360, S0_y=200, qucs_type="Text", S0_text="for measuring\nthe loop stability" *) S0_text #() S0_text5;
+    (* S0_x1=60, S0_y1=20, S0_x2=230, S0_y2=190, qucs_type="Rectangle" *) S0_text #() S0_text1;
+    (* S0_x1=70, S0_y1=140, S0_x2=125, S0_y2=20, qucs_type="Text", S0_text="bias stabilisation", qucs_font_color="#00007f", qucs_font_size=14, qucs_font_angle=90 *) S0_text #() S0_text2;
+    (* S0_x1=390, S0_y1=200, S0_x2=-20, S0_y2=-60, qucs_type="Arrow", qucs_pen_color="#ff0000", qucs_pen_width=3, qucs_pen_style=1 *) S0_text #() S0_text3;
+    (* S0_x1=20, S0_y1=240, S0_x2=242, S0_y2=200, qucs_type="Text", S0_text="Circuits of this kind are used to\nstabilize the bias of RF\ntransistors. But sometimes they\ntend to LF oscillations. This\nschematic shows how to\ndetermine the degree of stability\nby simulating magnitude and\nphase margin of the loop gain.\nResult: As a rule of thumb,\nit should be  C2 >> C1", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S0_text #() S0_text4;
+    (* S0_x1=360, S0_y1=200, S0_x2=122, S0_y2=40, qucs_type="Text", S0_text="for measuring\nthe loop stability", qucs_font_color="#ff0000", qucs_font_size=12, qucs_font_angle=0 *) S0_text #() S0_text5;
 endmodule

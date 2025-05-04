@@ -43,3 +43,12 @@ void Element::setCenter(int, int, bool)
 void Element::getCenter(int&, int&)
 {
 }
+
+void Element::set_dev_type(std::string const& type)
+{
+  Model = QString::fromStdString(type);
+}
+
+std::string Element::dev_type()const {
+  return Model.toStdString();
+}

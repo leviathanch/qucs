@@ -60,4 +60,5 @@
     (* S0_x1=290, S0_y1=300, S0_x2=360, S0_y2=300 *) net #() net18 ( n_290_300, n_360_300 );
     (* S0_x1=420, S0_y1=300, S0_x2=460, S0_y2=300 *) net #() net19 ( n_420_300, n_460_300 );
     (* S0_x1=460, S0_y1=300, S0_x2=460, S0_y2=320 *) net #() net20 ( n_460_300, n_460_320 );
+    (* S0_x1=80, S0_y1=390, S0_x2=134, S0_y2=19, qucs_type="Text", S0_text="Meissner oscillator", qucs_font_color="#000000", qucs_font_size=16, qucs_font_angle=0 *) S0_text #() S0_text1;
 endmodule

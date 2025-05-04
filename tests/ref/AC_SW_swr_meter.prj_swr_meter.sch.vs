@@ -54,9 +54,9 @@
     (* S0_x1=440, S0_y1=120, S0_x2=620, S0_y2=120 *) net #() net9 ( n_440_120, n_620_120 );
     (* S0_x1=440, S0_y1=120, S0_x2=440, S0_y2=240 *) net #() net10 ( n_440_120, n_440_240 );
     (* S0_x1=380, S0_y1=240, S0_x2=440, S0_y2=240 *) net #() net11 ( n_380_240, n_440_240 );
-    (* S0_x=100, S0_y=60 *) S0_text #() S0_text1;
-    (* S0_x=580, S0_y=90 *) S0_text #() S0_text2;
-    (* S0_x=590, S0_y=260, qucs_type="Text", S0_text="load (e.g. antenna)" *) S0_text #() S0_text3;
-    (* S0_x=160, S0_y=240, qucs_type="Text", S0_text="generator" *) S0_text #() S0_text4;
-    (* S0_x=220, S0_y=420, qucs_type="Text", S0_text="This is a VSWR meter often used to measure if the antenna\nis matched. It is connected between generator and load.\nIt creates a voltage proportional to the forward voltage and\none proportional to the reflected voltage. The equations\non this page calculates the reflection coefficient using\nthe definition and using the voltages. As can be seen they\nequal each other. The mismatch created by the VSWR meter\nis very low." *) S0_text #() S0_text5;
+    (* S0_x1=100, S0_y1=60, S0_x2=130, S0_y2=200, qucs_type="Rectangle" *) S0_text #() S0_text1;
+    (* S0_x1=580, S0_y1=90, S0_x2=130, S0_y2=190, qucs_type="Rectangle" *) S0_text #() S0_text2;
+    (* S0_x1=590, S0_y1=260, S0_x2=143, S0_y2=20, qucs_type="Text", S0_text="load (e.g. antenna)", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S0_text #() S0_text3;
+    (* S0_x1=160, S0_y1=240, S0_x2=73, S0_y2=20, qucs_type="Text", S0_text="generator", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S0_text #() S0_text4;
+    (* S0_x1=220, S0_y1=420, S0_x2=458, S0_y2=160, qucs_type="Text", S0_text="This is a VSWR meter often used to measure if the antenna\nis matched. It is connected between generator and load.\nIt creates a voltage proportional to the forward voltage and\none proportional to the reflected voltage. The equations\non this page calculates the reflection coefficient using\nthe definition and using the voltages. As can be seen they\nequal each other. The mismatch created by the VSWR meter\nis very low.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S0_text #() S0_text5;
 endmodule

@@ -24,6 +24,7 @@ PortSymbol::PortSymbol(int cx_, int cy_, const QString& numberStr_,
                                          const QString& nameStr_)
 {
   Name = ".PortSym ";
+  Model = ".PortSym";
   isSelected = false;
   cx = cx_;
   cy = cy_;
@@ -220,4 +221,21 @@ void PortSymbol::mirrorY()
 {
   if(Angel == 0)  Angel = 180;
   else  if(Angel == 180)  Angel = 0;
+}
+
+// -----------------------------------------------------------------------
+std::string PortSymbol::attr_get()const
+{
+  std::string ret;
+  ret+="qucs_angel="+std::to_string(Angel);
+  return ret;
+}
+
+void PortSymbol::set_attribute(std::string name, std::string value)
+{
+  if(name=="qucs_angel") {
+    Angel = std::stoi(value);
+  } else {
+    Painting::set_attribute(name,value);
+  }
 }

@@ -29,6 +29,7 @@
 Ellipse::Ellipse(bool _filled)
 {
   Name = "Ellipse ";
+  Model = "Ellipse";
   isSelected = false;
   Pen = QPen(QColor());
   Brush = QBrush(Qt::lightGray);

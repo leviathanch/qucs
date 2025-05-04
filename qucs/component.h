@@ -93,13 +93,6 @@ public: // ports
   void check_node_positions(Schematic *schematic);
 
 public:
-  virtual std::string dev_type()const {
-	  // incomplete();
-	  return obsolete_model_hack().toStdString();
-  }
-  virtual void set_dev_type(std::string const& type);
-
-public:
   virtual void set_qucs_text_position(int x, int y) {_tx=x;_ty=y;}
   virtual void set_qucs_rotated(int x) {_qucs_rotated=x;}
   virtual void set_qucs_mirrored(int x) {_qucs_mirrored=x;}
@@ -166,8 +159,6 @@ public:
   }
 
 private:
-protected: // BUG
-  QString Model;
 protected: // BUG => Element.
   QString Name;
 protected: // BUG

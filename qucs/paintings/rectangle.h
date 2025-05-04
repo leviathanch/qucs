@@ -53,7 +53,7 @@ public:
 
   QPen  Pen;
   QBrush Brush;    // filling style/color
-  bool  filled;    // filled or not (for "getSelected" etc.)
+  bool  filled{false};    // filled or not (for "getSelected" etc.)
 };
 
 #endif
