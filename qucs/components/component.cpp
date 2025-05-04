@@ -924,6 +924,10 @@ void Component::set_param_by_name(std::string const& name, std::string const& v)
   }
 }
 
+std::string Component::dev_type()const {
+   return obsolete_model_hack().toStdString();
+}
+
 void Component::set_dev_type(std::string const& type)
 {
   Model = QString::fromStdString(type);

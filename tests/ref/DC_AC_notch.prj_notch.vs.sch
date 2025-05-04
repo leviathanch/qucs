@@ -17,20 +17,20 @@
 </Symbol>
 <Components>
   <GND * 5 130 370 0 0 0 0>
-  <C C1 1 210 170 0 0 0 0 "1.01u" 1 "" 0 "neutral" 0>
-  <R R5 1 310 120 0 0 0 0 "10k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <R R3 1 390 200 0 0 0 0 "1k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <R R4 1 470 280 0 0 0 2 "1k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <R R2 1 300 260 0 0 0 0 "1k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <C C2 1 500 170 0 0 0 1 "1u" 1 "" 0 "neutral" 0>
-  <.DC DC1 1 160 40 0 0 0 0 "26.85" 0 "0.001" 0 "1 pA" 0 "1 uV" 0 "no" 0 "150" 0 "no" 0 "none" 0 "CroutLU" 0>
-  <OpAmp OP1 1 210 260 0 0 0 0 "1e6" 1 "15 V" 0>
-  <OpAmp OP2 1 380 280 0 0 0 0 "1e6" 1 "15 V" 0>
-  <Eqn Eqn1 1 340 40 0 0 0 0 "y=1" 1 "yes" 0>
-  <R R1 1 130 340 0 0 1 1 "10k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <C C1 1 210 170 -26 17 0 0 "1.01u" 1 "" 0 "neutral" 0>
+  <R R5 1 310 120 -26 15 0 0 "10k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <R R3 1 390 200 -26 15 0 0 "1k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <R R4 1 470 280 -26 -55 0 2 "1k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <R R2 1 300 260 -26 15 0 0 "1k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <C C2 1 500 170 17 -26 0 1 "1u" 1 "" 0 "neutral" 0>
+  <.DC DC1 1 160 40 0 33 0 0 "26.85" 0 "0.001" 0 "1 pA" 0 "1 uV" 0 "no" 0 "150" 0 "no" 0 "none" 0 "CroutLU" 0>
+  <OpAmp OP1 1 210 260 -26 42 0 0 "1e6" 1 "15 V" 0>
+  <OpAmp OP2 1 380 280 -26 42 0 0 "1e6" 1 "15 V" 0>
+  <Eqn Eqn1 1 340 40 -33 17 0 0 "y=1" 1 "yes" 0>
+  <R R1 1 130 340 -98 -26 1 1 "10k" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
   <GND * 5 40 250 0 0 0 0>
-  <Vac V1 1 40 220 0 0 0 1 "1uV" 1 "1 GHz" 0 "0" 0 "0" 0>
-  <.AC AC1 1 190 370 0 0 0 0 "log" 1 "5" 1 "500" 1 "100" 1 "no" 0>
+  <Vac V1 1 40 220 18 -26 0 1 "1uV" 1 "1 GHz" 0 "0" 0 "0" 0>
+  <.AC AC1 1 190 370 0 33 0 0 "log" 1 "5" 1 "500" 1 "100" 1 "no" 0>
 </Components>
 <Wires>
   <420 280 430 280 "" 0 0 0 "">
@@ -65,4 +65,6 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 0 0 12 #000000 0 "50Hz notch filter:nbuilt by use of extremly high Q gyrator,nOpAmps fake a 10.1Henry+0.5mOhm coilnthat forms resonance circuit with C2">
+  <Text 0 0 12 #000000 0 "OpAmp gyrator fakes:ninductance = C1*R1*R2*R4/R3nresistance = 0.5*R2*R4/R3/OpAmpGain">
 </Paintings>

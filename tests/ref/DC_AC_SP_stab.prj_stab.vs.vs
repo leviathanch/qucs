@@ -93,4 +93,9 @@
     (* S0_x1=470, S0_y1=200, S0_x2=470, S0_y2=270 *) net #() net20 ( n_470_200, n_470_270 );
     (* S0_x1=220, S0_y1=270, S0_x2=220, S0_y2=280 *) net #() net21 ( n_220_270, n_220_280 );
     (* S0_x1=220, S0_y1=270, S0_x2=300, S0_y2=270 *) net #() net22 ( n_220_270, n_300_270 );
+    (* S0_x1=60, S0_y1=20, S0_x2=230, S0_y2=190, qucs_type="Rectangle" *) S0_graphics #() S0_graphics1;
+    (* S0_x=0, S0_y=0, qucs_type="Text", S0_text="bias stabilisation", qucs_font_color="#00007f", qucs_font_size=14, qucs_font_angle=90 *) S0_text #() S0_text1;
+    (* S0_x1=390, S0_y1=200, S0_x2=-20, S0_y2=-60, qucs_type="Arrow", qucs_pen_color="#ff0000", qucs_pen_width=3, qucs_pen_style=1 *) S0_graphics #() S0_graphics2;
+    (* S0_x=0, S0_y=0, qucs_type="Text", S0_text="Circuits of this kind are used tonstabilize the bias of RFntransistors. But sometimes theyntend to LF oscillations. Thisnschematic shows how tondetermine the degree of stabilitynby simulating magnitude andnphase margin of the loop gain.nResult: As a rule of thumb,nit should be  C2 >> C1", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S0_text #() S0_text2;
+    (* S0_x=0, S0_y=0, qucs_type="Text", S0_text="for measuringnthe loop stability", qucs_font_color="#ff0000", qucs_font_size=12, qucs_font_angle=0 *) S0_text #() S0_text3;
 endmodule
