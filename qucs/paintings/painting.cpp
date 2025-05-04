@@ -82,3 +82,31 @@ QString Painting::toBrushString (int brush) {
   }
   return "Qt::NoBrush";
 }
+
+std::string Painting::attr_get() const {
+  std::string ret;
+  ret+="S0_x1="+std::to_string(cx);
+  ret+=", ";
+  ret+="S0_y1="+std::to_string(cy);
+  ret+=", ";
+  ret+="S0_x2="+std::to_string(x2);
+  ret+=", ";
+  ret+="S0_y2="+std::to_string(y2);
+  return ret;
+}
+
+void Painting::set_attribute(std::string name, std::string value)
+{
+  if(name=="S0_x1") {
+    cx = std::stoi(value);
+  }
+  else if(name=="S0_y1") {
+    cy = std::stoi(value);
+  }
+  else if(name=="S0_x2") {
+    x2 = std::stoi(value);
+  }
+  else if(name=="S0_y2") {
+    y2 = std::stoi(value);
+  }
+}
