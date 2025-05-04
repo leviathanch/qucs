@@ -42,4 +42,5 @@
     (* S0_x1=300, S0_y1=120, S0_x2=300, S0_y2=140 *) net #() net10 ( n_300_120, n_300_140 );
     (* S0_x1=300, S0_y1=40, S0_x2=410, S0_y2=40 *) net #() net11 ( n_300_40, n_410_40 );
     (* S0_x1=300, S0_y1=40, S0_x2=300, S0_y2=60 *) net #() net12 ( n_300_40, n_300_60 );
+    (* S0_x1=270, S0_y1=240, qucs_type="Text", S0_text="ideal Wilkinson divider:n- power into port 1 is split equally to port 2 and 3n- port 2 and 3 are decoupledn- if port 2 and 3 are terminated equally, no powern  is consumed by R1n- a wider bandwidth can be achieved by usingn  more than one Line2/Line3/R1 section" *) S0_text #() S0_text1;
 endmodule

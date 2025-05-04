@@ -16,15 +16,15 @@
 <Symbol>
 </Symbol>
 <Components>
-  <Vac V1 1 56 277 0 0 0 1 "150 V" 1 "1 GHz" 0 "0" 0 "0" 0>
+  <Vac V1 1 56 277 18 -26 0 1 "150 V" 1 "1 GHz" 0 "0" 0 "0" 0>
   <GND * 5 56 437 0 0 0 0>
-  <R R1 1 306 257 0 0 0 1 "15 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <R R2 1 406 257 0 0 0 1 "6 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <R R3 1 516 257 0 0 0 1 "8 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
-  <C C1 1 516 377 0 0 0 1 "177 uF" 1 "" 0 "neutral" 0>
-  <WProbe PF 1 216 187 0 0 0 0>
-  <.AC AC1 1 63 -26 0 0 0 0 "lin" 1 "100 Hz" 1 "1000 Hz" 1 "10" 1 "no" 0>
-  <L L1 1 406 377 0 0 0 1 "0.1 H" 1 "" 0>
+  <R R1 1 306 257 15 -26 0 1 "15 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <R R2 1 406 257 15 -26 0 1 "6 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <R R3 1 516 257 15 -26 0 1 "8 Ohm" 1 "26.85" 0 "0.0" 0 "0.0" 0 "26.85" 0 "european" 0>
+  <C C1 1 516 377 17 -26 0 1 "177 uF" 1 "" 0 "neutral" 0>
+  <WProbe PF 1 216 187 28 -31 0 0>
+  <.AC AC1 1 63 -26 0 33 0 0 "lin" 1 "100 Hz" 1 "1000 Hz" 1 "10" 1 "no" 0>
+  <L L1 1 406 377 10 -26 0 1 "0.1 H" 1 "" 0>
 </Components>
 <Wires>
   <56 187 186 187 "" 0 0 0 "">
@@ -53,4 +53,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 232 -21 12 #000000 0 "Wattmeter in AC, the component alwaysnacts as both voltmeter and ammeter.nWith the collected values, it then calculates thenpower triangle and corresponding power factor.">
 </Paintings>

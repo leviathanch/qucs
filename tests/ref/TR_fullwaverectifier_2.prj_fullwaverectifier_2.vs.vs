@@ -68,4 +68,5 @@
     (* S0_x1=300, S0_y1=220, S0_x2=300, S0_y2=270 *) net #() net24 ( n_300_220, n_300_270 );
     (* S0_x1=300, S0_y1=110, S0_x2=300, S0_y2=160 *) net #() net25 ( n_300_110, n_300_160 );
     (* S0_x1=50, S0_y1=270, S0_x2=160, S0_y2=270 *) net #() net26 ( n_50_270, n_160_270 );
+    (* S0_x1=50, S0_y1=40, qucs_type="Text", S0_text="Gratz bridge rectifier: a full-wave rectifier using 4 diodes." *) S0_text #() S0_text1;
 endmodule
