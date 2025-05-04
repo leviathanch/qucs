@@ -55,4 +55,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 80 390 16 #000000 0 "Meissner oscillator">
 </Paintings>
