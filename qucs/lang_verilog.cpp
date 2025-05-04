@@ -272,15 +272,20 @@ static void dumpDeclaration(outputStream& stream, Element const* e)
 static void dumpPainting(outputStream& stream, Element const* p)
 {
   static int text_counter=1;
-  stream << "    ";
-  stream << "(* S0_x="
-         << p->cx
-         << ", S0_y="
-         << p->cy;
-  if(p->attr_get()!="") {
-    stream << ", "
-           << p->attr_get();
-  }
+  std::string _attr = p->attr_get();
+  stream << "    "
+         << "(* "
+         << "S0_x1="+std::to_string(p->cx)
+         << ", "
+         << "S0_y1="+std::to_string(p->cy)
+         << ", "
+         << "S0_x2="+std::to_string(p->x2)
+         << ", "
+         << "S0_y2="+std::to_string(p->y2);
+         if(_attr!="") {
+  stream << ", "
+         << p->attr_get();
+         }
   stream << " *)"
          << " S0_text #()"
          << " S0_text"
@@ -587,6 +592,20 @@ void parse_instance(CS& cmd, T* x)
   cmd.check(0, "what's this?");
 }
 
+void parse_painting(CS& cmd, Painting* p)
+{
+  assert(p);
+  incomplete();
+  cmd.reset();
+  while (cmd >> "(*") {
+    while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
+      std::string name, value;
+      cmd >> name >> "=" >> value;
+      p->set_attribute(name, value);
+    }
+  }
+}
+
 class inspect_attributes {
   std::string _type;
 public:
@@ -617,7 +636,9 @@ std::shared_ptr<Element> clone_instance(std::string const& type)
 {
   QString qtype = QString::fromStdString(type);
   std::shared_ptr<Component> x = Module::getComponent(qtype); // BUG. need proper dispatcher.
-  return x;
+  if(x) return x;
+  std::shared_ptr<Painting> p = Module::getPainting(qtype);
+  return p;
 }
 
 bool readVerilog(CS &cmd, Schematic*s)
@@ -656,8 +677,12 @@ bool readVerilog(CS &cmd, Schematic*s)
 	/*x = */ parse_instance(cmd, x);
 	// BUG: Gives inconsisten values when generating refs
 	// setting text position to 0,0 for now.
-	x->set_qucs_text_position(0, 0);
+  //x->set_qucs_text_position(0, 0);
 	s->pushBack(std::dynamic_pointer_cast<Component>(inst)); // (yikes)
+      }else if(auto p = dynamic_cast<Painting*>(inst.get())) {
+        auto pe = std::dynamic_pointer_cast<Painting>(inst);
+        parse_painting(cmd, pe.get());
+        s->pushBack(pe);
       }else{ untested();
 	incomplete();
       }

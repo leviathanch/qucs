@@ -55,4 +55,8 @@
     (* S0_x1=530, S0_y1=80, S0_x2=640, S0_y2=80 *) net #() net13 ( n_530_80, n_640_80 );
     (* S0_x1=530, S0_y1=80, S0_x2=530, S0_y2=100 *) net #() net14 ( n_530_80, n_530_100 );
     (* S0_x1=640, S0_y1=160, S0_x2=640, S0_y2=190 *) net #() net15 ( n_640_160, n_640_190 );
+    (* S0_x1=480, S0_y1=50, S0_x2=121, S0_y2=19, qucs_type="Text", S0_text="equivalent circuit", qucs_font_color="#000000", qucs_font_size=14, qucs_font_angle=0 *) S0_text #() S0_text1;
+    (* S0_x1=90, S0_y1=50, S0_x2=55, S0_y2=19, qucs_type="Text", S0_text="Gyrator", qucs_font_color="#000000", qucs_font_size=14, qucs_font_angle=0 *) S0_text #() S0_text2;
+    (* S0_x1=520, S0_y1=220, S0_x2=110, S0_y2=19, qucs_type="Text", S0_text="L = R1 * R2 * C", qucs_font_color="#000000", qucs_font_size=14, qucs_font_angle=0 *) S0_text #() S0_text3;
+    (* S0_x1=330, S0_y1=200, S0_x2=227, S0_y2=55, qucs_type="Text", S0_text="As can be seen: With the use ofnan OpAmps, a capacitor cannrebuild a very large inductor.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S0_text #() S0_text4;
 endmodule

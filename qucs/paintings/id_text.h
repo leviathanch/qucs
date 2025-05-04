@@ -44,6 +44,8 @@ public:
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
+  std::string attr_get()const override {return "qucs_type=\".ID\"";}
+
   bool load(const QString&);
   QString save();
   QString saveCpp();

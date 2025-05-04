@@ -82,3 +82,19 @@ QString Painting::toBrushString (int brush) {
   }
   return "Qt::NoBrush";
 }
+
+void Painting::set_attribute(std::string name, std::string value)
+{
+  if(name=="S0_x1") {
+    cx = std::stoi(value);
+  }
+  else if(name=="S0_y1") {
+    cy = std::stoi(value);
+  }
+  else if(name=="S0_x2") {
+    x2 = std::stoi(value);
+  }
+  else if(name=="S0_y2") {
+    y2 = std::stoi(value);
+  }
+}

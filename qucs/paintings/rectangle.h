@@ -32,6 +32,8 @@ public:
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
+  std::string attr_get()const override {return "qucs_type=\"Rectangle\"";}
+
   Painting* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   static Element* info_filled(QString&, char* &, bool getNewOne=false);
@@ -53,7 +55,7 @@ public:
 
   QPen  Pen;
   QBrush Brush;    // filling style/color
-  bool  filled;    // filled or not (for "getSelected" etc.)
+  bool  filled{false};    // filled or not (for "getSelected" etc.)
 };
 
 #endif
