@@ -46,4 +46,8 @@
     (* S0_x1=40, S0_y1=230, S0_x2=140, S0_y2=230 *) net #() net10 ( n_40_230, n_140_230 );
     (* S0_x1=200, S0_y1=170, S0_x2=280, S0_y2=170 *) net #() net11 ( n_200_170, n_280_170 );
     (* S0_x1=40, S0_y1=170, S0_x2=80, S0_y2=170 *) net #() net12 ( n_40_170, n_80_170 );
+    (* S0_x1=200, S0_y1=60, S0_x2=-30, S0_y2=100, qucs_type="Arrow", qucs_xp1=-17, qucs_yp1=84, qucs_xp2=-31, qucs_yp2=79,  *) S0_text #() S0_text1;
+    (* S0_x1=400, S0_y1=60, S0_x2=10, S0_y2=90, qucs_type="Arrow", qucs_xp1=15, qucs_yp1=70, qucs_xp2=0, qucs_yp2=72,  *) S0_text #() S0_text2;
+    (* S0_x1=320, S0_y1=60, S0_x2=0, S0_y2=90, qucs_type="Arrow", qucs_xp1=7, qucs_yp1=70, qucs_xp2=-8, qucs_yp2=70,  *) S0_text #() S0_text3;
+    (* S0_x1=180, S0_y1=20, S0_x2=230, S0_y2=37, qucs_type="Text", S0_text="conventional power supply:ntransformer, 2-way-rectifier, filter" *) S0_text #() S0_text4;
 endmodule

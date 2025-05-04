@@ -532,3 +532,40 @@ bool Arrow::Dialog()
   delete d;
   return changed;
 }
+
+// -----------------------------------------------------------------------
+std::string Arrow::attr_get()const
+{
+  std::string ret;
+  ret+=Painting::attr_get();
+  ret+=", ";
+  ret+="qucs_type=\"Arrow\"";
+  ret+=", ";
+  ret+="qucs_xp1="+std::to_string(xp1);
+  ret+=", ";
+  ret+="qucs_yp1="+std::to_string(yp1);
+  ret+=", ";
+  ret+="qucs_xp2="+std::to_string(xp2);
+  ret+=", ";
+  ret+="qucs_yp2="+std::to_string(yp2);
+  ret+=", ";
+  return ret;
+}
+
+void Arrow::set_attribute(std::string name, std::string value)
+{
+  if(name=="qucs_xp1") {
+    xp1 = std::stoi(value);
+  }
+  else if(name=="qucs_yp1") {
+    yp1 = std::stoi(value);
+  }
+  else if(name=="qucs_xp2") {
+    xp2 = std::stoi(value);
+  }
+  else if(name=="qucs_yp2") {
+    yp2 = std::stoi(value);
+  } else {
+    Painting::set_attribute(name,value);
+  }
+}

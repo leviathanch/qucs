@@ -87,6 +87,6 @@
     (* S0_x1=180, S0_y1=340, S0_x2=180, S0_y2=370 *) net #() net29 ( n_180_340, n_180_370 );
     (* S0_x1=180, S0_y1=270, S0_x2=270, S0_y2=270 *) net #() net30 ( n_180_270, n_270_270 );
     (* S0_x1=180, S0_y1=270, S0_x2=180, S0_y2=280 *) net #() net31 ( n_180_270, n_180_280 );
-    (* S0_x=50, S0_y=20, qucs_type="Text", S0_text="Symmetrical current biased LC-Oscillator" *) S0_text #() S0_text1;
-    (* S0_x=480, S0_y=50, qucs_type="Text", S0_text="frequency = 1 / 2π · sqrt(L·C)\n\nAs this is a symmetrical oscillator,\nthe output spectrum contains no\neven harmonics." *) S0_text #() S0_text2;
+    (* S0_x1=50, S0_y1=20, S0_x2=292, S0_y2=19, qucs_type="Text", S0_text="Symmetrical current biased LC-Oscillator" *) S0_text #() S0_text1;
+    (* S0_x1=480, S0_y1=50, S0_x2=239, S0_y2=91, qucs_type="Text", S0_text="frequency = 1 / 2π · sqrt(L·C)\n\nAs this is a symmetrical oscillator,\nthe output spectrum contains no\neven harmonics." *) S0_text #() S0_text2;
 endmodule

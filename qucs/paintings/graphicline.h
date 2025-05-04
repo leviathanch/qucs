@@ -33,6 +33,8 @@ public:
   void getCenter(int&, int&);
   void setCenter(int, int, bool relative=false);
 
+  std::string attr_get()const override {return Painting::attr_get()+", qucs_type=\"Line\"";}
+
   Painting* newOne();
   static Element* info(QString&, char* &, bool getNewOne=false);
   bool load(const QString&);
