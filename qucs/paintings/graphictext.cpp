@@ -393,7 +393,6 @@ void GraphicText::set_attribute(std::string name, std::string value)
 {
   if(name=="S0_text" && value.size()) {
     Text=QString::fromStdString(value);
-    //Text.replace("\\n","\n");
   } else if(name=="qucs_font_color") {
     Color.setNamedColor(QString::fromStdString(value));
   } else if(name=="qucs_font_size") {
