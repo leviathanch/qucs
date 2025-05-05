@@ -666,7 +666,7 @@ bool readVerilog(CS &cmd, Schematic*s)
 	/*x = */ parse_instance(cmd, x);
 	// BUG: Gives inconsisten values when generating refs
 	// setting text position to 0,0 for now.
-	x->set_qucs_text_position(0, 0);
+  //x->set_qucs_text_position(0, 0);
 	s->pushBack(std::dynamic_pointer_cast<Component>(inst)); // (yikes)
       }else if(auto p = dynamic_cast<Painting*>(inst.get())) {
         auto pe = std::dynamic_pointer_cast<Painting>(inst);
