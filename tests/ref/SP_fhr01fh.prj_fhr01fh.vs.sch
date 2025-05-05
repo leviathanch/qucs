@@ -90,5 +90,5 @@
   <Text 410 370 14 #ff0000 0 "source ">
   <Text -20 110 14 #ff0000 90 "gate ">
   <Text 640 110 14 #ff0000 90 "drain ">
-  <Text 210 480 12 #000000 0 "small-signal model of Fujitsu HEMT FHR01FH (2V, 10mA) ntaken from:  nPospieszalski, "Modeling of Noise Parameters of MESFET's and nMODFET's and their frequency and temperature dependence", nIEEE Trans. Microwave Theory and Techniques, Sept. 1989 ">
+  <Text 210 480 12 #000000 0 "small-signal model of Fujitsu HEMT FHR01FH (2V, 10mA) \ntaken from:  \nPospieszalski, "Modeling of Noise Parameters of MESFET's and \nMODFET's and their frequency and temperature dependence", \nIEEE Trans. Microwave Theory and Techniques, Sept. 1989 ">
 </Paintings>

@@ -56,5 +56,5 @@
   <Text 480 50 14 #000000 0 "equivalent circuit">
   <Text 90 50 14 #000000 0 "Gyrator">
   <Text 520 220 14 #000000 0 "L = R1 * R2 * C">
-  <Text 330 200 12 #000000 0 "As can be seen: With the use ofnan OpAmps, a capacitor cannrebuild a very large inductor.">
+  <Text 330 200 12 #000000 0 "As can be seen: With the use of\nan OpAmps, a capacitor can\nrebuild a very large inductor.">
 </Paintings>

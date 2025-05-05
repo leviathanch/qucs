@@ -70,5 +70,5 @@
 </Diagrams>
 <Paintings>
   <Text 50 20 16 #0055ff 0 "Symmetrical current biased LC-Oscillator">
-  <Text 480 50 14 #000000 0 "frequency = 1 / 2π · sqrt(L·C)nnAs this is a symmetrical oscillator,nthe output spectrum contains noneven harmonics.">
+  <Text 480 50 14 #000000 0 "frequency = 1 / 2π · sqrt(L·C)\n\nAs this is a symmetrical oscillator,\nthe output spectrum contains no\neven harmonics.">
 </Paintings>

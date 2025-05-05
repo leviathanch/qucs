@@ -247,8 +247,18 @@ std::string CS::ctos(const std::string& term,
 				++quotes;
 				skip();
 			}else if (skip1('\\')) {
-				end_string = cursor() - 1;
-				s += _cmd.substr(begin_string, end_string-begin_string);
+				if (skip1('n')) {
+					end_string = cursor() - 2;
+					s += _cmd.substr(begin_string, end_string-begin_string);
+					s += "\n";
+				} else if (skip1('"')) {
+					end_string = cursor() - 2;
+					s += _cmd.substr(begin_string, end_string-begin_string);
+					s += "\"";
+				} else {
+					end_string = cursor() - 1;
+					s += _cmd.substr(begin_string, end_string-begin_string);
+				}
 				begin_string = cursor();
 				skip1(the_end_quote);
 			}else{
