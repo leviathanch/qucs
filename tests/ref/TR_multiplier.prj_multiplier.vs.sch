@@ -58,5 +58,5 @@
   <Text 90 310 12 #ff0000 0 "Generator">
   <Text 310 310 12 #ff0000 0 "1. stage">
   <Text 500 310 12 #ff0000 0 "2. stage">
-  <Text 260 360 12 #000000 0 "Two-stage Villard circuit:nEvery stage adds two-times the input voltage.n(Decreased by the diode voltage drop)nMany stages can be put in cascade.nThis circuit can only drive a high-impedance load.">
+  <Text 260 360 12 #000000 0 "Two-stage Villard circuit:\\nEvery stage adds two-times the input voltage.\\n(Decreased by the diode voltage drop)\\nMany stages can be put in cascade.\\nThis circuit can only drive a high-impedance load.">
 </Paintings>

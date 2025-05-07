@@ -68,5 +68,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
-  <Text 100 460 12 #000000 0 "Active, single-balanced mixer: In the output signal, onencan see a strong carrier (LO signal).">
+  <Text 100 460 12 #000000 0 "Active, single-balanced mixer: In the output signal, one\\ncan see a strong carrier (LO signal).">
 </Paintings>

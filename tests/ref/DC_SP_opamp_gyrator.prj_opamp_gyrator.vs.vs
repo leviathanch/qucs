@@ -58,5 +58,5 @@
     (* S0_x=480, S0_y=50, qucs_type="Text", S0_text="equivalent circuit", qucs_font_color="#000000", qucs_font_size=14, qucs_font_angle=0, qucs_w=120, qucs_h=24 *) S0_text #() S0_text1();
     (* S0_x=90, S0_y=50, qucs_type="Text", S0_text="Gyrator", qucs_font_color="#000000", qucs_font_size=14, qucs_font_angle=0, qucs_w=55, qucs_h=24 *) S0_text #() S0_text2();
     (* S0_x=520, S0_y=220, qucs_type="Text", S0_text="L = R1 * R2 * C", qucs_font_color="#000000", qucs_font_size=14, qucs_font_angle=0, qucs_w=110, qucs_h=24 *) S0_text #() S0_text3();
-    (* S0_x=330, S0_y=200, qucs_type="Text", S0_text="As can be seen: With the use ofnan OpAmps, a capacitor cannrebuild a very large inductor.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0, qucs_w=227, qucs_h=70 *) S0_text #() S0_text4();
+    (* S0_x=330, S0_y=200, qucs_type="Text", S0_text="As can be seen: With the use of\nan OpAmps, a capacitor can\nrebuild a very large inductor.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0, qucs_w=227, qucs_h=70 *) S0_text #() S0_text4();
 endmodule

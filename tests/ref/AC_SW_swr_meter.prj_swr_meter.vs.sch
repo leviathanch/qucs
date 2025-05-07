@@ -56,5 +56,5 @@
   <Rectangle 580 90 130 190 #000000 1 1 #c0c0c0 1 0>
   <Text 590 260 12 #000000 0 "load (e.g. antenna)">
   <Text 160 240 12 #000000 0 "generator">
-  <Text 220 420 12 #000000 0 "This is a VSWR meter often used to measure if the antennanis matched. It is connected between generator and load.nIt creates a voltage proportional to the forward voltage andnone proportional to the reflected voltage. The equationsnon this page calculates the reflection coefficient usingnthe definition and using the voltages. As can be seen theynequal each other. The mismatch created by the VSWR meternis very low.">
+  <Text 220 420 12 #000000 0 "This is a VSWR meter often used to measure if the antenna\\nis matched. It is connected between generator and load.\\nIt creates a voltage proportional to the forward voltage and\\none proportional to the reflected voltage. The equations\\non this page calculates the reflection coefficient using\\nthe definition and using the voltages. As can be seen they\\nequal each other. The mismatch created by the VSWR meter\\nis very low.">
 </Paintings>

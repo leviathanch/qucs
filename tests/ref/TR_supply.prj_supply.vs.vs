@@ -49,5 +49,5 @@
     (* S0_x=200, S0_y=60, qucs_type="Arrow", qucs_pen_color="#000000", qucs_pen_width=0, qucs_pen_style=1, qucs_w=-30, qucs_h=100 *) S0_graphics #() S0_graphics1();
     (* S0_x=400, S0_y=60, qucs_type="Arrow", qucs_pen_color="#000000", qucs_pen_width=0, qucs_pen_style=1, qucs_w=10, qucs_h=90 *) S0_graphics #() S0_graphics2();
     (* S0_x=320, S0_y=60, qucs_type="Arrow", qucs_pen_color="#000000", qucs_pen_width=0, qucs_pen_style=1, qucs_w=0, qucs_h=90 *) S0_graphics #() S0_graphics3();
-    (* S0_x=180, S0_y=20, qucs_type="Text", S0_text="conventional power supply:ntransformer, 2-way-rectifier, filter", qucs_font_color="#000000", qucs_font_size=16, qucs_font_angle=0, qucs_w=228, qucs_h=47 *) S0_text #() S0_text1();
+    (* S0_x=180, S0_y=20, qucs_type="Text", S0_text="conventional power supply:\ntransformer, 2-way-rectifier, filter", qucs_font_color="#000000", qucs_font_size=16, qucs_font_angle=0, qucs_w=228, qucs_h=47 *) S0_text #() S0_text1();
 endmodule

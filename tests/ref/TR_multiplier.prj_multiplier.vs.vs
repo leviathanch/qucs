@@ -59,5 +59,5 @@
     (* S0_x=90, S0_y=310, qucs_type="Text", S0_text="Generator", qucs_font_color="#ff0000", qucs_font_size=12, qucs_font_angle=0, qucs_w=73, qucs_h=24 *) S0_text #() S0_text1();
     (* S0_x=310, S0_y=310, qucs_type="Text", S0_text="1. stage", qucs_font_color="#ff0000", qucs_font_size=12, qucs_font_angle=0, qucs_w=57, qucs_h=24 *) S0_text #() S0_text2();
     (* S0_x=500, S0_y=310, qucs_type="Text", S0_text="2. stage", qucs_font_color="#ff0000", qucs_font_size=12, qucs_font_angle=0, qucs_w=57, qucs_h=24 *) S0_text #() S0_text3();
-    (* S0_x=260, S0_y=360, qucs_type="Text", S0_text="Two-stage Villard circuit:nEvery stage adds two-times the input voltage.n(Decreased by the diode voltage drop)nMany stages can be put in cascade.nThis circuit can only drive a high-impedance load.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0, qucs_w=350, qucs_h=116 *) S0_text #() S0_text4();
+    (* S0_x=260, S0_y=360, qucs_type="Text", S0_text="Two-stage Villard circuit:\nEvery stage adds two-times the input voltage.\n(Decreased by the diode voltage drop)\nMany stages can be put in cascade.\nThis circuit can only drive a high-impedance load.", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0, qucs_w=350, qucs_h=116 *) S0_text #() S0_text4();
 endmodule
