@@ -67,4 +67,5 @@
 <Diagrams>
 </Diagrams>
 <Paintings>
+  <Text 720 1170 16 #0000ff 0 "10GHz band pass filter\\nCreated by Toyoyuki ISHIKAWA">
 </Paintings>
