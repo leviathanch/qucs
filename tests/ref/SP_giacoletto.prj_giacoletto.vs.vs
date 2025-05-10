@@ -44,7 +44,7 @@
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100000", S0_x1=180, S0_y1=140, S0_x2=240, S0_y2=140 *) R #(.R(45 Ohm),.Temp(26.85),.Tc1(0.0),.Tc2(0.0),.Tnom(26.85)) R1 ( n_180_140, n_240_140 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=360, S0_y1=240 *) GND #() \*  ( n_360_240 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=60, S0_y1=240 *) GND #() \*  ( n_60_240 );
-    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=520, S0_y1=160, S0_x2=580, S0_y2=160, S0_x3=580, S0_y3=220, S0_x4=520, S0_y4=220 *) VCCS #(.G(1.2 S),.T(0)) SRC1 ( n_520_160, n_580_160, n_580_220, n_520_220 );
+    (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="11", S0_x1=520, S0_y1=160, S0_x2=580, S0_y2=160, S0_x3=580, S0_y3=220, S0_x4=520, S0_y4=220 *) VCCS #(.G(1.2 S),.T(0)) SRC1 ( n_520_160, n_580_160, n_580_220, n_520_220 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="10", S0_x1=600, S0_y1=140, S0_x2=660, S0_y2=140 *) L #(.L(1.5 nH),.I()) L2 ( n_600_140, n_660_140 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="", S0_x1=680, S0_y1=240 *) GND #() \*  ( n_680_240 );
     (* qucs_mirrored=0, qucs_rotated=0, qucs_visible="100", S0_x1=440, S0_y1=80, S0_x2=500, S0_y2=80 *) C #(.C(0.1 pF),.V()) C2 ( n_440_80, n_500_80 );
@@ -84,5 +84,5 @@
     (* S0_x1=170, S0_y1=60, S0_x2=170, S0_y2=140 *) net #() net30 ( n_170_60, n_170_140 );
     (* S0_x1=170, S0_y1=60, S0_x2=280, S0_y2=60 *) net #() net31 ( n_170_60, n_280_60 );
     (* S0_x1=60, S0_y1=140, S0_x2=100, S0_y2=140 *) net #() net32 ( n_60_140, n_100_140 );
-    (* S0_x=60, S0_y=20, qucs_type="Text", S0_text="Modified Giacoletto equivalent circuit ", qucs_font_color="#000000", qucs_font_size=12, qucs_font_angle=0 *) S__text #() S0_text1();
+    (* S0_x=60, S0_y=20, qucs_type="Text", S0_text="Modified Giacoletto equivalent circuit ", qucs_font_color="#000000", qucs_font_size=16, qucs_font_angle=0 *) S__text #() S0_text1();
 endmodule
