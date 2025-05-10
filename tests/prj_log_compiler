@@ -57,6 +57,13 @@ for i in $( cd ${srcdir}; ls $base/*.{sch,vs} ) ; do
 	# (ab)using stdout for now, hardwired, see Schematic::warn..
 	eval "$cmd > ${out}/${base}_${schname}.vs.tmp" ${REDIR}
 
+	if [[ ${i} == *.vs ]]; then
+		$DIFF ${srcdir}/$i ${out}/${base}_${schname%%.*}.sch.vs >> ${out}/collective_roundtrip_diff_vs
+
+	elif [[ ${i} == *.sch ]]; then
+		$DIFF ${srcdir}/$i ${out}/${base}_${schname%%.*}.vs.sch >> ${out}/collective_roundtrip_diff_sch
+	fi
+
 	# .tmp ist part of what is tested, append it
 	cat ${out}/${base}_${schname}.vs.tmp >> ${out}/${base}_${schname}.vs
 	rm ${out}/${base}_${schname}.vs.tmp

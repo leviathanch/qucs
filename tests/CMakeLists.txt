@@ -131,6 +131,13 @@ add_test(NAME "ElementTests" COMMAND "ElementTests")
 endif() # BUILD_API_TESTS
 
 set(check_commands)
+
+add_test(NAME TestCleanup COMMAND rm -f ${PROJECT_BINARY_DIR}/out/collective_roundtrip_diff_*)
+add_custom_target(CleanRoundTrip COMMAND rm -f ${PROJECT_BINARY_DIR}/out/collective_roundtrip_diff_*)
+set_tests_properties(TestCleanup PROPERTIES DEPENDS "CleanRoundTrip")
+
+#list(APPEND check_commands COMMAND rm -f ${PROJECT_BINARY_DIR}/out/collective_roundtrip_diff_*)
+
 foreach(project IN LISTS PRJ_TESTS)
     list(APPEND check_commands COMMAND srcdir=${PROJECT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/prj_log_compiler ${project})
     add_test(NAME "${TestCounter}_${project}" COMMAND ${PROJECT_SOURCE_DIR}/prj_log_compiler ${project})
