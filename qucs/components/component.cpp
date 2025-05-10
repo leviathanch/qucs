@@ -852,6 +852,10 @@ void Component::set_attribute(std::string name, std::string value)
   if(name == "qucs_rotated"){
     set_qucs_rotated(std::stoi(value));
   }
+  else
+  if(name == "qucs_visible"){ untested();
+    _qucs_p_visibility = value;
+  }
 }
 
 void Component::apply_qucs_values()
@@ -871,13 +875,11 @@ void Component::apply_qucs_values()
     cx = _qucs_x1;
     cy = _qucs_y1;
   }
-  /* BUG: Tests fail as long as Verilog Schematics are not updated
   int i=0;
   for (auto pp=Props.begin(); pp!=Props.end(); pp++, i++) { untested();
     assert(i<(int)_qucs_p_visibility.size());
     pp->display=(_qucs_p_visibility[i]=='1');
   }
-  */
 }
 
 // -------------------------------------------------------
