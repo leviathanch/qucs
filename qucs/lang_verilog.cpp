@@ -621,6 +621,25 @@ void parse_painting(CS& cmd, Painting* p)
   }
 }
 
+void parse_preamle(CS& cmd, Schematic* s)
+{ untested();
+  assert(s);
+  incomplete();
+  cmd.reset();
+  while (cmd >> "(*") {
+    while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) { untested();
+      std::string name, value;
+      cmd >> name;
+      if(cmd >> "="){
+        cmd >> value;
+      }else{
+        value = "1";
+      }
+      s->set_attribute(name, value);
+    }
+  }
+}
+
 class inspect_attributes {
   std::string _type;
 public:
@@ -671,7 +690,7 @@ bool readVerilog(CS &cmd, Schematic*s)
     inspect_attributes attr(cmd);
     trace1("inspected", cmd.tail());
     if(cmd>>"module") { untested();
-      //ignore for now;
+      parse_preamle(cmd,s);
     }else if(cmd>>"endmodule"){
       //ignore for now;
     }else{
