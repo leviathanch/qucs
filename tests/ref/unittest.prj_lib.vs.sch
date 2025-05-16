@@ -1,11 +1,11 @@
 <Qucs Schematic 0.0.21-dev>
 <Properties>
-  <View=0,0,800,800,1,0,0>
+  <View=1920,-333,2270,-130,4.42857,0,0>
   <Grid=10,10,1>
-  <DataSet=lib.dat>
-  <DataDisplay=lib.dpl>
+  <DataSet=integrity1.dat>
+  <DataDisplay=integrity1.dpl>
   <OpenDisplay=1>
-  <Script=lib.m>
+  <Script=integrity1.m>
   <RunScript=0>
   <showFrame=0>
   <FrameText0=Title>
