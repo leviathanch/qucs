@@ -91,13 +91,7 @@ std::string Painting::attr_get()const
 
 void Painting::set_attribute(std::string name, std::string value)
 {
-  if(name=="S0_x") {
-    cx = std::stoi(value);
-  }
-  else if(name=="S0_y") {
-    cy = std::stoi(value);
-  }
-  else if(name=="qucs_w") { untested();
+  if(name=="qucs_w") { untested();
     x2 = std::stoi(value);
   }
   else if(name=="qucs_h") { untested();

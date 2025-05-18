@@ -161,6 +161,15 @@ public:
   virtual void setCenter(int, int, bool relative=false);
   virtual void getCenter(int&, int&);
 
+  virtual void set_attribute(std::string name, std::string value) {}
+  virtual void set_qucs_cx(int x) {cx=x;}
+  virtual void set_qucs_cy(int y) {cy=y;}
+  virtual void set_qucs_x1(int x) {x1=x;}
+  virtual void set_qucs_y1(int y) {y1=y;}
+  virtual void set_qucs_x2(int x) {x2=x;}
+  virtual void set_qucs_y2(int y) {y2=y;}
+  virtual void apply_qucs_values() {}
+
   bool isSelected;
   int  Type;    // whether it is Component, Wire, ...
   int  cx{0}, cy{0}, x1{0}, y1{0}, x2{0}, y2{0};  // center and relative boundings
