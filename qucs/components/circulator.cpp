@@ -37,11 +37,11 @@ Circulator::Circulator()
   Ports.push_back(qucs::Port( 30,  0));
   Ports.push_back(qucs::Port(  0, 30));
 
-  x1 = -30; y1 = -16;
-  x2 =  30; y2 =  30;
+  x1() = -30; y1() = -16;
+  x2() =  30; y2() =  30;
 
-  set_qucs_text_position(x1+4,
-  y1 - QucsSettings.font.pointSize()-4); // yikes.
+  set_qucs_text_position(x1()+4,
+  y1() - QucsSettings.font.pointSize()-4); // yikes.
   Model = "Circulator";
   Name  = "X";
 

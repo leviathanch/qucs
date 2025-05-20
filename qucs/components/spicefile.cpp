@@ -135,13 +135,13 @@ void SpiceFile::createSymbol()
     Ports.push_back(qucs::Port( 0, h+15));    // 'Ref' port
   }
 
-  x1 = -30; y1 = -h-2;
-  x2 =  30; y2 =  h+15;
+  x1() = -30; y1() = -h-2;
+  x2() =  30; y2() =  h+15;
 
   // compute component name text position - normal size font
   QFontMetrics  metrics(QucsSettings.font, 0);   // use the screen-compatible metric
   fHeight = metrics.lineSpacing();
-  set_qucs_text_position(x1+4, y1 - fHeight - 4); // BUG
+  set_qucs_text_position(x1()+4, y1() - fHeight - 4); // BUG
   if(prop(0).display){
 	  set_qucs_text_position(tx(), ty() - fHeight);
   }else{

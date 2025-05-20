@@ -31,8 +31,8 @@ Ground::Ground()
 
   Ports.push_back(qucs::Port(  0,  0));
 
-  x1 = -12; y1 =  0;
-  x2 =  12; y2 = 25;
+  x1() = -12; y1() =  0;
+  x2() =  12; y2() = 25;
 
   set_qucs_text_position(0, 0);
   Model = "GND";

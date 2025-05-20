@@ -49,7 +49,7 @@ mod_amp::mod_amp()
  Props.push_back(qucs::Property ("CSCALE", "50", false,
     QObject::tr("Current limit scale factor")));
   createSymbol ();
-  set_qucs_text_position(x2+4, y1+4);
+  set_qucs_text_position(x2()+4, y1()+4);
   Model = "mod_amp";
   Name  = "OP";
 }
@@ -95,7 +95,7 @@ void mod_amp::createSymbol()
   Ports.push_back(qucs::Port(-30, 20));
   Ports.push_back(qucs::Port( 40,  0));
 
-  x1 = -30; y1 = -38;
-  x2 =  40; y2 =  38;
+  x1() = -30; y1() = -38;
+  x2() =  40; y2() =  38;
 
 }

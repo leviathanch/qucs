@@ -35,9 +35,9 @@ GraphicText::GraphicText()
   isSelected = false;
   Color = QColor(0,0,0);
   Font = QucsSettings.font;
-  cx = cy = 0;
-  x1 = x2 = 0;
-  y1 = y2 = 0;
+  cx() = cy() = 0;
+  x1() = x2() = 0;
+  y1() = y2() = 0;
   Angle = 0;
 }
 
@@ -51,8 +51,8 @@ void GraphicText::paint(ViewPainter *p)
   // keep track of painter state
   p->Painter->save();
 
-  QTransform Mat(1.0, 0.0, 0.0, 1.0, p->DX + float(cx) * p->Scale,
-                                     p->DY + float(cy) * p->Scale);
+  QTransform Mat(1.0, 0.0, 0.0, 1.0, p->DX + float(cx()) * p->Scale,
+                                     p->DY + float(cy()) * p->Scale);
   p->Painter->setWorldTransform(Mat);
   p->Painter->rotate(-Angle);   // automatically enables transformation
 
@@ -80,8 +80,8 @@ void GraphicText::paint(ViewPainter *p)
   // restore painter state
   p->Painter->restore();
 
-  x2 = int(float(w) / p->Scale);
-  y2 = int(float(h) / p->Scale);
+  x2() = int(float(w) / p->Scale);
+  y2() = int(float(h) / p->Scale);
   p->Painter->setFont(f);
 }
 
@@ -94,7 +94,7 @@ void GraphicText::paintScheme(Schematic *p)
 // FIXME #warning 		wm.dy() + double(cy) * wm.m22());
   // FIXME #warning p->setWorldMatrix(Mat);
   // FIXME #warning p->rotate(-Angle);
-  p->PostPaintEvent(_Rect, 0, 0, x2, y2);
+  p->PostPaintEvent(_Rect, 0, 0, x2(), y2());
 
   // FIXME #warning p->setWorldMatrix(wm);
 }
@@ -102,16 +102,16 @@ void GraphicText::paintScheme(Schematic *p)
 // ------------------------------------------------------------------------
 void GraphicText::getCenter(int& x, int &y)
 {
-  x = cx+(x2>>1);
-  y = cy+(y2>>1);
+  x = cx()+(x2()>>1);
+  y = cy()+(y2()>>1);
 }
 
 // -----------------------------------------------------------------------
 // Sets the center of the painting to x/y.
 void GraphicText::setCenter(int x, int y, bool relative)
 {
-  if(relative) {  cx += x;  cy += y;  }
-  else {  cx = x-(x2>>1);  cy = y-(y2>>1);  }
+  if(relative) {  cx() += x;  cy() += y;  }
+  else {  cx() = x-(x2()>>1);  cy() = y-(y2()>>1);  }
 }
 
 // -----------------------------------------------------------------------
@@ -137,11 +137,11 @@ bool GraphicText::load(const QString& s)
 
   QString n;
   n  = s.section(' ',1,1);    // cx
-  cx = n.toInt(&ok);
+  cx() = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',2,2);    // cy
-  cy = n.toInt(&ok);
+  cy() = n.toInt(&ok);
   if(!ok) return false;
 
   n  = s.section(' ',3,3);    // Size
@@ -164,8 +164,8 @@ bool GraphicText::load(const QString& s)
   // get size of text using the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);
   QSize r = metrics.size(0, Text);    // get overall size of text
-  x2 = r.width();
-  y2 = r.height();
+  x2() = r.width();
+  y2() = r.height();
 
   return true;
 }
@@ -177,7 +177,7 @@ QString GraphicText::save()
   misc::convert2ASCII(t);
 
   // The 'Text' property has to be the last within the line !
-  QString s = Name+QString::number(cx)+" "+QString::number(cy)+" "
+  QString s = Name+QString::number(cx())+" "+QString::number(cy())+" "
 		+ QString::number(Font.pointSize())+" "+Color.name()+" "
 		+ QString::number(Angle) + " \""+t+"\"";
   return s;
@@ -191,7 +191,7 @@ QString GraphicText::saveCpp()
 
   QString s =
     QString ("new Text (%1, %2, \"%3\", QColor (\"%4\"), %5, %6, %7)").
-    arg(cx).arg(cy).arg(t).
+    arg(cx()).arg(cy()).arg(t).
     arg(Color.name()).arg(Font.pointSize()).
     arg(cos(pi * Angle / 180.0)).arg(sin(pi * Angle / 180.0));
   s = "Texts.append (" + s + ");";
@@ -207,7 +207,7 @@ QString GraphicText::saveJSON()
     QString ("{\"type\" : \"graphictext\", "
       "\"x\" : %1, \"y\" : %2, \"s\" : \"%3\", "
       "\"color\" : \"%4\", \"size\" : %5, \"cos\" : %6, \"sin\" : %7},").
-      arg(cx).arg(cy).arg(t).
+      arg(cx()).arg(cy()).arg(t).
       arg(Color.name()).arg(Font.pointSize()).
       arg(cos(pi * Angle / 180.0)).arg(sin(pi * Angle / 180.0));
   return s;
@@ -222,18 +222,18 @@ void GraphicText::MouseMoving(
 {
   // FIXME #warning p->setPen(Qt::SolidLine);
   if(drawn) {
-    p->PostPaintEvent(_Line, x1+15, y1+15, x1+20, y1,0,0,true);  // erase old cursor symbol
-    p->PostPaintEvent(_Line, x1+26, y1+15, x1+21, y1,0,0,true);
-    p->PostPaintEvent(_Line, x1+17, y1+8,  x1+23, y1+8,0,0,true);
+    p->PostPaintEvent(_Line, x1()+15, y1()+15, x1()+20, y1(),0,0,true);  // erase old cursor symbol
+    p->PostPaintEvent(_Line, x1()+26, y1()+15, x1()+21, y1(),0,0,true);
+    p->PostPaintEvent(_Line, x1()+17, y1()+8,  x1()+23, y1()+8,0,0,true);
   }
-  x1 = x;
-  y1 = y;
-  p->PostPaintEvent(_Line, x1+15, y1+15, x1+20, y1,0,0,true);  // paint new cursor symbol
-  p->PostPaintEvent(_Line, x1+26, y1+15, x1+21, y1,0,0,true);
-  p->PostPaintEvent(_Line, x1+17, y1+8,  x1+23, y1+8,0,0,true);
+  x1() = x;
+  y1() = y;
+  p->PostPaintEvent(_Line, x1()+15, y1()+15, x1()+20, y1(),0,0,true);  // paint new cursor symbol
+  p->PostPaintEvent(_Line, x1()+26, y1()+15, x1()+21, y1(),0,0,true);
+  p->PostPaintEvent(_Line, x1()+17, y1()+8,  x1()+23, y1()+8,0,0,true);
 
-  cx = gx;
-  cy = gy;
+  cx() = gx;
+  cy() = gy;
 }
 
 // ------------------------------------------------------------------------
@@ -250,12 +250,12 @@ bool GraphicText::getSelected(float fX, float fY, float)
   double phi  = pi/180.0*double(Angle);
   float  sine = sin(phi), cosine = cos(phi);
 
-  fX -= float(cx);
-  fY -= float(cy);
+  fX -= float(cx());
+  fY -= float(cy());
   int _x = int( fX*cosine - fY*sine );
   int _y = int( fY*cosine + fX*sine );
 
-  if(_x >= 0) if(_y >= 0) if(_x <= x2) if(_y <= y2)
+  if(_x >= 0) if(_y >= 0) if(_x <= x2()) if(_y <= y2())
     return true;
 
   return false;
@@ -266,23 +266,23 @@ void GraphicText::Bounding(int& xmin, int& ymin, int& xmax, int& ymax)
 {
   double phi = pi/180.0*double(Angle);
   double sine = sin(phi), cosine = cos(phi);
-  int dx = int( double(y2) * sine );
-  int dy = int( double(y2) * cosine );
-  xmin = dx;  xmax = cx;
-  ymin = dy;  ymax = cy;
-  if(xmin < 0)  xmin += cx;
-  else { xmax += xmin;  xmin = cx; }
-  if(ymin < 0)  ymin += cy;
-  else { ymax += ymin;  ymin = cy; }
+  int dx = int( double(y2()) * sine );
+  int dy = int( double(y2()) * cosine );
+  xmin = dx;  xmax = cx();
+  ymin = dy;  ymax = cy();
+  if(xmin < 0)  xmin += cx();
+  else { xmax += xmin;  xmin = cx(); }
+  if(ymin < 0)  ymin += cy();
+  else { ymax += ymin;  ymin = cy(); }
 
-  int x = cx + int( double(x2) * cosine );
+  int x = cx() + int( double(x2()) * cosine );
   if(xmax < x)  xmax = x;
   else if(xmin > x)  xmin = x;
   x += dx;
   if(xmax < x)  xmax = x;
   else if(xmin > x)  xmin = x;
 
-  int y = cy - int( double(x2) * sine );
+  int y = cy() - int( double(x2()) * sine );
   if(ymax < y)  ymax = y;
   else if(ymin > y)  ymin = y;
   y += dy;
@@ -296,8 +296,8 @@ void GraphicText::rotate()
 {
   Angle += 90;
   Angle %= 360;
-  cx -= x2 >> 1;
-  cy -= y2 >> 1;
+  cx() -= x2() >> 1;
+  cy() -= y2() >> 1;
 }
 
 // -----------------------------------------------------------------------
@@ -362,8 +362,8 @@ bool GraphicText::Dialog()
   // get font metric using the screen-compatible metric
   QFontMetrics  m(f, 0);
   QSize s = m.size(0, Text); // get size of text
-  x2 = s.width();
-  y2 = s.height();
+  x2() = s.width();
+  y2() = s.height();
 
   delete d;
   return changed;

@@ -58,9 +58,9 @@ JK_FlipFlop::JK_FlipFlop()
   Ports.push_back(qucs::Port(  0,-40));  // set
   Ports.push_back(qucs::Port(  0, 40));  // reset
 
-  x1 = -30; y1 = -40;
-  x2 =  30; y2 =  40;
-  set_qucs_text_position(x1+4, y2+4);
+  x1() = -30; y1() = -40;
+  x2() =  30; y2() =  40;
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "JKFF";
   Name  = "Y";
 }

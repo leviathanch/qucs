@@ -31,10 +31,10 @@ Optimize_Sim::Optimize_Sim()
 
   Texts.push_back(qucs::Text(0, 0, Description, Qt::darkBlue, QucsSettings.largeFontSize));
 
-  x1 = -10; y1 = -9;
-  x2 = x1+128; y2 = y1+41;
+  x1() = -10; y1() = -9;
+  x2() = x1()+128; y2() = y1()+41;
 
-  set_qucs_text_position(0, y1+1);
+  set_qucs_text_position(0, y1()+1);
   Model = ".Opt";
   Name  = "Opt";
 

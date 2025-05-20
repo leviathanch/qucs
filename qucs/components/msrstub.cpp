@@ -30,10 +30,10 @@ MSrstub::MSrstub()
 
   Ports.push_back(qucs::Port(0, 10));
 
-  x1 = -22; y1 =-30;
-  x2 =  22; y2 = 10;
+  x1() = -22; y1() =-30;
+  x2() =  22; y2() = 10;
 
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "MRSTUB";
   Name  = "MS";
 

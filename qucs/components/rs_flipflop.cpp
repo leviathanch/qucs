@@ -46,9 +46,9 @@ RS_FlipFlop::RS_FlipFlop()
   Ports.push_back(qucs::Port( 30,-10));  // Q
   Ports.push_back(qucs::Port( 30, 10));  // nQ
 
-  x1 = -30; y1 = -24;
-  x2 =  30; y2 =  24;
-  set_qucs_text_position(x1+4, y2+4);
+  x1() = -30; y1() = -24;
+  x2() =  30; y2() =  24;
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "RSFF";
   Name  = "Y";
 }

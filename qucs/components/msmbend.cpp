@@ -35,10 +35,10 @@ MSmbend::MSmbend()
   Ports.push_back(qucs::Port(-30, 0));
   Ports.push_back(qucs::Port(  0,30));
 
-  x1 = -30; y1 =-11;
-  x2 =  11; y2 = 30;
+  x1() = -30; y1() =-11;
+  x2() =  11; y2() = 30;
 
-  set_qucs_text_position(x2+4, y1+4);
+  set_qucs_text_position(x2()+4, y1()+4);
   Model = "MMBEND";
   Name  = "MS";
 

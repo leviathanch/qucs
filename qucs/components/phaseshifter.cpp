@@ -35,10 +35,10 @@ Phaseshifter::Phaseshifter()
   Ports.push_back(qucs::Port(-30,  0));
   Ports.push_back(qucs::Port( 30,  0));
 
-  x1 = -30; y1 = -17;
-  x2 =  30; y2 =  17;
+  x1() = -30; y1() = -17;
+  x2() =  30; y2() =  17;
 
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "PShift";
   Name  = "X";
 

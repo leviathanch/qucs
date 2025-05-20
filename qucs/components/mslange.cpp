@@ -37,10 +37,10 @@ MSlange::MSlange()
   Ports.push_back(qucs::Port( 30,-30));
   Ports.push_back(qucs::Port(-30, 30));
 
-  x1 = -30; y1 =-33;
-  x2 =  30; y2 = 33;
+  x1() = -30; y1() =-33;
+  x2() =  30; y2() = 33;
 
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "MLANGE";
   Name  = "MS";
 

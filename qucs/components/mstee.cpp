@@ -24,13 +24,13 @@ MStee::MStee()
 {
   Description = QObject::tr("microstrip tee");
 
-  x1 = -30; y1 = -11;
-  x2 =  30; y2 =  30;
+  x1() = -30; y1() = -11;
+  x2() =  30; y2() =  30;
 
   // use the screen-compatible metric
   QFontMetrics metrics(QucsSettings.font, 0);   // get size of text
-  set_qucs_text_position(x1+4,
-  y1 - 5*metrics.lineSpacing() - 4); // BUG
+  set_qucs_text_position(x1()+4,
+  y1() - 5*metrics.lineSpacing() - 4); // BUG
   Model = "MTEE";
   Name  = "MS";
 

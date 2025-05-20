@@ -31,7 +31,7 @@ andor4x3::andor4x3()
     +" ("+QObject::tr ("s")+")"));
  
   createSymbol ();
-  set_qucs_text_position(x1+19, y2+4);
+  set_qucs_text_position(x1()+19, y2()+4);
   Model = "andor4x3";
   Name  = "Y";
 }
@@ -111,8 +111,8 @@ void andor4x3::createSymbol()
 
   Ports.push_back(qucs::Port( 50, 20));  // Y
 
-  x1 = -50; y1 = -64;
-  x2 =  50; y2 =  104;
+  x1() = -50; y1() = -64;
+  x2() =  50; y2() =  104;
 
 }
 
