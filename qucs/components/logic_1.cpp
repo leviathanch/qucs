@@ -27,7 +27,7 @@ logic_1::logic_1()
     QObject::tr ("logic 1 voltage level")
     +" ("+QObject::tr ("V")+")"));
   createSymbol ();
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "logic_1";
   Name  = "S";
 }
@@ -64,8 +64,8 @@ void logic_1::createSymbol()
 
   Ports.push_back(qucs::Port(  0,  0)); // L1
 
-  x1 = -39; y1 = -14;
-  x2 = 0;   y2 =  14;
+  x1() = -39; y1() = -14;
+  x2()() = 0;   y2() =  14;
 }
 
 QString logic_1::vhdlCode( int )

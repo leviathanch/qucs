@@ -44,10 +44,10 @@ iProbe::iProbe()
   Ports.push_back(qucs::Port(-30,  0));
   Ports.push_back(qucs::Port( 30,  0));
 
-  x1 = -30; y1 = -34;
-  x2 =  30; y2 =  12;
+  x1() = -30; y1() = -34;
+  x2()() =  30; y2() =  12;
 
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "IProbe";
   Name  = "Pr";
 }

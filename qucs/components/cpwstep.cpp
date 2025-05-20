@@ -54,10 +54,10 @@ CPWstep::CPWstep()
   Ports.push_back(qucs::Port(-30, 0));
   Ports.push_back(qucs::Port( 30, 0));
 
-  x1 = -30; y1 =-24;
-  x2 =  30; y2 = 24;
+  x1() = -30; y1() =-24;
+  x2()() =  30; y2() = 24;
 
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "CSTEP";
   Name  = "CL";
 

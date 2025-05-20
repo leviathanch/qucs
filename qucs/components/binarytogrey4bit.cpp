@@ -31,7 +31,7 @@ binarytogrey4bit::binarytogrey4bit()
     +" ("+QObject::tr ("s")+")"));
 
   createSymbol ();
-  set_qucs_text_position(x1 + 19, y2 + 4);
+  set_qucs_text_position(x1() + 19, y2() + 4);
   Model = "binarytogrey4bit";
   Name  = "Y";
 }
@@ -94,8 +94,8 @@ void binarytogrey4bit::createSymbol()
   Ports.push_back(qucs::Port( 50,-10));  // G1
   Ports.push_back(qucs::Port( 50,-30));  // G0
 
-  x1 = -50; y1 = -64;
-  x2 =  50; y2 =  44;
+  x1() = -50; y1() = -64;
+  x2()() =  50; y2() =  44;
 }
 
 QString binarytogrey4bit::vhdlCode( int )

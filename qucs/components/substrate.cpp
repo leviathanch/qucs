@@ -47,10 +47,10 @@ Substrate::Substrate()
   Lines.push_back(qucs::Line( 52,-22, 66, -8,QPen(Qt::darkBlue,1)));
   Lines.push_back(qucs::Line( 66,-30, 80,-16,QPen(Qt::darkBlue,1)));
 
-  x1 = -34; y1 =-44;
-  x2 =  84; y2 = 20;
+  x1() = -34; y1() =-44;
+  x2()() =  84; y2() = 20;
 
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "SUBST";
   Name  = "Subst";
 

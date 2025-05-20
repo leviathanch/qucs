@@ -1492,9 +1492,9 @@ void MouseActions::MPressMarker(Schematic *Doc, QMouseEvent*, float fX, float fY
 
   if(pm) {
     assert(pm->diag());
-    int x0 = pm->diag()->cx;
-    int y0 = pm->diag()->cy;
-    Doc->enlargeView(x0+pm->x1, y0-pm->y1-pm->y2, x0+pm->x1+pm->x2, y0-pm->y1);
+    int x0 = pm->diag()->cx();
+    int y0 = pm->diag()->cy();
+    Doc->enlargeView(x0+pm->x1(), y0-pm->y1()-pm->y2(), x0+pm->x1()+pm->x2()(), y0-pm->y1());
   }
   Doc->viewport()->update();
   drawn = false;
@@ -1724,8 +1724,8 @@ void MouseActions::moveElements(Schematic *Doc, int& x1, int& y1)
 
   for(auto pe = movingElements.begin(); pe != movingElements.end(); ++pe) {
     if(pe->Type & isLabel) {
-      pe->cx += x1;  pe->x1 += x1;
-      pe->cy += y1;  pe->y1 += y1;
+      pe->cx() += x1;  pe->x1() += x1;
+      pe->cy() += y1;  pe->y1() += y1;
     }
     else
       pe->setCenter(x1, y1, true);
@@ -1744,16 +1744,16 @@ void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
     case isAnalogComponent:
     case isDigitalComponent:
       ((Component*)pe.operator->())->rotate(); // rotate !before! rotating the center
-      x2 = x1 - pe->cx;
-      pe->setCenter(pe->cy - y1 + x1, x2 + y1);
+      x2 = x1 - pe->cx();
+      pe->setCenter(pe->cy() - y1 + x1, x2 + y1);
       break;
     case isWire:
-      x2     = pe->x1;
-      pe->x1 = pe->y1 - y1 + x1;
-      pe->y1 = x1 - x2 + y1;
-      x2     = pe->x2;
-      pe->x2 = pe->y2 - y1 + x1;
-      pe->y2 = x1 - x2 + y1;
+      x2     = pe->x1();
+      pe->x1() = pe->y1() - y1 + x1;
+      pe->y1() = x1 - x2 + y1;
+      x2     = pe->x2()();
+      pe->x2()() = pe->y2() - y1 + x1;
+      pe->y2() = x1 - x2 + y1;
       break;
     case isPainting:
       ((Painting*)pe.operator->())->rotate(); // rotate !before! rotating the center
@@ -1761,8 +1761,8 @@ void MouseActions::rotateElements(Schematic *Doc, int& x1, int& y1)
       pe->setCenter(y2 - y1 + x1, x1 - x2 + y1);
           break;
     default:
-      x2 = x1 - pe->cx;   // if diagram -> only rotate cx/cy
-      pe->setCenter(pe->cy - y1 + x1, x2 + y1);
+      x2 = x1 - pe->cx();   // if diagram -> only rotate cx/cy
+      pe->setCenter(pe->cy() - y1 + x1, x2 + y1);
       break;
     }
   }
@@ -1784,10 +1784,10 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
 	case isWire:
           {
             auto pw = std::dynamic_pointer_cast<Wire>(pe.ref());
-            if (pe->x1 == pe->x2 && pe->y1 == pe->y2)  break;
+            if (pe->x1() == pe->x2()() && pe->y1() == pe->y2())  break;
             Doc->insertWire(pw);
             if (Doc->Wires->find(pw.get()) != Doc->Wires->end())
-              Doc->enlargeView(pe->x1, pe->y1, pe->x2, pe->y2);
+              Doc->enlargeView(pe->x1(), pe->y1(), pe->x2()(), pe->y2());
           }
 	  break;
 	case isDiagram:
@@ -1795,7 +1795,7 @@ void MouseActions::MReleasePaste(Schematic *Doc, QMouseEvent *Event)
             auto pd = std::dynamic_pointer_cast<Diagram>(pe.ref());
             Doc->Diagrams->append(pd);
             pd->loadGraphData(Info.path() + QDir::separator() + Doc->DataSet);
-            Doc->enlargeView(pe->cx, pe->cy-pe->y2, pe->cx+pe->x2, pe->cy);
+            Doc->enlargeView(pe->cx(), pe->cy()-pe->y2(), pe->cx()+pe->x2()(), pe->cy());
           }
 	  break;
 	case isPainting:

@@ -37,10 +37,10 @@ circularloop::circularloop()
   Ports.push_back(qucs::Port(-30, 0));
   Ports.push_back(qucs::Port( 30, 0));
 
-  x1 = -30; y1 =-30;
-  x2 =  30; y2 = 5;
+  x1() = -30; y1() =-30;
+  x2()() =  30; y2() = 5;
 
-  set_qucs_text_position(x1, y1+40);
+  set_qucs_text_position(x1(), y1()+40);
   Model = "CIRCULARLOOP";
   Name  = "CIRCULARLOOP";
 

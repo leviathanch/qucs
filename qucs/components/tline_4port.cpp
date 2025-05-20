@@ -41,10 +41,10 @@ TLine_4Port::TLine_4Port()
   Ports.push_back(qucs::Port( 30, 10));
   Ports.push_back(qucs::Port(-30, 10));
 
-  x1 = -30; y1 =-12;
-  x2 =  30; y2 = 12;
+  x1() = -30; y1() =-12;
+  x2()() =  30; y2() = 12;
 
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "TLIN4P";
   Name  = "Line";
 

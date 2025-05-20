@@ -52,10 +52,10 @@ Coupler::Coupler()
   Ports.push_back(qucs::Port(-30, 20));
 
 
-  x1 = -30; y1 = -25;
-  x2 =  30; y2 =  25;
+  x1() = -30; y1() = -25;
+  x2()() =  30; y2() =  25;
 
-  set_qucs_text_position(x1+4, y2+4);
+  set_qucs_text_position(x1()+4, y2()+4);
   Model = "Coupler";
   Name  = "X";
 
