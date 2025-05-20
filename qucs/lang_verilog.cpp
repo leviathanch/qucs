@@ -201,10 +201,10 @@ void dump_attributes(outputStream& stream, T const* x)
         if(pp->getConnection()) {
           stream << sep
             << "S0_x" << port_idx
-            << "=" << pp->getConnection()->cx
+            << "=" << pp->getConnection()->cx()
             << ", "
             << "S0_y" << port_idx
-            << "="<< pp->getConnection()->cy;
+            << "="<< pp->getConnection()->cy();
           sep = ", ";
           port_idx++;
         }
@@ -212,15 +212,15 @@ void dump_attributes(outputStream& stream, T const* x)
     } else {
       stream << QString("S0_x%1=%2, S0_y%1=%3")
         .arg(1)
-        .arg(c->cx)
-        .arg(c->cy);
+        .arg(c->cx())
+        .arg(c->cy());
     }
   } else if(w) {
     stream << QString("S0_x1=%1, S0_y1=%2, S0_x2=%3, S0_y2=%4")
-      .arg(w->ports(0)->cx)
-      .arg(w->ports(0)->cy)
-      .arg(w->ports(1)->cx)
-      .arg(w->ports(1)->cy);
+      .arg(w->ports(0)->cx())
+      .arg(w->ports(0)->cy())
+      .arg(w->ports(1)->cx())
+      .arg(w->ports(1)->cy());
   } else {
     // what?
   }
@@ -284,10 +284,10 @@ static void dumpPainting(outputStream& stream, Element const* p)
   stream << "    "
          << "(* "
          << "S0_x="
-         << p->cx
+         << p->cx()
          << ", "
          << "S0_y="
-         << p->cy
+         << p->cy()
          << ", "
          << "qucs_type=\""+p->dev_type()+"\"";
   if(p->attr_get()!="") {
@@ -405,11 +405,36 @@ template <class T>
 void set_attribute(T* x, std::string name, std::string value)
 {
   assert(x);
+  if(name == "S0_x"){
+    x->set_cx(std::stoi(value));
+  }
+  else if(name == "S0_y"){
+    x->set_cy(std::stoi(value));
+  }
+  else if(name == "S0_x1"){
+    x->set_x1(std::stoi(value));
+  }
+  else if(name == "S0_y1"){
+    x->set_y1(std::stoi(value));
+  }
+  else if(name == "S0_x2"){
+    x->set_x2(std::stoi(value));
+  }
+  else if(name == "S0_y2"){
+    x->set_y2(std::stoi(value));
+  }
+  else {
+    x->set_attribute(name, value);
+  }
+}
+
+void set_attribute(Component* x, std::string name, std::string value)
+{
+  assert(x);
   if(name == "S0_x1"){
     x->set_qucs_x1(std::stoi(value));
   }
-  else
-  if(name == "S0_y1"){
+  else if(name == "S0_y1"){
     x->set_qucs_y1(std::stoi(value));
   }
   else {
