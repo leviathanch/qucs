@@ -405,14 +405,18 @@ template <class T>
 void set_attribute(T* x, std::string name, std::string value)
 {
   assert(x);
-  if(name == "S0_x1"){
-    x->set_qucs_x1(std::stoi(value));
-  }
-  else
-  if(name == "S0_y1"){
-    x->set_qucs_y1(std::stoi(value));
-  }
-  else {
+  if (Component* comp = dynamic_cast<Component*>(x)) { // Check if x is a Component
+    if(name == "S0_x1"){
+      comp->set_qucs_x1(std::stoi(value));
+    }
+    else if(name == "S0_y1"){
+      comp->set_qucs_y1(std::stoi(value));
+    }
+    else {
+      comp->set_attribute(name, value);
+    }
+  } else {
+    // For non-Component types (like Wire), directly call their set_attribute
     x->set_attribute(name, value);
   }
 }

@@ -28,8 +28,8 @@ Node::Node(int _x, int _y)
   State = 0;
   DType = "";
 
-  cx() = _x;
-  cy() = _y;
+  set_cx(_x);
+  set_cy(_y);
 }
 
 Node::~Node()
