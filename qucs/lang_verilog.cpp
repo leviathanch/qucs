@@ -422,6 +422,25 @@ void set_attribute(Painting* x, std::string name, std::string value)
   x->set_attribute(name, value);
 }
 
+void set_attribute(Schematic* x, std::string name, std::string value)
+{
+  x->set_attribute(name, value);
+}
+
+class inspect_attributes {
+  std::string _type;
+public:
+  explicit inspect_attributes(CS& cmd);
+  void set_attribute(std::string name, std::string value);
+  std::string type()const {return _type;}
+  bool has_type()const {return _type.size();}
+};
+
+void set_attribute(inspect_attributes* x, std::string name, std::string value)
+{
+  x->set_attribute(name, value);
+}
+
 template <class T>
 void parse_attributes(CS& cmd, T* x)
 {
@@ -430,9 +449,25 @@ void parse_attributes(CS& cmd, T* x)
   while (cmd >> "(*") {
     while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) {
       std::string name, value;
-      cmd >> name >> "=" >> value;
+      cmd >> name;
+      if(cmd >> "="){
+        cmd >> value;
+      }else{
+        value = "1";
+      }
       set_attribute(x, name, value);
     }
+  }
+}
+
+inspect_attributes::inspect_attributes(CS& cmd) { untested();
+  parse_attributes(cmd, this);
+}
+void inspect_attributes::set_attribute(std::string name, std::string value) { untested();
+  trace2("inspect", name, value);
+  if(name=="qucs_type") { untested();
+    _type = value;
+  }else{ untested();
   }
 }
 
@@ -612,32 +647,6 @@ void parse_instance(CS& cmd, T* x)
   cmd.check(0, "what's this?");
 }
 
-class inspect_attributes {
-  std::string _type;
-public:
-  explicit inspect_attributes(CS& cmd) { untested();
-    while (cmd >> "(*") { untested();
-      while(cmd.ns_more() && !(cmd >> ",") && !(cmd >> "*)")) { untested();
-	std::string name, value;
-	cmd >> name;
-        if(cmd >> "="){
-	  cmd >> value;
-	}else{
-	  value = "1";
-	}
-	trace2("inspect", name, value);
-	if(name=="qucs_type") { untested();
-	  _type = value;
-	}else{ untested();
-	}
-      }
-    }
-  }
-
-  std::string type()const {return _type;}
-  bool has_type()const {return _type.size();}
-};
-
 std::shared_ptr<Element> clone_instance(std::string const& type)
 {
   QString qtype = QString::fromStdString(type);
@@ -662,7 +671,8 @@ bool readVerilog(CS &cmd, Schematic*s)
     inspect_attributes attr(cmd);
     trace1("inspected", cmd.tail());
     if(cmd>>"module") { untested();
-      //ignore for now;
+      cmd.reset();
+      parse_attributes(cmd, s);
     }else if(cmd>>"endmodule"){
       //ignore for now;
     }else{
