@@ -654,7 +654,7 @@ bool readVerilog(CS &cmd, Schematic*s)
       }
 
       if(type=="wire") {
-	 // BUG: Not a component
+        // BUG: Not a component
       }else if(type=="net") {
         Wire* w = new Wire(0,0,0,0, (Node*)4,(Node*)4);
         if(w) {
@@ -662,24 +662,24 @@ bool readVerilog(CS &cmd, Schematic*s)
           parse_instance(cmd, w);
           s->pushBack(w);
         }else{ untested();
-		  }
+        }
       }else if(auto x = dynamic_cast<Component*>(inst.get())) {
-	trace3("readVerilog, gotComponent", type, x->tx(), x->ty());
-  attr.export_attrs(x);
-  x->apply_qucs_values();
-  x->set_dev_type(type);
-	/*x = */ parse_instance(cmd, x);
-	// BUG: Gives inconsisten values when generating refs
-	// setting text position to 0,0 for now.
-	x->set_qucs_text_position(0, 0);
-	s->pushBack(std::dynamic_pointer_cast<Component>(inst)); // (yikes)
+        trace3("readVerilog, gotComponent", type, x->tx(), x->ty());
+        attr.export_attrs(x);
+        x->apply_qucs_values();
+        x->set_dev_type(type);
+        /*x = */ parse_instance(cmd, x);
+        // BUG: Gives inconsisten values when generating refs
+        // setting text position to 0,0 for now.
+        x->set_qucs_text_position(0, 0);
+        s->pushBack(std::dynamic_pointer_cast<Component>(inst)); // (yikes)
       }else if(dynamic_cast<Painting*>(inst.get())) {
         auto pe = std::dynamic_pointer_cast<Painting>(inst);
         attr.export_attrs(pe.get());
         cmd >> ';';
         s->pushBack(pe);
       }else{
-	incomplete();
+        incomplete();
       }
     }
     trace2("readVerilog3", cmd.fullstring(), cmd.atEnd());
