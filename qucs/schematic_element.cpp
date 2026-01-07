@@ -1623,6 +1623,8 @@ void Schematic::newMovingWires(SharedObjectList<Element> &p, Node *pn, int pos)
         if(pn->State & 16)  // node was already worked on
             break;
 
+        if(!pn->connections().size()) return;
+
         pe = pn->connections().front().lock();
         if(!pe)  return;
 
@@ -2995,6 +2997,8 @@ void Schematic::oneLabel(Node *n1)
                 pl = pn->Label;
             }
         }
+
+        if(!pn->connections().size()) continue;
 
         for(auto j = pn->connections().begin(); j != pn->connections().end(); ++j)
         {
